@@ -1,0 +1,27 @@
+{
+  "nav": {
+    "home": "Início",
+    "login": "Login",
+    "logout": "Sair"
+  },
+  "landing": {
+    "title": "PayFlow",
+    "subtitle": "Gestão financeira simplificada",
+    "cta": "Começar agora",
+    "description": "Controle suas finanças com facilidade"
+  },
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Senha",
+    "submit": "Entrar",
+    "noAccount": "Não tem conta?",
+    "signup": "Cadastre-se"
+  },
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancelar",
+    "error": "Erro",
+    "loading": "Carregando..."
+  }
+}

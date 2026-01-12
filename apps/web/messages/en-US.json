@@ -1,0 +1,27 @@
+{
+  "nav": {
+    "home": "Home",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "landing": {
+    "title": "PayFlow",
+    "subtitle": "Simplified financial management",
+    "cta": "Get started now",
+    "description": "Control your finances with ease"
+  },
+  "login": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "noAccount": "Don't have an account?",
+    "signup": "Sign up"
+  },
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "error": "Error",
+    "loading": "Loading..."
+  }
+}
