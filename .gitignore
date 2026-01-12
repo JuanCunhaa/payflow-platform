@@ -1,0 +1,19 @@
+# Node
+node_modules/
+*.log
+
+# Build outputs
+apps/**/.next/
+apps/**/dist/
+packages/**/dist/
+
+# Env
+.env
+.env.local
+
+# Coverage
+coverage/
+
+# OS
+.DS_Store
+Thumbs.db

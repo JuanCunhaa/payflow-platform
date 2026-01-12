@@ -1,0 +1,20 @@
+{
+  "name": "payflow",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run -w @payflow/shared build && concurrently -n shared,web,api -c yellow,cyan,magenta \"npm run -w @payflow/shared build:watch\" \"npm run -w @payflow/web dev\" \"npm run -w @payflow/api dev\"",
+    "build": "npm run -w @payflow/shared build && npm run -w @payflow/web build && npm run -w @payflow/api build",
+    "lint": "npm run -w @payflow/web lint && npm run -w @payflow/api lint",
+    "format": "prettier -w .",
+    "test": "npm run -w @payflow/web test && npm run -w @payflow/api test"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "prettier": "^3.2.4"
+  }
+}
