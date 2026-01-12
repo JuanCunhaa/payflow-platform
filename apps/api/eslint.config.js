@@ -24,6 +24,22 @@ module.exports = [
       ...js.configs.recommended.rules,
       ...tsPlugin.configs.recommended.rules,
       ...prettier.rules,
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+        },
+      ],
+      '@typescript-eslint/no-explicit-any': 'warn',
+      'sort-imports': [
+        'warn',
+        {
+          ignoreCase: true,
+          ignoreDeclarationSort: true,
+        },
+      ],
     },
   },
 ];

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { createContext, useContext, useMemo } from 'react';
 import { en } from './translations/en';
 import { pt } from './translations/pt';
@@ -14,7 +14,13 @@ const I18nContext = createContext<{ t: (key: string) => string; locale: Locale }
   locale: 'pt',
 });
 
-export function I18nProvider({ locale = 'pt', children }: { locale?: Locale; children: React.ReactNode }) {
+export function I18nProvider({
+  locale = 'pt',
+  children,
+}: {
+  locale?: Locale;
+  children: React.ReactNode;
+}) {
   const dict: Dict = dictionaries[locale] ?? en;
   const t = useMemo(() => {
     return (key: string) => {
