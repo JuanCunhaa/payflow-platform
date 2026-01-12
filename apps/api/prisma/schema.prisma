@@ -10,29 +10,77 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// ============ ENUMS ============
 
-  accounts Account[]
+enum TenantStatus {
+  ACTIVE
+  DRAFT
+  SUSPENDED
+}
+
+enum UserType {
+  PLATFORM
+  STAFF
+  GUARDIAN
+}
+
+enum UserStatus {
+  PENDING_APPROVAL
+  ACTIVE
+  REJECTED
+  SUSPENDED
+}
+
+enum Role {
+  PLATFORM_ADMIN
+  SCHOOL_ADMIN
+  GUARDIAN
+  STAFF
+}
+
+// ============ MODELS ============
+
+model Tenant {
+  id          String       @id @default(uuid()) @db.Uuid
+  name        String
+  slug        String       @unique
+  schoolCode  String       @unique @map("school_code")
+  status      TenantStatus @default(ACTIVE)
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+
+  memberships Membership[]
+
+  @@map("tenants")
+}
+
+model User {
+  id            String     @id @default(uuid()) @db.Uuid
+  email         String     @unique @db.Citext
+  name          String?
+  passwordHash  String     @map("password_hash")
+  type          UserType   @default(GUARDIAN)
+  status        UserStatus @default(PENDING_APPROVAL)
+  emailVerified Boolean    @default(false) @map("email_verified")
+  createdAt     DateTime   @default(now()) @map("created_at")
+  updatedAt     DateTime   @updatedAt @map("updated_at")
+
+  memberships Membership[]
 
   @@map("users")
 }
 
-model Account {
-  id        String   @id @default(cuid())
-  name      String
-  balance   Float    @default(0)
-  type      String   @default("checking") // checking, savings, credit_card
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Membership {
+  id        String   @id @default(uuid()) @db.Uuid
+  role      Role     @default(GUARDIAN)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String @db.Uuid @map("user_id")
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tenantId String @db.Uuid @map("tenant_id")
+  tenant   Tenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
-  @@map("accounts")
+  @@unique([userId, tenantId])
+  @@map("memberships")
 }

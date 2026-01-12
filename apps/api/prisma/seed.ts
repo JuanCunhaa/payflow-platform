@@ -4,55 +4,107 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient({});
 
 async function main() {
-  console.log('Starting database seed...');
+  console.log("Starting database seed...");
 
   // Clear existing data
-  await prisma.account.deleteMany();
+  await prisma.membership.deleteMany();
   await prisma.user.deleteMany();
+  await prisma.tenant.deleteMany();
 
-  // Create sample users
-  const user1 = await prisma.user.create({
+  // Create sample tenants
+  const tenant1 = await prisma.tenant.create({
     data: {
-      email: 'alice@example.com',
-      name: 'Alice Silva',
-      password: 'hashed_password_1', // In production, use bcrypt
-      accounts: {
-        create: [
-          {
-            name: 'Conta Corrente',
-            type: 'checking',
-            balance: 1500.5,
-          },
-          {
-            name: 'Poupança',
-            type: 'savings',
-            balance: 5000.0,
-          },
-        ],
-      },
+      name: "Escola São Paulo",
+      slug: "escola-sao-paulo",
+      schoolCode: "ESP001",
+      status: "ACTIVE",
     },
   });
 
-  const user2 = await prisma.user.create({
+  const tenant2 = await prisma.tenant.create({
     data: {
-      email: 'bob@example.com',
-      name: 'Bob Santos',
-      password: 'hashed_password_2',
-      accounts: {
-        create: [
-          {
-            name: 'Conta Principal',
-            type: 'checking',
-            balance: 2500.75,
-          },
-        ],
-      },
+      name: "Colégio Rio de Janeiro",
+      slug: "colegio-rio",
+      schoolCode: "CRJ002",
+      status: "ACTIVE",
     },
   });
 
-  console.log(`✓ Created ${user1.name} with accounts`);
-  console.log(`✓ Created ${user2.name} with accounts`);
-  console.log('✓ Database seeded successfully');
+  // Create sample users (emails lowercased)
+  const admin = await prisma.user.create({
+    data: {
+      email: "admin@payflow.com".toLowerCase(),
+      name: "Admin PayFlow",
+      passwordHash: "hashed_password_admin",
+      type: "PLATFORM",
+      status: "ACTIVE",
+      emailVerified: true,
+    },
+  });
+
+  const schoolAdmin = await prisma.user.create({
+    data: {
+      email: "diretor@escolasaopaulo.com".toLowerCase(),
+      name: "Maria Diretora",
+      passwordHash: "hashed_password_school",
+      type: "STAFF",
+      status: "ACTIVE",
+      emailVerified: true,
+    },
+  });
+
+  const guardian = await prisma.user.create({
+    data: {
+      email: "pai@example.com".toLowerCase(),
+      name: "João Pai",
+      passwordHash: "hashed_password_guardian",
+      type: "GUARDIAN",
+      status: "ACTIVE",
+      emailVerified: true,
+    },
+  });
+
+  // Create memberships
+  await prisma.membership.create({
+    data: {
+      userId: schoolAdmin.id,
+      tenantId: tenant1.id,
+      role: "SCHOOL_ADMIN",
+    },
+  });
+
+  await prisma.membership.create({
+    data: {
+      userId: guardian.id,
+      tenantId: tenant1.id,
+      role: "GUARDIAN",
+    },
+  });
+
+  await prisma.membership.create({
+    data: {
+      userId: guardian.id,
+      tenantId: tenant2.id,
+      role: "GUARDIAN",
+    },
+  });
+
+  // Optional: platform admin membership to tenant1
+  await prisma.membership.create({
+    data: {
+      userId: admin.id,
+      tenantId: tenant1.id,
+      role: "PLATFORM_ADMIN",
+    },
+  });
+
+  console.log(`✓ Created ${tenant1.name} (tenant)`);
+  console.log(`✓ Created ${tenant2.name} (tenant)`);
+  console.log(`✓ Created ${admin.name} (platform)`);
+  console.log(`✓ Created ${schoolAdmin.name} (staff)`);
+  console.log(`✓ Created ${guardian.name} (guardian)`);
+  console.log("✓ Created memberships");
+  console.log("✓ Database seeded successfully");
 }
 
 main()
@@ -60,7 +112,7 @@ main()
     await prisma.$disconnect();
   })
   .catch(async (e) => {
-    console.error('Seeding error:', e);
+    console.error("Seeding error:", e);
     await prisma.$disconnect();
     process.exit(1);
   });
