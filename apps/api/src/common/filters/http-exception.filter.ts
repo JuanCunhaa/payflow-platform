@@ -4,9 +4,11 @@ import {
   Catch,
   ExceptionFilter,
   HttpException,
+  HttpStatus,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
+import { ThrottlerException } from '@nestjs/throttler';
 import { Request, Response } from 'express';
 
 @Catch()
@@ -21,6 +23,17 @@ export class HttpExceptionFilter implements ExceptionFilter {
       const status = exception.getStatus();
       const resp = exception.getResponse() as any;
 
+      // Rate limit (429) normalization
+      if (exception instanceof ThrottlerException) {
+        return res.status(HttpStatus.TOO_MANY_REQUESTS).json({
+          code: 'rate_limit_exceeded',
+          message: 'Too many requests. Please try again later.',
+          status: HttpStatus.TOO_MANY_REQUESTS,
+          timestamp,
+          path: req.url,
+        });
+      }
+
       // If a structured response with code is provided, respect it and enrich.
       if (resp && typeof resp === 'object' && resp.code) {
         return res.status(status).json({
@@ -33,7 +46,9 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
       // Validation errors normalization (from ValidationPipe)
       if (exception instanceof BadRequestException) {
-        const messages = Array.isArray(resp?.message) ? resp.message : [resp?.message].filter(Boolean);
+        const messages = Array.isArray(resp?.message)
+          ? resp.message
+          : [resp?.message].filter(Boolean);
         return res.status(status).json({
           code: 'validation_error',
           message: 'Validation failed',

@@ -1,39 +1,154 @@
 'use client';
 
 import Link from 'next/link';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { i18nKeys } from '@payflow/shared';
 import { useI18n } from '../../i18n-context';
+import { useTenant } from '../../tenant-context';
 
 export default function LoginPage() {
   const { t, locale } = useI18n();
+  const { tenant } = useTenant();
+  const router = useRouter();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      const response = await fetch('http://localhost:3333/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Pass tenant info via header for subdomain-based login
+          ...(tenant?.slug && { 'X-Tenant-Slug': tenant.slug }),
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        // Handle validation errors
+        if (data.errors && Array.isArray(data.errors)) {
+          setError(data.errors.join(', '));
+        } else {
+          setError(data.message || t(i18nKeys.login.error.generic));
+        }
+        return;
+      }
+
+      // Success - store token and redirect
+      localStorage.setItem('accessToken', data.accessToken);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      if (data.tenant) {
+        localStorage.setItem('tenant', JSON.stringify(data.tenant));
+      }
+
+      // Redirect to dashboard
+      router.push(`/${locale}/dashboard`);
+    } catch (err) {
+      console.error('Login error:', err);
+      setError(t(i18nKeys.login.error.connection));
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <main style={{ padding: '24px', fontFamily: 'sans-serif', maxWidth: '400px', margin: '50px auto' }}>
+    <main
+      style={{ padding: '24px', fontFamily: 'sans-serif', maxWidth: '400px', margin: '50px auto' }}
+    >
       <nav style={{ marginBottom: '32px' }}>
         <Link href={locale === 'pt-BR' ? '/en-US' : '/pt-BR'}>
-          {locale === 'pt-BR' ? 'English' : 'Português'}
+          {locale === 'pt-BR'
+            ? t(i18nKeys.common.language.english)
+            : t(i18nKeys.common.language.portuguese)}
         </Link>
       </nav>
 
+      {tenant && (
+        <div
+          style={{
+            marginBottom: '16px',
+            padding: '12px',
+            background: '#f0f9ff',
+            borderRadius: '8px',
+            border: '1px solid #bae6fd',
+          }}
+        >
+          <strong>{tenant.name}</strong>
+        </div>
+      )}
+
       <h1>{t(i18nKeys.login.title)}</h1>
 
-      <form onSubmit={(e) => e.preventDefault()} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      {error && (
+        <div
+          style={{
+            padding: '12px',
+            background: '#fef2f2',
+            color: '#dc2626',
+            borderRadius: '8px',
+            marginBottom: '16px',
+            border: '1px solid #fecaca',
+          }}
+        >
+          {error}
+        </div>
+      )}
+
+      <form
+        onSubmit={handleSubmit}
+        style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
+      >
         <div>
           <label htmlFor="email" style={{ display: 'block', marginBottom: '8px' }}>
             {t(i18nKeys.login.email)}
           </label>
-          <input id="email" type="email" placeholder="user@example.com" style={{ width: '100%', padding: '8px' }} />
+          <input
+            id="email"
+            type="email"
+            placeholder="user@example.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            style={{ width: '100%', padding: '8px' }}
+            required
+          />
         </div>
 
         <div>
           <label htmlFor="password" style={{ display: 'block', marginBottom: '8px' }}>
             {t(i18nKeys.login.password)}
           </label>
-          <input id="password" type="password" style={{ width: '100%', padding: '8px' }} />
+          <input
+            id="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{ width: '100%', padding: '8px' }}
+            required
+          />
         </div>
 
-        <button type="submit" style={{ padding: '10px', fontSize: '16px', cursor: 'pointer' }}>
-          {t(i18nKeys.login.submit)}
+        <button
+          type="submit"
+          disabled={loading}
+          style={{
+            padding: '10px',
+            fontSize: '16px',
+            cursor: loading ? 'not-allowed' : 'pointer',
+            opacity: loading ? 0.7 : 1,
+          }}
+        >
+          {loading ? t(i18nKeys.common.loading) : t(i18nKeys.login.submit)}
         </button>
       </form>
 
@@ -45,6 +160,39 @@ export default function LoginPage() {
       <Link href={`/${locale}`} style={{ marginTop: '24px', display: 'block' }}>
         ← {t(i18nKeys.nav.home)}
       </Link>
+
+      {/* Debug info for development */}
+      <div
+        style={{
+          marginTop: '32px',
+          padding: '12px',
+          background: '#f5f5f5',
+          borderRadius: '8px',
+          fontSize: '12px',
+        }}
+      >
+        <strong>{t(i18nKeys.login.debug.title)}</strong>
+        <br />
+        {tenant?.slug === 'vidal' && (
+          <>
+            {t(i18nKeys.login.debug.emailLabel)}: admin@vidal.com
+            <br />
+          </>
+        )}
+        {tenant?.slug === 'alpha' && (
+          <>
+            {t(i18nKeys.login.debug.emailLabel)}: admin@alpha.com
+            <br />
+          </>
+        )}
+        {!tenant && (
+          <>
+            {t(i18nKeys.login.debug.emailLabel)}: platform.admin@payflow.com
+            <br />
+          </>
+        )}
+        {t(i18nKeys.login.debug.passwordLabel)}: Admin@12345
+      </div>
     </main>
   );
 }

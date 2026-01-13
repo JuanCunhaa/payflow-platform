@@ -8,10 +8,14 @@ export default function Home() {
   const { t, locale } = useI18n();
 
   return (
-    <main style={{ padding: '24px', fontFamily: 'sans-serif', maxWidth: '1200px', margin: '0 auto' }}>
+    <main
+      style={{ padding: '24px', fontFamily: 'sans-serif', maxWidth: '1200px', margin: '0 auto' }}
+    >
       <nav style={{ marginBottom: '32px' }}>
         <Link href={locale === 'pt-BR' ? '/en-US/login' : '/pt-BR/login'}>
-          {locale === 'pt-BR' ? 'English' : 'Português'}
+          {locale === 'pt-BR'
+            ? t(i18nKeys.common.language.english)
+            : t(i18nKeys.common.language.portuguese)}
         </Link>
       </nav>
 

@@ -1,12 +1,24 @@
-"use client";
+'use client';
 import React, { createContext, useContext } from 'react';
 
-type Tenant = { slug: string | null };
+type Tenant = { slug: string | null; name?: string };
 
-const Ctx = createContext<Tenant>({ slug: null });
+type TenantContextValue = {
+  tenant: Tenant | null;
+};
 
-export function TenantProvider({ slug, children }: { slug: string | null; children: React.ReactNode }) {
-  return <Ctx.Provider value={{ slug }}>{children}</Ctx.Provider>;
+const Ctx = createContext<TenantContextValue>({ tenant: null });
+
+export function TenantProvider({
+  slug,
+  children,
+}: {
+  slug: string | null;
+  children: React.ReactNode;
+}) {
+  const value: TenantContextValue = slug ? { tenant: { slug } } : { tenant: null };
+
+  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
 
 export function useTenant() {

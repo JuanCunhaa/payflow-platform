@@ -17,12 +17,41 @@ export const i18nKeys = {
     submit: 'login.submit',
     noAccount: 'login.noAccount',
     signup: 'login.signup',
+    error: {
+      generic: 'login.error.generic',
+      connection: 'login.error.connection',
+    },
+    debug: {
+      title: 'login.debug.title',
+      emailLabel: 'login.debug.emailLabel',
+      passwordLabel: 'login.debug.passwordLabel',
+    },
   },
   common: {
     ok: 'common.ok',
     cancel: 'common.cancel',
     error: 'common.error',
     loading: 'common.loading',
+    language: {
+      english: 'common.language.english',
+      portuguese: 'common.language.portuguese',
+    },
+  },
+  tenant: {
+    notFound: {
+      title: 'tenant.notFound.title',
+      description: 'tenant.notFound.description',
+      extra: 'tenant.notFound.extra',
+    },
+  },
+  dashboard: {
+    title: 'dashboard.title',
+    welcome: 'dashboard.welcome',
+    userTypeLabel: 'dashboard.userTypeLabel',
+    emailLabel: 'dashboard.emailLabel',
+    tenantLabel: 'dashboard.tenantLabel',
+    platformTenantFallback: 'dashboard.platformTenantFallback',
+    backToHome: 'dashboard.backToHome',
   },
 } as const;
 

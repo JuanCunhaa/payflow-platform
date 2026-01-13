@@ -16,12 +16,41 @@
     "password": "Senha",
     "submit": "Entrar",
     "noAccount": "Não tem conta?",
-    "signup": "Cadastre-se"
+    "signup": "Cadastre-se",
+    "error": {
+      "generic": "Falha no login",
+      "connection": "Erro de conexão. Tente novamente."
+    },
+    "debug": {
+      "title": "Credenciais de teste:",
+      "emailLabel": "Email",
+      "passwordLabel": "Senha"
+    }
   },
   "common": {
     "ok": "OK",
     "cancel": "Cancelar",
     "error": "Erro",
-    "loading": "Carregando..."
+    "loading": "Carregando...",
+    "language": {
+      "english": "Inglês",
+      "portuguese": "Português"
+    }
+  },
+  "tenant": {
+    "notFound": {
+      "title": "Tenant não encontrado",
+      "description": "Verificamos o subdomínio informado e não encontramos uma escola correspondente.",
+      "extra": "Verifique o endereço ou entre em contato com o suporte."
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Bem-vindo, {name}!",
+    "userTypeLabel": "Você está logado como",
+    "emailLabel": "Email",
+    "tenantLabel": "Tenant",
+    "platformTenantFallback": "Plataforma",
+    "backToHome": "Voltar para a home"
   }
 }

@@ -11,7 +11,7 @@ export class HealthController {
     try {
       await this.prisma.$queryRawUnsafe('SELECT 1');
       return { status: 'ok', db: 'ok', timestamp };
-    } catch (e) {
+    } catch (_error) {
       throw new ServiceUnavailableException({
         code: 'db_unreachable',
         message: 'Database unreachable',

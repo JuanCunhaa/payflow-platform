@@ -22,8 +22,8 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   // Check if locale is already in pathname
-  const pathnameHasLocale = locales.some((locale) =>
-    pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+  const pathnameHasLocale = locales.some(
+    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
   );
 
   // Allow tenant-not-found to bypass locale redirects to avoid loops

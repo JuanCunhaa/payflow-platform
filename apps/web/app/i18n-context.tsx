@@ -23,11 +23,7 @@ export function I18nProvider({
 }) {
   const t = (key: string) => getNestedValue(dict, key);
 
-  return (
-    <I18nContext.Provider value={{ locale, t, dict }}>
-      {children}
-    </I18nContext.Provider>
-  );
+  return <I18nContext.Provider value={{ locale, t, dict }}>{children}</I18nContext.Provider>;
 }
 
 export function useI18n() {

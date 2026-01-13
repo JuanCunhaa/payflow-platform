@@ -16,12 +16,41 @@
     "password": "Password",
     "submit": "Sign in",
     "noAccount": "Don't have an account?",
-    "signup": "Sign up"
+    "signup": "Sign up",
+    "error": {
+      "generic": "Login failed",
+      "connection": "Connection error. Please try again."
+    },
+    "debug": {
+      "title": "Test credentials:",
+      "emailLabel": "Email",
+      "passwordLabel": "Password"
+    }
   },
   "common": {
     "ok": "OK",
     "cancel": "Cancel",
     "error": "Error",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "language": {
+      "english": "English",
+      "portuguese": "Portuguese"
+    }
+  },
+  "tenant": {
+    "notFound": {
+      "title": "Tenant not found",
+      "description": "We checked the provided subdomain and could not find a matching school.",
+      "extra": "Check the address or contact support."
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome, {name}!",
+    "userTypeLabel": "You are logged in as",
+    "emailLabel": "Email",
+    "tenantLabel": "Tenant",
+    "platformTenantFallback": "Platform",
+    "backToHome": "Back to home"
   }
 }

@@ -11,7 +11,10 @@
     "build": "npm run -w @payflow/shared build && npm run -w @payflow/web build && npm run -w @payflow/api build",
     "lint": "npm run -w @payflow/web lint && npm run -w @payflow/api lint",
     "format": "prettier -w .",
-    "test": "npm run -w @payflow/web test && npm run -w @payflow/api test"
+    "test": "npm run -w @payflow/web test && npm run -w @payflow/api test",
+    "db:migrate": "npm run -w @payflow/api db:migrate",
+    "db:seed": "npm run -w @payflow/api db:seed",
+    "db:studio": "npm run -w @payflow/api db:studio"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",

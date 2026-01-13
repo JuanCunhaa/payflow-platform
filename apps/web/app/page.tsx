@@ -4,4 +4,3 @@ import { defaultLocale } from '@payflow/shared';
 export default function RootPage() {
   redirect(`/${defaultLocale}`);
 }
-
