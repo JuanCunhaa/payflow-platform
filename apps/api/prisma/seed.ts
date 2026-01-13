@@ -1,110 +1,129 @@
 import "dotenv/config";
 import { PrismaClient } from "@prisma/client";
+import * as bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient({});
 
+async function hashPassword(plain: string) {
+  const salt = await bcrypt.genSalt(10);
+  return bcrypt.hash(plain, salt);
+}
+
 async function main() {
-  console.log("Starting database seed...");
+  console.log("Starting idempotent seed...");
 
-  // Clear existing data
-  await prisma.membership.deleteMany();
-  await prisma.user.deleteMany();
-  await prisma.tenant.deleteMany();
+  // Desired data
+  const tenants = [
+    { name: "Vidal", slug: "vidal", schoolCode: "VIDAL-0001" },
+    { name: "Alpha", slug: "alpha", schoolCode: "ALPHA-0001" },
+  ];
 
-  // Create sample tenants
-  const tenant1 = await prisma.tenant.create({
-    data: {
-      name: "Escola São Paulo",
-      slug: "escola-sao-paulo",
-      schoolCode: "ESP001",
+  const defaultPassword = process.env.SEED_DEFAULT_PASSWORD || "Admin@12345";
+  const passwordHash = await hashPassword(defaultPassword);
+
+  // Upsert tenants
+  const upsertedTenants = await Promise.all(
+    tenants.map((t) =>
+      prisma.tenant.upsert({
+        where: { slug: t.slug },
+        update: { name: t.name, schoolCode: t.schoolCode, status: "ACTIVE" },
+        create: { name: t.name, slug: t.slug, schoolCode: t.schoolCode, status: "ACTIVE" },
+      })
+    )
+  );
+
+  const [tenantVidal, tenantAlpha] = upsertedTenants;
+
+  // Users (emails normalized)
+  const platformEmail = "platform.admin@payflow.com".toLowerCase();
+  const vidalAdminEmail = "admin@vidal.com".toLowerCase();
+  const alphaAdminEmail = "admin@alpha.com".toLowerCase();
+
+  const platform = await prisma.user.upsert({
+    where: { email: platformEmail },
+    update: {
+      name: "Platform Admin",
+      passwordHash,
+      type: "PLATFORM",
       status: "ACTIVE",
+      emailVerified: true,
     },
-  });
-
-  const tenant2 = await prisma.tenant.create({
-    data: {
-      name: "Colégio Rio de Janeiro",
-      slug: "colegio-rio",
-      schoolCode: "CRJ002",
-      status: "ACTIVE",
-    },
-  });
-
-  // Create sample users (emails lowercased)
-  const admin = await prisma.user.create({
-    data: {
-      email: "admin@payflow.com".toLowerCase(),
-      name: "Admin PayFlow",
-      passwordHash: "hashed_password_admin",
+    create: {
+      email: platformEmail,
+      name: "Platform Admin",
+      passwordHash,
       type: "PLATFORM",
       status: "ACTIVE",
       emailVerified: true,
     },
   });
 
-  const schoolAdmin = await prisma.user.create({
-    data: {
-      email: "diretor@escolasaopaulo.com".toLowerCase(),
-      name: "Maria Diretora",
-      passwordHash: "hashed_password_school",
+  const vidalAdmin = await prisma.user.upsert({
+    where: { email: vidalAdminEmail },
+    update: {
+      name: "Vidal Admin",
+      passwordHash,
+      type: "STAFF",
+      status: "ACTIVE",
+      emailVerified: true,
+    },
+    create: {
+      email: vidalAdminEmail,
+      name: "Vidal Admin",
+      passwordHash,
       type: "STAFF",
       status: "ACTIVE",
       emailVerified: true,
     },
   });
 
-  const guardian = await prisma.user.create({
-    data: {
-      email: "pai@example.com".toLowerCase(),
-      name: "João Pai",
-      passwordHash: "hashed_password_guardian",
-      type: "GUARDIAN",
+  const alphaAdmin = await prisma.user.upsert({
+    where: { email: alphaAdminEmail },
+    update: {
+      name: "Alpha Admin",
+      passwordHash,
+      type: "STAFF",
+      status: "ACTIVE",
+      emailVerified: true,
+    },
+    create: {
+      email: alphaAdminEmail,
+      name: "Alpha Admin",
+      passwordHash,
+      type: "STAFF",
       status: "ACTIVE",
       emailVerified: true,
     },
   });
 
-  // Create memberships
-  await prisma.membership.create({
-    data: {
-      userId: schoolAdmin.id,
-      tenantId: tenant1.id,
-      role: "SCHOOL_ADMIN",
-    },
+  // Memberships (upsert by composite unique)
+  await prisma.membership.upsert({
+    where: { userId_tenantId: { userId: platform.id, tenantId: tenantVidal.id } },
+    update: { role: "PLATFORM_ADMIN" },
+    create: { userId: platform.id, tenantId: tenantVidal.id, role: "PLATFORM_ADMIN" },
+  });
+  await prisma.membership.upsert({
+    where: { userId_tenantId: { userId: platform.id, tenantId: tenantAlpha.id } },
+    update: { role: "PLATFORM_ADMIN" },
+    create: { userId: platform.id, tenantId: tenantAlpha.id, role: "PLATFORM_ADMIN" },
   });
 
-  await prisma.membership.create({
-    data: {
-      userId: guardian.id,
-      tenantId: tenant1.id,
-      role: "GUARDIAN",
-    },
+  await prisma.membership.upsert({
+    where: { userId_tenantId: { userId: vidalAdmin.id, tenantId: tenantVidal.id } },
+    update: { role: "SCHOOL_ADMIN" },
+    create: { userId: vidalAdmin.id, tenantId: tenantVidal.id, role: "SCHOOL_ADMIN" },
+  });
+  await prisma.membership.upsert({
+    where: { userId_tenantId: { userId: alphaAdmin.id, tenantId: tenantAlpha.id } },
+    update: { role: "SCHOOL_ADMIN" },
+    create: { userId: alphaAdmin.id, tenantId: tenantAlpha.id, role: "SCHOOL_ADMIN" },
   });
 
-  await prisma.membership.create({
-    data: {
-      userId: guardian.id,
-      tenantId: tenant2.id,
-      role: "GUARDIAN",
-    },
-  });
-
-  // Optional: platform admin membership to tenant1
-  await prisma.membership.create({
-    data: {
-      userId: admin.id,
-      tenantId: tenant1.id,
-      role: "PLATFORM_ADMIN",
-    },
-  });
-
-  console.log(`✓ Created ${tenant1.name} (tenant)`);
-  console.log(`✓ Created ${tenant2.name} (tenant)`);
-  console.log(`✓ Created ${admin.name} (platform)`);
-  console.log(`✓ Created ${schoolAdmin.name} (staff)`);
-  console.log(`✓ Created ${guardian.name} (guardian)`);
-  console.log("✓ Created memberships");
-  console.log("✓ Database seeded successfully");
+  console.log("✓ Seed ok");
+  console.log("Logins:");
+  console.log(`  PLATFORM -> ${platformEmail} / ${defaultPassword}`);
+  console.log(`  VIDAL    -> ${vidalAdminEmail} / ${defaultPassword}`);
+  console.log(`  ALPHA    -> ${alphaAdminEmail} / ${defaultPassword}`);
 }
 
 main()
