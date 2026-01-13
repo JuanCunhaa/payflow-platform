@@ -1,9 +1,17 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 
 import { AppController } from './app.controller';
+import { TenantController } from './tenant/tenant.controller';
+import { PrismaService } from './prisma/prisma.service';
+import { TenantResolverMiddleware } from './common/tenant/tenant.middleware';
 
 @Module({
-  controllers: [AppController],
-  providers: [],
+  controllers: [AppController, TenantController],
+  providers: [PrismaService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    // Attach tenant (if resolvable) to every request; platform routes can ignore it.
+    consumer.apply(TenantResolverMiddleware).forRoutes('*');
+  }
+}
