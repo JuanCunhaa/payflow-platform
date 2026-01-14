@@ -67,4 +67,3 @@ SEED_DEFAULT_PASSWORD="MinhaSenha@Forte" npm run db:seed
 - `npm run db:migrate` – `prisma migrate dev` na API.
 - `npm run db:seed` – Executa o seed Prisma na API.
 - `npm run db:studio` – Abre o Prisma Studio.
-

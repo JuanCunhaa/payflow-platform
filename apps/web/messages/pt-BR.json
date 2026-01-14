@@ -46,7 +46,8 @@
     "signup": "Cadastre-se",
     "error": {
       "generic": "Falha no login",
-      "connection": "Erro de conexão. Tente novamente."
+      "connection": "Erro de conexão. Tente novamente.",
+      "rateLimit": "Muitas tentativas de login. Tente novamente em alguns minutos."
     }
   },
   "common": {
@@ -191,6 +192,56 @@
       "empty": "Nenhum evento de auditoria encontrado para o filtro atual.",
       "errorGeneric": "Não foi possível carregar os eventos de auditoria.",
       "errorConnection": "Erro de conexão ao carregar os eventos de auditoria."
+    }
+  },
+  "school": {
+    "nav": {
+      "dashboard": "Painel da escola",
+      "settings": "Configurações",
+      "classes": "Turmas",
+      "students": "Alunos",
+      "guardians": "Responsáveis",
+      "approvalsGuardians": "Aprovação de responsáveis"
+    },
+    "breadcrumbs": {
+      "root": "Escola",
+      "dashboard": "Dashboard",
+      "settings": "Configurações",
+      "classes": "Turmas",
+      "students": "Alunos",
+      "guardians": "Responsáveis",
+      "approvals": "Aprovações",
+      "approvalsGuardians": "Aprovação de responsáveis"
+    },
+    "layout": {
+      "unauthorizedTitle": "Você não tem acesso ao painel da escola",
+      "unauthorizedDescription": "Esta área é reservada para a equipe da escola. Se você acredita que isso é um engano, entre em contato com o administrador."
+    },
+    "pages": {
+      "dashboard": {
+        "title": "Visão geral da escola",
+        "description": "Resumo de turmas, alunos e fluxos financeiros desta escola (em breve)."
+      },
+      "settings": {
+        "title": "Configurações da escola",
+        "description": "Configure informações básicas, regras de cobrança e integrações da escola (em breve)."
+      },
+      "classes": {
+        "title": "Turmas",
+        "description": "Gerencie turmas, séries e grupos da escola (em breve)."
+      },
+      "students": {
+        "title": "Alunos",
+        "description": "Liste e gerencie os alunos vinculados a esta escola (em breve)."
+      },
+      "guardians": {
+        "title": "Responsáveis",
+        "description": "Gerencie perfis de responsáveis e seus vínculos com os alunos (em breve)."
+      },
+      "approvalsGuardians": {
+        "title": "Aprovação de responsáveis",
+        "description": "Revise e aprove novas contas de responsáveis que aguardam validação (em breve)."
+      }
     }
   }
 }

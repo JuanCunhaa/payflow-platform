@@ -46,7 +46,8 @@
     "signup": "Sign up",
     "error": {
       "generic": "Login failed",
-      "connection": "Connection error. Please try again."
+      "connection": "Connection error. Please try again.",
+      "rateLimit": "Too many login attempts. Please try again in a few minutes."
     }
   },
   "common": {
@@ -192,5 +193,56 @@
       "errorGeneric": "Could not load audit events.",
       "errorConnection": "Connection error while loading audit events."
     }
+  },
+  "school": {
+    "nav": {
+      "dashboard": "School panel",
+      "settings": "Settings",
+      "classes": "Classes",
+      "students": "Students",
+      "guardians": "Guardians",
+      "approvalsGuardians": "Guardian approvals"
+    },
+    "breadcrumbs": {
+      "root": "School",
+      "dashboard": "Dashboard",
+      "settings": "Settings",
+      "classes": "Classes",
+      "students": "Students",
+      "guardians": "Guardians",
+      "approvals": "Approvals",
+      "approvalsGuardians": "Guardian approvals"
+    },
+    "layout": {
+      "unauthorizedTitle": "You don't have access to the school panel",
+      "unauthorizedDescription": "This area is reserved for school staff. If you believe this is a mistake, contact the school administrator."
+    },
+    "pages": {
+      "dashboard": {
+        "title": "School overview",
+        "description": "Summary of classes, students and financial flows for this school (coming soon)."
+      },
+      "settings": {
+        "title": "School settings",
+        "description": "Configure basic information, billing rules and integrations for this school (coming soon)."
+      },
+      "classes": {
+        "title": "Classes",
+        "description": "Manage classes, grades and groups for the school (coming soon)."
+      },
+      "students": {
+        "title": "Students",
+        "description": "List and manage students linked to this school (coming soon)."
+      },
+      "guardians": {
+        "title": "Guardians",
+        "description": "Manage guardian profiles and their links to students (coming soon)."
+      },
+      "approvalsGuardians": {
+        "title": "Guardian approvals",
+        "description": "Review and approve new guardian accounts waiting for validation (coming soon)."
+      }
+    }
   }
 }
+

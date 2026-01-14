@@ -1,12 +1,6 @@
 'use client';
 
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useI18n } from './i18n-context';
 import { i18nKeys } from '@payflow/shared';
@@ -25,6 +19,7 @@ type AuthUser = {
   name: string | null;
   userType: string;
   status?: string;
+   role?: string;
   tenant?: AuthTenant;
 };
 
@@ -128,22 +123,42 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setLoginError(null);
 
       try {
+        const bypassHeaders: Record<string, string> = {};
+        if (process.env.NEXT_PUBLIC_BYPASS_RATE_LIMIT_FOR_TESTS === '1') {
+          bypassHeaders['x-payflow-bypass-ratelimit'] = '1';
+        }
+
         const res = await fetch(`${API_BASE}/auth/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             ...(tenantSlug ? { 'X-Tenant-Slug': tenantSlug } : {}),
+            ...bypassHeaders,
           },
           credentials: 'include',
           body: JSON.stringify({ email, password }),
         });
 
-        const data = (await res.json()) as any;
+        let data: any = null;
+        try {
+          data = await res.json();
+        } catch {
+          // Ignore JSON parse errors; handled by status below
+        }
 
         if (!res.ok) {
-          const msg = t ? t(i18nKeys.login.error.generic) : 'login.error.generic';
+          const code = data?.code as string | undefined;
+
+          let key = i18nKeys.login.error.generic;
+          if (code === 'rate_limit_exceeded') {
+            key = i18nKeys.login.error.rateLimit;
+          }
+
+          const msg = t ? t(key) : key;
           setLoginError(msg);
-          throw new Error(msg);
+
+          // Surface error so callers can react (e.g. stop loading)
+          throw new Error(code || 'login_failed');
         }
 
         const loginData = data as LoginResponse;
@@ -156,14 +171,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const base = locale || 'pt-BR';
         router.push(`/${base}${path}`);
       } catch (err) {
-        if (!loginError) {
+        setLoginError((prev) => {
+          if (prev) return prev;
           const fallback = t ? t(i18nKeys.login.error.connection) : 'login.error.connection';
-          setLoginError(fallback);
-        }
+          return fallback;
+        });
         throw err;
       }
     },
-    [locale, loginError, router, t],
+    [locale, router, t]
   );
 
   const logout = useCallback(async () => {
@@ -217,7 +233,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       res = await doFetch(result.accessToken ?? null);
       return res;
     },
-    [accessToken, logout, refreshSession],
+    [accessToken, logout, refreshSession]
   );
 
   const clearLoginError = useCallback(() => {

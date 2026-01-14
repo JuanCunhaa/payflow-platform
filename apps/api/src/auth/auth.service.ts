@@ -22,6 +22,7 @@ export interface LoginResponse {
     name: string | null;
     userType: string;
     status?: string;
+    role?: string;
   };
   tenant?: {
     id: string;
@@ -103,6 +104,7 @@ export class AuthService {
           name: user.name,
           userType: user.type,
           status: user.status,
+          role: undefined,
         },
         redirectHint: 'platform_dashboard',
       };
@@ -159,6 +161,7 @@ export class AuthService {
         name: user.name,
         userType: user.type,
         status: user.status,
+        role: membership.role,
       },
       tenant: {
         id: membership.tenant.id,
@@ -285,6 +288,7 @@ export class AuthService {
           name: user.name,
           userType: user.type,
           status: user.status,
+          role: undefined,
         },
         redirectHint: 'platform_dashboard',
       };
@@ -327,6 +331,7 @@ export class AuthService {
         name: user.name,
         userType: user.type,
         status: user.status,
+        role: membership.role,
       },
       tenant: {
         id: membership.tenant.id,

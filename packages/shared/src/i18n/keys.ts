@@ -47,6 +47,7 @@ export const i18nKeys = {
     error: {
       generic: 'login.error.generic',
       connection: 'login.error.connection',
+      rateLimit: 'login.error.rateLimit',
     },
   },
   common: {
@@ -191,6 +192,56 @@ export const i18nKeys = {
       empty: 'platform.audit.empty',
       errorGeneric: 'platform.audit.errorGeneric',
       errorConnection: 'platform.audit.errorConnection',
+    },
+  },
+  school: {
+    nav: {
+      dashboard: 'school.nav.dashboard',
+      settings: 'school.nav.settings',
+      classes: 'school.nav.classes',
+      students: 'school.nav.students',
+      guardians: 'school.nav.guardians',
+      approvalsGuardians: 'school.nav.approvalsGuardians',
+    },
+    breadcrumbs: {
+      root: 'school.breadcrumbs.root',
+      dashboard: 'school.breadcrumbs.dashboard',
+      settings: 'school.breadcrumbs.settings',
+      classes: 'school.breadcrumbs.classes',
+      students: 'school.breadcrumbs.students',
+      guardians: 'school.breadcrumbs.guardians',
+      approvals: 'school.breadcrumbs.approvals',
+      approvalsGuardians: 'school.breadcrumbs.approvalsGuardians',
+    },
+    layout: {
+      unauthorizedTitle: 'school.layout.unauthorizedTitle',
+      unauthorizedDescription: 'school.layout.unauthorizedDescription',
+    },
+    pages: {
+      dashboard: {
+        title: 'school.pages.dashboard.title',
+        description: 'school.pages.dashboard.description',
+      },
+      settings: {
+        title: 'school.pages.settings.title',
+        description: 'school.pages.settings.description',
+      },
+      classes: {
+        title: 'school.pages.classes.title',
+        description: 'school.pages.classes.description',
+      },
+      students: {
+        title: 'school.pages.students.title',
+        description: 'school.pages.students.description',
+      },
+      guardians: {
+        title: 'school.pages.guardians.title',
+        description: 'school.pages.guardians.description',
+      },
+      approvalsGuardians: {
+        title: 'school.pages.approvalsGuardians.title',
+        description: 'school.pages.approvalsGuardians.description',
+      },
     },
   },
 } as const;

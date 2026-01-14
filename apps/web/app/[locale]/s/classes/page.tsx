@@ -1,9 +1,9 @@
 'use client';
 
 import { i18nKeys } from '@payflow/shared';
-import { useI18n } from '../../i18n-context';
+import { useI18n } from '../../../i18n-context';
 
-export default function SchoolDashboardPage() {
+export default function SchoolClassesPage() {
   const { t } = useI18n();
 
   return (
@@ -23,7 +23,7 @@ export default function SchoolDashboardPage() {
           marginBottom: '8px',
         }}
       >
-        {t(i18nKeys.school.pages.dashboard.title)}
+        {t(i18nKeys.school.pages.classes.title)}
       </h1>
       <p
         style={{
@@ -32,7 +32,7 @@ export default function SchoolDashboardPage() {
           margin: 0,
         }}
       >
-        {t(i18nKeys.school.pages.dashboard.description)}
+        {t(i18nKeys.school.pages.classes.description)}
       </p>
     </div>
   );
