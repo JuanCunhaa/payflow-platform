@@ -14,7 +14,7 @@ async function bootstrap() {
 
   // Enable CORS for frontend
   app.enableCors({
-    origin: ['http://localhost:3000', /\.localtest\.me(:\d+)?$/],
+    origin: ['http://localhost:3000', 'http://localtest.me:3000', /\.localtest\.me(:\d+)?$/],
     credentials: true,
   });
 

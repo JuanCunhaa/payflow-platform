@@ -106,6 +106,23 @@ export const i18nKeys = {
       connection: 'requestDemo.error.connection',
     },
   },
+  platform: {
+    nav: {
+      dashboard: 'platform.nav.dashboard',
+      tenants: 'platform.nav.tenants',
+      leads: 'platform.nav.leads',
+      audit: 'platform.nav.audit',
+    },
+    tenants: {
+      title: 'platform.tenants.title',
+    },
+    leads: {
+      title: 'platform.leads.title',
+    },
+    audit: {
+      title: 'platform.audit.title',
+    },
+  },
 } as const;
 
 export type Locale = 'pt-BR' | 'en-US';

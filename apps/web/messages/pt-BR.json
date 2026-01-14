@@ -105,6 +105,23 @@
       "generic": "Não foi possível enviar seu pedido agora. Tente novamente em alguns minutos.",
       "connection": "Erro de conexão. Verifique sua internet e tente novamente."
     }
+  },
+  "platform": {
+    "nav": {
+      "dashboard": "Plataforma",
+      "tenants": "Escolas",
+      "leads": "Leads",
+      "audit": "Auditoria"
+    },
+    "tenants": {
+      "title": "Escolas (tenants)"
+    },
+    "leads": {
+      "title": "Leads de escolas"
+    },
+    "audit": {
+      "title": "Audit log"
+    }
   }
 }
 

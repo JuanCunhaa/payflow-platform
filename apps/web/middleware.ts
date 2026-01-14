@@ -50,9 +50,34 @@ async function maybeValidateTenant(request: NextRequest) {
   const path = request.nextUrl.pathname;
   if (path.includes('/tenant-not-found')) return NextResponse.next();
 
-  // Only validate in dev for localtest.me/lvh.me
   const host = request.headers.get('host') || undefined;
   const { sub, domain } = extractFirstSubdomain(host);
+
+  const parts = path.split('/');
+  const maybeLocale = parts.length > 1 ? parts[1] : '';
+  const locale = locales.includes(maybeLocale as any) ? maybeLocale : defaultLocale;
+  const isPlatformPath = parts.length > 2 && parts[2] === 'p';
+
+  // Host-based routing for platform (/p) paths
+  if (isPlatformPath) {
+    // Allow /p only on admin.* host
+    if (sub === 'admin') {
+      // Platform host: do not validate tenant
+      return NextResponse.next();
+    }
+
+    // On tenant or root hosts, block /p and send user back to locale root
+    const url = request.nextUrl.clone();
+    url.pathname = `/${locale}`;
+    return NextResponse.redirect(url);
+  }
+
+  // Admin host on non-/p routes: skip tenant validation
+  if (sub === 'admin') {
+    return NextResponse.next();
+  }
+
+  // Only validate tenant in dev for localtest.me/lvh.me
   if (!sub || !domain) return NextResponse.next();
   if (!domain.endsWith('localtest.me') && !domain.endsWith('lvh.me')) {
     return NextResponse.next();

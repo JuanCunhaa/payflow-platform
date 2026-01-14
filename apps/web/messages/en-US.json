@@ -105,6 +105,23 @@
       "generic": "We couldn't send your request right now. Please try again in a few minutes.",
       "connection": "Connection error. Check your internet and try again."
     }
+  },
+  "platform": {
+    "nav": {
+      "dashboard": "Platform",
+      "tenants": "Tenants",
+      "leads": "Leads",
+      "audit": "Audit"
+    },
+    "tenants": {
+      "title": "School tenants"
+    },
+    "leads": {
+      "title": "School leads"
+    },
+    "audit": {
+      "title": "Audit log"
+    }
   }
 }
 
