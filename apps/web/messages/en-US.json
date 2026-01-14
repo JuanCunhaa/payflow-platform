@@ -114,7 +114,35 @@
       "audit": "Audit"
     },
     "tenants": {
-      "title": "School tenants"
+      "title": "School tenants",
+      "table": {
+        "name": "Name",
+        "slug": "Slug (subdomain)",
+        "schoolCode": "School code",
+        "status": "Status",
+        "createdAt": "Created at",
+        "actions": "Actions"
+      },
+      "status": {
+        "draft": "Draft",
+        "active": "Active",
+        "suspended": "Suspended"
+      },
+      "form": {
+        "name": "School name",
+        "slug": "Slug (subdomain)",
+        "schoolCode": "School code",
+        "adminEmail": "Admin email",
+        "adminName": "Admin name",
+        "adminPassword": "Initial password (optional)",
+        "createTitle": "Create new school",
+        "editTitle": "Edit school",
+        "submitCreate": "New school",
+        "submitEdit": "Save changes"
+      },
+      "empty": "No tenants found for the current filter.",
+      "errorGeneric": "Could not load or update tenants.",
+      "errorConnection": "Connection error while loading or updating tenants."
     },
     "leads": {
       "title": "School leads",

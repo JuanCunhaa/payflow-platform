@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { PublicController } from './public/public.controller';
 import { WebhooksController } from './webhooks/webhooks.controller';
 import { PlatformLeadsController } from './platform/platform-leads.controller';
+import { PlatformTenantsController } from './platform/platform-tenants.controller';
 import { PrismaService } from './prisma/prisma.service';
 import { TenantResolverMiddleware } from './common/tenant/tenant.middleware';
 
@@ -44,6 +45,7 @@ import { TenantResolverMiddleware } from './common/tenant/tenant.middleware';
     PublicController,
     WebhooksController,
     PlatformLeadsController,
+    PlatformTenantsController,
   ],
   providers: [PrismaService],
 })

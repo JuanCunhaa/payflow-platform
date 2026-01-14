@@ -114,7 +114,35 @@
       "audit": "Auditoria"
     },
     "tenants": {
-      "title": "Escolas (tenants)"
+      "title": "Escolas (tenants)",
+      "table": {
+        "name": "Nome",
+        "slug": "Slug (subdomínio)",
+        "schoolCode": "School Code",
+        "status": "Status",
+        "createdAt": "Criado em",
+        "actions": "Ações"
+      },
+      "status": {
+        "draft": "Rascunho",
+        "active": "Ativo",
+        "suspended": "Suspenso"
+      },
+      "form": {
+        "name": "Nome da escola",
+        "slug": "Slug (subdomínio)",
+        "schoolCode": "School Code",
+        "adminEmail": "Email do admin",
+        "adminName": "Nome do admin",
+        "adminPassword": "Senha inicial (opcional)",
+        "createTitle": "Criar nova escola",
+        "editTitle": "Editar escola",
+        "submitCreate": "Nova escola",
+        "submitEdit": "Salvar alterações"
+      },
+      "empty": "Nenhuma escola encontrada para o filtro atual.",
+      "errorGeneric": "Não foi possível carregar ou atualizar os tenants.",
+      "errorConnection": "Erro de conexão ao carregar ou atualizar os tenants."
     },
     "leads": {
       "title": "Leads de escolas",
