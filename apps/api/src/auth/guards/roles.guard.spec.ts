@@ -36,7 +36,7 @@ async function run() {
   // Helper to test required roles via overriding reflector
   function canActivate(req: MockRequest, roles: AppRole[]): boolean {
     (reflector as any).getAllAndOverride = () => roles;
-    const ctx = createExecutionContext(req, roles);
+    const ctx = createExecutionContext(req);
     return guard.canActivate(ctx);
   }
 

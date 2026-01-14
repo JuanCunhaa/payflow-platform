@@ -7,10 +7,14 @@ import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { CurrentUser, CurrentUserPayload } from './decorators/current-user.decorator';
 import { Public } from './decorators/public.decorator';
+import { AuditService } from '../audit/audit.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly auditService: AuditService,
+  ) {}
 
   /**
    * POST /auth/login
@@ -27,7 +31,49 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
   ): Promise<LoginResponse> {
     const tenant = (req as any).tenant;
-    return this.authService.login(loginDto, tenant?.slug, res);
+    const normalizedEmail = loginDto.email.trim().toLowerCase();
+    const forwardedFor = req.headers['x-forwarded-for'];
+    const ip =
+      (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) || req.ip || undefined;
+    const userAgent = (req.headers['user-agent'] as string | undefined) || undefined;
+
+    try {
+      const result = await this.authService.login(loginDto, tenant?.slug, res);
+
+      await this.auditService.log({
+        tenantId: result.tenant?.id ?? null,
+        actorUserId: result.user.id,
+        actorType: 'USER',
+        action: 'auth.login.success',
+        targetType: 'user',
+        targetId: result.user.id,
+        metadata: {
+          email: result.user.email,
+          userType: result.user.userType,
+          tenantSlug: result.tenant?.slug ?? null,
+        },
+        ip: ip ?? null,
+        userAgent: userAgent ?? null,
+      });
+
+      return result;
+    } catch (err) {
+      await this.auditService.log({
+        tenantId: tenant?.id ?? null,
+        actorUserId: null,
+        actorType: 'USER',
+        action: 'auth.login.failure',
+        targetType: 'user',
+        targetId: null,
+        metadata: {
+          email: normalizedEmail,
+          reason: 'login_failed',
+        },
+        ip: ip ?? null,
+        userAgent: userAgent ?? null,
+      });
+      throw err;
+    }
   }
 
   /**
@@ -65,6 +111,26 @@ export class AuthController {
   async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const refreshCookie = req.cookies?.payflow_refresh_token as string | undefined;
     await this.authService.logout(refreshCookie, res);
+
+    const forwardedFor = req.headers['x-forwarded-for'];
+    const ip =
+      (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) || req.ip || undefined;
+    const userAgent = (req.headers['user-agent'] as string | undefined) || undefined;
+
+    await this.auditService.log({
+      tenantId: (req as any).tenant?.id ?? null,
+      actorUserId: null,
+      actorType: 'PUBLIC',
+      action: 'auth.logout',
+      targetType: 'user',
+      targetId: null,
+      metadata: {
+        hadRefreshCookie: Boolean(refreshCookie),
+      },
+      ip: ip ?? null,
+      userAgent: userAgent ?? null,
+    });
+
     return { success: true };
   }
 }
