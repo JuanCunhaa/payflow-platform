@@ -32,7 +32,12 @@ export default function LoginPage() {
 
   return (
     <main
-      style={{ padding: '24px', fontFamily: 'sans-serif', maxWidth: '400px', margin: '50px auto' }}
+      style={{
+        padding: '24px',
+        fontFamily: 'sans-serif',
+        maxWidth: '400px',
+        margin: '50px auto',
+      }}
     >
       <nav style={{ marginBottom: '32px' }}>
         <Link href={locale === 'pt-BR' ? '/en-US' : '/pt-BR'}>
@@ -128,39 +133,7 @@ export default function LoginPage() {
       <Link href={`/${locale}`} style={{ marginTop: '24px', display: 'block' }}>
         ← {t(i18nKeys.nav.home)}
       </Link>
-
-      {/* Debug info for development */}
-      <div
-        style={{
-          marginTop: '32px',
-          padding: '12px',
-          background: '#f5f5f5',
-          borderRadius: '8px',
-          fontSize: '12px',
-        }}
-      >
-        <strong>{t(i18nKeys.login.debug.title)}</strong>
-        <br />
-        {tenant?.slug === 'vidal' && (
-          <>
-            {t(i18nKeys.login.debug.emailLabel)}: admin@vidal.com
-            <br />
-          </>
-        )}
-        {tenant?.slug === 'alpha' && (
-          <>
-            {t(i18nKeys.login.debug.emailLabel)}: admin@alpha.com
-            <br />
-          </>
-        )}
-        {!tenant && (
-          <>
-            {t(i18nKeys.login.debug.emailLabel)}: platform.admin@payflow.com
-            <br />
-          </>
-        )}
-        {t(i18nKeys.login.debug.passwordLabel)}: Admin@12345
-      </div>
     </main>
   );
 }
+

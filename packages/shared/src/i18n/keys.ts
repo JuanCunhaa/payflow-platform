@@ -48,11 +48,6 @@ export const i18nKeys = {
       generic: 'login.error.generic',
       connection: 'login.error.connection',
     },
-    debug: {
-      title: 'login.debug.title',
-      emailLabel: 'login.debug.emailLabel',
-      passwordLabel: 'login.debug.passwordLabel',
-    },
   },
   common: {
     ok: 'common.ok',

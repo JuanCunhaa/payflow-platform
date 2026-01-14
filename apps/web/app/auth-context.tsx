@@ -39,6 +39,7 @@ type AuthContextValue = {
   user: AuthUser | null;
   accessToken: string | null;
   sessionLoading: boolean;
+  isLoggingOut: boolean;
   login: (email: string, password: string, tenantSlug?: string) => Promise<void>;
   logout: () => Promise<void>;
   apiFetch: (path: string, init?: RequestInit) => Promise<Response>;
@@ -74,6 +75,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [sessionLoading, setSessionLoading] = useState<boolean>(true);
   const [loginError, setLoginError] = useState<string | null>(null);
+  const [isLoggingOut, setIsLoggingOut] = useState<boolean>(false);
 
   const router = useRouter();
   const { t, locale } = useI18n();
@@ -165,6 +167,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 
   const logout = useCallback(async () => {
+    setIsLoggingOut(true);
     try {
       await fetch(`${API_BASE}/auth/logout`, {
         method: 'POST',
@@ -179,6 +182,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const base = locale || 'pt-BR';
     router.push(`/${base}`);
+    setIsLoggingOut(false);
   }, [locale, router]);
 
   const apiFetch = useCallback(
@@ -224,6 +228,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     user,
     accessToken,
     sessionLoading,
+    isLoggingOut,
     login,
     logout,
     apiFetch,

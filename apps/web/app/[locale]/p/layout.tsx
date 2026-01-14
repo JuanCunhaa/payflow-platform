@@ -12,19 +12,19 @@ export default function PlatformLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { user, sessionLoading } = useAuth();
+  const { user, sessionLoading, isLoggingOut } = useAuth();
   const { locale, t } = useI18n();
   const router = useRouter();
 
   useEffect(() => {
-    if (sessionLoading) return;
+    if (sessionLoading || isLoggingOut) return;
     if (!user || user.userType !== 'PLATFORM') {
       const base = locale || 'pt-BR';
       router.replace(`/${base}/login`);
     }
-  }, [user, sessionLoading, router, locale]);
+  }, [user, sessionLoading, isLoggingOut, router, locale]);
 
-  if (sessionLoading || !user || user.userType !== 'PLATFORM') {
+  if (sessionLoading || isLoggingOut || !user || user.userType !== 'PLATFORM') {
     return (
       <main
         style={{
@@ -113,4 +113,3 @@ export default function PlatformLayout({
     </div>
   );
 }
-

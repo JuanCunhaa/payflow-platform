@@ -47,11 +47,6 @@
     "error": {
       "generic": "Login failed",
       "connection": "Connection error. Please try again."
-    },
-    "debug": {
-      "title": "Test credentials:",
-      "emailLabel": "Email",
-      "passwordLabel": "Password"
     }
   },
   "common": {
@@ -199,4 +194,3 @@
     }
   }
 }
-

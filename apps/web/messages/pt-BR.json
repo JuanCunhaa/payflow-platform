@@ -47,11 +47,6 @@
     "error": {
       "generic": "Falha no login",
       "connection": "Erro de conexão. Tente novamente."
-    },
-    "debug": {
-      "title": "Credenciais de teste:",
-      "emailLabel": "Email",
-      "passwordLabel": "Senha"
     }
   },
   "common": {
