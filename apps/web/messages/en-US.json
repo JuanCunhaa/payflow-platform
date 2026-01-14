@@ -6,9 +6,36 @@
   },
   "landing": {
     "title": "PayFlow",
-    "subtitle": "Simplified financial management",
+    "subtitle": "Financial flows made simple for schools and families",
     "cta": "Get started now",
-    "description": "Control your finances with ease"
+    "description": "Centralize tuition, events and one-off charges in one place, with clear communication between school and guardians.",
+    "problem": {
+      "title": "Spreadsheets, WhatsApp and scattered receipts don’t scale",
+      "spreadsheets": "Manual spreadsheets, different versions and a risk of errors on every update.",
+      "whatsapp": "Payment requests get lost among groups, chats and off-hours messages.",
+      "receipts": "Receipts spread across email, photos and attachments make reconciliation hard."
+    },
+    "solution": {
+      "title": "A platform designed for school operations",
+      "events": "Events: registrations, payments and attendance in a single flow.",
+      "tuitions": "Tuitions: automatic billing, invoices and delinquency tracking.",
+      "oneOff": "One-off charges: materials, trips and extras with less friction.",
+      "communication": "Communication: clear reminders for guardians, without the noise.",
+      "finance": "Finance and reports: consolidated view by class, grade and period."
+    },
+    "proof": {
+      "title": "Built for schools that want professional financial workflows",
+      "subtitle": "Testimonials, case studies and integrations will live here — for now, focus on validating the flow."
+    },
+    "finalCta": {
+      "title": "Ready to organize your school payments?",
+      "subtitle": "Start with a small group of guardians and evolve safely."
+    },
+    "buttons": {
+      "login": "Sign in",
+      "guardian": "I’m a guardian",
+      "demo": "Bring PayFlow to my school"
+    }
   },
   "login": {
     "title": "Login",

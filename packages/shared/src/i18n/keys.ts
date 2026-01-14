@@ -9,6 +9,33 @@ export const i18nKeys = {
     subtitle: 'landing.subtitle',
     cta: 'landing.cta',
     description: 'landing.description',
+    problem: {
+      title: 'landing.problem.title',
+      spreadsheets: 'landing.problem.spreadsheets',
+      whatsapp: 'landing.problem.whatsapp',
+      receipts: 'landing.problem.receipts',
+    },
+    solution: {
+      title: 'landing.solution.title',
+      events: 'landing.solution.events',
+      tuitions: 'landing.solution.tuitions',
+      oneOff: 'landing.solution.oneOff',
+      communication: 'landing.solution.communication',
+      finance: 'landing.solution.finance',
+    },
+    proof: {
+      title: 'landing.proof.title',
+      subtitle: 'landing.proof.subtitle',
+    },
+    finalCta: {
+      title: 'landing.finalCta.title',
+      subtitle: 'landing.finalCta.subtitle',
+    },
+    buttons: {
+      login: 'landing.buttons.login',
+      guardian: 'landing.buttons.guardian',
+      demo: 'landing.buttons.demo',
+    },
   },
   login: {
     title: 'login.title',

@@ -6,9 +6,36 @@
   },
   "landing": {
     "title": "PayFlow",
-    "subtitle": "Gestão financeira simplificada",
+    "subtitle": "Gestão financeira para escolas e responsáveis",
     "cta": "Começar agora",
-    "description": "Controle suas finanças com facilidade"
+    "description": "Centralize mensalidades, eventos e cobranças em um só lugar, com comunicação clara entre escola e famílias.",
+    "problem": {
+      "title": "Planilha, WhatsApp e comprovantes perdidos não escalam",
+      "spreadsheets": "Planilhas manuais, versões diferentes e risco de erro a cada atualização.",
+      "whatsapp": "Cobranças por WhatsApp se perdem no meio de recados, grupos e mensagens fora de hora.",
+      "receipts": "Comprovantes espalhados entre e-mail, fotos e anexos dificultam conciliação e controle."
+    },
+    "solution": {
+      "title": "Uma plataforma pensada para a rotina da escola",
+      "events": "Eventos: inscrições, pagamentos e presença em um só fluxo.",
+      "tuitions": "Mensalidades: geração automática, boletos e controle de inadimplência.",
+      "oneOff": "Cobranças avulsas: materiais, passeios e extras sem fricção.",
+      "communication": "Comunicação: lembretes claros para responsáveis, sem ruído.",
+      "finance": "Financeiro e relatórios: visão consolidada por turma, série e período."
+    },
+    "proof": {
+      "title": "Feito para escolas que querem profissionalizar a gestão",
+      "subtitle": "Depoimentos, cases e integrações virão aqui — por enquanto, foque em validar o fluxo."
+    },
+    "finalCta": {
+      "title": "Pronto para organizar os pagamentos da sua escola?",
+      "subtitle": "Comece testando com poucos responsáveis e evolua com segurança."
+    },
+    "buttons": {
+      "login": "Entrar",
+      "guardian": "Sou responsável",
+      "demo": "Quero na minha escola"
+    }
   },
   "login": {
     "title": "Login",
