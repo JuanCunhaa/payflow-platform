@@ -2,15 +2,15 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { i18nKeys } from '@payflow/shared';
 import { useI18n } from '../../i18n-context';
 import { useTenant } from '../../tenant-context';
+import { useAuth } from '../../auth-context';
 
 export default function LoginPage() {
   const { t, locale } = useI18n();
   const { tenant } = useTenant();
-  const router = useRouter();
+  const { login } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,40 +23,14 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:3333/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          // Pass tenant info via header for subdomain-based login
-          ...(tenant?.slug && { 'X-Tenant-Slug': tenant.slug }),
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        // Handle validation errors
-        if (data.errors && Array.isArray(data.errors)) {
-          setError(data.errors.join(', '));
-        } else {
-          setError(data.message || t(i18nKeys.login.error.generic));
-        }
-        return;
-      }
-
-      // Success - store token and redirect
-      localStorage.setItem('accessToken', data.accessToken);
-      localStorage.setItem('user', JSON.stringify(data.user));
-      if (data.tenant) {
-        localStorage.setItem('tenant', JSON.stringify(data.tenant));
-      }
-
-      // Redirect to dashboard
-      router.push(`/${locale}/dashboard`);
+      await login(email, password, tenant?.slug ?? undefined);
     } catch (err) {
-      console.error('Login error:', err);
-      setError(t(i18nKeys.login.error.connection));
+      // Error message is handled inside AuthProvider; we can still show a generic one
+      if (err instanceof Error && err.message) {
+        setError(err.message);
+      } else {
+        setError(t(i18nKeys.login.error.generic));
+      }
     } finally {
       setLoading(false);
     }

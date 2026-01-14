@@ -1,60 +1,26 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { i18nKeys } from '@payflow/shared';
 import { useI18n } from '../../i18n-context';
 import { useTenant } from '../../tenant-context';
-
-interface User {
-  id: string;
-  email: string;
-  name: string;
-  userType: string;
-}
-
-interface StoredTenant {
-  id: string;
-  name: string;
-  slug: string;
-}
+import { useAuth } from '../../auth-context';
 
 export default function DashboardPage() {
   const { t, locale } = useI18n();
   const { tenant: contextTenant } = useTenant();
+  const { user, sessionLoading, logout } = useAuth();
   const router = useRouter();
 
-  const [user, setUser] = useState<User | null>(null);
-  const [tenant, setTenant] = useState<StoredTenant | null>(null);
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    // Check if user is logged in
-    const token = localStorage.getItem('accessToken');
-    const storedUser = localStorage.getItem('user');
-    const storedTenant = localStorage.getItem('tenant');
-
-    if (!token || !storedUser) {
+    if (!sessionLoading && !user) {
       router.push(`/${locale}/login`);
-      return;
     }
+  }, [sessionLoading, user, locale, router]);
 
-    setUser(JSON.parse(storedUser));
-    if (storedTenant) {
-      setTenant(JSON.parse(storedTenant));
-    }
-    setLoading(false);
-  }, [locale, router]);
-
-  const handleLogout = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('user');
-    localStorage.removeItem('tenant');
-    router.push(`/${locale}/login`);
-  };
-
-  if (loading) {
+  if (sessionLoading || !user) {
     return (
       <main
         style={{
@@ -85,14 +51,14 @@ export default function DashboardPage() {
       >
         <div>
           <h1 style={{ margin: 0 }}>{t(i18nKeys.dashboard.title)}</h1>
-          {(tenant || contextTenant) && (
+          {(user.tenant || contextTenant) && (
             <span style={{ color: '#6b7280', fontSize: '14px' }}>
-              {tenant?.name || contextTenant?.name}
+              {user.tenant?.name || contextTenant?.name}
             </span>
           )}
         </div>
         <button
-          onClick={handleLogout}
+          onClick={logout}
           style={{
             padding: '8px 16px',
             cursor: 'pointer',
@@ -115,10 +81,10 @@ export default function DashboardPage() {
         }}
       >
         <h2 style={{ marginTop: 0 }}>
-          {t(i18nKeys.dashboard.welcome).replace('{name}', user?.name ?? '')}
+          {t(i18nKeys.dashboard.welcome).replace('{name}', user.name ?? '')}
         </h2>
         <p style={{ margin: 0, color: '#6b7280' }}>
-          {t(i18nKeys.dashboard.userTypeLabel)} <strong>{user?.userType}</strong>
+          {t(i18nKeys.dashboard.userTypeLabel)} <strong>{user.userType}</strong>
         </p>
       </div>
 
@@ -138,7 +104,7 @@ export default function DashboardPage() {
           }}
         >
           <h3 style={{ marginTop: 0 }}>📧 {t(i18nKeys.dashboard.emailLabel)}</h3>
-          <p style={{ margin: 0, wordBreak: 'break-all' }}>{user?.email}</p>
+          <p style={{ margin: 0, wordBreak: 'break-all' }}>{user.email}</p>
         </div>
 
         <div
@@ -151,7 +117,9 @@ export default function DashboardPage() {
         >
           <h3 style={{ marginTop: 0 }}>🏫 {t(i18nKeys.dashboard.tenantLabel)}</h3>
           <p style={{ margin: 0 }}>
-            {tenant?.name || contextTenant?.name || t(i18nKeys.dashboard.platformTenantFallback)}
+            {user.tenant?.name ||
+              contextTenant?.name ||
+              t(i18nKeys.dashboard.platformTenantFallback)}
           </p>
         </div>
 
@@ -164,7 +132,7 @@ export default function DashboardPage() {
           }}
         >
           <h3 style={{ marginTop: 0 }}>👤 {t(i18nKeys.dashboard.userTypeLabel)}</h3>
-          <p style={{ margin: 0 }}>{user?.userType}</p>
+          <p style={{ margin: 0 }}>{user.userType}</p>
         </div>
       </div>
 
@@ -174,3 +142,4 @@ export default function DashboardPage() {
     </main>
   );
 }
+

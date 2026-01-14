@@ -9,7 +9,7 @@ type MockRequest = {
   tenant?: { id: string; slug: string };
 };
 
-function createExecutionContext(req: MockRequest, roles: AppRole[]): ExecutionContext {
+function createExecutionContext(req: MockRequest): ExecutionContext {
   return {
     switchToHttp: () => ({
       getRequest: () => req,

@@ -52,5 +52,11 @@
     "tenantLabel": "Tenant",
     "platformTenantFallback": "Platform",
     "backToHome": "Back to home"
+  },
+  "auth": {
+    "pendingApproval": {
+      "title": "Account pending approval",
+      "description": "Your guardian account is under review. You will receive an email when it is approved."
+    }
   }
 }

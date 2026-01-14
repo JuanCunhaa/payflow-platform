@@ -3,6 +3,7 @@ import { getDictionary } from '@/lib/i18n';
 import { I18nProvider } from '../i18n-context';
 import { headers } from 'next/headers';
 import { TenantProvider } from '../tenant-context';
+import { AuthProvider } from '../auth-context';
 
 function stripPort(host?: string | null) {
   if (!host) return null;
@@ -47,7 +48,7 @@ export default async function LocaleLayout({
       <body>
         <TenantProvider slug={tenantSlug}>
           <I18nProvider locale={params.locale} dict={dict}>
-            {children}
+            <AuthProvider>{children}</AuthProvider>
           </I18nProvider>
         </TenantProvider>
       </body>

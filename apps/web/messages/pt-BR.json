@@ -52,5 +52,11 @@
     "tenantLabel": "Tenant",
     "platformTenantFallback": "Plataforma",
     "backToHome": "Voltar para a home"
+  },
+  "auth": {
+    "pendingApproval": {
+      "title": "Cadastro em aprovação",
+      "description": "Seu cadastro de responsável está em análise. Você receberá um e-mail quando for aprovado."
+    }
   }
 }

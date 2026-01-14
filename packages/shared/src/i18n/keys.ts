@@ -37,6 +37,12 @@ export const i18nKeys = {
       portuguese: 'common.language.portuguese',
     },
   },
+  auth: {
+    pendingApproval: {
+      title: 'auth.pendingApproval.title',
+      description: 'auth.pendingApproval.description',
+    },
+  },
   tenant: {
     notFound: {
       title: 'tenant.notFound.title',
