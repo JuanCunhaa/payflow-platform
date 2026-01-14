@@ -12,6 +12,7 @@ import { PlatformTenantsController } from './platform/platform-tenants.controlle
 import { PlatformAuditController } from './platform/platform-audit.controller';
 import { PrismaService } from './prisma/prisma.service';
 import { TenantResolverMiddleware } from './common/tenant/tenant.middleware';
+import { SchoolSettingsController } from './school/school-settings.controller';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { TenantResolverMiddleware } from './common/tenant/tenant.middleware';
     PlatformLeadsController,
     PlatformTenantsController,
     PlatformAuditController,
+    SchoolSettingsController,
   ],
   providers: [PrismaService],
 })

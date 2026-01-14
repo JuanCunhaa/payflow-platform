@@ -64,6 +64,7 @@ model Tenant {
   status      TenantStatus @default(ACTIVE)
   createdAt   DateTime     @default(now()) @map("created_at")
   updatedAt   DateTime     @updatedAt @map("updated_at")
+  settingsJson Json?       @map("settings_json")
 
   memberships Membership[]
 
