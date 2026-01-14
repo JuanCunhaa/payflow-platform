@@ -10,7 +10,7 @@
     "cta": "Get started now",
     "description": "Centralize tuition, events and one-off charges in one place, with clear communication between school and guardians.",
     "problem": {
-      "title": "Spreadsheets, WhatsApp and scattered receipts don’t scale",
+      "title": "Spreadsheets, WhatsApp and scattered receipts don't scale",
       "spreadsheets": "Manual spreadsheets, different versions and a risk of errors on every update.",
       "whatsapp": "Payment requests get lost among groups, chats and off-hours messages.",
       "receipts": "Receipts spread across email, photos and attachments make reconciliation hard."
@@ -33,7 +33,7 @@
     },
     "buttons": {
       "login": "Sign in",
-      "guardian": "I’m a guardian",
+      "guardian": "I'm a guardian",
       "demo": "Bring PayFlow to my school"
     }
   },
@@ -85,5 +85,26 @@
       "title": "Account pending approval",
       "description": "Your guardian account is under review. You will receive an email when it is approved."
     }
+  },
+  "requestDemo": {
+    "title": "Bring PayFlow to my school",
+    "description": "Fill in the details below and our team will contact you to schedule a demo.",
+    "form": {
+      "responsibleName": "Contact name",
+      "schoolName": "School name",
+      "email": "Email",
+      "phone": "Phone",
+      "submit": "Request a demo"
+    },
+    "success": {
+      "title": "We received your request!",
+      "description": "We will reach out soon using the email you provided to coordinate next steps."
+    },
+    "error": {
+      "validation": "Please check that all fields are filled in correctly.",
+      "generic": "We couldn't send your request right now. Please try again in a few minutes.",
+      "connection": "Connection error. Check your internet and try again."
+    }
   }
 }
+

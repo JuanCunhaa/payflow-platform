@@ -48,6 +48,12 @@ enum ActorType {
   PUBLIC
 }
 
+enum LeadStatus {
+  NEW
+  CONTACTED
+  CONVERTED
+}
+
 // ============ MODELS ============
 
 model Tenant {
@@ -127,4 +133,16 @@ model AuditLog {
   @@index([tenantId], map: "audit_logs_tenant_id_idx")
   @@index([actorUserId, createdAt], map: "audit_logs_actor_user_id_created_at_idx")
   @@map("audit_logs")
+}
+
+model Lead {
+  id         String     @id @default(uuid()) @db.Uuid
+  name       String
+  schoolName String     @map("school_name")
+  email      String
+  phone      String
+  status     LeadStatus @default(NEW)
+  createdAt  DateTime   @default(now()) @map("created_at")
+
+  @@map("leads")
 }

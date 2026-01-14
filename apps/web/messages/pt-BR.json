@@ -85,5 +85,26 @@
       "title": "Cadastro em aprovação",
       "description": "Seu cadastro de responsável está em análise. Você receberá um e-mail quando for aprovado."
     }
+  },
+  "requestDemo": {
+    "title": "Quero o PayFlow na minha escola",
+    "description": "Preencha os dados abaixo para que nossa equipe entre em contato e agende uma demonstração.",
+    "form": {
+      "responsibleName": "Nome do responsável",
+      "schoolName": "Nome da escola",
+      "email": "Email",
+      "phone": "Telefone",
+      "submit": "Solicitar demonstração"
+    },
+    "success": {
+      "title": "Recebemos seu pedido!",
+      "description": "Em breve entraremos em contato pelo email informado para combinar os próximos passos."
+    },
+    "error": {
+      "validation": "Verifique se todos os campos estão preenchidos corretamente.",
+      "generic": "Não foi possível enviar seu pedido agora. Tente novamente em alguns minutos.",
+      "connection": "Erro de conexão. Verifique sua internet e tente novamente."
+    }
   }
 }
+

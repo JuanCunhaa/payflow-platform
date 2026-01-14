@@ -86,6 +86,26 @@ export const i18nKeys = {
     platformTenantFallback: 'dashboard.platformTenantFallback',
     backToHome: 'dashboard.backToHome',
   },
+  requestDemo: {
+    title: 'requestDemo.title',
+    description: 'requestDemo.description',
+    form: {
+      responsibleName: 'requestDemo.form.responsibleName',
+      schoolName: 'requestDemo.form.schoolName',
+      email: 'requestDemo.form.email',
+      phone: 'requestDemo.form.phone',
+      submit: 'requestDemo.form.submit',
+    },
+    success: {
+      title: 'requestDemo.success.title',
+      description: 'requestDemo.success.description',
+    },
+    error: {
+      validation: 'requestDemo.error.validation',
+      generic: 'requestDemo.error.generic',
+      connection: 'requestDemo.error.connection',
+    },
+  },
 } as const;
 
 export type Locale = 'pt-BR' | 'en-US';
