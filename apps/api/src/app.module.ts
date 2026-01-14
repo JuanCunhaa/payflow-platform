@@ -7,6 +7,7 @@ import { HealthController } from './health/health.controller';
 import { AuthModule } from './auth/auth.module';
 import { PublicController } from './public/public.controller';
 import { WebhooksController } from './webhooks/webhooks.controller';
+import { PlatformLeadsController } from './platform/platform-leads.controller';
 import { PrismaService } from './prisma/prisma.service';
 import { TenantResolverMiddleware } from './common/tenant/tenant.middleware';
 
@@ -42,6 +43,7 @@ import { TenantResolverMiddleware } from './common/tenant/tenant.middleware';
     HealthController,
     PublicController,
     WebhooksController,
+    PlatformLeadsController,
   ],
   providers: [PrismaService],
 })

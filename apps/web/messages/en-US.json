@@ -117,7 +117,28 @@
       "title": "School tenants"
     },
     "leads": {
-      "title": "School leads"
+      "title": "School leads",
+      "table": {
+        "schoolName": "School",
+        "responsibleName": "Contact",
+        "email": "Email",
+        "phone": "Phone",
+        "status": "Status",
+        "createdAt": "Created at"
+      },
+      "status": {
+        "new": "New",
+        "contacted": "Contacted",
+        "converted": "Converted"
+      },
+      "actions": {
+        "markContacted": "Mark as contacted",
+        "markConverted": "Mark as converted",
+        "convertToTenant": "Create tenant (DRAFT)"
+      },
+      "empty": "No leads found for the current filter.",
+      "errorGeneric": "Could not load or update leads.",
+      "errorConnection": "Connection error while loading or updating leads."
     },
     "audit": {
       "title": "Audit log"

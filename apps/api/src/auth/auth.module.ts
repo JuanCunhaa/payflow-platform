@@ -20,6 +20,6 @@ import { AuditService } from '../audit/audit.service';
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy, PrismaService, PasswordService, AuditService],
-  exports: [AuthService, JwtModule, PasswordService],
+  exports: [AuthService, JwtModule, PasswordService, AuditService],
 })
 export class AuthModule {}

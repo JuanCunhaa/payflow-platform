@@ -118,6 +118,24 @@ export const i18nKeys = {
     },
     leads: {
       title: 'platform.leads.title',
+      table: {
+        schoolName: 'platform.leads.table.schoolName',
+        responsibleName: 'platform.leads.table.responsibleName',
+        email: 'platform.leads.table.email',
+        phone: 'platform.leads.table.phone',
+        status: 'platform.leads.table.status',
+        createdAt: 'platform.leads.table.createdAt',
+      },
+      status: {
+        new: 'platform.leads.status.new',
+        contacted: 'platform.leads.status.contacted',
+        converted: 'platform.leads.status.converted',
+      },
+      actions: {
+        markContacted: 'platform.leads.actions.markContacted',
+        markConverted: 'platform.leads.actions.markConverted',
+        convertToTenant: 'platform.leads.actions.convertToTenant',
+      },
     },
     audit: {
       title: 'platform.audit.title',

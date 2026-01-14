@@ -117,7 +117,28 @@
       "title": "Escolas (tenants)"
     },
     "leads": {
-      "title": "Leads de escolas"
+      "title": "Leads de escolas",
+      "table": {
+        "schoolName": "Escola",
+        "responsibleName": "Responsável",
+        "email": "Email",
+        "phone": "Telefone",
+        "status": "Status",
+        "createdAt": "Criado em"
+      },
+      "status": {
+        "new": "Novo",
+        "contacted": "Contactado",
+        "converted": "Convertido"
+      },
+      "actions": {
+        "markContacted": "Marcar como contactado",
+        "markConverted": "Marcar como convertido",
+        "convertToTenant": "Criar tenant (DRAFT)"
+      },
+      "empty": "Nenhum lead encontrado para o filtro atual.",
+      "errorGeneric": "Não foi possível carregar ou atualizar os leads.",
+      "errorConnection": "Erro de conexão ao carregar ou atualizar os leads."
     },
     "audit": {
       "title": "Audit log"
