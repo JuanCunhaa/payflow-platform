@@ -5,6 +5,7 @@ import {
   ExceptionFilter,
   HttpException,
   HttpStatus,
+  ForbiddenException,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -64,6 +65,17 @@ export class HttpExceptionFilter implements ExceptionFilter {
         return res.status(status).json({
           code: 'not_found',
           message: 'Resource not found',
+          status,
+          timestamp,
+          path: req.url,
+        });
+      }
+
+      // Forbidden normalization
+      if (exception instanceof ForbiddenException) {
+        return res.status(status).json({
+          code: 'forbidden',
+          message: 'Forbidden',
           status,
           timestamp,
           path: req.url,
