@@ -169,7 +169,33 @@
       "errorConnection": "Connection error while loading or updating leads."
     },
     "audit": {
-      "title": "Audit log"
+      "title": "Audit log",
+      "filters": {
+        "tenant": "School (tenant)",
+        "action": "Action",
+        "actorEmail": "Actor email",
+        "from": "From",
+        "to": "To",
+        "apply": "Apply filters",
+        "clear": "Clear filters"
+      },
+      "table": {
+        "timestamp": "Date/time",
+        "tenant": "Tenant",
+        "actor": "Actor",
+        "action": "Action",
+        "target": "Target",
+        "ip": "IP",
+        "details": "View details"
+      },
+      "modal": {
+        "title": "Event details",
+        "close": "Close",
+        "metadataEmpty": "No metadata recorded for this event."
+      },
+      "empty": "No audit events found for the current filter.",
+      "errorGeneric": "Could not load audit events.",
+      "errorConnection": "Connection error while loading audit events."
     }
   }
 }

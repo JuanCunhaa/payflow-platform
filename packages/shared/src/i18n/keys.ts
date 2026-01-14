@@ -170,6 +170,32 @@ export const i18nKeys = {
     },
     audit: {
       title: 'platform.audit.title',
+      filters: {
+        tenant: 'platform.audit.filters.tenant',
+        action: 'platform.audit.filters.action',
+        actorEmail: 'platform.audit.filters.actorEmail',
+        from: 'platform.audit.filters.from',
+        to: 'platform.audit.filters.to',
+        apply: 'platform.audit.filters.apply',
+        clear: 'platform.audit.filters.clear',
+      },
+      table: {
+        timestamp: 'platform.audit.table.timestamp',
+        tenant: 'platform.audit.table.tenant',
+        actor: 'platform.audit.table.actor',
+        action: 'platform.audit.table.action',
+        target: 'platform.audit.table.target',
+        ip: 'platform.audit.table.ip',
+        details: 'platform.audit.table.details',
+      },
+      modal: {
+        title: 'platform.audit.modal.title',
+        close: 'platform.audit.modal.close',
+        metadataEmpty: 'platform.audit.modal.metadataEmpty',
+      },
+      empty: 'platform.audit.empty',
+      errorGeneric: 'platform.audit.errorGeneric',
+      errorConnection: 'platform.audit.errorConnection',
     },
   },
 } as const;

@@ -169,7 +169,33 @@
       "errorConnection": "Erro de conexão ao carregar ou atualizar os leads."
     },
     "audit": {
-      "title": "Audit log"
+      "title": "Audit log",
+      "filters": {
+        "tenant": "Escola (tenant)",
+        "action": "Ação",
+        "actorEmail": "Email do ator",
+        "from": "De",
+        "to": "Até",
+        "apply": "Aplicar filtros",
+        "clear": "Limpar filtros"
+      },
+      "table": {
+        "timestamp": "Data/hora",
+        "tenant": "Tenant",
+        "actor": "Ator",
+        "action": "Ação",
+        "target": "Alvo",
+        "ip": "IP",
+        "details": "Ver detalhes"
+      },
+      "modal": {
+        "title": "Detalhes do evento",
+        "close": "Fechar",
+        "metadataEmpty": "Nenhum metadata registrado para este evento."
+      },
+      "empty": "Nenhum evento de auditoria encontrado para o filtro atual.",
+      "errorGeneric": "Não foi possível carregar os eventos de auditoria.",
+      "errorConnection": "Erro de conexão ao carregar os eventos de auditoria."
     }
   }
 }
