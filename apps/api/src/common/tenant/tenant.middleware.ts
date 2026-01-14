@@ -1,6 +1,6 @@
 import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 function stripPort(host?: string): string | undefined {
   if (!host) return host;
@@ -36,7 +36,7 @@ export class TenantResolverMiddleware implements NestMiddleware {
           select: { id: true, slug: true },
         });
         if (tenant) {
-          (req as any).tenant = tenant;
+          req.tenant = tenant;
         }
       }
     } catch (err) {

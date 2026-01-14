@@ -7,6 +7,6 @@ export class TenantController {
   @Get('ping')
   @TenantScoped()
   ping(@Req() req: Request) {
-    return { ok: true, tenant: (req as any).tenant };
+    return { ok: true, tenant: req.tenant ?? null };
   }
 }

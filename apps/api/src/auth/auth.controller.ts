@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Get, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 import { Request, Response } from 'express';
 import { CustomThrottlerGuard } from '../common/guards/throttler.guard';
@@ -30,7 +30,7 @@ export class AuthController {
     @Req() req: Request,
     @Res({ passthrough: true }) res: Response,
   ): Promise<LoginResponse> {
-    const tenant = (req as any).tenant;
+    const tenant = req.tenant;
     const normalizedEmail = loginDto.email.trim().toLowerCase();
     const forwardedFor = req.headers['x-forwarded-for'];
     const ip =
@@ -85,7 +85,7 @@ export class AuthController {
   @UseGuards(CustomThrottlerGuard)
   @Throttle({ short: { ttl: 5 * 60 * 1000, limit: 10 } })
   async refresh(@Req() req: Request, @Res({ passthrough: true }) res: Response): Promise<LoginResponse> {
-    const tenant = (req as any).tenant;
+    const tenant = req.tenant;
     const refreshCookie = req.cookies?.payflow_refresh_token as string | undefined;
     return this.authService.refreshSession(refreshCookie, tenant?.slug, res);
   }
@@ -118,7 +118,7 @@ export class AuthController {
     const userAgent = (req.headers['user-agent'] as string | undefined) || undefined;
 
     await this.auditService.log({
-      tenantId: (req as any).tenant?.id ?? null,
+      tenantId: req.tenant?.id ?? null,
       actorUserId: null,
       actorType: 'PUBLIC',
       action: 'auth.logout',

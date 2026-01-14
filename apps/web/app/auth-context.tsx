@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 import { useRouter } from 'next/navigation';
 import { useI18n } from './i18n-context';
+import { i18nKeys } from '@payflow/shared';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333';
 
@@ -138,16 +139,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const data = (await res.json()) as any;
 
         if (!res.ok) {
-          const messages: string[] = Array.isArray(data?.errors)
-            ? data.errors
-            : [data?.message].filter(Boolean);
-          const msg =
-            messages[0] ||
-            (data?.code === 'weak_password'
-              ? t ? t('login.error.generic') : 'Weak password'
-              : t
-              ? t('login.error.generic')
-              : 'Login failed');
+          const msg = t ? t(i18nKeys.login.error.generic) : 'login.error.generic';
           setLoginError(msg);
           throw new Error(msg);
         }
@@ -162,8 +154,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const base = locale || 'pt-BR';
         router.push(`/${base}${path}`);
       } catch (err) {
-        if (err instanceof Error && !loginError) {
-          setLoginError(err.message);
+        if (!loginError) {
+          const fallback = t ? t(i18nKeys.login.error.connection) : 'login.error.connection';
+          setLoginError(fallback);
         }
         throw err;
       }
@@ -248,4 +241,3 @@ export function useAuth(): AuthContextValue {
   }
   return ctx;
 }
-

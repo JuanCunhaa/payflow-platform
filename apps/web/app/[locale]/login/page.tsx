@@ -10,27 +10,21 @@ import { useAuth } from '../../auth-context';
 export default function LoginPage() {
   const { t, locale } = useI18n();
   const { tenant } = useTenant();
-  const { login } = useAuth();
+  const { login, loginError, clearLoginError } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    clearLoginError();
     setLoading(true);
 
     try {
       await login(email, password, tenant?.slug ?? undefined);
-    } catch (err) {
-      // Error message is handled inside AuthProvider; we can still show a generic one
-      if (err instanceof Error && err.message) {
-        setError(err.message);
-      } else {
-        setError(t(i18nKeys.login.error.generic));
-      }
+    } catch {
+      // Error is handled by AuthProvider via loginError
     } finally {
       setLoading(false);
     }
@@ -64,7 +58,7 @@ export default function LoginPage() {
 
       <h1>{t(i18nKeys.login.title)}</h1>
 
-      {error && (
+      {loginError && (
         <div
           style={{
             padding: '12px',
@@ -75,7 +69,7 @@ export default function LoginPage() {
             border: '1px solid #fecaca',
           }}
         >
-          {error}
+          {loginError}
         </div>
       )}
 

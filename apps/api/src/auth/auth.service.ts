@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException, Logger } from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma/prisma.service';
 import { LoginDto } from './dto/login.dto';
@@ -184,12 +184,7 @@ export class AuthService {
 
   // Helper to access refresh token repository without relying on generated Prisma typings
   private get refreshTokenRepo() {
-    return (this.prisma as any).refreshToken as {
-      create: (args: any) => Promise<any>;
-      findUnique: (args: any) => Promise<any>;
-      update: (args: any) => Promise<any>;
-      updateMany: (args: any) => Promise<any>;
-    };
+    return this.prisma.refreshToken;
   }
 
   private getRefreshCookieOptions() {

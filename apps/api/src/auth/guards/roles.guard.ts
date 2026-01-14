@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Request } from 'express';
-import { ROLES_KEY, AppRole } from '../roles.decorator';
+import { AppRole, ROLES_KEY } from '../roles.decorator';
 import { CurrentUserPayload } from '../decorators/current-user.decorator';
 
 type TenantRequest = Request & {
@@ -76,4 +76,3 @@ export class RolesGuard implements CanActivate {
     return true;
   }
 }
-

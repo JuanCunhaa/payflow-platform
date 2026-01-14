@@ -20,9 +20,7 @@ export class AuditService {
   constructor(private readonly prisma: PrismaService) {}
 
   private get auditLogRepo() {
-    return (this.prisma as any).auditLog as {
-      create: (args: any) => Promise<any>;
-    };
+    return this.prisma.auditLog;
   }
 
   private sanitizeMetadata(metadata: unknown): unknown {
@@ -78,4 +76,3 @@ export class AuditService {
     });
   }
 }
-

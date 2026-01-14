@@ -1,5 +1,8 @@
 import { AuthService } from './auth.service';
 import { PasswordService } from './password.service';
+import { PrismaService } from '../prisma/prisma.service';
+import { JwtService } from '@nestjs/jwt';
+import { Response } from 'express';
 
 type MockUser = {
   id: string;
@@ -7,7 +10,8 @@ type MockUser = {
   name: string | null;
   type: string;
   status: string;
-  memberships: any[];
+  memberships: unknown[];
+  passwordHash: string;
 };
 
 type MockRefreshToken = {
@@ -35,18 +39,19 @@ async function run() {
     type: 'PLATFORM',
     status: 'ACTIVE',
     memberships: [],
+    passwordHash,
   };
   users.push(user);
 
   const prismaMock = {
     user: {
-      findUnique: async (args: any) => {
-        const whereEmail = args?.where?.email;
+      findUnique: async (args: { where?: { email?: string } }) => {
+        const whereEmail = args.where?.email;
         return users.find((u) => u.email === whereEmail) || null;
       },
     },
     refreshToken: {
-      create: async (args: any) => {
+      create: async (args: { data: Omit<MockRefreshToken, 'revokedAt' | 'user'> }) => {
         const data = args.data;
         const token: MockRefreshToken = {
           id: data.id,
@@ -59,13 +64,13 @@ async function run() {
         refreshTokens.push(token);
         return token;
       },
-      findUnique: async (args: any) => {
-        const id = args.where?.id;
+      findUnique: async (args: { where: { id: string } }) => {
+        const id = args.where.id;
         return refreshTokens.find((t) => t.id === id) || null;
       },
-      update: async (args: any) => {
-        const id = args.where?.id;
-        const data = args.data || {};
+      update: async (args: { where: { id: string }; data: Partial<MockRefreshToken> }) => {
+        const id = args.where.id;
+        const data = args.data ?? {};
         const token = refreshTokens.find((t) => t.id === id);
         if (!token) {
           throw new Error('Token not found');
@@ -73,10 +78,13 @@ async function run() {
         Object.assign(token, data);
         return token;
       },
-      updateMany: async (args: any) => {
-        const id = args.where?.id;
-        const matchRevokedAt = args.where?.revokedAt;
-        const data = args.data || {};
+      updateMany: async (args: {
+        where: { id: string; revokedAt: Date | null };
+        data: Partial<MockRefreshToken>;
+      }) => {
+        const id = args.where.id;
+        const matchRevokedAt = args.where.revokedAt;
+        const data = args.data ?? {};
         let count = 0;
         for (const t of refreshTokens) {
           if (t.id === id && t.revokedAt === matchRevokedAt) {
@@ -91,28 +99,29 @@ async function run() {
 
   let tokenCounter = 0;
   const jwtMock = {
-    sign: (payload: any) => `jwt-${payload.sub}-${++tokenCounter}`,
-  };
+    sign: (payload: { sub: string }) => `jwt-${payload.sub}-${++tokenCounter}`,
+  } as unknown as JwtService;
 
-  const authService = new AuthService(prismaMock as any, jwtMock as any, passwordService);
+  const authService = new AuthService(
+    prismaMock as unknown as PrismaService,
+    jwtMock,
+    passwordService,
+  );
 
   function createResponseMock() {
     return {
-      cookies: {} as Record<string, { value: string; options: any }>,
-      cookie(name: string, value: string, options: any) {
+      cookies: {} as Record<string, { value: string; options: Record<string, unknown> }>,
+      cookie(name: string, value: string, options: Record<string, unknown>) {
         this.cookies[name] = { value, options };
       },
-    };
+    } as unknown as Response;
   }
 
   // ---- Login ----
   const resLogin = createResponseMock();
-  const loginDto: any = { email, password: plainPassword };
+  const loginDto: { email: string; password: string } = { email, password: plainPassword };
 
-  // Inject passwordHash into mocked user record
-  (user as any).passwordHash = passwordHash;
-
-  const loginResult = await authService.login(loginDto, undefined, resLogin as any);
+  const loginResult = await authService.login(loginDto, undefined, resLogin);
 
   if (!loginResult.accessToken.startsWith('jwt-')) {
     throw new Error('login() did not return a valid access token');
@@ -136,11 +145,7 @@ async function run() {
   const refreshCookieValue = resLogin.cookies['payflow_refresh_token'].value;
   const resRefresh = createResponseMock();
 
-  const refreshResult = await authService.refreshSession(
-    refreshCookieValue,
-    undefined,
-    resRefresh as any,
-  );
+  const refreshResult = await authService.refreshSession(refreshCookieValue, undefined, resRefresh);
 
   if (!refreshResult.accessToken.startsWith('jwt-')) {
     throw new Error('refreshSession() did not return a valid access token');
@@ -162,7 +167,7 @@ async function run() {
 
   // ---- Logout ----
   const resLogout = createResponseMock();
-  await authService.logout(secondCookieValue, resLogout as any);
+  await authService.logout(secondCookieValue, resLogout);
 
   const clearedCookie = resLogout.cookies['payflow_refresh_token'];
   if (!clearedCookie || clearedCookie.options.maxAge !== 0) {

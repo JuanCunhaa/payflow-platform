@@ -16,7 +16,7 @@ export class WebhooksController {
   @Throttle({ long: { ttl: 60 * 1000, limit: 100 } })
   async handleStripeWebhook(
     @Headers('stripe-signature') _signature: string,
-    @Body() _payload: any
+    @Body() _payload: unknown
   ) {
     this.logger.log('Received Stripe webhook');
     // TODO: Verify Stripe signature and process event
@@ -33,7 +33,7 @@ export class WebhooksController {
    */
   @Post('payment/:provider')
   @Throttle({ long: { ttl: 60 * 1000, limit: 100 } })
-  async handlePaymentWebhook(@Param('provider') provider: string, @Body() _payload: any) {
+  async handlePaymentWebhook(@Param('provider') provider: string, @Body() _payload: unknown) {
     this.logger.log(`Received webhook from provider: ${provider}`);
     // TODO: Route to appropriate payment provider handler
     return {

@@ -1,5 +1,5 @@
 import { ExecutionContext, Injectable, Logger } from '@nestjs/common';
-import { ThrottlerGuard, ThrottlerException } from '@nestjs/throttler';
+import { ThrottlerException, ThrottlerGuard } from '@nestjs/throttler';
 import { Request } from 'express';
 
 @Injectable()
@@ -8,7 +8,7 @@ export class CustomThrottlerGuard extends ThrottlerGuard {
 
   protected async throwThrottlingException(
     context: ExecutionContext,
-    _throttlerLimitDetail: any
+    _throttlerLimitDetail: unknown
   ): Promise<void> {
     const req = context.switchToHttp().getRequest<Request>();
     const ip = req.ip || req.headers['x-forwarded-for'] || 'unknown';

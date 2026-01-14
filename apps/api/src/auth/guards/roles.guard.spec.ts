@@ -13,16 +13,16 @@ function createExecutionContext(req: MockRequest): ExecutionContext {
   return {
     switchToHttp: () => ({
       getRequest: () => req,
-      getResponse: () => ({} as any),
-      getNext: () => ({} as any),
+      getResponse: () => ({}),
+      getNext: () => ({}),
     }),
-    getClass: () => ({} as any),
-    getHandler: () => ({} as any),
+    getClass: () => ({}),
+    getHandler: () => ({}),
     getArgs: () => [],
     getArgByIndex: () => undefined,
     getType: () => 'http',
-    switchToRpc: () => ({} as any),
-    switchToWs: () => ({} as any),
+    switchToRpc: () => ({}),
+    switchToWs: () => ({}),
   } as unknown as ExecutionContext;
 }
 
@@ -35,7 +35,8 @@ async function run() {
 
   // Helper to test required roles via overriding reflector
   function canActivate(req: MockRequest, roles: AppRole[]): boolean {
-    (reflector as any).getAllAndOverride = () => roles;
+    (reflector as unknown as { getAllAndOverride: () => AppRole[] }).getAllAndOverride =
+      () => roles;
     const ctx = createExecutionContext(req);
     return guard.canActivate(ctx);
   }

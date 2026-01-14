@@ -3,14 +3,22 @@ import {
   BadRequestException,
   Catch,
   ExceptionFilter,
+  ForbiddenException,
   HttpException,
   HttpStatus,
-  ForbiddenException,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ThrottlerException } from '@nestjs/throttler';
 import { Request, Response } from 'express';
+
+type HttpExceptionResponse =
+  | {
+      message?: string | string[];
+      code?: string;
+      [key: string]: unknown;
+    }
+  | string;
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -22,7 +30,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     if (exception instanceof HttpException) {
       const status = exception.getStatus();
-      const resp = exception.getResponse() as any;
+      const resp = exception.getResponse() as HttpExceptionResponse;
 
       // Rate limit (429) normalization
       if (exception instanceof ThrottlerException) {

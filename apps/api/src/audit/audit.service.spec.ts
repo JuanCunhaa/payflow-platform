@@ -1,18 +1,19 @@
 import { AuditService } from './audit.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 async function run() {
-  const created: any[] = [];
+  const created: Array<Record<string, unknown>> = [];
 
   const prismaMock = {
     auditLog: {
-      create: async (args: any) => {
+      create: async (args: { data: Record<string, unknown> }) => {
         created.push(args.data);
         return args.data;
       },
     },
-  };
+  } as unknown as PrismaService;
 
-  const service = new AuditService(prismaMock as any);
+  const service = new AuditService(prismaMock);
 
   await service.log({
     actorType: 'USER',
@@ -34,7 +35,7 @@ async function run() {
     throw new Error('AuditService should create one audit log entry');
   }
 
-  const entry = created[0];
+  const entry = created[0] as Record<string, unknown>;
 
   if (entry.tenantId !== 'tenant-1' || entry.actorUserId !== 'user-1') {
     throw new Error('AuditService did not persist tenantId/actorUserId correctly');
@@ -44,8 +45,8 @@ async function run() {
     throw new Error('AuditService should store metadata');
   }
 
-  const meta = entry.metadata as any;
-  if (meta.email !== 'user@example.com') {
+  const meta = entry.metadata as Record<string, unknown> | null | undefined;
+  if (!meta || meta.email !== 'user@example.com') {
     throw new Error('AuditService should keep non-sensitive fields intact');
   }
 
