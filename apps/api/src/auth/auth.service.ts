@@ -1,8 +1,8 @@
 import { Injectable, UnauthorizedException, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcryptjs';
 import { PrismaService } from '../prisma/prisma.service';
 import { LoginDto } from './dto/login.dto';
+import { PasswordService } from './password.service';
 
 export interface JwtPayload {
   sub: string; // user id
@@ -33,15 +33,17 @@ export class AuthService {
 
   constructor(
     private readonly prisma: PrismaService,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly passwordService: PasswordService
   ) {}
 
   async login(loginDto: LoginDto, tenantSlug?: string): Promise<LoginResponse> {
-    const { email, password } = loginDto;
+    const email = loginDto.email.trim().toLowerCase();
+    const { password } = loginDto;
 
     // Find user by email (case-insensitive due to CITEXT)
     const user = await this.prisma.user.findUnique({
-      where: { email: email.toLowerCase() },
+      where: { email },
       include: {
         memberships: {
           include: {
@@ -63,7 +65,7 @@ export class AuthService {
     }
 
     // Verify password
-    const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
+    const isPasswordValid = await this.passwordService.verify(password, user.passwordHash);
     if (!isPasswordValid) {
       this.logger.warn(`Login attempt failed: invalid password for ${email}`);
       throw new UnauthorizedException('Invalid credentials');

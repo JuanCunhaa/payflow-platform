@@ -1,13 +1,8 @@
 import 'dotenv/config';
 import { PrismaClient } from '@prisma/client';
-import * as bcrypt from 'bcryptjs';
+import * as argon2 from 'argon2';
 
 const prisma = new PrismaClient({});
-
-async function hashPassword(plain: string) {
-  const salt = await bcrypt.genSalt(10);
-  return bcrypt.hash(plain, salt);
-}
 
 async function main() {
   console.log('Starting idempotent seed...');
@@ -19,7 +14,7 @@ async function main() {
   ];
 
   const defaultPassword = process.env.SEED_DEFAULT_PASSWORD || 'Admin@12345';
-  const passwordHash = await hashPassword(defaultPassword);
+  const passwordHash = await argon2.hash(defaultPassword, { type: argon2.argon2id });
 
   // Upsert tenants
   const upsertedTenants = await Promise.all(
