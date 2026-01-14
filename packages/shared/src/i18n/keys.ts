@@ -118,6 +118,9 @@ export const i18nKeys = {
     },
     leads: {
       title: 'platform.leads.title',
+      empty: 'platform.leads.empty',
+      errorGeneric: 'platform.leads.errorGeneric',
+      errorConnection: 'platform.leads.errorConnection',
       table: {
         schoolName: 'platform.leads.table.schoolName',
         responsibleName: 'platform.leads.table.responsibleName',
