@@ -3,6 +3,8 @@ import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma/prisma.service';
 import { LoginDto } from './dto/login.dto';
 import { PasswordService } from './password.service';
+import { Response } from 'express';
+import { randomBytes, randomUUID } from 'crypto';
 
 export interface JwtPayload {
   sub: string; // user id
@@ -19,13 +21,18 @@ export interface LoginResponse {
     email: string;
     name: string | null;
     userType: string;
+    status?: string;
   };
   tenant?: {
     id: string;
     name: string;
     slug: string;
   };
+  redirectHint?: string;
 }
+
+const REFRESH_TOKEN_COOKIE = 'payflow_refresh_token';
+const REFRESH_TOKEN_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 @Injectable()
 export class AuthService {
@@ -37,7 +44,11 @@ export class AuthService {
     private readonly passwordService: PasswordService
   ) {}
 
-  async login(loginDto: LoginDto, tenantSlug?: string): Promise<LoginResponse> {
+  async login(
+    loginDto: LoginDto,
+    tenantSlug: string | undefined,
+    res: Response
+  ): Promise<LoginResponse> {
     const email = loginDto.email.trim().toLowerCase();
     const { password } = loginDto;
 
@@ -81,14 +92,19 @@ export class AuthService {
 
       this.logger.log(`Platform user ${email} logged in successfully`);
 
+      const accessToken = this.jwtService.sign(payload);
+      await this.issueRefreshToken(user.id, res);
+
       return {
-        accessToken: this.jwtService.sign(payload),
+        accessToken,
         user: {
           id: user.id,
           email: user.email,
           name: user.name,
           userType: user.type,
+          status: user.status,
         },
+        redirectHint: 'platform_dashboard',
       };
     }
 
@@ -132,19 +148,24 @@ export class AuthService {
       `User ${email} logged in to tenant ${membership.tenant.slug} as ${membership.role}`
     );
 
+    const accessToken = this.jwtService.sign(payload);
+    await this.issueRefreshToken(user.id, res);
+
     return {
-      accessToken: this.jwtService.sign(payload),
+      accessToken,
       user: {
         id: user.id,
         email: user.email,
         name: user.name,
         userType: user.type,
+        status: user.status,
       },
       tenant: {
         id: membership.tenant.id,
         name: membership.tenant.name,
         slug: membership.tenant.slug,
       },
+      redirectHint: 'tenant_dashboard',
     };
   }
 
@@ -158,6 +179,187 @@ export class AuthService {
         type: true,
         status: true,
       },
+    });
+  }
+
+  // Helper to access refresh token repository without relying on generated Prisma typings
+  private get refreshTokenRepo() {
+    return (this.prisma as any).refreshToken as {
+      create: (args: any) => Promise<any>;
+      findUnique: (args: any) => Promise<any>;
+      update: (args: any) => Promise<any>;
+      updateMany: (args: any) => Promise<any>;
+    };
+  }
+
+  private getRefreshCookieOptions() {
+    const isProd = process.env.NODE_ENV === 'production';
+    return {
+      httpOnly: true,
+      secure: isProd,
+      sameSite: 'lax' as const,
+      path: '/',
+      maxAge: REFRESH_TOKEN_TTL_MS,
+    };
+  }
+
+  private async issueRefreshToken(
+    userId: string,
+    res: Response,
+    previousTokenId?: string
+  ): Promise<void> {
+    const secret = randomBytes(32).toString('hex');
+    const tokenHash = await this.passwordService.hash(secret);
+    const expiresAt = new Date(Date.now() + REFRESH_TOKEN_TTL_MS);
+    const id = randomUUID();
+
+    await this.refreshTokenRepo.create({
+      data: {
+        id,
+        userId,
+        tokenHash,
+        expiresAt,
+      },
+    });
+
+    if (previousTokenId) {
+      await this.refreshTokenRepo
+        .update({
+          where: { id: previousTokenId },
+          data: { revokedAt: new Date() },
+        })
+        .catch(() => {
+          // Ignore if token was already revoked/removed
+        });
+    }
+
+    const cookieValue = `${id}.${secret}`;
+    res.cookie(REFRESH_TOKEN_COOKIE, cookieValue, this.getRefreshCookieOptions());
+  }
+
+  async refreshSession(
+    refreshCookie: string | undefined,
+    tenantSlug: string | undefined,
+    res: Response
+  ): Promise<LoginResponse> {
+    if (!refreshCookie) {
+      throw new UnauthorizedException('Missing refresh token');
+    }
+
+    const [id, secret] = refreshCookie.split('.');
+    if (!id || !secret) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+
+    const token = await this.refreshTokenRepo.findUnique({
+      where: { id },
+      include: { user: { include: { memberships: { include: { tenant: true } } } } },
+    });
+
+    if (!token || token.revokedAt || token.expiresAt < new Date()) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+
+    const isValid = await this.passwordService.verify(secret, token.tokenHash);
+    if (!isValid) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
+
+    const user = token.user;
+
+    if (!user || user.status !== 'ACTIVE') {
+      throw new UnauthorizedException('Account is not active');
+    }
+
+    // Determine tenant context similarly to login
+    if (user.type === 'PLATFORM') {
+      const payload: JwtPayload = {
+        sub: user.id,
+        email: user.email,
+        userType: user.type,
+      };
+
+      const accessToken = this.jwtService.sign(payload);
+      await this.issueRefreshToken(user.id, res, token.id);
+
+      return {
+        accessToken,
+        user: {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          userType: user.type,
+          status: user.status,
+        },
+        redirectHint: 'platform_dashboard',
+      };
+    }
+
+    let membership = user.memberships[0];
+
+    if (tenantSlug) {
+      const tenantMembership = user.memberships.find((m) => m.tenant.slug === tenantSlug);
+      if (!tenantMembership) {
+        throw new UnauthorizedException('No access to this tenant');
+      }
+      membership = tenantMembership;
+    }
+
+    if (!membership) {
+      throw new UnauthorizedException('No tenant membership found');
+    }
+
+    if (membership.tenant.status !== 'ACTIVE') {
+      throw new UnauthorizedException('Tenant is not active');
+    }
+
+    const payload: JwtPayload = {
+      sub: user.id,
+      email: user.email,
+      userType: user.type,
+      tenantId: membership.tenantId,
+      role: membership.role,
+    };
+
+    const accessToken = this.jwtService.sign(payload);
+    await this.issueRefreshToken(user.id, res, token.id);
+
+    return {
+      accessToken,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        userType: user.type,
+        status: user.status,
+      },
+      tenant: {
+        id: membership.tenant.id,
+        name: membership.tenant.name,
+        slug: membership.tenant.slug,
+      },
+      redirectHint: 'tenant_dashboard',
+    };
+  }
+
+  async logout(refreshCookie: string | undefined, res: Response): Promise<void> {
+    if (refreshCookie) {
+      const [id] = refreshCookie.split('.');
+      if (id) {
+        await this.refreshTokenRepo
+          .updateMany({
+            where: { id, revokedAt: null },
+            data: { revokedAt: new Date() },
+          })
+          .catch(() => {
+            // Ignore errors during logout
+          });
+      }
+    }
+
+    res.cookie(REFRESH_TOKEN_COOKIE, '', {
+      ...this.getRefreshCookieOptions(),
+      maxAge: 0,
     });
   }
 }

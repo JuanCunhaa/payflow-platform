@@ -1,6 +1,6 @@
-import { Body, Controller, Post, Get, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { CustomThrottlerGuard } from '../common/guards/throttler.guard';
 import { AuthService, LoginResponse } from './auth.service';
 import { LoginDto } from './dto/login.dto';
@@ -21,10 +21,27 @@ export class AuthController {
   @Public()
   @UseGuards(CustomThrottlerGuard)
   @Throttle({ short: { ttl: 5 * 60 * 1000, limit: 10 } })
-  async login(@Body() loginDto: LoginDto, @Req() req: Request): Promise<LoginResponse> {
-    // Get tenant from middleware if present (subdomain-based login)
+  async login(
+    @Body() loginDto: LoginDto,
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<LoginResponse> {
     const tenant = (req as any).tenant;
-    return this.authService.login(loginDto, tenant?.slug);
+    return this.authService.login(loginDto, tenant?.slug, res);
+  }
+
+  /**
+   * POST /auth/refresh
+   * Uses httpOnly refresh token cookie to issue a new access token
+   */
+  @Post('refresh')
+  @Public()
+  @UseGuards(CustomThrottlerGuard)
+  @Throttle({ short: { ttl: 5 * 60 * 1000, limit: 10 } })
+  async refresh(@Req() req: Request, @Res({ passthrough: true }) res: Response): Promise<LoginResponse> {
+    const tenant = (req as any).tenant;
+    const refreshCookie = req.cookies?.payflow_refresh_token as string | undefined;
+    return this.authService.refreshSession(refreshCookie, tenant?.slug, res);
   }
 
   /**
@@ -37,5 +54,17 @@ export class AuthController {
     return {
       user,
     };
+  }
+
+  /**
+   * POST /auth/logout
+   * Revokes current refresh token and clears cookie
+   */
+  @Post('logout')
+  @Public()
+  async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+    const refreshCookie = req.cookies?.payflow_refresh_token as string | undefined;
+    await this.authService.logout(refreshCookie, res);
+    return { success: true };
   }
 }

@@ -22,7 +22,7 @@ async function run() {
   }
 
   // validateStrength() should reject weak passwords
-  const weakPasswords = ['12345678', 'password', 'admin123', 'short1', 'NoNumber1'.replace('1', '')];
+  const weakPasswords = ['12345678', 'password', 'admin123', 'short1', 'NoNumber'];
 
   for (const pwd of weakPasswords) {
     let threw = false;
@@ -31,7 +31,7 @@ async function run() {
     } catch (e) {
       threw = e instanceof BadRequestException;
       if (threw) {
-        const resp: any = (e as BadRequestException).getResponse();
+        const resp = (e as BadRequestException).getResponse() as { code?: string };
         if (resp.code !== 'weak_password') {
           throw new Error(`Expected weak_password code, got ${resp.code}`);
         }
@@ -49,8 +49,6 @@ async function run() {
 }
 
 run().catch((err) => {
-  // eslint-disable-next-line no-console
   console.error(err);
   process.exit(1);
 });
-

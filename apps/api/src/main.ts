@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 
 import * as dotenv from 'dotenv';
+import * as cookieParser from 'cookie-parser';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 
@@ -16,6 +17,9 @@ async function bootstrap() {
     origin: ['http://localhost:3000', /\.localtest\.me(:\d+)?$/],
     credentials: true,
   });
+
+  // Cookie parser for reading httpOnly refresh tokens
+  app.use(cookieParser());
 
   // Global validation pipe for DTOs
   app.useGlobalPipes(

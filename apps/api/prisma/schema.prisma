@@ -65,7 +65,8 @@ model User {
   createdAt     DateTime   @default(now()) @map("created_at")
   updatedAt     DateTime   @updatedAt @map("updated_at")
 
-  memberships Membership[]
+  memberships   Membership[]
+  refreshTokens RefreshToken[]
 
   @@map("users")
 }
@@ -83,4 +84,19 @@ model Membership {
 
   @@unique([userId, tenantId])
   @@map("memberships")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid()) @db.Uuid
+  tokenHash String   @map("token_hash")
+  expiresAt DateTime @map("expires_at")
+  revokedAt DateTime? @map("revoked_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  userId String @db.Uuid @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "refresh_tokens_user_id_idx")
+  @@index([expiresAt], map: "refresh_tokens_expires_at_idx")
+  @@map("refresh_tokens")
 }
