@@ -67,6 +67,8 @@ model Tenant {
   settingsJson Json?       @map("settings_json")
 
   memberships Membership[]
+  grades      Grade[]
+  classes     Class[]
 
   @@map("tenants")
 }
@@ -146,4 +148,35 @@ model Lead {
   createdAt  DateTime   @default(now()) @map("created_at")
 
   @@map("leads")
+}
+
+model Grade {
+  id        String   @id @default(uuid()) @db.Uuid
+  tenantId  String   @db.Uuid @map("tenant_id")
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  name      String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  classes   Class[]
+
+  @@unique([tenantId, name])
+  @@index([tenantId], map: "grades_tenant_id_idx")
+  @@map("grades")
+}
+
+model Class {
+  id        String   @id @default(uuid()) @db.Uuid
+  tenantId  String   @db.Uuid @map("tenant_id")
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  gradeId   String   @db.Uuid @map("grade_id")
+  grade     Grade    @relation(fields: [gradeId], references: [id], onDelete: Cascade)
+  name      String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([tenantId, name])
+  @@index([tenantId], map: "classes_tenant_id_idx")
+  @@index([gradeId], map: "classes_grade_id_idx")
+  @@map("classes")
 }
