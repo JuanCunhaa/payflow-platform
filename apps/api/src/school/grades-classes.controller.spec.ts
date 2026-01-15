@@ -242,7 +242,7 @@ async function run() {
   const otherTenantId = 'tenant-2';
 
   // ---- Create grade ----
-  const reqTenant = createTenantRequest(tenantId) as unknown as TenantRequest;
+  const reqTenant = createTenantRequest(tenantId);
 
   const createdGradeResult = await controller.createGrade(reqTenant, { name: '1º ano' });
   if (!createdGradeResult.grade || createdGradeResult.grade.name !== '1º ano') {
@@ -267,7 +267,7 @@ async function run() {
   }
 
   // ---- List grades tenant-scoped ----
-  const otherReq = createTenantRequest(otherTenantId) as unknown as TenantRequest;
+  const otherReq = createTenantRequest(otherTenantId);
   await controller.createGrade(otherReq, { name: '2º ano' });
 
   const listTenant1 = await controller.listGrades(reqTenant, '1', '10');
@@ -305,7 +305,7 @@ async function run() {
   const gradeForClassResult = await controller.createGrade(reqTenant, { name: '2º ano' });
   const gradeForClassId = gradeForClassResult.grade.id;
 
-  const classReq = createTenantRequest(tenantId) as unknown as TenantRequest;
+  const classReq = createTenantRequest(tenantId);
   const createdClassResult = await controller.createClass(classReq, {
     gradeId: gradeForClassId,
     name: '2ºA',

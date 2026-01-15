@@ -14,6 +14,7 @@ import { PrismaService } from './prisma/prisma.service';
 import { TenantResolverMiddleware } from './common/tenant/tenant.middleware';
 import { SchoolSettingsController } from './school/school-settings.controller';
 import { GradesClassesController } from './school/grades-classes.controller';
+import { StudentsController } from './school/students.controller';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { GradesClassesController } from './school/grades-classes.controller';
     PlatformAuditController,
     SchoolSettingsController,
     GradesClassesController,
+    StudentsController,
   ],
   providers: [PrismaService],
 })

@@ -25,7 +25,7 @@ import { UpdateGradeDto } from './dto/update-grade.dto';
 import { CreateClassDto } from './dto/create-class.dto';
 import { UpdateClassDto } from './dto/update-class.dto';
 
-type TenantRequest = Request & {
+type TenantRequest = Partial<Request> & {
   tenant?: { id: string; slug: string };
 };
 
