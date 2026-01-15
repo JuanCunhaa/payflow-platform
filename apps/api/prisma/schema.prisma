@@ -54,6 +54,11 @@ enum LeadStatus {
   CONVERTED
 }
 
+enum StudentStatus {
+  ACTIVE
+  INACTIVE
+}
+
 // ============ MODELS ============
 
 model Tenant {
@@ -69,6 +74,7 @@ model Tenant {
   memberships Membership[]
   grades      Grade[]
   classes     Class[]
+  students    Student[]
 
   @@map("tenants")
 }
@@ -175,8 +181,26 @@ model Class {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  students  Student[]
+
   @@unique([tenantId, name])
   @@index([tenantId], map: "classes_tenant_id_idx")
   @@index([gradeId], map: "classes_grade_id_idx")
   @@map("classes")
+}
+
+model Student {
+  id        String        @id @default(uuid()) @db.Uuid
+  tenantId  String        @db.Uuid @map("tenant_id")
+  tenant    Tenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  classId   String        @db.Uuid @map("class_id")
+  class     Class         @relation(fields: [classId], references: [id], onDelete: Cascade)
+  name      String
+  status    StudentStatus @default(ACTIVE)
+  createdAt DateTime      @default(now()) @map("created_at")
+
+  @@unique([tenantId, classId, name])
+  @@index([tenantId], map: "students_tenant_id_idx")
+  @@index([classId], map: "students_class_id_idx")
+  @@map("students")
 }
