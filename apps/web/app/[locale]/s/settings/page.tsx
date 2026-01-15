@@ -35,7 +35,7 @@ export default function SchoolSettingsPage() {
       try {
         const res = await apiFetch('/school/settings');
         if (!res.ok) {
-          setError(t(i18nKeys.platform.tenants.errorGeneric));
+          setError(t(i18nKeys.school.settings.feedback.loadError));
           return;
         }
         const data = (await res.json()) as SettingsPayload;
@@ -46,7 +46,7 @@ export default function SchoolSettingsPage() {
         setContactPhone(data.contactPhone ?? '');
       } catch {
         if (!cancelled) {
-          setError(t(i18nKeys.platform.tenants.errorConnection));
+          setError(t(i18nKeys.school.settings.feedback.loadError));
         }
       } finally {
         if (!cancelled) {
@@ -77,7 +77,7 @@ export default function SchoolSettingsPage() {
       });
 
       if (!res.ok) {
-        setError(t(i18nKeys.platform.tenants.errorGeneric));
+        setError(t(i18nKeys.school.settings.feedback.saveError));
         return;
       }
 
@@ -87,7 +87,7 @@ export default function SchoolSettingsPage() {
       setContactPhone(data.contactPhone ?? '');
       setSuccess(true);
     } catch {
-      setError(t(i18nKeys.platform.tenants.errorConnection));
+      setError(t(i18nKeys.school.settings.feedback.saveError));
     } finally {
       setSaving(false);
     }
@@ -165,7 +165,7 @@ export default function SchoolSettingsPage() {
               }}
             >
               {/* Reutilizando mensagem genérica de sucesso de tenants */}
-              {t(i18nKeys.platform.tenants.form.submitEdit)}
+              {t(i18nKeys.school.settings.feedback.saveSuccess)}
             </div>
           )}
 

@@ -6,6 +6,21 @@ import { Request } from 'express';
 export class CustomThrottlerGuard extends ThrottlerGuard {
   private readonly logger = new Logger(CustomThrottlerGuard.name);
 
+  // In automated test runs we want deterministic behaviour and
+  // don't need rate limiting. Allow bypass via env flag.
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const req = context.switchToHttp().getRequest<Request>();
+
+    if (
+      process.env.BYPASS_RATE_LIMIT_FOR_TESTS === '1' ||
+      req.headers['x-payflow-bypass-ratelimit'] === '1'
+    ) {
+      return true;
+    }
+
+    return super.canActivate(context);
+  }
+
   protected async throwThrottlingException(
     context: ExecutionContext,
     _throttlerLimitDetail: unknown

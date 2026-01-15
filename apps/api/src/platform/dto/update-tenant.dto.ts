@@ -15,4 +15,3 @@ export class UpdateTenantDto {
   @IsString()
   schoolCode?: string;
 }
-

@@ -5,8 +5,8 @@ import * as argon2 from 'argon2';
 export class PasswordService {
   private static readonly weakPasswords = new Set(
     ['12345678', 'password', 'admin123', 'qwerty123', '11111111', '123456789'].map((p) =>
-      p.toLowerCase(),
-    ),
+      p.toLowerCase()
+    )
   );
 
   async hash(password: string): Promise<string> {
@@ -55,4 +55,3 @@ export class PasswordService {
     }
   }
 }
-

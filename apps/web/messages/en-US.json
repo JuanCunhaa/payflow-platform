@@ -217,6 +217,13 @@
       "unauthorizedTitle": "You don't have access to the school panel",
       "unauthorizedDescription": "This area is reserved for school staff. If you believe this is a mistake, contact the school administrator."
     },
+    "settings": {
+      "feedback": {
+        "saveSuccess": "School settings saved successfully.",
+        "saveError": "Could not save school settings.",
+        "loadError": "Could not load school settings."
+      }
+    },
     "pages": {
       "dashboard": {
         "title": "School overview",
@@ -245,4 +252,3 @@
     }
   }
 }
-

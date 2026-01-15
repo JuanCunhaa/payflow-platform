@@ -18,10 +18,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Roles } from '../auth/roles.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
-import {
-  CurrentUser,
-  CurrentUserPayload,
-} from '../auth/decorators/current-user.decorator';
+import { CurrentUser, CurrentUserPayload } from '../auth/decorators/current-user.decorator';
 import { PasswordService } from '../auth/password.service';
 import { AuditService } from '../audit/audit.service';
 import { CreateTenantDto } from './dto/create-tenant.dto';
@@ -33,9 +30,7 @@ const ALLOWED_TENANT_STATUS: TenantStatus[] = ['ACTIVE', 'DRAFT', 'SUSPENDED'];
 
 type PrismaTenantClient = Pick<PrismaClient, 'tenant' | 'user' | 'membership'>;
 
-function parseTenantStatusOrUndefined(
-  statusParam?: string,
-): TenantStatus | undefined {
+function parseTenantStatusOrUndefined(statusParam?: string): TenantStatus | undefined {
   if (!statusParam) return undefined;
   if (ALLOWED_TENANT_STATUS.includes(statusParam as TenantStatus)) {
     return statusParam as TenantStatus;
@@ -56,10 +51,7 @@ function slugifyName(value: string): string {
   return normalized || 'tenant';
 }
 
-async function ensureUniqueSlug(
-  prisma: PrismaTenantClient,
-  baseSlug: string,
-): Promise<string> {
+async function ensureUniqueSlug(prisma: PrismaTenantClient, baseSlug: string): Promise<string> {
   let candidate = baseSlug;
   let counter = 1;
 
@@ -79,7 +71,7 @@ async function ensureUniqueSlug(
 async function ensureUniqueSchoolCode(
   prisma: PrismaTenantClient,
   schoolCode: string,
-  ignoreId?: string,
+  ignoreId?: string
 ): Promise<void> {
   const existing = await prisma.tenant.findUnique({
     where: { schoolCode },
@@ -95,10 +87,13 @@ async function ensureUniqueSchoolCode(
 
 async function generateUniqueSchoolCode(
   prisma: PrismaTenantClient,
-  baseSlug: string,
+  baseSlug: string
 ): Promise<string> {
   const codeBase =
-    baseSlug.replace(/[^a-z0-9]/gi, '').toUpperCase().slice(0, 8) || 'SCHOOL';
+    baseSlug
+      .replace(/[^a-z0-9]/gi, '')
+      .toUpperCase()
+      .slice(0, 8) || 'SCHOOL';
 
   let attempt = 1;
   for (;;) {
@@ -127,14 +122,14 @@ export class PlatformTenantsController {
   constructor(
     private readonly prisma: PrismaService,
     private readonly passwordService: PasswordService,
-    private readonly auditService: AuditService,
+    private readonly auditService: AuditService
   ) {}
 
   @Get()
   async listTenants(
     @Query('status') statusParam?: string,
     @Query('page') pageParam?: string,
-    @Query('pageSize') pageSizeParam?: string,
+    @Query('pageSize') pageSizeParam?: string
   ) {
     const status = parseTenantStatusOrUndefined(statusParam);
     const page = Math.max(parseInt(pageParam ?? '1', 10) || 1, 1);
@@ -166,7 +161,7 @@ export class PlatformTenantsController {
   async createTenant(
     @Body() dto: CreateTenantDto,
     @CurrentUser() user: CurrentUserPayload,
-    @Req() req: Request,
+    @Req() req: Request
   ) {
     const name = dto.name.trim();
     if (!name) {
@@ -255,10 +250,7 @@ export class PlatformTenantsController {
     });
 
     const forwardedFor = req.headers['x-forwarded-for'];
-    const ip =
-      (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) ||
-      req.ip ||
-      null;
+    const ip = (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) || req.ip || null;
     const userAgent = (req.headers['user-agent'] as string | undefined) || null;
 
     await this.auditService.log({
@@ -299,7 +291,7 @@ export class PlatformTenantsController {
     @Param('id') id: string,
     @Body() dto: UpdateTenantDto,
     @CurrentUser() user: CurrentUserPayload,
-    @Req() req: Request,
+    @Req() req: Request
   ) {
     const data: Record<string, unknown> = {};
 
@@ -333,11 +325,7 @@ export class PlatformTenantsController {
           message: 'School code cannot be empty',
         });
       }
-      await ensureUniqueSchoolCode(
-        this.prisma as unknown as PrismaTenantClient,
-        schoolCode,
-        id,
-      );
+      await ensureUniqueSchoolCode(this.prisma as unknown as PrismaTenantClient, schoolCode, id);
       data.schoolCode = schoolCode;
     }
 
@@ -362,10 +350,7 @@ export class PlatformTenantsController {
     }
 
     const forwardedFor = req.headers['x-forwarded-for'];
-    const ip =
-      (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) ||
-      req.ip ||
-      null;
+    const ip = (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) || req.ip || null;
     const userAgent = (req.headers['user-agent'] as string | undefined) || null;
 
     await this.auditService.log({
@@ -397,7 +382,7 @@ export class PlatformTenantsController {
   async activateTenant(
     @Param('id') id: string,
     @CurrentUser() user: CurrentUserPayload,
-    @Req() req: Request,
+    @Req() req: Request
   ) {
     let tenant;
     try {
@@ -413,10 +398,7 @@ export class PlatformTenantsController {
     }
 
     const forwardedFor = req.headers['x-forwarded-for'];
-    const ip =
-      (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) ||
-      req.ip ||
-      null;
+    const ip = (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) || req.ip || null;
     const userAgent = (req.headers['user-agent'] as string | undefined) || null;
 
     await this.auditService.log({
@@ -446,7 +428,7 @@ export class PlatformTenantsController {
   async suspendTenant(
     @Param('id') id: string,
     @CurrentUser() user: CurrentUserPayload,
-    @Req() req: Request,
+    @Req() req: Request
   ) {
     let tenant;
     try {
@@ -462,10 +444,7 @@ export class PlatformTenantsController {
     }
 
     const forwardedFor = req.headers['x-forwarded-for'];
-    const ip =
-      (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) ||
-      req.ip ||
-      null;
+    const ip = (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) || req.ip || null;
     const userAgent = (req.headers['user-agent'] as string | undefined) || null;
 
     await this.auditService.log({
@@ -491,4 +470,3 @@ export class PlatformTenantsController {
     };
   }
 }
-

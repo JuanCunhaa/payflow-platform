@@ -48,10 +48,7 @@ function slugifyName(value: string): string {
   return normalized || 'tenant';
 }
 
-async function ensureUniqueSlug(
-  prisma: PrismaLeadsClient,
-  baseSlug: string,
-): Promise<string> {
+async function ensureUniqueSlug(prisma: PrismaLeadsClient, baseSlug: string): Promise<string> {
   let candidate = baseSlug;
   let counter = 1;
 
@@ -70,10 +67,13 @@ async function ensureUniqueSlug(
 
 async function generateUniqueSchoolCode(
   prisma: PrismaLeadsClient,
-  baseSlug: string,
+  baseSlug: string
 ): Promise<string> {
   const codeBase =
-    baseSlug.replace(/[^a-z0-9]/gi, '').toUpperCase().slice(0, 8) || 'SCHOOL';
+    baseSlug
+      .replace(/[^a-z0-9]/gi, '')
+      .toUpperCase()
+      .slice(0, 8) || 'SCHOOL';
 
   let attempt = 1;
   for (;;) {
@@ -96,14 +96,14 @@ async function generateUniqueSchoolCode(
 export class PlatformLeadsController {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly auditService: AuditService,
+    private readonly auditService: AuditService
   ) {}
 
   @Get()
   async listLeads(
     @Query('status') statusParam?: string,
     @Query('page') pageParam?: string,
-    @Query('pageSize') pageSizeParam?: string,
+    @Query('pageSize') pageSizeParam?: string
   ) {
     const status = parseStatusOrUndefined(statusParam);
     const page = Math.max(parseInt(pageParam ?? '1', 10) || 1, 1);
@@ -132,10 +132,7 @@ export class PlatformLeadsController {
   }
 
   @Patch(':id')
-  async updateLeadStatus(
-    @Param('id') id: string,
-    @Body('status') statusParam: string,
-  ) {
+  async updateLeadStatus(@Param('id') id: string, @Body('status') statusParam: string) {
     const status = parseStatusOrUndefined(statusParam);
     if (!status) {
       throw new BadRequestException({
@@ -162,7 +159,7 @@ export class PlatformLeadsController {
   async convertToTenant(
     @Param('id') id: string,
     @CurrentUser() user: CurrentUserPayload,
-    @Req() req: Request,
+    @Req() req: Request
   ) {
     const lead = await this.prisma.lead.findUnique({
       where: { id },
@@ -178,14 +175,8 @@ export class PlatformLeadsController {
     const baseSlug = slugifyName(lead.schoolName);
 
     const tenant = await this.prisma.$transaction(async (prismaTx) => {
-      const uniqueSlug = await ensureUniqueSlug(
-        prismaTx as PrismaLeadsClient,
-        baseSlug,
-      );
-      const schoolCode = await generateUniqueSchoolCode(
-        prismaTx as PrismaLeadsClient,
-        uniqueSlug,
-      );
+      const uniqueSlug = await ensureUniqueSlug(prismaTx as PrismaLeadsClient, baseSlug);
+      const schoolCode = await generateUniqueSchoolCode(prismaTx as PrismaLeadsClient, uniqueSlug);
 
       const createdTenant = await prismaTx.tenant.create({
         data: {
@@ -205,10 +196,7 @@ export class PlatformLeadsController {
     });
 
     const forwardedFor = req.headers['x-forwarded-for'];
-    const ip =
-      (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) ||
-      req.ip ||
-      null;
+    const ip = (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) || req.ip || null;
     const userAgent = (req.headers['user-agent'] as string | undefined) || null;
 
     await this.auditService.log({

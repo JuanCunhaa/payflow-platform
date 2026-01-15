@@ -11,16 +11,17 @@ import { useAuth } from '../../auth-context';
 export default function DashboardPage() {
   const { t, locale } = useI18n();
   const { tenant: contextTenant } = useTenant();
-  const { user, sessionLoading, logout } = useAuth();
+  const { user, sessionLoading, logout, isLoggingOut } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!sessionLoading && !user) {
+    if (sessionLoading || isLoggingOut) return;
+    if (!user) {
       router.push(`/${locale}/login`);
     }
-  }, [sessionLoading, user, locale, router]);
+  }, [sessionLoading, isLoggingOut, user, locale, router]);
 
-  if (sessionLoading || !user) {
+  if (sessionLoading || isLoggingOut || !user) {
     return (
       <main
         style={{
@@ -142,4 +143,3 @@ export default function DashboardPage() {
     </main>
   );
 }
-

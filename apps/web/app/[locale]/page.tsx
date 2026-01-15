@@ -132,7 +132,9 @@ export default function Home() {
           <h2 style={{ fontSize: '16px', marginBottom: '12px', color: '#0f172a' }}>
             {t(i18nKeys.landing.problem.title)}
           </h2>
-          <ul style={{ listStyle: 'disc', paddingLeft: '18px', color: '#475569', fontSize: '14px' }}>
+          <ul
+            style={{ listStyle: 'disc', paddingLeft: '18px', color: '#475569', fontSize: '14px' }}
+          >
             <li>{t(i18nKeys.landing.problem.spreadsheets)}</li>
             <li>{t(i18nKeys.landing.problem.whatsapp)}</li>
             <li>{t(i18nKeys.landing.problem.receipts)}</li>

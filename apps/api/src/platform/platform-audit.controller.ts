@@ -1,10 +1,4 @@
-import {
-  BadRequestException,
-  Controller,
-  Get,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
+import { BadRequestException, Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { Prisma, PrismaClient } from '@prisma/client';
 
 import { PrismaService } from '../prisma/prisma.service';
@@ -40,7 +34,7 @@ export class PlatformAuditController {
     @Query('from') fromParam?: string,
     @Query('to') toParam?: string,
     @Query('page') pageParam?: string,
-    @Query('limit') limitParam?: string,
+    @Query('limit') limitParam?: string
   ) {
     const prisma = this.prisma as unknown as PrismaAuditClient;
 
@@ -104,12 +98,10 @@ export class PlatformAuditController {
     ]);
 
     const tenantIds = Array.from(
-      new Set(logs.map((log) => log.tenantId).filter((id): id is string => !!id)),
+      new Set(logs.map((log) => log.tenantId).filter((id): id is string => !!id))
     );
     const actorIds = Array.from(
-      new Set(
-        logs.map((log) => log.actorUserId).filter((id): id is string => !!id),
-      ),
+      new Set(logs.map((log) => log.actorUserId).filter((id): id is string => !!id))
     );
 
     const [tenants, actors] = await Promise.all([
@@ -134,8 +126,8 @@ export class PlatformAuditController {
       items: logs.map((log) => ({
         id: log.id,
         timestamp: log.createdAt.toISOString(),
-        tenant: log.tenantId ? tenantMap.get(log.tenantId) ?? null : null,
-        actor: log.actorUserId ? actorMap.get(log.actorUserId) ?? null : null,
+        tenant: log.tenantId ? (tenantMap.get(log.tenantId) ?? null) : null,
+        actor: log.actorUserId ? (actorMap.get(log.actorUserId) ?? null) : null,
         actorType: log.actorType,
         action: log.action,
         targetType: log.targetType,
@@ -151,4 +143,3 @@ export class PlatformAuditController {
     };
   }
 }
-

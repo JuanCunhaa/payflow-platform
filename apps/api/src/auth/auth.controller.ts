@@ -13,7 +13,7 @@ import { AuditService } from '../audit/audit.service';
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly auditService: AuditService,
+    private readonly auditService: AuditService
   ) {}
 
   /**
@@ -28,7 +28,7 @@ export class AuthController {
   async login(
     @Body() loginDto: LoginDto,
     @Req() req: Request,
-    @Res({ passthrough: true }) res: Response,
+    @Res({ passthrough: true }) res: Response
   ): Promise<LoginResponse> {
     const tenant = req.tenant;
     const normalizedEmail = loginDto.email.trim().toLowerCase();
@@ -84,7 +84,10 @@ export class AuthController {
   @Public()
   @UseGuards(CustomThrottlerGuard)
   @Throttle({ short: { ttl: 5 * 60 * 1000, limit: 10 } })
-  async refresh(@Req() req: Request, @Res({ passthrough: true }) res: Response): Promise<LoginResponse> {
+  async refresh(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response
+  ): Promise<LoginResponse> {
     const tenant = req.tenant;
     const refreshCookie = req.cookies?.payflow_refresh_token as string | undefined;
     return this.authService.refreshSession(refreshCookie, tenant?.slug, res);

@@ -105,7 +105,7 @@ async function run() {
   const authService = new AuthService(
     prismaMock as unknown as PrismaService,
     jwtMock,
-    passwordService,
+    passwordService
   );
 
   function createResponseMock() {

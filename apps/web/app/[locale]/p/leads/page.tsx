@@ -49,7 +49,7 @@ export default function PlatformLeadsPage() {
 
       try {
         const response = await apiFetch(
-          `/platform/leads${params.toString() ? `?${params.toString()}` : ''}`,
+          `/platform/leads${params.toString() ? `?${params.toString()}` : ''}`
         );
         if (!response.ok) {
           setError(t(i18nKeys.platform.leads.errorGeneric));
@@ -63,7 +63,7 @@ export default function PlatformLeadsPage() {
         setLoading(false);
       }
     },
-    [apiFetch, t],
+    [apiFetch, t]
   );
 
   useEffect(() => {
@@ -164,12 +164,8 @@ export default function PlatformLeadsPage() {
         >
           <option value="all">Todos</option>
           <option value="NEW">{t(i18nKeys.platform.leads.status.new)}</option>
-          <option value="CONTACTED">
-            {t(i18nKeys.platform.leads.status.contacted)}
-          </option>
-          <option value="CONVERTED">
-            {t(i18nKeys.platform.leads.status.converted)}
-          </option>
+          <option value="CONTACTED">{t(i18nKeys.platform.leads.status.contacted)}</option>
+          <option value="CONVERTED">{t(i18nKeys.platform.leads.status.converted)}</option>
         </select>
       </div>
 
@@ -192,9 +188,7 @@ export default function PlatformLeadsPage() {
       {loading ? (
         <p>{t(i18nKeys.common.loading)}</p>
       ) : leads.length === 0 ? (
-        <p style={{ fontSize: '14px', color: '#6b7280' }}>
-          {t(i18nKeys.platform.leads.empty)}
-        </p>
+        <p style={{ fontSize: '14px', color: '#6b7280' }}>{t(i18nKeys.platform.leads.empty)}</p>
       ) : (
         <div
           style={{
@@ -231,9 +225,7 @@ export default function PlatformLeadsPage() {
                 <th style={{ textAlign: 'left', padding: '8px 12px' }}>
                   {t(i18nKeys.platform.leads.table.createdAt)}
                 </th>
-                <th style={{ textAlign: 'left', padding: '8px 12px' }}>
-                  Ações
-                </th>
+                <th style={{ textAlign: 'left', padding: '8px 12px' }}>Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -244,9 +236,7 @@ export default function PlatformLeadsPage() {
                   <td style={{ padding: '8px 12px' }}>{lead.email}</td>
                   <td style={{ padding: '8px 12px' }}>{lead.phone}</td>
                   <td style={{ padding: '8px 12px' }}>{statusLabel(lead.status)}</td>
-                  <td style={{ padding: '8px 12px' }}>
-                    {formatDate(lead.createdAt)}
-                  </td>
+                  <td style={{ padding: '8px 12px' }}>{formatDate(lead.createdAt)}</td>
                   <td style={{ padding: '8px 12px' }}>
                     <div
                       style={{
@@ -266,8 +256,7 @@ export default function PlatformLeadsPage() {
                             borderRadius: '999px',
                             border: '1px solid #e5e7eb',
                             backgroundColor: '#f9fafb',
-                            cursor:
-                              mutatingId === lead.id ? 'not-allowed' : 'pointer',
+                            cursor: mutatingId === lead.id ? 'not-allowed' : 'pointer',
                           }}
                         >
                           {t(i18nKeys.platform.leads.actions.markContacted)}
@@ -284,8 +273,7 @@ export default function PlatformLeadsPage() {
                             borderRadius: '999px',
                             border: '1px solid #e5e7eb',
                             backgroundColor: '#f3f4f6',
-                            cursor:
-                              mutatingId === lead.id ? 'not-allowed' : 'pointer',
+                            cursor: mutatingId === lead.id ? 'not-allowed' : 'pointer',
                           }}
                         >
                           {t(i18nKeys.platform.leads.actions.markConverted)}
@@ -303,8 +291,7 @@ export default function PlatformLeadsPage() {
                             border: 'none',
                             backgroundColor: '#2563eb',
                             color: '#ffffff',
-                            cursor:
-                              mutatingId === lead.id ? 'not-allowed' : 'pointer',
+                            cursor: mutatingId === lead.id ? 'not-allowed' : 'pointer',
                           }}
                         >
                           {t(i18nKeys.platform.leads.actions.convertToTenant)}

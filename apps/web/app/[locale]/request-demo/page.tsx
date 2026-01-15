@@ -100,8 +100,7 @@ export default function RequestDemoPage() {
     <main
       style={{
         padding: '24px',
-        fontFamily:
-          'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
         maxWidth: '640px',
         margin: '50px auto',
       }}
@@ -270,9 +269,7 @@ export default function RequestDemoPage() {
             color: '#ffffff',
           }}
         >
-          {submitting
-            ? t(i18nKeys.common.loading)
-            : t(i18nKeys.requestDemo.form.submit)}
+          {submitting ? t(i18nKeys.common.loading) : t(i18nKeys.requestDemo.form.submit)}
         </button>
       </form>
     </main>

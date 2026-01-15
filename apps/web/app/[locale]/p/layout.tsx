@@ -7,11 +7,7 @@ import { i18nKeys } from '@payflow/shared';
 import { useAuth } from '../../auth-context';
 import { useI18n } from '../../i18n-context';
 
-export default function PlatformLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function PlatformLayout({ children }: { children: React.ReactNode }) {
   const { user, sessionLoading, isLoggingOut } = useAuth();
   const { locale, t } = useI18n();
   const router = useRouter();
@@ -29,8 +25,7 @@ export default function PlatformLayout({
       <main
         style={{
           padding: '24px',
-          fontFamily:
-            'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+          fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
         }}
       >
         {t(i18nKeys.common.loading)}
@@ -45,8 +40,7 @@ export default function PlatformLayout({
       style={{
         display: 'flex',
         minHeight: '100vh',
-        fontFamily:
-          'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
       }}
     >
       <aside
@@ -75,28 +69,16 @@ export default function PlatformLayout({
             fontSize: '14px',
           }}
         >
-          <Link
-            href={basePath}
-            style={{ color: '#e5e7eb', textDecoration: 'none' }}
-          >
+          <Link href={basePath} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
             {t(i18nKeys.platform.nav.dashboard)}
           </Link>
-          <Link
-            href={`${basePath}/tenants`}
-            style={{ color: '#e5e7eb', textDecoration: 'none' }}
-          >
+          <Link href={`${basePath}/tenants`} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
             {t(i18nKeys.platform.nav.tenants)}
           </Link>
-          <Link
-            href={`${basePath}/leads`}
-            style={{ color: '#e5e7eb', textDecoration: 'none' }}
-          >
+          <Link href={`${basePath}/leads`} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
             {t(i18nKeys.platform.nav.leads)}
           </Link>
-          <Link
-            href={`${basePath}/audit`}
-            style={{ color: '#e5e7eb', textDecoration: 'none' }}
-          >
+          <Link href={`${basePath}/audit`} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
             {t(i18nKeys.platform.nav.audit)}
           </Link>
         </nav>

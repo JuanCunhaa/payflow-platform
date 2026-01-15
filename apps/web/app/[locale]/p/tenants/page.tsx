@@ -62,7 +62,7 @@ export default function PlatformTenantsPage() {
 
       try {
         const response = await apiFetch(
-          `/platform/tenants${params.toString() ? `?${params.toString()}` : ''}`,
+          `/platform/tenants${params.toString() ? `?${params.toString()}` : ''}`
         );
         if (!response.ok) {
           setError(t(i18nKeys.platform.tenants.errorGeneric));
@@ -76,7 +76,7 @@ export default function PlatformTenantsPage() {
         setLoading(false);
       }
     },
-    [apiFetch, t],
+    [apiFetch, t]
   );
 
   useEffect(() => {
@@ -207,7 +207,7 @@ export default function PlatformTenantsPage() {
     try {
       const response = await apiFetch(
         `/platform/tenants/${id}/${next === 'ACTIVE' ? 'activate' : 'suspend'}`,
-        { method: 'POST' },
+        { method: 'POST' }
       );
       if (!response.ok) {
         setError(t(i18nKeys.platform.tenants.errorGeneric));
@@ -243,9 +243,7 @@ export default function PlatformTenantsPage() {
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
           <select
             value={statusFilter}
-            onChange={(event) =>
-              setStatusFilter(event.target.value as StatusFilter)
-            }
+            onChange={(event) => setStatusFilter(event.target.value as StatusFilter)}
             style={{
               padding: '6px 10px',
               borderRadius: '999px',
@@ -254,15 +252,9 @@ export default function PlatformTenantsPage() {
             }}
           >
             <option value="all">Todos</option>
-            <option value="DRAFT">
-              {t(i18nKeys.platform.tenants.status.draft)}
-            </option>
-            <option value="ACTIVE">
-              {t(i18nKeys.platform.tenants.status.active)}
-            </option>
-            <option value="SUSPENDED">
-              {t(i18nKeys.platform.tenants.status.suspended)}
-            </option>
+            <option value="DRAFT">{t(i18nKeys.platform.tenants.status.draft)}</option>
+            <option value="ACTIVE">{t(i18nKeys.platform.tenants.status.active)}</option>
+            <option value="SUSPENDED">{t(i18nKeys.platform.tenants.status.suspended)}</option>
           </select>
 
           <button
@@ -528,9 +520,7 @@ export default function PlatformTenantsPage() {
       {loading ? (
         <p>{t(i18nKeys.common.loading)}</p>
       ) : tenants.length === 0 ? (
-        <p style={{ fontSize: '14px', color: '#6b7280' }}>
-          {t(i18nKeys.platform.tenants.empty)}
-        </p>
+        <p style={{ fontSize: '14px', color: '#6b7280' }}>{t(i18nKeys.platform.tenants.empty)}</p>
       ) : (
         <div
           style={{
@@ -575,12 +565,8 @@ export default function PlatformTenantsPage() {
                   <td style={{ padding: '8px 12px' }}>{tenant.name}</td>
                   <td style={{ padding: '8px 12px' }}>{tenant.slug}</td>
                   <td style={{ padding: '8px 12px' }}>{tenant.schoolCode}</td>
-                  <td style={{ padding: '8px 12px' }}>
-                    {statusLabel(tenant.status)}
-                  </td>
-                  <td style={{ padding: '8px 12px' }}>
-                    {formatDate(tenant.createdAt)}
-                  </td>
+                  <td style={{ padding: '8px 12px' }}>{statusLabel(tenant.status)}</td>
+                  <td style={{ padding: '8px 12px' }}>{formatDate(tenant.createdAt)}</td>
                   <td style={{ padding: '8px 12px' }}>
                     <div
                       style={{
@@ -606,9 +592,7 @@ export default function PlatformTenantsPage() {
                       {tenant.status !== 'ACTIVE' && (
                         <button
                           type="button"
-                          onClick={() =>
-                            void handleStatusChange(tenant.id, 'ACTIVE')
-                          }
+                          onClick={() => void handleStatusChange(tenant.id, 'ACTIVE')}
                           disabled={actionId === tenant.id}
                           style={{
                             padding: '4px 8px',
@@ -617,8 +601,7 @@ export default function PlatformTenantsPage() {
                             border: '1px solid #bbf7d0',
                             backgroundColor: '#ecfdf3',
                             color: '#166534',
-                            cursor:
-                              actionId === tenant.id ? 'not-allowed' : 'pointer',
+                            cursor: actionId === tenant.id ? 'not-allowed' : 'pointer',
                           }}
                         >
                           {t(i18nKeys.platform.tenants.status.active)}
@@ -627,9 +610,7 @@ export default function PlatformTenantsPage() {
                       {tenant.status === 'ACTIVE' && (
                         <button
                           type="button"
-                          onClick={() =>
-                            void handleStatusChange(tenant.id, 'SUSPENDED')
-                          }
+                          onClick={() => void handleStatusChange(tenant.id, 'SUSPENDED')}
                           disabled={actionId === tenant.id}
                           style={{
                             padding: '4px 8px',
@@ -638,8 +619,7 @@ export default function PlatformTenantsPage() {
                             border: '1px solid #fecaca',
                             backgroundColor: '#fef2f2',
                             color: '#b91c1c',
-                            cursor:
-                              actionId === tenant.id ? 'not-allowed' : 'pointer',
+                            cursor: actionId === tenant.id ? 'not-allowed' : 'pointer',
                           }}
                         >
                           {t(i18nKeys.platform.tenants.status.suspended)}

@@ -91,7 +91,7 @@ export default function PlatformAuditPage() {
 
       try {
         const response = await apiFetch(
-          `/platform/audit${params.toString() ? `?${params.toString()}` : ''}`,
+          `/platform/audit${params.toString() ? `?${params.toString()}` : ''}`
         );
         if (!response.ok) {
           setError(t(i18nKeys.platform.audit.errorGeneric));
@@ -107,7 +107,7 @@ export default function PlatformAuditPage() {
         setLoading(false);
       }
     },
-    [apiFetch, tenantId, actionFilter, actorEmail, fromDate, toDate, t],
+    [apiFetch, tenantId, actionFilter, actorEmail, fromDate, toDate, t]
   );
 
   useEffect(() => {
@@ -359,9 +359,7 @@ export default function PlatformAuditPage() {
       {loading ? (
         <p>{t(i18nKeys.common.loading)}</p>
       ) : items.length === 0 ? (
-        <p style={{ fontSize: '14px', color: '#6b7280' }}>
-          {t(i18nKeys.platform.audit.empty)}
-        </p>
+        <p style={{ fontSize: '14px', color: '#6b7280' }}>{t(i18nKeys.platform.audit.empty)}</p>
       ) : (
         <div
           style={{
@@ -407,9 +405,7 @@ export default function PlatformAuditPage() {
             <tbody>
               {items.map((item) => (
                 <tr key={item.id} style={{ borderTop: '1px solid #e5e7eb' }}>
-                  <td style={{ padding: '8px 12px' }}>
-                    {formatDate(item.timestamp)}
-                  </td>
+                  <td style={{ padding: '8px 12px' }}>{formatDate(item.timestamp)}</td>
                   <td style={{ padding: '8px 12px' }}>
                     {item.tenant ? `${item.tenant.name} (${item.tenant.slug})` : '-'}
                   </td>

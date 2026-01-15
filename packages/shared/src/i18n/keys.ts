@@ -217,6 +217,13 @@ export const i18nKeys = {
       unauthorizedTitle: 'school.layout.unauthorizedTitle',
       unauthorizedDescription: 'school.layout.unauthorizedDescription',
     },
+    settings: {
+      feedback: {
+        saveSuccess: 'school.settings.feedback.saveSuccess',
+        saveError: 'school.settings.feedback.saveError',
+        loadError: 'school.settings.feedback.loadError',
+      },
+    },
     pages: {
       dashboard: {
         title: 'school.pages.dashboard.title',
