@@ -224,6 +224,50 @@
         "loadError": "Could not load school settings."
       }
     },
+    "classesUi": {
+      "tabs": {
+        "grades": "Grades",
+        "classes": "Classes"
+      },
+      "grades": {
+        "title": "School grades",
+        "table": {
+          "name": "Grade name",
+          "actions": "Actions"
+        },
+        "empty": "No grades found for this school.",
+        "create": "New grade",
+        "edit": "Edit grade",
+        "delete": "Remove grade",
+        "deleteConfirmTitle": "Remove grade",
+        "deleteConfirmDescription": "This grade will be removed. You cannot remove it while there are classes linked to it."
+      },
+      "classes": {
+        "title": "Classes",
+        "table": {
+          "name": "Class name",
+          "grade": "Grade",
+          "actions": "Actions"
+        },
+        "empty": "No classes found for the current filter.",
+        "create": "New class",
+        "edit": "Edit class",
+        "delete": "Remove class",
+        "filterByGrade": "Filter by grade"
+      },
+      "form": {
+        "gradeName": "Grade name",
+        "className": "Class name",
+        "classGrade": "Class grade",
+        "cancel": "Cancel",
+        "save": "Save"
+      },
+      "feedback": {
+        "loadError": "Could not load grades and classes.",
+        "saveError": "Could not save data. Please check the fields and try again.",
+        "deleteError": "Could not remove the record. Please try again."
+      }
+    },
     "pages": {
       "dashboard": {
         "title": "School overview",
@@ -234,8 +278,8 @@
         "description": "Configure basic information, billing rules and integrations for this school (coming soon)."
       },
       "classes": {
-        "title": "Classes",
-        "description": "Manage classes, grades and groups for the school (coming soon)."
+        "title": "Grades and classes",
+        "description": "Organize students by grade and class for this school."
       },
       "students": {
         "title": "Students",

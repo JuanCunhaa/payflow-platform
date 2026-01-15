@@ -224,6 +224,46 @@ export const i18nKeys = {
         loadError: 'school.settings.feedback.loadError',
       },
     },
+    classesUi: {
+      tabs: {
+        grades: 'school.classes.tabs.grades',
+        classes: 'school.classes.tabs.classes',
+      },
+      grades: {
+        title: 'school.classes.grades.title',
+        tableName: 'school.classes.grades.table.name',
+        actions: 'school.classes.grades.table.actions',
+        empty: 'school.classes.grades.empty',
+        create: 'school.classes.grades.create',
+        edit: 'school.classes.grades.edit',
+        delete: 'school.classes.grades.delete',
+        deleteConfirmTitle: 'school.classes.grades.deleteConfirmTitle',
+        deleteConfirmDescription: 'school.classes.grades.deleteConfirmDescription',
+      },
+      classes: {
+        title: 'school.classes.classes.title',
+        tableName: 'school.classes.classes.table.name',
+        tableGrade: 'school.classes.classes.table.grade',
+        actions: 'school.classes.classes.table.actions',
+        empty: 'school.classes.classes.empty',
+        create: 'school.classes.classes.create',
+        edit: 'school.classes.classes.edit',
+        delete: 'school.classes.classes.delete',
+        filterByGrade: 'school.classes.classes.filterByGrade',
+      },
+      form: {
+        gradeName: 'school.classes.form.gradeName',
+        className: 'school.classes.form.className',
+        classGrade: 'school.classes.form.classGrade',
+        cancel: 'school.classes.form.cancel',
+        save: 'school.classes.form.save',
+      },
+      feedback: {
+        loadError: 'school.classes.feedback.loadError',
+        saveError: 'school.classes.feedback.saveError',
+        deleteError: 'school.classes.feedback.deleteError',
+      },
+    },
     pages: {
       dashboard: {
         title: 'school.pages.dashboard.title',

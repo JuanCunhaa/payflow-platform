@@ -1,0 +1,56 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]: PayFlow
+      - navigation [ref=e5]:
+        - link "Inglês" [ref=e6] [cursor=pointer]:
+          - /url: /en-US
+        - link "Entrar" [ref=e7] [cursor=pointer]:
+          - /url: /pt-BR/login
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - heading "PayFlow" [level=1] [ref=e10]
+        - paragraph [ref=e11]: Gestão financeira para escolas e responsáveis
+        - paragraph [ref=e12]: Centralize mensalidades, eventos e cobranças em um só lugar, com comunicação clara entre escola e famílias.
+        - generic [ref=e13]:
+          - link "Entrar" [ref=e14] [cursor=pointer]:
+            - /url: /pt-BR/login
+            - button "Entrar" [ref=e15]
+          - link "Sou responsável" [ref=e16] [cursor=pointer]:
+            - /url: /pt-BR/register/guardian
+            - button "Sou responsável" [active] [ref=e17]
+          - link "Quero na minha escola" [ref=e18] [cursor=pointer]:
+            - /url: /pt-BR/request-demo
+            - button "Quero na minha escola" [ref=e19]
+      - generic [ref=e20]:
+        - heading "Planilha, WhatsApp e comprovantes perdidos não escalam" [level=2] [ref=e21]
+        - list [ref=e22]:
+          - listitem [ref=e23]: Planilhas manuais, versões diferentes e risco de erro a cada atualização.
+          - listitem [ref=e24]: Cobranças por WhatsApp se perdem no meio de recados, grupos e mensagens fora de hora.
+          - listitem [ref=e25]: Comprovantes espalhados entre e-mail, fotos e anexos dificultam conciliação e controle.
+    - generic [ref=e26]:
+      - heading "Uma plataforma pensada para a rotina da escola" [level=2] [ref=e27]
+      - generic [ref=e28]:
+        - generic [ref=e29]: "Eventos: inscrições, pagamentos e presença em um só fluxo."
+        - generic [ref=e30]: "Mensalidades: geração automática, boletos e controle de inadimplência."
+        - generic [ref=e31]: "Cobranças avulsas: materiais, passeios e extras sem fricção."
+        - generic [ref=e32]: "Comunicação: lembretes claros para responsáveis, sem ruído."
+        - generic [ref=e33]: "Financeiro e relatórios: visão consolidada por turma, série e período."
+    - generic [ref=e34]:
+      - heading "Feito para escolas que querem profissionalizar a gestão" [level=2] [ref=e35]
+      - paragraph [ref=e36]: Depoimentos, cases e integrações virão aqui — por enquanto, foque em validar o fluxo.
+    - generic [ref=e37]:
+      - heading "Pronto para organizar os pagamentos da sua escola?" [level=2] [ref=e38]
+      - paragraph [ref=e39]: Comece testando com poucos responsáveis e evolua com segurança.
+      - generic [ref=e40]:
+        - link "Entrar" [ref=e41] [cursor=pointer]:
+          - /url: /pt-BR/login
+          - button "Entrar" [ref=e42]
+        - link "Quero na minha escola" [ref=e43] [cursor=pointer]:
+          - /url: /pt-BR/request-demo
+          - button "Quero na minha escola" [ref=e44]
+  - alert [ref=e45]
+```

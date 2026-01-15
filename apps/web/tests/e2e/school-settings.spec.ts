@@ -78,5 +78,4 @@ test.describe('School settings and audit', () => {
       page.getByText(newDisplayName, { exact: false })
     ).toBeVisible();
   });
-}
-
+});

@@ -136,9 +136,21 @@ export class GradesClassesController {
       });
     }
 
+    const existing = await this.prisma.grade.findFirst({
+      where: { id, tenantId },
+      select: { id: true },
+    });
+
+    if (!existing) {
+      throw new NotFoundException({
+        code: 'grade_not_found',
+        message: 'Grade not found for this tenant',
+      });
+    }
+
     try {
       const grade = await this.prisma.grade.update({
-        where: { id_tenantId: { id, tenantId } },
+        where: { id },
         data,
       });
       return { grade };
@@ -150,10 +162,7 @@ export class GradesClassesController {
         });
       }
 
-      throw new NotFoundException({
-        code: 'grade_not_found',
-        message: 'Grade not found for this tenant',
-      });
+      throw error;
     }
   }
 
@@ -173,17 +182,18 @@ export class GradesClassesController {
       });
     }
 
-    try {
-      await this.prisma.grade.delete({
-        where: { id_tenantId: { id, tenantId } },
-      });
-      return { success: true };
-    } catch {
+    const result = await this.prisma.grade.deleteMany({
+      where: { id, tenantId },
+    });
+
+    if (result.count === 0) {
       throw new NotFoundException({
         code: 'grade_not_found',
         message: 'Grade not found for this tenant',
       });
     }
+
+    return { success: true };
   }
 
   // --------- CLASSES ----------
@@ -313,9 +323,21 @@ export class GradesClassesController {
       });
     }
 
+    const existing = await this.prisma.class.findFirst({
+      where: { id, tenantId },
+      select: { id: true },
+    });
+
+    if (!existing) {
+      throw new NotFoundException({
+        code: 'class_not_found',
+        message: 'Class not found for this tenant',
+      });
+    }
+
     try {
       const classEntity = await this.prisma.class.update({
-        where: { id_tenantId: { id, tenantId } },
+        where: { id },
         data,
       });
       return { class: classEntity };
@@ -327,10 +349,7 @@ export class GradesClassesController {
         });
       }
 
-      throw new NotFoundException({
-        code: 'class_not_found',
-        message: 'Class not found for this tenant',
-      });
+      throw error;
     }
   }
 
@@ -339,16 +358,17 @@ export class GradesClassesController {
   async deleteClass(@Req() req: TenantRequest, @Param('id') id: string) {
     const tenantId = req.tenant!.id;
 
-    try {
-      await this.prisma.class.delete({
-        where: { id_tenantId: { id, tenantId } },
-      });
-      return { success: true };
-    } catch {
+    const result = await this.prisma.class.deleteMany({
+      where: { id, tenantId },
+    });
+
+    if (result.count === 0) {
       throw new NotFoundException({
         code: 'class_not_found',
         message: 'Class not found for this tenant',
       });
     }
+
+    return { success: true };
   }
 }

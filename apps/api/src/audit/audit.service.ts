@@ -69,7 +69,8 @@ export class AuditService {
         action,
         targetType,
         targetId,
-        metadata: safeMetadata,
+        // Prisma Json type is structural; sanitizeMetadata always returns JSON-safe values.
+        metadata: safeMetadata as unknown as Record<string, unknown> | null,
         ip,
         userAgent,
       },

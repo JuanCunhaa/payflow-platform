@@ -2,7 +2,6 @@ import { AuthService } from './auth.service';
 import { PasswordService } from './password.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
-import { Response } from 'express';
 
 type MockUser = {
   id: string;
@@ -21,6 +20,11 @@ type MockRefreshToken = {
   expiresAt: Date;
   revokedAt: Date | null;
   user: MockUser;
+};
+
+type MockResponse = {
+  cookies: Record<string, { value: string; options: Record<string, unknown> }>;
+  cookie(name: string, value: string, options: Record<string, unknown>): void;
 };
 
 async function run() {
@@ -108,20 +112,24 @@ async function run() {
     passwordService
   );
 
-  function createResponseMock() {
+  function createResponseMock(): MockResponse {
     return {
-      cookies: {} as Record<string, { value: string; options: Record<string, unknown> }>,
+      cookies: {},
       cookie(name: string, value: string, options: Record<string, unknown>) {
         this.cookies[name] = { value, options };
       },
-    } as unknown as Response;
+    };
   }
 
   // ---- Login ----
   const resLogin = createResponseMock();
   const loginDto: { email: string; password: string } = { email, password: plainPassword };
 
-  const loginResult = await authService.login(loginDto, undefined, resLogin);
+  const loginResult = await authService.login(
+    loginDto,
+    undefined,
+    resLogin as unknown as unknown as import('express').Response
+  );
 
   if (!loginResult.accessToken.startsWith('jwt-')) {
     throw new Error('login() did not return a valid access token');
@@ -145,7 +153,11 @@ async function run() {
   const refreshCookieValue = resLogin.cookies['payflow_refresh_token'].value;
   const resRefresh = createResponseMock();
 
-  const refreshResult = await authService.refreshSession(refreshCookieValue, undefined, resRefresh);
+  const refreshResult = await authService.refreshSession(
+    refreshCookieValue,
+    undefined,
+    resRefresh as unknown as import('express').Response
+  );
 
   if (!refreshResult.accessToken.startsWith('jwt-')) {
     throw new Error('refreshSession() did not return a valid access token');
@@ -167,7 +179,7 @@ async function run() {
 
   // ---- Logout ----
   const resLogout = createResponseMock();
-  await authService.logout(secondCookieValue, resLogout);
+  await authService.logout(secondCookieValue, resLogout as unknown as import('express').Response);
 
   const clearedCookie = resLogout.cookies['payflow_refresh_token'];
   if (!clearedCookie || clearedCookie.options.maxAge !== 0) {

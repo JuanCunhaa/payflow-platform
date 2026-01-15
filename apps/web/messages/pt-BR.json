@@ -11,7 +11,7 @@
     "description": "Centralize mensalidades, eventos e cobranças em um só lugar, com comunicação clara entre escola e famílias.",
     "problem": {
       "title": "Planilha, WhatsApp e comprovantes perdidos não escalam",
-      "spreadsheets": "Planilhas manuais, versões diferentes e risco de erro a cada atualização.",
+      "spreadsheets": "Planilhas manuais, diferentes versões e risco de erro a cada atualização.",
       "whatsapp": "Cobranças por WhatsApp se perdem no meio de recados, grupos e mensagens fora de hora.",
       "receipts": "Comprovantes espalhados entre e-mail, fotos e anexos dificultam conciliação e controle."
     },
@@ -62,7 +62,7 @@
   },
   "tenant": {
     "notFound": {
-      "title": "Tenant não encontrado",
+      "title": "Escola não encontrada",
       "description": "Verificamos o subdomínio informado e não encontramos uma escola correspondente.",
       "extra": "Verifique o endereço ou entre em contato com o suporte."
     }
@@ -72,7 +72,7 @@
     "welcome": "Bem-vindo, {name}!",
     "userTypeLabel": "Você está logado como",
     "emailLabel": "Email",
-    "tenantLabel": "Tenant",
+    "tenantLabel": "Escola",
     "platformTenantFallback": "Plataforma",
     "backToHome": "Voltar para a home"
   },
@@ -137,8 +137,8 @@
         "submitEdit": "Salvar alterações"
       },
       "empty": "Nenhuma escola encontrada para o filtro atual.",
-      "errorGeneric": "Não foi possível carregar ou atualizar os tenants.",
-      "errorConnection": "Erro de conexão ao carregar ou atualizar os tenants."
+      "errorGeneric": "Não foi possível carregar ou atualizar as escolas.",
+      "errorConnection": "Erro de conexão ao carregar ou atualizar as escolas."
     },
     "leads": {
       "title": "Leads de escolas",
@@ -158,7 +158,7 @@
       "actions": {
         "markContacted": "Marcar como contactado",
         "markConverted": "Marcar como convertido",
-        "convertToTenant": "Criar tenant (DRAFT)"
+        "convertToTenant": "Criar escola (DRAFT)"
       },
       "empty": "Nenhum lead encontrado para o filtro atual.",
       "errorGeneric": "Não foi possível carregar ou atualizar os leads.",
@@ -177,7 +177,7 @@
       },
       "table": {
         "timestamp": "Data/hora",
-        "tenant": "Tenant",
+        "tenant": "Escola",
         "actor": "Ator",
         "action": "Ação",
         "target": "Alvo",
@@ -224,6 +224,50 @@
         "loadError": "Não foi possível carregar as configurações da escola."
       }
     },
+    "classesUi": {
+      "tabs": {
+        "grades": "Séries",
+        "classes": "Turmas"
+      },
+      "grades": {
+        "title": "Séries da escola",
+        "table": {
+          "name": "Nome da série",
+          "actions": "Ações"
+        },
+        "empty": "Nenhuma série cadastrada para esta escola.",
+        "create": "Nova série",
+        "edit": "Editar série",
+        "delete": "Remover série",
+        "deleteConfirmTitle": "Remover série",
+        "deleteConfirmDescription": "Esta série será removida. Você não poderá removê-la enquanto houver turmas vinculadas."
+      },
+      "classes": {
+        "title": "Turmas",
+        "table": {
+          "name": "Nome da turma",
+          "grade": "Série",
+          "actions": "Ações"
+        },
+        "empty": "Nenhuma turma cadastrada para o filtro atual.",
+        "create": "Nova turma",
+        "edit": "Editar turma",
+        "delete": "Remover turma",
+        "filterByGrade": "Filtrar por série"
+      },
+      "form": {
+        "gradeName": "Nome da série",
+        "className": "Nome da turma",
+        "classGrade": "Série da turma",
+        "cancel": "Cancelar",
+        "save": "Salvar"
+      },
+      "feedback": {
+        "loadError": "Não foi possível carregar as séries e turmas.",
+        "saveError": "Não foi possível salvar os dados. Verifique os campos e tente novamente.",
+        "deleteError": "Não foi possível remover o registro. Tente novamente."
+      }
+    },
     "pages": {
       "dashboard": {
         "title": "Visão geral da escola",
@@ -234,8 +278,8 @@
         "description": "Configure informações básicas, regras de cobrança e integrações da escola (em breve)."
       },
       "classes": {
-        "title": "Turmas",
-        "description": "Gerencie turmas, séries e grupos da escola (em breve)."
+        "title": "Séries e turmas",
+        "description": "Organize alunos por série e turma desta escola."
       },
       "students": {
         "title": "Alunos",
