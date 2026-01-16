@@ -100,6 +100,7 @@ model User {
   refreshTokens RefreshToken[]
   guardians     Guardian[]
   emailVerifyTokens EmailVerifyToken[]
+  passwordResetTokens PasswordResetToken[]
 
   @@map("users")
 }
@@ -258,4 +259,17 @@ model EmailVerifyToken {
 
   @@index([userId], map: "email_verify_tokens_user_id_idx")
   @@map("email_verify_tokens")
+}
+
+model PasswordResetToken {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid @map("user_id")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String   @map("token_hash")
+  expiresAt DateTime @map("expires_at")
+  usedAt    DateTime? @map("used_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId], map: "password_reset_tokens_user_id_idx")
+  @@map("password_reset_tokens")
 }

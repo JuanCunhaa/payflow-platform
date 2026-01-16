@@ -1,10 +1,11 @@
-import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma/prisma.service';
 import { LoginDto } from './dto/login.dto';
 import { PasswordService } from './password.service';
 import { Response } from 'express';
 import { randomBytes, randomUUID } from 'crypto';
+import { EmailService } from '../notifications/email.service';
 
 export interface JwtPayload {
   sub: string; // user id
@@ -34,6 +35,7 @@ export interface LoginResponse {
 
 const REFRESH_TOKEN_COOKIE = 'payflow_refresh_token';
 const REFRESH_TOKEN_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+const PASSWORD_RESET_TOKEN_TTL_MS = 60 * 60 * 1000; // 60 minutes
 
 @Injectable()
 export class AuthService {
@@ -42,7 +44,8 @@ export class AuthService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
-    private readonly passwordService: PasswordService
+    private readonly passwordService: PasswordService,
+    private readonly emailService: EmailService
   ) {}
 
   async login(
@@ -361,5 +364,150 @@ export class AuthService {
       ...this.getRefreshCookieOptions(),
       maxAge: 0,
     });
+  }
+
+  /**
+   * Creates a password reset token for the given email if a user exists.
+   * Always succeeds with no indication whether the email is registered.
+   */
+  async requestPasswordReset(email: string): Promise<void> {
+    const normalizedEmail = email.trim().toLowerCase();
+
+    if (!normalizedEmail) {
+      // Keep behaviour generic: do nothing, but do not fail.
+      return;
+    }
+
+    const user = await this.prisma.user.findUnique({
+      where: { email: normalizedEmail },
+      select: { id: true, email: true },
+    });
+
+    if (!user) {
+      // Do not reveal that the email is not registered.
+      this.logger.log(`Password reset requested for non-existent email ${normalizedEmail}`);
+      return;
+    }
+
+    const id = randomUUID();
+    const secret = randomBytes(32).toString('hex');
+    const tokenHash = await this.passwordService.hash(secret);
+    const expiresAt = new Date(Date.now() + PASSWORD_RESET_TOKEN_TTL_MS);
+    const createdAt = new Date();
+
+    // Store hashed token using raw SQL to keep schema dependency minimal.
+    await this.prisma.$executeRaw`
+      INSERT INTO "password_reset_tokens" ("id", "user_id", "token_hash", "expires_at", "created_at")
+      VALUES (${id}, ${user.id}, ${tokenHash}, ${expiresAt}, ${createdAt})
+    `;
+
+    const fullToken = `${id}.${secret}`;
+
+    // Simulated email integration
+    await this.emailService.sendPasswordResetEmail(user.email, fullToken);
+
+    this.logger.log(`Password reset token created for user ${user.email}`);
+  }
+
+  /**
+   * Resets password using a reset token and new password.
+   * Applies password strength validation and revokes existing refresh tokens.
+   */
+  async resetPassword(token: string, newPassword: string): Promise<void> {
+    const trimmedToken = token?.trim();
+    if (!trimmedToken) {
+      throw new BadRequestException({
+        code: 'invalid_token',
+        message: 'Invalid password reset token',
+      });
+    }
+
+    // Validate new password strength first.
+    this.passwordService.validateStrength(newPassword);
+
+    const [id, secret] = trimmedToken.split('.');
+    if (!id || !secret) {
+      throw new BadRequestException({
+        code: 'invalid_token',
+        message: 'Invalid password reset token',
+      });
+    }
+
+    type PasswordResetTokenRow = {
+      id: string;
+      userId: string;
+      tokenHash: string;
+      expiresAt: Date;
+      usedAt: Date | null;
+    };
+
+    const rows = await this.prisma.$queryRaw<PasswordResetTokenRow[]>`
+      SELECT
+        id,
+        user_id   AS "userId",
+        token_hash AS "tokenHash",
+        expires_at AS "expiresAt",
+        used_at    AS "usedAt"
+      FROM "password_reset_tokens"
+      WHERE id = ${id}
+    `;
+
+    const record = rows[0];
+
+    if (!record) {
+      throw new BadRequestException({
+        code: 'invalid_token',
+        message: 'Invalid or unknown password reset token',
+      });
+    }
+
+    if (record.usedAt) {
+      throw new BadRequestException({
+        code: 'reset_token_used',
+        message: 'Password reset token has already been used',
+      });
+    }
+
+    const now = new Date();
+    if (record.expiresAt < now) {
+      throw new BadRequestException({
+        code: 'reset_token_expired',
+        message: 'Password reset token has expired',
+      });
+    }
+
+    const isValidSecret = await this.passwordService.verify(secret, record.tokenHash);
+    if (!isValidSecret) {
+      throw new BadRequestException({
+        code: 'invalid_token',
+        message: 'Invalid password reset token',
+      });
+    }
+
+    const newHash = await this.passwordService.hash(newPassword);
+
+    // Update password, mark token as used and revoke existing refresh tokens.
+    await this.prisma.user.update({
+      where: { id: record.userId },
+      data: { passwordHash: newHash },
+    });
+
+    await this.prisma.$executeRaw`
+      UPDATE "password_reset_tokens"
+      SET "used_at" = ${now}
+      WHERE "id" = ${record.id}
+    `;
+
+    await this.refreshTokenRepo.updateMany({
+      where: {
+        userId: record.userId,
+        revokedAt: null,
+      },
+      data: {
+        revokedAt: now,
+      },
+    });
+
+    this.logger.log(`Password reset completed for user ${record.userId}`);
   }
 }

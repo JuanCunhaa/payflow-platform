@@ -11,5 +11,10 @@ export class EmailService {
   async sendGuardianRejectionEmail(recipient: string): Promise<void> {
     this.logger.log(`Simulated email: guardian rejection sent to ${recipient}`);
   }
-}
 
+  async sendPasswordResetEmail(recipient: string, token: string): Promise<void> {
+    this.logger.log(
+      `Simulated email: password reset requested for ${recipient}. Token: ${token}`
+    );
+  }
+}

@@ -8,6 +8,8 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { CurrentUser, CurrentUserPayload } from './decorators/current-user.decorator';
 import { Public } from './decorators/public.decorator';
 import { AuditService } from '../audit/audit.service';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -91,6 +93,34 @@ export class AuthController {
     const tenant = req.tenant;
     const refreshCookie = req.cookies?.payflow_refresh_token as string | undefined;
     return this.authService.refreshSession(refreshCookie, tenant?.slug, res);
+  }
+
+  /**
+   * POST /auth/forgot-password
+   * Initiates password reset flow. Always returns a generic success message.
+   * Rate limited with "medium" bucket to avoid abuse.
+   */
+  @Post('forgot-password')
+  @Public()
+  @UseGuards(CustomThrottlerGuard)
+  @Throttle({ medium: { ttl: 10 * 60 * 1000, limit: 5 } })
+  async forgotPassword(@Body() body: ForgotPasswordDto) {
+    await this.authService.requestPasswordReset(body.email);
+    return {
+      message: 'Se existir conta, enviaremos instruções para redefinir a senha.',
+    };
+  }
+
+  /**
+   * POST /auth/reset-password
+   * Completes password reset using a valid token and new password.
+   */
+  @Post('reset-password')
+  @Public()
+  @UseGuards(CustomThrottlerGuard)
+  async resetPassword(@Body() body: ResetPasswordDto) {
+    await this.authService.resetPassword(body.token, body.newPassword);
+    return { success: true };
   }
 
   /**

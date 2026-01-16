@@ -31,6 +31,15 @@ async function run() {
   const passwordService = new PasswordService();
   const users: MockUser[] = [];
   const refreshTokens: MockRefreshToken[] = [];
+  const passwordResetTokens: {
+    id: string;
+    userId: string;
+    tokenHash: string;
+    expiresAt: Date;
+    usedAt: Date | null;
+    createdAt: Date;
+  }[] = [];
+  const emailEvents: { recipient: string; token: string }[] = [];
 
   const email = 'user@example.com';
   const plainPassword = 'Admin@12345';
@@ -52,6 +61,16 @@ async function run() {
       findUnique: async (args: { where?: { email?: string } }) => {
         const whereEmail = args.where?.email;
         return users.find((u) => u.email === whereEmail) || null;
+      },
+      update: async (args: { where: { id: string }; data: Partial<MockUser> }) => {
+        const { where, data } = args;
+        const { id } = where;
+        const existing = users.find((u) => u.id === id);
+        if (!existing) {
+          throw new Error('User not found');
+        }
+        Object.assign(existing, data);
+        return existing;
       },
     },
     refreshToken: {
@@ -83,21 +102,79 @@ async function run() {
         return token;
       },
       updateMany: async (args: {
-        where: { id: string; revokedAt: Date | null };
+        where: { id?: string; userId?: string; revokedAt?: Date | null };
         data: Partial<MockRefreshToken>;
       }) => {
-        const id = args.where.id;
-        const matchRevokedAt = args.where.revokedAt;
+        const { id, userId, revokedAt } = args.where;
         const data = args.data ?? {};
         let count = 0;
         for (const t of refreshTokens) {
-          if (t.id === id && t.revokedAt === matchRevokedAt) {
+          const idMatches = id ? t.id === id : true;
+          const userMatches = userId ? t.userId === userId : true;
+          const revokedMatches =
+            typeof revokedAt === 'undefined' ? true : t.revokedAt === revokedAt;
+          if (idMatches && userMatches && revokedMatches) {
             Object.assign(t, data);
             count++;
           }
         }
         return { count };
       },
+    },
+    $executeRaw: async (strings: TemplateStringsArray, ...values: unknown[]) => {
+      const sql = strings.join(' ');
+      if (sql.includes('INSERT INTO "password_reset_tokens"')) {
+        const [id, userId, tokenHash, expiresAt, createdAt] = values as [
+          string,
+          string,
+          string,
+          Date,
+          Date,
+        ];
+        passwordResetTokens.push({
+          id,
+          userId,
+          tokenHash,
+          expiresAt,
+          usedAt: null,
+          createdAt,
+        });
+        return 1;
+      }
+      if (sql.includes('UPDATE "password_reset_tokens"')) {
+        const [usedAt, id] = values as [Date, string];
+        const record = passwordResetTokens.find((t) => t.id === id);
+        if (record) {
+          record.usedAt = usedAt;
+        }
+        return 1;
+      }
+      throw new Error(`Unsupported $executeRaw SQL in test: ${sql}`);
+    },
+    $queryRaw: async <T = unknown>(strings: TemplateStringsArray, ...values: unknown[]): Promise<T> => {
+      const sql = strings.join(' ');
+      if (sql.includes('FROM "password_reset_tokens"')) {
+        const [id] = values as [string];
+        const record = passwordResetTokens.find((t) => t.id === id);
+        if (!record) {
+          return [] as T;
+        }
+        const row = {
+          id: record.id,
+          userId: record.userId,
+          tokenHash: record.tokenHash,
+          expiresAt: record.expiresAt,
+          usedAt: record.usedAt,
+        };
+        return [row] as unknown as T;
+      }
+      throw new Error(`Unsupported $queryRaw SQL in test: ${sql}`);
+    },
+  };
+
+  const emailServiceMock = {
+    async sendPasswordResetEmail(recipient: string, token: string) {
+      emailEvents.push({ recipient, token });
     },
   };
 
@@ -109,7 +186,8 @@ async function run() {
   const authService = new AuthService(
     prismaMock as unknown as PrismaService,
     jwtMock,
-    passwordService
+    passwordService,
+    emailServiceMock as unknown as any
   );
 
   function createResponseMock(): MockResponse {
@@ -190,6 +268,91 @@ async function run() {
   const secondToken = refreshTokens.find((t) => t.id === secondTokenId);
   if (!secondToken || secondToken.revokedAt === null) {
     throw new Error('logout() should revoke current refresh token');
+  }
+
+  // ---- Prepare an active refresh token for reset tests ----
+  const resLogin2 = createResponseMock();
+  await authService.login(
+    loginDto,
+    undefined,
+    resLogin2 as unknown as import('express').Response
+  );
+
+  const activeBeforeReset = refreshTokens.filter(
+    (t) => t.userId === user.id && t.revokedAt === null
+  );
+  if (activeBeforeReset.length < 1) {
+    throw new Error('Second login should create an active refresh token');
+  }
+
+  // ---- Password reset: request ----
+  await authService.requestPasswordReset(email);
+
+  if (passwordResetTokens.length !== 1) {
+    throw new Error('requestPasswordReset() should create exactly one reset token');
+  }
+  if (emailEvents.length !== 1) {
+    throw new Error('requestPasswordReset() should send one reset email');
+  }
+
+  const resetTokenValue = emailEvents[0].token;
+  const resetRecord = passwordResetTokens[0];
+
+  // ---- Password reset: invalid token ----
+  try {
+    await authService.resetPassword('invalid-token', 'NewAdmin@123');
+    throw new Error('resetPassword() should reject an invalid token');
+  } catch {
+    // expected
+  }
+
+  // ---- Password reset: expired token ----
+  resetRecord.expiresAt = new Date(Date.now() - 60_000);
+  try {
+    await authService.resetPassword(resetTokenValue, 'NewAdmin@123');
+    throw new Error('resetPassword() should reject an expired token');
+  } catch {
+    // expected
+  }
+
+  // ---- Password reset: token already used ----
+  resetRecord.expiresAt = new Date(Date.now() + 60_000);
+  resetRecord.usedAt = new Date();
+  try {
+    await authService.resetPassword(resetTokenValue, 'NewAdmin@123');
+    throw new Error('resetPassword() should reject a used token');
+  } catch {
+    // expected
+  }
+
+  // ---- Password reset: success path ----
+  passwordResetTokens.length = 0;
+  emailEvents.length = 0;
+
+  await authService.requestPasswordReset(email);
+
+  const freshTokenValue = emailEvents[0].token;
+  const freshRecord = passwordResetTokens[0];
+
+  freshRecord.expiresAt = new Date(Date.now() + 60_000);
+  freshRecord.usedAt = null;
+
+  await authService.resetPassword(freshTokenValue, 'NewStrongPass1');
+
+  if (!freshRecord.usedAt) {
+    throw new Error('resetPassword() should mark token as used');
+  }
+
+  const passwordUpdated = await passwordService.verify('NewStrongPass1', user.passwordHash);
+  if (!passwordUpdated) {
+    throw new Error('resetPassword() should update the user password hash');
+  }
+
+  const activeAfterReset = refreshTokens.filter(
+    (t) => t.userId === user.id && t.revokedAt === null
+  );
+  if (activeAfterReset.length > 0) {
+    throw new Error('resetPassword() should revoke existing refresh tokens');
   }
 
   console.log('AuthService tests passed');
