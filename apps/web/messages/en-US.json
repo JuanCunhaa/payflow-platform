@@ -302,6 +302,47 @@
       },
       "empty": "No students found for the current filter."
     },
+    "guardiansUi": {
+      "filters": {
+        "search": "Search by name or email",
+        "status": "Status",
+        "statusAll": "All statuses"
+      },
+      "table": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "actions": {
+        "create": "New guardian",
+        "edit": "Edit",
+        "inactivate": "Deactivate",
+        "activate": "Activate",
+        "viewDetails": "View details",
+        "linkStudent": "Link student",
+        "unlinkStudent": "Unlink"
+      },
+      "detail": {
+        "title": "Guardian details",
+        "infoTitle": "Guardian information",
+        "studentsTitle": "Linked students",
+        "studentsEmpty": "No students linked to this guardian."
+      },
+      "feedback": {
+        "loadError": "Could not load guardians.",
+        "saveError": "Could not save guardian. Please check the fields and try again.",
+        "deleteError": "Could not delete guardian. Please try again.",
+        "linkError": "Could not link student. Please check the data and try again.",
+        "unlinkError": "Could not unlink student. Please try again."
+      },
+      "empty": "No guardians found for the current filter."
+    },
     "pages": {
       "dashboard": {
         "title": "School overview",
@@ -321,7 +362,7 @@
       },
       "guardians": {
         "title": "Guardians",
-        "description": "Manage guardian profiles and their links to students (coming soon)."
+        "description": "Manage guardian profiles and their links to students."
       },
       "approvalsGuardians": {
         "title": "Guardian approvals",

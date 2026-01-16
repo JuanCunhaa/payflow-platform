@@ -302,6 +302,47 @@
       },
       "empty": "Nenhum aluno encontrado para o filtro atual."
     },
+    "guardiansUi": {
+      "filters": {
+        "search": "Buscar por nome ou email",
+        "status": "Status",
+        "statusAll": "Todos os status"
+      },
+      "table": {
+        "name": "Nome",
+        "email": "Email",
+        "phone": "Telefone",
+        "status": "Status",
+        "actions": "Ações"
+      },
+      "status": {
+        "active": "Ativo",
+        "inactive": "Inativo"
+      },
+      "actions": {
+        "create": "Novo responsável",
+        "edit": "Editar",
+        "inactivate": "Inativar",
+        "activate": "Reativar",
+        "viewDetails": "Ver detalhes",
+        "linkStudent": "Vincular aluno",
+        "unlinkStudent": "Desvincular"
+      },
+      "detail": {
+        "title": "Detalhes do responsável",
+        "infoTitle": "Dados do responsável",
+        "studentsTitle": "Alunos vinculados",
+        "studentsEmpty": "Nenhum aluno vinculado a este responsável."
+      },
+      "feedback": {
+        "loadError": "Não foi possível carregar os responsáveis.",
+        "saveError": "Não foi possível salvar o responsável. Verifique os campos e tente novamente.",
+        "deleteError": "Não foi possível remover o responsável. Tente novamente.",
+        "linkError": "Não foi possível vincular o aluno. Verifique os dados e tente novamente.",
+        "unlinkError": "Não foi possível desvincular o aluno. Tente novamente."
+      },
+      "empty": "Nenhum responsável encontrado para o filtro atual."
+    },
     "pages": {
       "dashboard": {
         "title": "Visão geral da escola",
@@ -321,7 +362,7 @@
       },
       "guardians": {
         "title": "Responsáveis",
-        "description": "Gerencie perfis de responsáveis e seus vínculos com os alunos (em breve)."
+        "description": "Gerencie perfis de responsáveis e seus vínculos com os alunos."
       },
       "approvalsGuardians": {
         "title": "Aprovação de responsáveis",
@@ -330,4 +371,3 @@
     }
   }
 }
-

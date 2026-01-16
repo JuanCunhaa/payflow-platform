@@ -92,6 +92,11 @@ export class GuardiansController {
         skip: (page - 1) * pageSize,
         take: pageSize,
         include: {
+          user: {
+            select: {
+              email: true,
+            },
+          },
           students: {
             select: {
               studentId: true,
@@ -136,15 +141,41 @@ export class GuardiansController {
       });
     }
 
-    const user = await this.prisma.user.findUnique({
-      where: { id: dto.userId },
-      select: { id: true, type: true },
-    });
+    let userId: string | null = null;
 
-    if (!user) {
+    if (dto.userId) {
+      const user = await this.prisma.user.findUnique({
+        where: { id: dto.userId },
+        select: { id: true, type: true },
+      });
+
+      if (!user) {
+        throw new BadRequestException({
+          code: 'user_not_found',
+          message: 'User not found for guardian',
+        });
+      }
+
+      userId = user.id;
+    } else if (dto.userEmail) {
+      const email = dto.userEmail.trim().toLowerCase();
+      const user = await this.prisma.user.findUnique({
+        where: { email },
+        select: { id: true, type: true },
+      });
+
+      if (!user) {
+        throw new BadRequestException({
+          code: 'user_not_found',
+          message: 'User not found for guardian',
+        });
+      }
+
+      userId = user.id;
+    } else {
       throw new BadRequestException({
-        code: 'user_not_found',
-        message: 'User not found for guardian',
+        code: 'user_required',
+        message: 'Either userId or userEmail must be provided',
       });
     }
 
@@ -157,7 +188,7 @@ export class GuardiansController {
       const guardian = await this.prisma.guardian.create({
         data: {
           tenantId,
-          userId: user.id,
+          userId,
           name,
           phone,
           status,
@@ -354,4 +385,3 @@ export class GuardiansController {
     return { success: true };
   }
 }
-

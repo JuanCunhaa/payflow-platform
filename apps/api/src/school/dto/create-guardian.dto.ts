@@ -1,4 +1,12 @@
-import { IsIn, IsNotEmpty, IsOptional, IsString, IsUUID, MaxLength } from 'class-validator';
+import {
+  IsEmail,
+  IsIn,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsUUID,
+  MaxLength,
+} from 'class-validator';
 
 const GUARDIAN_STATUSES = ['ACTIVE', 'INACTIVE'] as const;
 
@@ -15,12 +23,15 @@ export class CreateGuardianDto {
   @MaxLength(50)
   phone!: string;
 
+  @IsOptional()
   @IsUUID()
-  @IsNotEmpty()
-  userId!: string;
+  userId?: string;
+
+  @IsOptional()
+  @IsEmail()
+  userEmail?: string;
 
   @IsOptional()
   @IsIn(GUARDIAN_STATUSES)
   status?: GuardianStatusDto;
 }
-

@@ -298,6 +298,47 @@ export const i18nKeys = {
       },
       empty: 'school.students.empty',
     },
+    guardiansUi: {
+      filters: {
+        search: 'school.guardians.filters.search',
+        status: 'school.guardians.filters.status',
+        statusAll: 'school.guardians.filters.statusAll',
+      },
+      table: {
+        name: 'school.guardians.table.name',
+        email: 'school.guardians.table.email',
+        phone: 'school.guardians.table.phone',
+        status: 'school.guardians.table.status',
+        actions: 'school.guardians.table.actions',
+      },
+      status: {
+        active: 'school.guardians.status.active',
+        inactive: 'school.guardians.status.inactive',
+      },
+      actions: {
+        create: 'school.guardians.actions.create',
+        edit: 'school.guardians.actions.edit',
+        inactivate: 'school.guardians.actions.inactivate',
+        activate: 'school.guardians.actions.activate',
+        viewDetails: 'school.guardians.actions.viewDetails',
+        linkStudent: 'school.guardians.actions.linkStudent',
+        unlinkStudent: 'school.guardians.actions.unlinkStudent',
+      },
+      detail: {
+        title: 'school.guardians.detail.title',
+        infoTitle: 'school.guardians.detail.infoTitle',
+        studentsTitle: 'school.guardians.detail.studentsTitle',
+        studentsEmpty: 'school.guardians.detail.studentsEmpty',
+      },
+      feedback: {
+        loadError: 'school.guardians.feedback.loadError',
+        saveError: 'school.guardians.feedback.saveError',
+        deleteError: 'school.guardians.feedback.deleteError',
+        linkError: 'school.guardians.feedback.linkError',
+        unlinkError: 'school.guardians.feedback.unlinkError',
+      },
+      empty: 'school.guardians.empty',
+    },
     pages: {
       dashboard: {
         title: 'school.pages.dashboard.title',
