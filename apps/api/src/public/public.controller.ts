@@ -1,17 +1,20 @@
-import { BadRequestException, Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
+import type { Request } from 'express';
 import { PrismaService } from '../prisma/prisma.service';
 import { PasswordService } from '../auth/password.service';
 import { CustomThrottlerGuard } from '../common/guards/throttler.guard';
 import { CreateLeadDto } from './dto/create-lead.dto';
 import { RegisterGuardianDto } from './dto/register-guardian.dto';
+import { AuditService } from '../audit/audit.service';
 
 @Controller('public')
 @UseGuards(CustomThrottlerGuard)
 export class PublicController {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly passwordService: PasswordService
+    private readonly passwordService: PasswordService,
+    private readonly auditService: AuditService
   ) {}
 
   /**
@@ -75,7 +78,7 @@ export class PublicController {
    */
   @Post('register-guardian')
   @Throttle({ medium: { ttl: 10 * 60 * 1000, limit: 5 } })
-  async registerGuardian(@Body() dto: RegisterGuardianDto) {
+  async registerGuardian(@Body() dto: RegisterGuardianDto, @Req() req: Request) {
     const name = dto.name.trim();
     const email = dto.email.trim().toLowerCase();
     const phone = dto.phone.trim();
@@ -123,7 +126,7 @@ export class PublicController {
 
     const passwordHash = await this.passwordService.hash(dto.password);
 
-    await this.prisma.$transaction(async (tx) => {
+    const result = await this.prisma.$transaction(async (tx) => {
       const user = await tx.user.create({
         data: {
           email,
@@ -151,6 +154,28 @@ export class PublicController {
           status: 'ACTIVE',
         },
       });
+
+      return { userId: user.id };
+    });
+
+    const forwardedFor = req.headers['x-forwarded-for'];
+    const ip =
+      (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) || req.ip || null;
+    const userAgent = (req.headers['user-agent'] as string | undefined) || null;
+
+    await this.auditService.log({
+      tenantId: tenant.id,
+      actorUserId: result.userId,
+      actorType: 'PUBLIC',
+      action: 'guardian.register',
+      targetType: 'user',
+      targetId: result.userId,
+      metadata: {
+        email,
+        schoolCode,
+      },
+      ip,
+      userAgent,
     });
 
     return {
