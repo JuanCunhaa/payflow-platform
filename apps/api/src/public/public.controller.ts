@@ -1,13 +1,18 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 import { PrismaService } from '../prisma/prisma.service';
+import { PasswordService } from '../auth/password.service';
 import { CustomThrottlerGuard } from '../common/guards/throttler.guard';
 import { CreateLeadDto } from './dto/create-lead.dto';
+import { RegisterGuardianDto } from './dto/register-guardian.dto';
 
 @Controller('public')
 @UseGuards(CustomThrottlerGuard)
 export class PublicController {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly passwordService: PasswordService
+  ) {}
 
   /**
    * GET /public/info
@@ -61,5 +66,96 @@ export class PublicController {
 
     // Captcha token is accepted in DTO for future use, but ignored for now.
     return { success: true };
+  }
+
+  /**
+   * POST /public/register-guardian
+   * Public endpoint for guardian self-registration.
+   * Uses medium rate limiting and applies password policy.
+   */
+  @Post('register-guardian')
+  @Throttle({ medium: { ttl: 10 * 60 * 1000, limit: 5 } })
+  async registerGuardian(@Body() dto: RegisterGuardianDto) {
+    const name = dto.name.trim();
+    const email = dto.email.trim().toLowerCase();
+    const phone = dto.phone.trim();
+    const schoolCode = dto.schoolCode.trim().toUpperCase();
+
+    if (!name || !email || !phone || !dto.password || !dto.confirmPassword || !schoolCode) {
+      throw new BadRequestException({
+        code: 'validation_error',
+        message: 'All fields are required',
+      });
+    }
+
+    if (dto.password !== dto.confirmPassword) {
+      throw new BadRequestException({
+        code: 'password_mismatch',
+        message: 'Password and confirmation do not match',
+      });
+    }
+
+    this.passwordService.validateStrength(dto.password);
+
+    const tenant = await this.prisma.tenant.findUnique({
+      where: { schoolCode },
+      select: { id: true, status: true },
+    });
+
+    if (!tenant || tenant.status !== 'ACTIVE') {
+      throw new BadRequestException({
+        code: 'school_code_not_found',
+        message: 'School code is invalid or tenant is not active',
+      });
+    }
+
+    const existingUser = await this.prisma.user.findUnique({
+      where: { email },
+      select: { id: true },
+    });
+
+    if (existingUser) {
+      throw new BadRequestException({
+        code: 'email_in_use',
+        message: 'An account with this email already exists',
+      });
+    }
+
+    const passwordHash = await this.passwordService.hash(dto.password);
+
+    await this.prisma.$transaction(async (tx) => {
+      const user = await tx.user.create({
+        data: {
+          email,
+          name,
+          passwordHash,
+          type: 'GUARDIAN',
+          status: 'PENDING_APPROVAL',
+        },
+      });
+
+      await tx.membership.create({
+        data: {
+          userId: user.id,
+          tenantId: tenant.id,
+          role: 'GUARDIAN',
+        },
+      });
+
+      await tx.guardian.create({
+        data: {
+          tenantId: tenant.id,
+          userId: user.id,
+          name,
+          phone,
+          status: 'ACTIVE',
+        },
+      });
+    });
+
+    return {
+      success: true,
+      pendingApproval: true,
+    };
   }
 }

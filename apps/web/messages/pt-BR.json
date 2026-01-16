@@ -102,6 +102,31 @@
       "connection": "Erro de conexão. Verifique sua internet e tente novamente."
     }
   },
+  "guardianRegister": {
+    "title": "Sou responsável",
+    "description": "Preencha seus dados e o código da escola para criar sua conta. Após o envio, a escola precisará aprovar seu cadastro antes do primeiro acesso.",
+    "form": {
+      "name": "Nome completo",
+      "email": "Email",
+      "phone": "Telefone",
+      "password": "Senha",
+      "confirmPassword": "Confirmar senha",
+      "schoolCode": "School Code da escola",
+      "submit": "Criar minha conta"
+    },
+    "success": {
+      "title": "Cadastro enviado para aprovação",
+      "description": "Recebemos seus dados. Assim que a escola aprovar seu cadastro, você poderá acessar o portal do responsável com seu email e senha."
+    },
+    "error": {
+      "validation": "Verifique se todos os campos foram preenchidos corretamente e se as senhas conferem.",
+      "weakPassword": "Sua senha é muito fraca. Use pelo menos 8 caracteres, incluindo letras e números, e evite senhas comuns.",
+      "schoolCode": "School Code inválido ou escola não encontrada. Confirme o código com a escola.",
+      "emailInUse": "Já existe uma conta cadastrada com este email.",
+      "generic": "Não foi possível concluir seu cadastro agora. Tente novamente em alguns minutos.",
+      "connection": "Erro de conexão. Verifique sua internet e tente novamente."
+    }
+  },
   "platform": {
     "nav": {
       "dashboard": "Plataforma",

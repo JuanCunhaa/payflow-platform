@@ -102,6 +102,31 @@ export const i18nKeys = {
       connection: 'requestDemo.error.connection',
     },
   },
+  guardianRegister: {
+    title: 'guardianRegister.title',
+    description: 'guardianRegister.description',
+    form: {
+      name: 'guardianRegister.form.name',
+      email: 'guardianRegister.form.email',
+      phone: 'guardianRegister.form.phone',
+      password: 'guardianRegister.form.password',
+      confirmPassword: 'guardianRegister.form.confirmPassword',
+      schoolCode: 'guardianRegister.form.schoolCode',
+      submit: 'guardianRegister.form.submit',
+    },
+    success: {
+      title: 'guardianRegister.success.title',
+      description: 'guardianRegister.success.description',
+    },
+    error: {
+      validation: 'guardianRegister.error.validation',
+      weakPassword: 'guardianRegister.error.weakPassword',
+      schoolCode: 'guardianRegister.error.schoolCode',
+      emailInUse: 'guardianRegister.error.emailInUse',
+      generic: 'guardianRegister.error.generic',
+      connection: 'guardianRegister.error.connection',
+    },
+  },
   platform: {
     nav: {
       dashboard: 'platform.nav.dashboard',

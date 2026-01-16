@@ -102,6 +102,31 @@
       "connection": "Connection error. Check your internet and try again."
     }
   },
+  "guardianRegister": {
+    "title": "I'm a guardian",
+    "description": "Fill in your details and the school code to create your account. After submitting, the school must approve your registration before you can log in.",
+    "form": {
+      "name": "Full name",
+      "email": "Email",
+      "phone": "Phone",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "schoolCode": "School code",
+      "submit": "Create my account"
+    },
+    "success": {
+      "title": "Registration sent for approval",
+      "description": "We received your details. As soon as the school approves your registration, you will be able to access the guardian portal with your email and password."
+    },
+    "error": {
+      "validation": "Please check that all fields are filled in correctly and that the passwords match.",
+      "weakPassword": "Your password is too weak. Use at least 8 characters including letters and numbers, and avoid very common passwords.",
+      "schoolCode": "Invalid school code or school not found. Confirm the code with the school.",
+      "emailInUse": "An account with this email already exists.",
+      "generic": "We couldn't complete your registration right now. Please try again in a few minutes.",
+      "connection": "Connection error. Check your internet and try again."
+    }
+  },
   "platform": {
     "nav": {
       "dashboard": "Platform",
