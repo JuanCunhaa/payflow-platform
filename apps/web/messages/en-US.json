@@ -44,10 +44,42 @@
     "submit": "Sign in",
     "noAccount": "Don't have an account?",
     "signup": "Sign up",
+    "forgotPassword": "Forgot your password?",
     "error": {
       "generic": "Login failed",
       "connection": "Connection error. Please try again.",
       "rateLimit": "Too many login attempts. Please try again in a few minutes."
+    }
+  },
+  "passwordReset": {
+    "forgot": {
+      "title": "Forgot your password?",
+      "description": "Enter your email. If there is an account, we will send instructions to reset your password.",
+      "emailLabel": "Email",
+      "submit": "Send instructions",
+      "success": "If an account exists with this email, you will receive password reset instructions in a few minutes.",
+      "error": {
+        "validation": "Please enter a valid email address.",
+        "connection": "Connection error. Please try again in a few minutes.",
+        "generic": "We couldn't process your request right now. Please try again in a few minutes."
+      }
+    },
+    "reset": {
+      "title": "Reset password",
+      "description": "Set a new password to access your account.",
+      "newPasswordLabel": "New password",
+      "confirmPasswordLabel": "Confirm new password",
+      "submit": "Reset password",
+      "success": "Your password has been reset successfully. You can now log in with the new password.",
+      "error": {
+        "validation": "Check that both password fields are filled and match.",
+        "weakPassword": "Your password is too weak. Use at least 8 characters with letters and numbers.",
+        "invalidToken": "Invalid reset link. Please request a new password reset email.",
+        "expiredToken": "This reset link has expired. Please request a new password reset email.",
+        "usedToken": "This reset link has already been used. Please request a new password reset email.",
+        "generic": "We couldn't reset your password right now. Please try again in a few minutes.",
+        "connection": "Connection error. Check your internet and try again."
+      }
     }
   },
   "common": {

@@ -44,10 +44,42 @@ export const i18nKeys = {
     submit: 'login.submit',
     noAccount: 'login.noAccount',
     signup: 'login.signup',
+    forgotPassword: 'login.forgotPassword',
     error: {
       generic: 'login.error.generic',
       connection: 'login.error.connection',
       rateLimit: 'login.error.rateLimit',
+    },
+  },
+  passwordReset: {
+    forgot: {
+      title: 'passwordReset.forgot.title',
+      description: 'passwordReset.forgot.description',
+      emailLabel: 'passwordReset.forgot.emailLabel',
+      submit: 'passwordReset.forgot.submit',
+      success: 'passwordReset.forgot.success',
+      error: {
+        validation: 'passwordReset.forgot.error.validation',
+        connection: 'passwordReset.forgot.error.connection',
+        generic: 'passwordReset.forgot.error.generic',
+      },
+    },
+    reset: {
+      title: 'passwordReset.reset.title',
+      description: 'passwordReset.reset.description',
+      newPasswordLabel: 'passwordReset.reset.newPasswordLabel',
+      confirmPasswordLabel: 'passwordReset.reset.confirmPasswordLabel',
+      submit: 'passwordReset.reset.submit',
+      success: 'passwordReset.reset.success',
+      error: {
+        validation: 'passwordReset.reset.error.validation',
+        weakPassword: 'passwordReset.reset.error.weakPassword',
+        invalidToken: 'passwordReset.reset.error.invalidToken',
+        expiredToken: 'passwordReset.reset.error.expiredToken',
+        usedToken: 'passwordReset.reset.error.usedToken',
+        generic: 'passwordReset.reset.error.generic',
+        connection: 'passwordReset.reset.error.connection',
+      },
     },
   },
   common: {

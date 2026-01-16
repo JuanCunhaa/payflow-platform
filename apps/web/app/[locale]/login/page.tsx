@@ -111,6 +111,10 @@ export default function LoginPage() {
           />
         </div>
 
+        <div style={{ textAlign: 'right', fontSize: '13px' }}>
+          <Link href={`/${locale}/forgot-password`}>{t(i18nKeys.login.forgotPassword)}</Link>
+        </div>
+
         <button
           type="submit"
           disabled={loading}

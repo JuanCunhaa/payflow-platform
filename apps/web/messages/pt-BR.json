@@ -44,10 +44,42 @@
     "submit": "Entrar",
     "noAccount": "Não tem conta?",
     "signup": "Cadastre-se",
+    "forgotPassword": "Esqueci minha senha",
     "error": {
       "generic": "Falha no login",
       "connection": "Erro de conexão. Tente novamente.",
       "rateLimit": "Muitas tentativas de login. Tente novamente em alguns minutos."
+    }
+  },
+  "passwordReset": {
+    "forgot": {
+      "title": "Esqueci minha senha",
+      "description": "Informe o seu email. Se existir uma conta, enviaremos instruções para redefinir a senha.",
+      "emailLabel": "Email",
+      "submit": "Enviar instruções",
+      "success": "Se existir uma conta com este email, você receberá instruções para redefinir a senha em alguns minutos.",
+      "error": {
+        "validation": "Informe um email válido.",
+        "connection": "Erro de conexão. Tente novamente em alguns minutos.",
+        "generic": "Não foi possível processar sua solicitação agora. Tente novamente em alguns minutos."
+      }
+    },
+    "reset": {
+      "title": "Redefinir senha",
+      "description": "Defina uma nova senha para acessar sua conta.",
+      "newPasswordLabel": "Nova senha",
+      "confirmPasswordLabel": "Confirmar nova senha",
+      "submit": "Redefinir senha",
+      "success": "Sua senha foi redefinida com sucesso. Você já pode fazer login com a nova senha.",
+      "error": {
+        "validation": "Verifique se as senhas foram preenchidas corretamente e se coincidem.",
+        "weakPassword": "Sua senha é muito fraca. Use pelo menos 8 caracteres com letras e números.",
+        "invalidToken": "Link de redefinição inválido. Solicite um novo email de recuperação.",
+        "expiredToken": "Este link de redefinição expirou. Solicite um novo email de recuperação.",
+        "usedToken": "Este link de redefinição já foi utilizado. Solicite um novo email de recuperação.",
+        "generic": "Não foi possível redefinir sua senha agora. Tente novamente em alguns minutos.",
+        "connection": "Erro de conexão. Verifique sua internet e tente novamente."
+      }
     }
   },
   "common": {
