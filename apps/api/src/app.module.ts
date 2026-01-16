@@ -18,6 +18,7 @@ import { StudentsController } from './school/students.controller';
 import { GuardiansController } from './school/guardians.controller';
 import { EmailService } from './notifications/email.service';
 import { GuardianController } from './guardian/guardian.controller';
+import { ContractsController } from './school/contracts.controller';
 
 @Module({
   imports: [
@@ -59,6 +60,7 @@ import { GuardianController } from './guardian/guardian.controller';
     StudentsController,
     GuardiansController,
     GuardianController,
+    ContractsController,
   ],
   providers: [PrismaService, EmailService],
 })
