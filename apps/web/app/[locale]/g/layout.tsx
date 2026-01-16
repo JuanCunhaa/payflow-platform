@@ -15,6 +15,7 @@ type NavItem = {
 
 const NAV_ITEMS: NavItem[] = [
   { href: '', labelKey: i18nKeys.guardian.nav.dashboard },
+  { href: '/profile', labelKey: i18nKeys.guardian.nav.profile },
   { href: '/students', labelKey: i18nKeys.guardian.nav.students },
   { href: '/invoices', labelKey: i18nKeys.guardian.nav.invoices },
 ];
@@ -209,4 +210,3 @@ export default function GuardianLayout({ children }: { children: React.ReactNode
     </div>
   );
 }
-

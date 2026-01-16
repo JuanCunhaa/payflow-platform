@@ -130,6 +130,7 @@
   "guardian": {
     "nav": {
       "dashboard": "Resumo",
+      "profile": "Meu perfil",
       "students": "Alunos",
       "invoices": "Cobranças"
     },

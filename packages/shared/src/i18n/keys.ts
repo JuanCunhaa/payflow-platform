@@ -130,6 +130,7 @@ export const i18nKeys = {
   guardian: {
     nav: {
       dashboard: 'guardian.nav.dashboard',
+      profile: 'guardian.nav.profile',
       students: 'guardian.nav.students',
       invoices: 'guardian.nav.invoices',
     },
