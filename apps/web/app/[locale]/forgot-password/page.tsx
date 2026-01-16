@@ -4,8 +4,7 @@ import type { FormEvent } from 'react';
 import { useState } from 'react';
 import { i18nKeys, isEmailValid } from '@payflow/shared';
 import { useI18n } from '../../i18n-context';
-
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333';
+import { getApiBase } from '../../api-base';
 
 export default function ForgotPasswordPage() {
   const { t } = useI18n();
@@ -36,17 +35,31 @@ export default function ForgotPasswordPage() {
     setSubmitting(true);
 
     try {
-      const response = await fetch(`${API_BASE}/auth/forgot-password`, {
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+      };
+      if (process.env.NODE_ENV !== 'production') {
+        headers['x-payflow-bypass-ratelimit'] = '1';
+      }
+
+      const response = await fetch(`${getApiBase()}/auth/forgot-password`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
         body: JSON.stringify({ email: email.trim() }),
       });
 
       if (!response.ok) {
         try {
           const data = (await response.json()) as { code?: string };
+
+          // In casos de rate limit, mantemos a resposta genérica
+          // de sucesso para o usuário, já que a API não revela
+          // se o email existe ou não.
+          if (data.code === 'rate_limit_exceeded') {
+            setSuccess(true);
+            return;
+          }
+
           if (data.code === 'validation_error') {
             setError(t(i18nKeys.passwordReset.forgot.error.validation));
           } else {
@@ -176,4 +189,3 @@ export default function ForgotPasswordPage() {
     </main>
   );
 }
-

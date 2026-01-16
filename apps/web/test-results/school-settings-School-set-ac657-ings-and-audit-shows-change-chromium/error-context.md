@@ -2,29 +2,29 @@
 
 ```yaml
 - generic [active] [ref=e1]:
-  - main [ref=e2]:
-    - navigation [ref=e3]:
-      - link "Inglês" [ref=e4] [cursor=pointer]:
+  - alert [ref=e2]
+  - main [ref=e3]:
+    - navigation [ref=e4]:
+      - link "Inglês" [ref=e5] [cursor=pointer]:
         - /url: /en-US
-    - generic [ref=e5]:
+    - generic [ref=e6]:
       - strong
-    - heading "Login" [level=1] [ref=e6]
-    - generic [ref=e7]: Muitas tentativas de login. Tente novamente em alguns minutos.
+    - heading "Login" [level=1] [ref=e7]
     - generic [ref=e8]:
       - generic [ref=e9]:
         - generic [ref=e10]: Email
         - textbox "Email" [ref=e11]:
           - /placeholder: user@example.com
-          - text: admin@vidal.com
       - generic [ref=e12]:
         - generic [ref=e13]: Senha
-        - textbox "Senha" [ref=e14]: Admin@12345
-      - button "Entrar" [ref=e15] [cursor=pointer]
-    - paragraph [ref=e16]:
+        - textbox "Senha" [ref=e14]
+      - link "Esqueci minha senha" [ref=e16] [cursor=pointer]:
+        - /url: /pt-BR/forgot-password
+      - button "Entrar" [ref=e17] [cursor=pointer]
+    - paragraph [ref=e18]:
       - text: Não tem conta?
-      - link "Cadastre-se" [ref=e17] [cursor=pointer]:
+      - link "Cadastre-se" [ref=e19] [cursor=pointer]:
         - /url: /pt-BR/signup
-    - link "← Início" [ref=e18] [cursor=pointer]:
+    - link "← Início" [ref=e20] [cursor=pointer]:
       - /url: /pt-BR
-  - alert [ref=e19]
 ```

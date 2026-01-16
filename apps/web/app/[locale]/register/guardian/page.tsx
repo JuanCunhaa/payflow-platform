@@ -3,9 +3,8 @@
 import type { FormEvent } from 'react';
 import { useState } from 'react';
 import { i18nKeys, isEmailValid } from '@payflow/shared';
-import { useI18n } from '../../i18n-context';
-
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333';
+import { useI18n } from '../../../i18n-context';
+import { getApiBase } from '../../../api-base';
 
 export default function RegisterGuardianPage() {
   const { t } = useI18n();
@@ -77,7 +76,7 @@ export default function RegisterGuardianPage() {
     setSubmitting(true);
 
     try {
-      const response = await fetch(`${API_BASE}/public/register-guardian`, {
+      const response = await fetch(`${getApiBase()}/public/register-guardian`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -351,4 +350,3 @@ export default function RegisterGuardianPage() {
     </main>
   );
 }
-

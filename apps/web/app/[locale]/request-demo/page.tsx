@@ -3,8 +3,7 @@
 import { FormEvent, useState } from 'react';
 import { i18nKeys, isEmailValid } from '@payflow/shared';
 import { useI18n } from '../../i18n-context';
-
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333';
+import { getApiBase } from '../../api-base';
 
 export default function RequestDemoPage() {
   const { t } = useI18n();
@@ -55,7 +54,7 @@ export default function RequestDemoPage() {
     setSubmitting(true);
 
     try {
-      const response = await fetch(`${API_BASE}/public/leads`, {
+      const response = await fetch(`${getApiBase()}/public/leads`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

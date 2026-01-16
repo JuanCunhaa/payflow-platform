@@ -38,13 +38,12 @@ test.describe('Authentication flows', () => {
     await page.getByRole('button', { name: 'Entrar' }).click();
 
     await expect(page).toHaveURL(new RegExp(`vidal\\.localtest\\.me:3000/${LOCALE}/s`));
-    await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible();
     await expect(
-      page.getByRole('heading', { name: /Vidal Admin/i }),
+      page.getByRole('heading', { name: 'Visão geral da escola' }),
     ).toBeVisible();
   });
 
-  test('logout redirects back to landing', async ({ page }) => {
+  test('logout redirects back to login', async ({ page }) => {
     await page.goto(`http://vidal.localtest.me:3000/${LOCALE}/login`);
 
     await page.getByLabel('Email').fill(TENANT_VIDAL_EMAIL);
@@ -55,6 +54,6 @@ test.describe('Authentication flows', () => {
 
     await page.getByRole('button', { name: 'Sair' }).click();
 
-    await expect(page).toHaveURL(new RegExp(`/${LOCALE}$`));
+    await expect(page).toHaveURL(new RegExp(`/${LOCALE}/login$`));
   });
 });

@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Logger,
   Put,
   Req,
   UseGuards,
@@ -23,6 +24,8 @@ type TenantRequest = Request & {
 @Controller('school')
 @UseGuards(JwtAuthGuard, RequireTenantGuard, RolesGuard)
 export class SchoolSettingsController {
+  private readonly logger = new Logger(SchoolSettingsController.name);
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly auditService: AuditService,
@@ -78,12 +81,20 @@ export class SchoolSettingsController {
       contactPhone: dto.contactPhone ?? previous.contactPhone ?? null,
     };
 
-    await this.prisma.tenant.update({
-      where: { id: tenantId },
-      data: {
-        settingsJson: nextSettings,
-      },
-    });
+    try {
+      await this.prisma.tenant.update({
+        where: { id: tenantId },
+        data: {
+          settingsJson: nextSettings,
+        },
+      });
+    } catch (error) {
+      this.logger.error(
+        `Failed to update school settings for tenant ${tenantId}`,
+        (error as Error)?.stack ?? String(error),
+      );
+      throw error;
+    }
 
     const changes: Record<string, { before: string | null; after: string | null }> = {};
     for (const key of ['displayName', 'contactEmail', 'contactPhone'] as const) {

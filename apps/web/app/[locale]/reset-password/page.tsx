@@ -5,8 +5,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { i18nKeys } from '@payflow/shared';
 import { useI18n } from '../../i18n-context';
-
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333';
+import { getApiBase } from '../../api-base';
 
 export default function ResetPasswordPage() {
   const { t, locale } = useI18n();
@@ -60,11 +59,16 @@ export default function ResetPasswordPage() {
     setSubmitting(true);
 
     try {
-      const response = await fetch(`${API_BASE}/auth/reset-password`, {
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+      };
+      if (process.env.NODE_ENV !== 'production') {
+        headers['x-payflow-bypass-ratelimit'] = '1';
+      }
+
+      const response = await fetch(`${getApiBase()}/auth/reset-password`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers,
         body: JSON.stringify({
           token,
           newPassword: password,

@@ -6,7 +6,7 @@ export default defineConfig({
   expect: {
     timeout: 10_000,
   },
-  fullyParallel: true,
+  fullyParallel: false,
   retries: process.env.CI ? 2 : 0,
   reporter: [['list'], ['html', { outputFolder: 'playwright-report', open: 'never' }]],
   use: {
@@ -20,6 +20,7 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
   ],
+  workers: 1,
   webServer: {
     command: 'cd ../.. && npm run dev',
     url: 'http://localhost:3000/pt-BR',

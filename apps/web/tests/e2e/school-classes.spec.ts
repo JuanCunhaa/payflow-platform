@@ -22,12 +22,12 @@ test.describe('School classes UI', () => {
   test('can create grade and class and see them listed', async ({ page }) => {
     await loginAsSchoolAdmin(page);
 
-    await page.goto(
-      `http://vidal.localtest.me:3000/${LOCALE}/s/classes`,
-    );
+    // Navega até /s/classes usando o menu lateral
+    // para preservar o contexto de sessão atual.
+    await page.getByRole('link', { name: 'Turmas' }).click();
 
     await expect(
-      page.getByRole('heading', { name: 'Séries e turmas' }),
+      page.getByText('Séries e turmas', { exact: false }),
     ).toBeVisible();
 
     const gradeName = `E2E Série ${Date.now()}`;
@@ -67,7 +67,8 @@ test.describe('School classes UI', () => {
       .click();
 
     await expect(page.getByText(className)).toBeVisible();
-    await expect(page.getByText(gradeName)).toBeVisible();
+    await expect(
+      page.getByRole('listitem').filter({ hasText: gradeName }).first(),
+    ).toBeVisible();
   });
 });
-

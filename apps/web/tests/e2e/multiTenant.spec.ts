@@ -11,18 +11,18 @@ test.describe('Multi-tenant routing', () => {
   test('invalid tenant redirects to tenant-not-found', async ({ page }) => {
     await page.goto(`http://inexistente.localtest.me:3000/${LOCALE}/s`);
 
-    await expect(page).toHaveURL(
-      new RegExp(`/pt-BR/tenant-not-found$`),
-    );
+    await expect(page).toHaveURL(new RegExp(`/pt-BR/tenant-not-found$`));
     await expect(
-      page.getByText('Tenant não encontrado', { exact: false }),
+      page.getByText('Escola não encontrada', { exact: false }),
     ).toBeVisible();
   });
 
   test('platform routes are blocked on tenant host', async ({ page }) => {
     await page.goto(`http://vidal.localtest.me:3000/${LOCALE}/p`);
 
-    await expect(page).toHaveURL(new RegExp(`vidal\\.localtest\\.me:3000/${LOCALE}$`));
+    await expect(page).toHaveURL(
+      new RegExp(`vidal\\.localtest\\.me:3000/${LOCALE}$`),
+    );
   });
 });
 

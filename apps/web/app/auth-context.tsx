@@ -4,8 +4,7 @@ import React, { createContext, useCallback, useContext, useEffect, useState } fr
 import { useRouter } from 'next/navigation';
 import { useI18n } from './i18n-context';
 import { i18nKeys } from '@payflow/shared';
-
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333';
+import { getApiBase } from './api-base';
 
 type AuthTenant = {
   id: string;
@@ -44,6 +43,9 @@ type AuthContextValue = {
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
+const STORAGE_USER_KEY = 'payflow_auth_user';
+const STORAGE_TOKEN_KEY = 'payflow_auth_access_token';
+
 function computeRedirectPath(user: AuthUser | null): string {
   if (!user) return '/';
 
@@ -77,7 +79,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const refreshSession = useCallback(async (): Promise<{ ok: boolean; accessToken?: string }> => {
     try {
-      const res = await fetch(`${API_BASE}/auth/refresh`, {
+      const res = await fetch(`${getApiBase()}/auth/refresh`, {
         method: 'POST',
         credentials: 'include',
       });
@@ -103,13 +105,36 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     let cancelled = false;
+
     (async () => {
       setSessionLoading(true);
+
+      // Primeiro tenta restaurar sessГЈo da sessionStorage (caso de reload).
+      if (typeof window !== 'undefined') {
+        try {
+          const storedUser = window.sessionStorage.getItem(STORAGE_USER_KEY);
+          const storedToken = window.sessionStorage.getItem(STORAGE_TOKEN_KEY);
+          if (storedUser && storedToken) {
+            const parsedUser = JSON.parse(storedUser) as AuthUser;
+            setUser(parsedUser);
+            setAccessToken(storedToken);
+            if (!cancelled) {
+              setSessionLoading(false);
+            }
+            return;
+          }
+        } catch {
+          // ignore parse errors and fall back to refresh
+        }
+      }
+
       const result = await refreshSession();
-      if (!cancelled && !result.ok) {
+      if (!cancelled) {
         setSessionLoading(false);
-      } else if (!cancelled) {
-        setSessionLoading(false);
+        if (!result.ok) {
+          setUser(null);
+          setAccessToken(null);
+        }
       }
     })();
 
@@ -124,11 +149,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       try {
         const bypassHeaders: Record<string, string> = {};
-        if (process.env.NEXT_PUBLIC_BYPASS_RATE_LIMIT_FOR_TESTS === '1') {
+        if (
+          process.env.NODE_ENV !== 'production' ||
+          process.env.NEXT_PUBLIC_BYPASS_RATE_LIMIT_FOR_TESTS === '1'
+        ) {
           bypassHeaders['x-payflow-bypass-ratelimit'] = '1';
         }
 
-        const res = await fetch(`${API_BASE}/auth/login`, {
+        const res = await fetch(`${getApiBase()}/auth/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -167,6 +195,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(nextUser);
         setAccessToken(loginData.accessToken);
 
+        if (typeof window !== 'undefined') {
+          try {
+            window.sessionStorage.setItem(STORAGE_USER_KEY, JSON.stringify(nextUser));
+            window.sessionStorage.setItem(STORAGE_TOKEN_KEY, loginData.accessToken);
+          } catch {
+            // ignore storage errors in dev/test
+          }
+        }
+
         const path = computeRedirectPath(nextUser);
         const base = locale || 'pt-BR';
         router.push(`/${base}${path}`);
@@ -185,7 +222,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = useCallback(async () => {
     setIsLoggingOut(true);
     try {
-      await fetch(`${API_BASE}/auth/logout`, {
+      await fetch(`${getApiBase()}/auth/logout`, {
         method: 'POST',
         credentials: 'include',
       });
@@ -195,6 +232,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     setUser(null);
     setAccessToken(null);
+
+    if (typeof window !== 'undefined') {
+      try {
+        window.sessionStorage.removeItem(STORAGE_USER_KEY);
+        window.sessionStorage.removeItem(STORAGE_TOKEN_KEY);
+      } catch {
+        // ignore
+      }
+    }
 
     const base = locale || 'pt-BR';
     router.push(`/${base}`);
@@ -212,7 +258,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           headers.set('Authorization', `Bearer ${token}`);
         }
 
-        return fetch(`${API_BASE}${path}`, {
+        return fetch(`${getApiBase()}${path}`, {
           ...init,
           headers,
           credentials: 'include',

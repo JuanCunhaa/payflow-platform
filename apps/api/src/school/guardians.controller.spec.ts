@@ -251,7 +251,25 @@ async function run() {
       Promise.all(operations),
   } as unknown as PrismaService;
 
-  const controller = new GuardiansController(prismaMock);
+  const auditMock = {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    log: async (_entry: unknown) => {
+      // no-op for unit tests
+    },
+  };
+
+  const emailMock = {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    sendGuardianApprovalEmail: async (_recipient: string) => {},
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    sendGuardianRejectionEmail: async (_recipient: string) => {},
+  };
+
+  const controller = new GuardiansController(
+    prismaMock,
+    auditMock as any,
+    emailMock as any
+  );
 
   const tenantId = 'tenant-1';
   const otherTenantId = 'tenant-2';
@@ -438,4 +456,3 @@ run().catch((error) => {
   console.error(error);
   process.exit(1);
 });
-

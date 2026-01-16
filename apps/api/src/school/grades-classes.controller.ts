@@ -5,6 +5,7 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   NotFoundException,
   Param,
   Post,
@@ -39,6 +40,8 @@ function parsePageParams(pageParam?: string, pageSizeParam?: string) {
 @Controller('school')
 @UseGuards(JwtAuthGuard, RequireTenantGuard, RolesGuard)
 export class GradesClassesController {
+  private readonly logger = new Logger(GradesClassesController.name);
+
   constructor(private readonly prisma: PrismaService) {}
 
   // --------- GRADES ----------
@@ -103,6 +106,10 @@ export class GradesClassesController {
           message: 'A grade with this name already exists for this school',
         });
       }
+       this.logger.error(
+         `Failed to create grade for tenant ${tenantId}`,
+         (error as Error)?.stack ?? String(error)
+       );
       throw error;
     }
   }
@@ -162,6 +169,10 @@ export class GradesClassesController {
         });
       }
 
+      this.logger.error(
+        `Failed to update grade ${id} for tenant ${tenantId}`,
+        (error as Error)?.stack ?? String(error)
+      );
       throw error;
     }
   }
@@ -275,6 +286,10 @@ export class GradesClassesController {
           message: 'A class with this name already exists for this school',
         });
       }
+      this.logger.error(
+        `Failed to create class for tenant ${tenantId}`,
+        (error as Error)?.stack ?? String(error)
+      );
       throw error;
     }
   }
@@ -349,6 +364,10 @@ export class GradesClassesController {
         });
       }
 
+      this.logger.error(
+        `Failed to update class ${id} for tenant ${tenantId}`,
+        (error as Error)?.stack ?? String(error)
+      );
       throw error;
     }
   }
