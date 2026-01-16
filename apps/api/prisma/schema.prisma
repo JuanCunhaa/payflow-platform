@@ -99,6 +99,7 @@ model User {
   memberships   Membership[]
   refreshTokens RefreshToken[]
   guardians     Guardian[]
+  emailVerifyTokens EmailVerifyToken[]
 
   @@map("users")
 }
@@ -245,4 +246,16 @@ model GuardianStudent {
   @@index([guardianId], map: "guardian_students_guardian_id_idx")
   @@index([studentId], map: "guardian_students_student_id_idx")
   @@map("guardian_students")
+}
+
+model EmailVerifyToken {
+  id        String   @id @default(uuid()) @db.Uuid
+  userId    String   @db.Uuid @map("user_id")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId], map: "email_verify_tokens_user_id_idx")
+  @@map("email_verify_tokens")
 }
