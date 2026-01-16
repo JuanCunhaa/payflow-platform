@@ -127,6 +127,27 @@
       "connection": "Erro de conexão. Verifique sua internet e tente novamente."
     }
   },
+  "guardian": {
+    "nav": {
+      "dashboard": "Resumo",
+      "students": "Alunos",
+      "invoices": "Cobranças"
+    },
+    "pages": {
+      "dashboard": {
+        "title": "Portal do responsável",
+        "description": "Acompanhe seus filhos, cobranças e comunicados da escola em um só lugar (em breve)."
+      },
+      "students": {
+        "title": "Meus alunos",
+        "description": "Veja os alunos vinculados à sua conta e seus dados básicos (em breve)."
+      },
+      "invoices": {
+        "title": "Minhas cobranças",
+        "description": "Visualize e acompanhe os pagamentos e cobranças da escola (em breve)."
+      }
+    }
+  },
   "platform": {
     "nav": {
       "dashboard": "Plataforma",

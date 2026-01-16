@@ -127,6 +127,27 @@ export const i18nKeys = {
       connection: 'guardianRegister.error.connection',
     },
   },
+  guardian: {
+    nav: {
+      dashboard: 'guardian.nav.dashboard',
+      students: 'guardian.nav.students',
+      invoices: 'guardian.nav.invoices',
+    },
+    pages: {
+      dashboard: {
+        title: 'guardian.pages.dashboard.title',
+        description: 'guardian.pages.dashboard.description',
+      },
+      students: {
+        title: 'guardian.pages.students.title',
+        description: 'guardian.pages.students.description',
+      },
+      invoices: {
+        title: 'guardian.pages.invoices.title',
+        description: 'guardian.pages.invoices.description',
+      },
+    },
+  },
   platform: {
     nav: {
       dashboard: 'platform.nav.dashboard',

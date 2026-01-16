@@ -127,6 +127,27 @@
       "connection": "Connection error. Check your internet and try again."
     }
   },
+  "guardian": {
+    "nav": {
+      "dashboard": "Overview",
+      "students": "Students",
+      "invoices": "Invoices"
+    },
+    "pages": {
+      "dashboard": {
+        "title": "Guardian portal",
+        "description": "Follow your children, invoices and school communication in one place (coming soon)."
+      },
+      "students": {
+        "title": "My students",
+        "description": "See the students linked to your account and their basic information (coming soon)."
+      },
+      "invoices": {
+        "title": "My invoices",
+        "description": "View and track school payments and charges (coming soon)."
+      }
+    }
+  },
   "platform": {
     "nav": {
       "dashboard": "Platform",
