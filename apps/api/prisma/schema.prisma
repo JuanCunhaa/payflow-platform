@@ -64,6 +64,12 @@ enum GuardianStatus {
   INACTIVE
 }
 
+enum ContractStatus {
+  ACTIVE
+  PAUSED
+  CANCELED
+}
+
 // ============ MODELS ============
 
 model Tenant {
@@ -81,6 +87,7 @@ model Tenant {
   classes     Class[]
   students    Student[]
   guardians   Guardian[]
+  contracts   Contract[]
 
   @@map("tenants")
 }
@@ -101,6 +108,7 @@ model User {
   guardians     Guardian[]
   emailVerifyTokens EmailVerifyToken[]
   passwordResetTokens PasswordResetToken[]
+  createdContracts Contract[] @relation("UserCreatedContracts")
 
   @@map("users")
 }
@@ -209,6 +217,7 @@ model Student {
   createdAt DateTime      @default(now()) @map("created_at")
 
   guardians GuardianStudent[]
+  contractStudents ContractStudent[]
 
   @@unique([tenantId, classId, name])
   @@index([tenantId], map: "students_tenant_id_idx")
@@ -272,4 +281,38 @@ model PasswordResetToken {
 
   @@index([userId], map: "password_reset_tokens_user_id_idx")
   @@map("password_reset_tokens")
+}
+
+model Contract {
+  id              String         @id @default(uuid()) @db.Uuid
+  tenantId        String         @db.Uuid @map("tenant_id")
+  tenant          Tenant         @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  name            String
+  amountCents     Int            @map("amount_cents")
+  currency        String         @default("BRL")
+  dueDay          Int            @map("due_day")
+  startDate       DateTime       @map("start_date")
+  endDate         DateTime?      @map("end_date")
+  status          ContractStatus @default(ACTIVE)
+  createdByUserId String         @db.Uuid @map("created_by_user_id")
+  createdByUser   User           @relation("UserCreatedContracts", fields: [createdByUserId], references: [id], onDelete: Cascade)
+  createdAt       DateTime       @default(now()) @map("created_at")
+
+  contractStudents ContractStudent[]
+
+  @@index([tenantId], map: "contracts_tenant_id_idx")
+  @@map("contracts")
+}
+
+model ContractStudent {
+  id         String   @id @default(uuid()) @db.Uuid
+  contractId String   @db.Uuid @map("contract_id")
+  contract   Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  studentId  String   @db.Uuid @map("student_id")
+  student    Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  @@unique([contractId, studentId])
+  @@index([studentId], map: "contract_students_student_id_idx")
+  @@map("contract_students")
 }
