@@ -268,6 +268,40 @@
         "deleteError": "Não foi possível remover o registro. Tente novamente."
       }
     },
+    "studentsUi": {
+      "filters": {
+        "class": "Turma",
+        "status": "Status",
+        "search": "Buscar por nome",
+        "statusAll": "Todos os status"
+      },
+      "table": {
+        "name": "Nome",
+        "class": "Turma",
+        "status": "Status",
+        "actions": "Ações"
+      },
+      "status": {
+        "active": "Ativo",
+        "inactive": "Inativo"
+      },
+      "actions": {
+        "create": "Novo aluno",
+        "edit": "Editar",
+        "delete": "Remover",
+        "inactivate": "Inativar",
+        "activate": "Reativar",
+        "importCsv": "Importar CSV"
+      },
+      "feedback": {
+        "loadError": "Não foi possível carregar os alunos.",
+        "saveError": "Não foi possível salvar o aluno. Verifique os campos e tente novamente.",
+        "deleteError": "Não foi possível remover o aluno. Tente novamente.",
+        "importError": "Não foi possível importar o arquivo CSV. Verifique o formato e tente novamente.",
+        "importSuccess": "Importação concluída com sucesso."
+      },
+      "empty": "Nenhum aluno encontrado para o filtro atual."
+    },
     "pages": {
       "dashboard": {
         "title": "Visão geral da escola",
@@ -283,7 +317,7 @@
       },
       "students": {
         "title": "Alunos",
-        "description": "Liste e gerencie os alunos vinculados a esta escola (em breve)."
+        "description": "Liste e gerencie os alunos vinculados a esta escola."
       },
       "guardians": {
         "title": "Responsáveis",

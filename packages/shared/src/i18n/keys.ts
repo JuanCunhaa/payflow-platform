@@ -264,6 +264,40 @@ export const i18nKeys = {
         deleteError: 'school.classes.feedback.deleteError',
       },
     },
+    studentsUi: {
+      filters: {
+        class: 'school.students.filters.class',
+        status: 'school.students.filters.status',
+        search: 'school.students.filters.search',
+        statusAll: 'school.students.filters.statusAll',
+      },
+      table: {
+        name: 'school.students.table.name',
+        class: 'school.students.table.class',
+        status: 'school.students.table.status',
+        actions: 'school.students.table.actions',
+      },
+      status: {
+        active: 'school.students.status.active',
+        inactive: 'school.students.status.inactive',
+      },
+      actions: {
+        create: 'school.students.actions.create',
+        edit: 'school.students.actions.edit',
+        delete: 'school.students.actions.delete',
+        inactivate: 'school.students.actions.inactivate',
+        activate: 'school.students.actions.activate',
+        importCsv: 'school.students.actions.importCsv',
+      },
+      feedback: {
+        loadError: 'school.students.feedback.loadError',
+        saveError: 'school.students.feedback.saveError',
+        deleteError: 'school.students.feedback.deleteError',
+        importError: 'school.students.feedback.importError',
+        importSuccess: 'school.students.feedback.importSuccess',
+      },
+      empty: 'school.students.empty',
+    },
     pages: {
       dashboard: {
         title: 'school.pages.dashboard.title',

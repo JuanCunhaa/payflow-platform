@@ -268,6 +268,40 @@
         "deleteError": "Could not remove the record. Please try again."
       }
     },
+    "studentsUi": {
+      "filters": {
+        "class": "Class",
+        "status": "Status",
+        "search": "Search by name",
+        "statusAll": "All statuses"
+      },
+      "table": {
+        "name": "Name",
+        "class": "Class",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "actions": {
+        "create": "New student",
+        "edit": "Edit",
+        "delete": "Delete",
+        "inactivate": "Inactivate",
+        "activate": "Reactivate",
+        "importCsv": "Import CSV"
+      },
+      "feedback": {
+        "loadError": "Could not load students.",
+        "saveError": "Could not save student. Please check the fields and try again.",
+        "deleteError": "Could not delete student. Please try again.",
+        "importError": "Could not import CSV file. Please check the format and try again.",
+        "importSuccess": "Import completed successfully."
+      },
+      "empty": "No students found for the current filter."
+    },
     "pages": {
       "dashboard": {
         "title": "School overview",
@@ -283,7 +317,7 @@
       },
       "students": {
         "title": "Students",
-        "description": "List and manage students linked to this school (coming soon)."
+        "description": "List and manage students linked to this school."
       },
       "guardians": {
         "title": "Guardians",
