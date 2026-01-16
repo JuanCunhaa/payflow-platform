@@ -338,6 +338,7 @@
         "email": "Email",
         "phone": "Telefone",
         "status": "Status",
+        "emailVerified": "Email verificado",
         "actions": "Ações"
       },
       "status": {

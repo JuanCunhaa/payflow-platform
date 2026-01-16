@@ -334,6 +334,7 @@ export const i18nKeys = {
         email: 'school.guardians.table.email',
         phone: 'school.guardians.table.phone',
         status: 'school.guardians.table.status',
+        emailVerified: 'school.guardians.table.emailVerified',
         actions: 'school.guardians.table.actions',
       },
       status: {

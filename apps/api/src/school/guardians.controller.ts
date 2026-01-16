@@ -95,6 +95,8 @@ export class GuardiansController {
           user: {
             select: {
               email: true,
+              emailVerified: true,
+              status: true,
             },
           },
           students: {
@@ -113,6 +115,51 @@ export class GuardiansController {
 
     return {
       items: guardians,
+      total,
+      page,
+      pageSize,
+      totalPages: total > 0 ? Math.ceil(total / pageSize) : 1,
+    };
+  }
+
+  @Get('pending')
+  @Roles('SCHOOL_ADMIN', 'SECRETARY', 'READONLY')
+  async listPendingGuardians(
+    @Req() req: TenantRequest,
+    @Query('page') pageParam?: string,
+    @Query('limit') limitParam?: string
+  ) {
+    const tenantId = req.tenant!.id;
+    const { page, pageSize } = parsePageParams(pageParam, limitParam);
+
+    const where = {
+      tenantId,
+      user: {
+        status: 'PENDING_APPROVAL' as const,
+      },
+    };
+
+    const [total, items] = await this.prisma.$transaction([
+      this.prisma.guardian.count({ where }),
+      this.prisma.guardian.findMany({
+        where,
+        orderBy: { createdAt: 'desc' },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+        include: {
+          user: {
+            select: {
+              email: true,
+              emailVerified: true,
+              status: true,
+            },
+          },
+        },
+      }),
+    ]);
+
+    return {
+      items,
       total,
       page,
       pageSize,
@@ -381,6 +428,65 @@ export class GuardiansController {
         message: 'Guardian is not linked to this student',
       });
     }
+
+    return { success: true };
+  }
+
+  @Post(':id/approve')
+  @Roles('SCHOOL_ADMIN', 'SECRETARY')
+  async approveGuardian(@Req() req: TenantRequest, @Param('id') id: string) {
+    const tenantId = req.tenant!.id;
+
+    const guardian = await this.prisma.guardian.findFirst({
+      where: { id, tenantId },
+      include: {
+        user: true,
+      },
+    });
+
+    if (!guardian) {
+      throw new NotFoundException({
+        code: 'guardian_not_found',
+        message: 'Guardian not found for this tenant',
+      });
+    }
+
+    await this.prisma.user.update({
+      where: { id: guardian.userId },
+      data: { status: 'ACTIVE' },
+    });
+
+    return { success: true };
+  }
+
+  @Post(':id/reject')
+  @Roles('SCHOOL_ADMIN', 'SECRETARY')
+  async rejectGuardian(@Req() req: TenantRequest, @Param('id') id: string) {
+    const tenantId = req.tenant!.id;
+
+    const guardian = await this.prisma.guardian.findFirst({
+      where: { id, tenantId },
+      include: {
+        user: true,
+      },
+    });
+
+    if (!guardian) {
+      throw new NotFoundException({
+        code: 'guardian_not_found',
+        message: 'Guardian not found for this tenant',
+      });
+    }
+
+    await this.prisma.user.update({
+      where: { id: guardian.userId },
+      data: { status: 'REJECTED' },
+    });
+
+    await this.prisma.guardian.update({
+      where: { id: guardian.id },
+      data: { status: 'INACTIVE' },
+    });
 
     return { success: true };
   }
