@@ -20,6 +20,9 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { RequireTenantGuard } from '../common/tenant/require-tenant.guard';
+import { CurrentUser, CurrentUserPayload } from '../auth/decorators/current-user.decorator';
+import { AuditService } from '../audit/audit.service';
+import { EmailService } from '../notifications/email.service';
 import { CreateGuardianDto } from './dto/create-guardian.dto';
 import { UpdateGuardianDto } from './dto/update-guardian.dto';
 import { LinkGuardianStudentDto } from './dto/link-guardian-student.dto';
@@ -54,7 +57,11 @@ function parsePageParams(pageParam?: string, pageSizeParam?: string) {
 @Controller('school/guardians')
 @UseGuards(JwtAuthGuard, RequireTenantGuard, RolesGuard)
 export class GuardiansController {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly auditService: AuditService,
+    private readonly emailService: EmailService
+  ) {}
 
   @Get()
   @Roles('SCHOOL_ADMIN', 'SECRETARY', 'READONLY')
@@ -434,7 +441,11 @@ export class GuardiansController {
 
   @Post(':id/approve')
   @Roles('SCHOOL_ADMIN', 'SECRETARY')
-  async approveGuardian(@Req() req: TenantRequest, @Param('id') id: string) {
+  async approveGuardian(
+    @Req() req: TenantRequest,
+    @Param('id') id: string,
+    @CurrentUser() actor: CurrentUserPayload
+  ) {
     const tenantId = req.tenant!.id;
 
     const guardian = await this.prisma.guardian.findFirst({
@@ -451,17 +462,50 @@ export class GuardiansController {
       });
     }
 
+    if (guardian.user.status !== 'PENDING_APPROVAL') {
+      throw new BadRequestException({
+        code: 'invalid_status',
+        message: 'Guardian is not pending approval',
+      });
+    }
+
+    if (!guardian.user.emailVerified) {
+      throw new BadRequestException({
+        code: 'email_not_verified',
+        message: 'Guardian email must be verified before approval',
+      });
+    }
+
     await this.prisma.user.update({
       where: { id: guardian.userId },
       data: { status: 'ACTIVE' },
     });
+
+    await this.auditService.log({
+      tenantId,
+      actorUserId: actor.id,
+      actorType: 'USER',
+      action: 'guardian.approve',
+      targetType: 'user',
+      targetId: guardian.userId,
+      metadata: {
+        guardianId: guardian.id,
+        guardianEmail: guardian.user.email,
+      },
+    });
+
+    await this.emailService.sendGuardianApprovalEmail(guardian.user.email);
 
     return { success: true };
   }
 
   @Post(':id/reject')
   @Roles('SCHOOL_ADMIN', 'SECRETARY')
-  async rejectGuardian(@Req() req: TenantRequest, @Param('id') id: string) {
+  async rejectGuardian(
+    @Req() req: TenantRequest,
+    @Param('id') id: string,
+    @CurrentUser() actor: CurrentUserPayload
+  ) {
     const tenantId = req.tenant!.id;
 
     const guardian = await this.prisma.guardian.findFirst({
@@ -487,6 +531,21 @@ export class GuardiansController {
       where: { id: guardian.id },
       data: { status: 'INACTIVE' },
     });
+
+    await this.auditService.log({
+      tenantId,
+      actorUserId: actor.id,
+      actorType: 'USER',
+      action: 'guardian.reject',
+      targetType: 'user',
+      targetId: guardian.userId,
+      metadata: {
+        guardianId: guardian.id,
+        guardianEmail: guardian.user.email,
+      },
+    });
+
+    await this.emailService.sendGuardianRejectionEmail(guardian.user.email);
 
     return { success: true };
   }

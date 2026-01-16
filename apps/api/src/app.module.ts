@@ -16,6 +16,7 @@ import { SchoolSettingsController } from './school/school-settings.controller';
 import { GradesClassesController } from './school/grades-classes.controller';
 import { StudentsController } from './school/students.controller';
 import { GuardiansController } from './school/guardians.controller';
+import { EmailService } from './notifications/email.service';
 
 @Module({
   imports: [
@@ -57,7 +58,7 @@ import { GuardiansController } from './school/guardians.controller';
     StudentsController,
     GuardiansController,
   ],
-  providers: [PrismaService],
+  providers: [PrismaService, EmailService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
