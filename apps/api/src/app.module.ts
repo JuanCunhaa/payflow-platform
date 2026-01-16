@@ -15,6 +15,7 @@ import { TenantResolverMiddleware } from './common/tenant/tenant.middleware';
 import { SchoolSettingsController } from './school/school-settings.controller';
 import { GradesClassesController } from './school/grades-classes.controller';
 import { StudentsController } from './school/students.controller';
+import { GuardiansController } from './school/guardians.controller';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { StudentsController } from './school/students.controller';
     SchoolSettingsController,
     GradesClassesController,
     StudentsController,
+    GuardiansController,
   ],
   providers: [PrismaService],
 })
