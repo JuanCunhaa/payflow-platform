@@ -24,5 +24,18 @@ export class AdminJobsController {
       ...result,
     };
   }
-}
 
+  @Post('recalculate-overdue')
+  async manuallyRecalculateOverdue() {
+    if (process.env.NODE_ENV === 'production') {
+      throw new NotFoundException();
+    }
+
+    const result = await this.invoiceJobsService.recalculateOverdueInvoices();
+
+    return {
+      job: 'recalculate_overdue',
+      ...result,
+    };
+  }
+}

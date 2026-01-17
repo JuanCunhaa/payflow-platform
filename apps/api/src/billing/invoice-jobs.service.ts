@@ -51,6 +51,7 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
     try {
       const now = new Date();
       await this.generateMonthlyInvoices(now);
+      await this.recalculateOverdueInvoices(now);
     } catch (error) {
       this.logger.error('Failed to run invoice generation job', error as Error);
     }
@@ -141,5 +142,42 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
       createdInvoices: createdCount,
     };
   }
-}
 
+  async recalculateOverdueInvoices(referenceDate: Date = new Date()) {
+    const now = referenceDate;
+
+    const result = await this.prisma.invoice.updateMany({
+      where: {
+        status: 'PENDING',
+        dueDate: {
+          lt: now,
+        },
+      },
+      data: {
+        status: 'OVERDUE',
+      },
+    });
+
+    const affected = result.count ?? 0;
+
+    await this.auditService.log({
+      tenantId: null,
+      actorUserId: null,
+      actorType: 'SYSTEM',
+      action: 'job.invoices.mark_overdue',
+      targetType: 'job',
+      targetId: null,
+      metadata: {
+        asOf: now.toISOString(),
+        affected,
+      },
+      ip: null,
+      userAgent: null,
+    });
+
+    return {
+      asOf: now.toISOString(),
+      affected,
+    };
+  }
+}
