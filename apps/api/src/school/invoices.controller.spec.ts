@@ -2,6 +2,7 @@ import { BadRequestException } from '@nestjs/common';
 import { SchoolInvoicesController } from './invoices.controller';
 import { PrismaService } from '../prisma/prisma.service';
 import { AuditService } from '../audit/audit.service';
+import { PaymentService } from '../billing/payment.service';
 import type { CurrentUserPayload } from '../auth/decorators/current-user.decorator';
 
 type TenantRequest = {
@@ -21,6 +22,7 @@ async function run() {
 
   const createdInvoices: any[] = [];
   let lastAudit: any | null = null;
+  let lastPaymentLinkCall: { invoiceId: string } | null = null;
 
   const prismaMock = {
     student: {
@@ -55,9 +57,17 @@ async function run() {
     },
   };
 
+  const paymentServiceMock = {
+    createPaymentLinkForInvoice: async (invoiceId: string) => {
+      lastPaymentLinkCall = { invoiceId };
+      return { paymentLink: `https://sandbox/${invoiceId}`, provider: 'SANDBOX' };
+    },
+  } as unknown as PaymentService;
+
   const controller = new SchoolInvoicesController(
     prismaMock as unknown as PrismaService,
-    auditMock as unknown as AuditService
+    auditMock as unknown as AuditService,
+    paymentServiceMock
   );
 
   const req = createTenantRequest(tenantId) as TenantRequest;
@@ -134,4 +144,3 @@ run().catch((error) => {
   console.error(error);
   process.exit(1);
 });
-

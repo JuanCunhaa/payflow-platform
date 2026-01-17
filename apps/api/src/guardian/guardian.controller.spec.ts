@@ -2,6 +2,7 @@ import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { GuardianController } from './guardian.controller';
 import { PrismaService } from '../prisma/prisma.service';
 import type { CurrentUserPayload } from '../auth/decorators/current-user.decorator';
+import { PaymentService } from '../billing/payment.service';
 
 type GuardianEntity = {
   id: string;
@@ -152,7 +153,22 @@ async function run() {
     },
   };
 
-  const controller = new GuardianController(prismaMock as unknown as PrismaService);
+  let lastPaymentLinkRequest: string | null = null;
+
+  const paymentServiceMock = {
+    createPaymentLinkForInvoice: async (invoiceId: string) => {
+      lastPaymentLinkRequest = invoiceId;
+      return {
+        paymentLink: `https://sandbox/${invoiceId}`,
+        provider: 'SANDBOX',
+      };
+    },
+  } as unknown as PaymentService;
+
+  const controller = new GuardianController(
+    prismaMock as unknown as PrismaService,
+    paymentServiceMock
+  );
 
   const tenantId = 'tenant-1';
   const userId = 'user-1';
@@ -233,6 +249,15 @@ async function run() {
     throw new Error('getInvoice should return guardian invoice');
   }
 
+  // create payment link should work for own invoice
+  const linkResult = await controller.createPaymentLink(reqTenant, currentUser, invoiceId);
+  if (!linkResult.paymentLink || !linkResult.paymentLink.includes(invoiceId)) {
+    throw new Error('createPaymentLink should return a payment link for own invoice');
+  }
+  if (lastPaymentLinkRequest !== invoiceId) {
+    throw new Error('createPaymentLink should delegate to PaymentService');
+  }
+
   // Another guardian must not access this invoice
   const otherGuardianId = nextId();
   const otherUserId = 'user-2';
@@ -261,6 +286,17 @@ async function run() {
   }
   if (!forbiddenOnInvoice) {
     throw new Error('getInvoice should throw ForbiddenException for another guardian');
+  }
+
+  // Guardian must not generate payment link for another guardian's invoice
+  let forbiddenOnPaymentLink = false;
+  try {
+    await controller.createPaymentLink(otherReqTenant, otherUser, invoiceId);
+  } catch (error) {
+    forbiddenOnPaymentLink = error instanceof ForbiddenException;
+  }
+  if (!forbiddenOnPaymentLink) {
+    throw new Error('createPaymentLink should throw ForbiddenException for another guardian');
   }
 
   // When guardian does not exist, endpoints should throw NotFoundException

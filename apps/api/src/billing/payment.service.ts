@@ -18,22 +18,23 @@ export class PaymentService {
   async createPaymentLinkForInvoice(
     invoiceId: string,
     actorUserId: string | null = null
-  ): Promise<{ paymentLink: string }> {
-    const invoice = await this.prisma.invoice.findFirst({
+  ): Promise<{ paymentLink: string; provider: string }> {
+    const invoice = (await this.prisma.invoice.findFirst({
       where: { id: invoiceId },
-      select: {
-        id: true,
-        tenantId: true,
-        amountCents: true,
-        status: true,
-      },
-    });
+    })) as any;
 
     if (!invoice) {
       throw new NotFoundException({
         code: 'invoice_not_found',
         message: 'Invoice not found',
       });
+    }
+
+    if (invoice.paymentLink) {
+      return {
+        paymentLink: invoice.paymentLink as string,
+        provider: (invoice.provider as string) ?? 'SANDBOX',
+      };
     }
 
     const allowedStatuses: InvoiceStatus[] = ['PENDING', 'OVERDUE'];
@@ -74,7 +75,6 @@ export class PaymentService {
       },
     });
 
-    return { paymentLink: result.url };
+    return { paymentLink: result.url, provider: 'SANDBOX' };
   }
 }
-

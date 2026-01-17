@@ -20,6 +20,7 @@ import { RequireTenantGuard } from '../common/tenant/require-tenant.guard';
 import { CreateOneOffInvoiceDto } from './dto/create-one-off-invoice.dto';
 import { CurrentUser, CurrentUserPayload } from '../auth/decorators/current-user.decorator';
 import { AuditService } from '../audit/audit.service';
+import { PaymentService } from '../billing/payment.service';
 
 type TenantRequest = Partial<Request> & {
   tenant?: { id: string; slug: string };
@@ -72,7 +73,8 @@ function parsePageParams(pageParam?: string, limitParam?: string) {
 export class SchoolInvoicesController {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly auditService: AuditService
+    private readonly auditService: AuditService,
+    private readonly paymentService: PaymentService
   ) {}
 
   @Get()
@@ -341,6 +343,47 @@ export class SchoolInvoicesController {
 
     return {
       invoiceId: invoice.id,
+    };
+  }
+
+  @Post(':id/payment-link')
+  @Roles('SCHOOL_ADMIN', 'FINANCE', 'SECRETARY')
+  async createPaymentLink(
+    @Req() req: TenantRequest,
+    @Param('id') id: string,
+    @CurrentUser() user: CurrentUserPayload
+  ) {
+    const tenantId = req.tenant!.id;
+
+    const invoice = (await this.prisma.invoice.findFirst({
+      where: { id, tenantId },
+      select: {
+        id: true,
+        status: true,
+        paymentLink: true,
+        provider: true,
+      } as any,
+    })) as any;
+
+    if (!invoice) {
+      throw new NotFoundException({
+        code: 'invoice_not_found',
+        message: 'Invoice not found for this tenant',
+      });
+    }
+
+    if (invoice.paymentLink) {
+      return {
+        paymentLink: invoice.paymentLink as string,
+        provider: (invoice.provider as string) ?? 'SANDBOX',
+      };
+    }
+
+    const result = await this.paymentService.createPaymentLinkForInvoice(id, user.id);
+
+    return {
+      paymentLink: result.paymentLink,
+      provider: result.provider,
     };
   }
 }

@@ -6,6 +6,7 @@ import {
   Get,
   NotFoundException,
   Param,
+  Post,
   Put,
   Query,
   Req,
@@ -20,6 +21,7 @@ import { Roles } from '../auth/roles.decorator';
 import { RequireTenantGuard } from '../common/tenant/require-tenant.guard';
 import { CurrentUser, CurrentUserPayload } from '../auth/decorators/current-user.decorator';
 import { UpdateGuardianMeDto } from './dto/update-guardian-me.dto';
+import { PaymentService } from '../billing/payment.service';
 
 type TenantRequest = Partial<Request> & {
   tenant?: { id: string; slug: string };
@@ -70,7 +72,10 @@ function parsePageParams(pageParam?: string, limitParam?: string) {
 @Controller('guardian')
 @UseGuards(JwtAuthGuard, RequireTenantGuard, RolesGuard)
 export class GuardianController {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly paymentService: PaymentService
+  ) {}
 
   private async resolveGuardianContext(
     req: TenantRequest,
@@ -412,6 +417,60 @@ export class GuardianController {
         description: invoice.contract?.name ?? null,
         paymentLink: null as string | null,
       },
+    };
+  }
+
+  @Post('invoices/:id/payment-link')
+  @Roles('GUARDIAN')
+  async createPaymentLink(
+    @Req() req: TenantRequest,
+    @CurrentUser() user: CurrentUserPayload,
+    @Param('id') id: string
+  ) {
+    const { guardian, tenantId, studentIds } = await this.resolveGuardianContext(req, user);
+
+    const invoice = (await this.prisma.invoice.findFirst({
+      where: { id, tenantId },
+      select: {
+        id: true,
+        guardianId: true,
+        studentId: true,
+        status: true,
+        paymentLink: true,
+        provider: true,
+      } as any,
+    })) as any;
+
+    if (!invoice) {
+      throw new NotFoundException({
+        code: 'invoice_not_found',
+        message: 'Invoice not found',
+      });
+    }
+
+    const ownsInvoice =
+      invoice.guardianId === guardian.id ||
+      (invoice.studentId && studentIds.includes(invoice.studentId));
+
+    if (!ownsInvoice) {
+      throw new ForbiddenException({
+        code: 'forbidden_invoice',
+        message: 'You are not allowed to access this invoice',
+      });
+    }
+
+    if (invoice.paymentLink) {
+      return {
+        paymentLink: invoice.paymentLink as string,
+        provider: (invoice.provider as string) ?? 'SANDBOX',
+      };
+    }
+
+    const result = await this.paymentService.createPaymentLinkForInvoice(id, user.id);
+
+    return {
+      paymentLink: result.paymentLink,
+      provider: result.provider,
     };
   }
 }
