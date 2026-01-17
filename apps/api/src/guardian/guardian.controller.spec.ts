@@ -1,4 +1,4 @@
-import { NotFoundException } from '@nestjs/common';
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { GuardianController } from './guardian.controller';
 import { PrismaService } from '../prisma/prisma.service';
 import type { CurrentUserPayload } from '../auth/decorators/current-user.decorator';
@@ -29,6 +29,18 @@ type GuardianStudentLink = {
   studentId: string;
 };
 
+type InvoiceStatus = 'PENDING' | 'PAID';
+
+type InvoiceEntity = {
+  id: string;
+  tenantId: string;
+  guardianId: string | null;
+  studentId: string | null;
+  amountCents: number;
+  dueDate: Date;
+  status: InvoiceStatus;
+};
+
 type TenantRequest = {
   tenant?: { id: string; slug: string };
 };
@@ -44,6 +56,7 @@ async function run() {
   const classes: ClassEntity[] = [];
   const students: StudentEntity[] = [];
   const guardianStudentLinks: GuardianStudentLink[] = [];
+  const invoices: InvoiceEntity[] = [];
 
   let counter = 0;
   const nextId = () => `id-${++counter}`;
@@ -61,23 +74,24 @@ async function run() {
 
         if (!guardian) return null;
 
-        if (!args.include) {
-          return guardian;
+        const include = args.include ?? {};
+
+        const result: any = { ...guardian };
+
+        if (include.user) {
+          result.user = {
+            email: 'guardian@example.com',
+            name: guardian.name,
+            status: 'ACTIVE',
+          };
         }
 
-        const withUser =
-          args.include.user &&
-          args.include.user.select && {
-            user: {
-              email: 'guardian@example.com',
-              name: guardian.name,
-            },
-          };
+        if (include.students) {
+          const hasStudentInclude = !!include.students.include?.student;
+          const hasStudentIdSelect = !!include.students.select?.studentId;
 
-        const withStudents =
-          args.include.students &&
-          args.include.students.include && {
-            students: guardianStudentLinks
+          if (hasStudentInclude) {
+            result.students = guardianStudentLinks
               .filter((link) => link.guardianId === guardian.id)
               .map((link) => {
                 const student = students.find((s) => s.id === link.studentId);
@@ -99,14 +113,17 @@ async function run() {
                     },
                   },
                 };
-              }),
-          };
+              });
+          } else if (hasStudentIdSelect) {
+            result.students = guardianStudentLinks
+              .filter((link) => link.guardianId === guardian.id)
+              .map((link) => ({
+                studentId: link.studentId,
+              }));
+          }
+        }
 
-        return {
-          ...guardian,
-          ...(withUser ?? {}),
-          ...(withStudents ?? {}),
-        };
+        return result;
       },
       update: async (args: { where: { id: string }; data: { name?: string; phone?: string } }) => {
         const guardian = guardians.find((g) => g.id === args.where.id);
@@ -120,6 +137,17 @@ async function run() {
           guardian.phone = args.data.phone;
         }
         return guardian;
+      },
+    },
+    invoice: {
+      findFirst: async (args: { where: { id?: string; tenantId?: string } }) => {
+        const { id, tenantId } = args.where;
+        const invoice = invoices.find((inv) => {
+          if (id && inv.id !== id) return false;
+          if (tenantId && inv.tenantId !== tenantId) return false;
+          return true;
+        });
+        return invoice ?? null;
       },
     },
   };
@@ -188,6 +216,53 @@ async function run() {
     throw new Error('getStudents should map student and class correctly');
   }
 
+  // ---- Guardian invoices: own invoice ----
+  const invoiceId = 'invoice-1';
+  invoices.push({
+    id: invoiceId,
+    tenantId,
+    guardianId,
+    studentId,
+    amountCents: 10000,
+    dueDate: new Date('2026-01-10T00:00:00.000Z'),
+    status: 'PENDING',
+  });
+
+  const invoiceResult = await controller.getInvoice(reqTenant, currentUser, invoiceId);
+  if (!invoiceResult.invoice || invoiceResult.invoice.id !== invoiceId) {
+    throw new Error('getInvoice should return guardian invoice');
+  }
+
+  // Another guardian must not access this invoice
+  const otherGuardianId = nextId();
+  const otherUserId = 'user-2';
+  guardians.push({
+    id: otherGuardianId,
+    tenantId,
+    userId: otherUserId,
+    name: 'Responsǭvel 2',
+    phone: '11000000000',
+  });
+
+  const otherReqTenant = createTenantRequest(tenantId) as TenantRequest;
+  const otherUser: CurrentUserPayload = {
+    id: otherUserId,
+    email: 'other@example.com',
+    userType: 'GUARDIAN',
+    tenantId,
+    role: 'GUARDIAN',
+  };
+
+  let forbiddenOnInvoice = false;
+  try {
+    await controller.getInvoice(otherReqTenant, otherUser, invoiceId);
+  } catch (error) {
+    forbiddenOnInvoice = error instanceof ForbiddenException;
+  }
+  if (!forbiddenOnInvoice) {
+    throw new Error('getInvoice should throw ForbiddenException for another guardian');
+  }
+
   // When guardian does not exist, endpoints should throw NotFoundException
   guardians.length = 0;
 
@@ -220,4 +295,3 @@ run().catch((error) => {
   console.error(error);
   process.exit(1);
 });
-
