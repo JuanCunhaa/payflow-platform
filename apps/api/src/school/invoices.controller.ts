@@ -1,9 +1,11 @@
 import {
   BadRequestException,
+  Body,
   Controller,
   Get,
   NotFoundException,
   Param,
+  Post,
   Query,
   Req,
   UseGuards,
@@ -15,6 +17,9 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { RequireTenantGuard } from '../common/tenant/require-tenant.guard';
+import { CreateOneOffInvoiceDto } from './dto/create-one-off-invoice.dto';
+import { CurrentUser, CurrentUserPayload } from '../auth/decorators/current-user.decorator';
+import { AuditService } from '../audit/audit.service';
 
 type TenantRequest = Partial<Request> & {
   tenant?: { id: string; slug: string };
@@ -65,7 +70,10 @@ function parsePageParams(pageParam?: string, limitParam?: string) {
 @Controller('school/invoices')
 @UseGuards(JwtAuthGuard, RequireTenantGuard, RolesGuard)
 export class SchoolInvoicesController {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly auditService: AuditService
+  ) {}
 
   @Get()
   @Roles('SCHOOL_ADMIN', 'FINANCE', 'SECRETARY', 'READONLY')
@@ -234,5 +242,105 @@ export class SchoolInvoicesController {
       },
     };
   }
-}
 
+  @Post('one-off')
+  @Roles('SCHOOL_ADMIN', 'FINANCE', 'SECRETARY')
+  async createOneOffInvoice(
+    @Req() req: TenantRequest,
+    @Body() dto: CreateOneOffInvoiceDto,
+    @CurrentUser() user: CurrentUserPayload
+  ) {
+    const tenantId = req.tenant!.id;
+
+    const amountCents = dto.amountCents;
+    if (!Number.isInteger(amountCents) || amountCents <= 0) {
+      throw new BadRequestException({
+        code: 'invalid_amount',
+        message: 'Amount must be greater than zero',
+      });
+    }
+
+    const dueDate = new Date(dto.dueDate);
+    if (Number.isNaN(dueDate.getTime())) {
+      throw new BadRequestException({
+        code: 'invalid_due_date',
+        message: 'Invalid due date',
+      });
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const normalizedDue = new Date(dueDate);
+    normalizedDue.setHours(0, 0, 0, 0);
+
+    if (normalizedDue < today) {
+      throw new BadRequestException({
+        code: 'invalid_due_date',
+        message: 'Due date cannot be in the past',
+      });
+    }
+
+    const [student, guardian] = await Promise.all([
+      this.prisma.student.findFirst({
+        where: { id: dto.studentId, tenantId },
+        select: { id: true },
+      }),
+      this.prisma.guardian.findFirst({
+        where: { id: dto.guardianId, tenantId },
+        select: { id: true },
+      }),
+    ]);
+
+    if (!student) {
+      throw new BadRequestException({
+        code: 'student_not_found',
+        message: 'Student not found for this tenant',
+      });
+    }
+
+    if (!guardian) {
+      throw new BadRequestException({
+        code: 'guardian_not_found',
+        message: 'Guardian not found for this tenant',
+      });
+    }
+
+    const invoice = await this.prisma.invoice.create({
+      data: {
+        tenantId,
+        contractId: null,
+        guardianId: guardian.id,
+        studentId: student.id,
+        amountCents,
+        dueDate,
+        status: 'PENDING',
+        provider: 'SANDBOX',
+        items: {
+          create: {
+            description: dto.description,
+            amountCents,
+          },
+        },
+      },
+    });
+
+    await this.auditService.log({
+      tenantId,
+      actorUserId: user.id,
+      actorType: 'USER',
+      action: 'invoice.oneoff.create',
+      targetType: 'invoice',
+      targetId: invoice.id,
+      metadata: {
+        studentId: student.id,
+        guardianId: guardian.id,
+        amountCents,
+        dueDate: dueDate.toISOString(),
+      },
+    });
+
+    return {
+      invoiceId: invoice.id,
+    };
+  }
+}
