@@ -70,6 +70,20 @@ enum ContractStatus {
   CANCELED
 }
 
+enum InvoiceStatus {
+  DRAFT
+  PENDING
+  PAID
+  OVERDUE
+  CANCELED
+  REFUNDED
+}
+
+enum InvoiceProvider {
+  SANDBOX
+  MERCADOPAGO
+}
+
 // ============ MODELS ============
 
 model Tenant {
@@ -88,6 +102,7 @@ model Tenant {
   students    Student[]
   guardians   Guardian[]
   contracts   Contract[]
+  invoices    Invoice[]
 
   @@map("tenants")
 }
@@ -218,6 +233,7 @@ model Student {
 
   guardians GuardianStudent[]
   contractStudents ContractStudent[]
+  invoices  Invoice[]
 
   @@unique([tenantId, classId, name])
   @@index([tenantId], map: "students_tenant_id_idx")
@@ -237,6 +253,7 @@ model Guardian {
   createdAt DateTime       @default(now()) @map("created_at")
 
   students  GuardianStudent[]
+  invoices  Invoice[]
 
   @@index([tenantId], map: "guardians_tenant_id_idx")
   @@index([userId], map: "guardians_user_id_idx")
@@ -299,6 +316,7 @@ model Contract {
   createdAt       DateTime       @default(now()) @map("created_at")
 
   contractStudents ContractStudent[]
+  invoices         Invoice[]
 
   @@index([tenantId], map: "contracts_tenant_id_idx")
   @@map("contracts")
@@ -315,4 +333,42 @@ model ContractStudent {
   @@unique([contractId, studentId])
   @@index([studentId], map: "contract_students_student_id_idx")
   @@map("contract_students")
+}
+
+model Invoice {
+  id                String          @id @default(uuid()) @db.Uuid
+  tenantId          String          @db.Uuid @map("tenant_id")
+  tenant            Tenant          @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  contractId        String?         @db.Uuid @map("contract_id")
+  contract          Contract?       @relation(fields: [contractId], references: [id], onDelete: SetNull)
+  guardianId        String?         @db.Uuid @map("guardian_id")
+  guardian          Guardian?       @relation(fields: [guardianId], references: [id], onDelete: SetNull)
+  studentId         String?         @db.Uuid @map("student_id")
+  student           Student?        @relation(fields: [studentId], references: [id], onDelete: SetNull)
+  amountCents       Int             @map("amount_cents")
+  dueDate           DateTime        @map("due_date")
+  status            InvoiceStatus   @default(DRAFT)
+  provider          InvoiceProvider @default(SANDBOX)
+  providerReference String?         @map("provider_reference")
+  createdAt         DateTime        @default(now()) @map("created_at")
+
+  items InvoiceItem[]
+
+  @@index([tenantId], map: "invoices_tenant_id_idx")
+  @@index([contractId], map: "invoices_contract_id_idx")
+  @@index([guardianId], map: "invoices_guardian_id_idx")
+  @@index([studentId], map: "invoices_student_id_idx")
+  @@index([status], map: "invoices_status_idx")
+  @@map("invoices")
+}
+
+model InvoiceItem {
+  id          String   @id @default(uuid()) @db.Uuid
+  invoiceId   String   @db.Uuid @map("invoice_id")
+  invoice     Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  description String
+  amountCents Int      @map("amount_cents")
+
+  @@index([invoiceId], map: "invoice_items_invoice_id_idx")
+  @@map("invoice_items")
 }
