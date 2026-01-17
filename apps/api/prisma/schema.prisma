@@ -350,6 +350,8 @@ model Invoice {
   status            InvoiceStatus   @default(DRAFT)
   provider          InvoiceProvider @default(SANDBOX)
   providerReference String?         @map("provider_reference")
+  competenceYear    Int             @map("competence_year")
+  competenceMonth   Int             @map("competence_month")
   createdAt         DateTime        @default(now()) @map("created_at")
 
   items InvoiceItem[]
@@ -359,6 +361,7 @@ model Invoice {
   @@index([guardianId], map: "invoices_guardian_id_idx")
   @@index([studentId], map: "invoices_student_id_idx")
   @@index([status], map: "invoices_status_idx")
+  @@unique([tenantId, contractId, competenceYear, competenceMonth], map: "invoices_tenant_contract_competence_key")
   @@map("invoices")
 }
 

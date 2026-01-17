@@ -19,6 +19,8 @@ import { GuardiansController } from './school/guardians.controller';
 import { EmailService } from './notifications/email.service';
 import { GuardianController } from './guardian/guardian.controller';
 import { ContractsController } from './school/contracts.controller';
+import { AdminJobsController } from './platform/admin-jobs.controller';
+import { InvoiceJobsService } from './billing/invoice-jobs.service';
 
 @Module({
   imports: [
@@ -55,6 +57,7 @@ import { ContractsController } from './school/contracts.controller';
     PlatformLeadsController,
     PlatformTenantsController,
     PlatformAuditController,
+    AdminJobsController,
     SchoolSettingsController,
     GradesClassesController,
     StudentsController,
@@ -62,7 +65,7 @@ import { ContractsController } from './school/contracts.controller';
     GuardianController,
     ContractsController,
   ],
-  providers: [PrismaService, EmailService],
+  providers: [PrismaService, EmailService, InvoiceJobsService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
