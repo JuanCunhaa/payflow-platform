@@ -84,6 +84,11 @@ enum InvoiceProvider {
   MERCADOPAGO
 }
 
+enum InvoicePaidMethod {
+  MANUAL
+  SANDBOX
+}
+
 // ============ MODELS ============
 
 model Tenant {
@@ -351,6 +356,10 @@ model Invoice {
   provider          InvoiceProvider @default(SANDBOX)
   providerReference String?         @map("provider_reference")
   paymentLink       String?         @map("payment_link")
+  paidAt            DateTime?       @map("paid_at")
+  paidMethod        InvoicePaidMethod? @map("paid_method")
+  paidNote          String?         @map("paid_note")
+  receiptUrl        String?         @map("receipt_url")
   competenceYear    Int             @map("competence_year")
   competenceMonth   Int             @map("competence_month")
   createdAt         DateTime        @default(now()) @map("created_at")

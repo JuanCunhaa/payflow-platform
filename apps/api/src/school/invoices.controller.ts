@@ -18,6 +18,7 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/roles.decorator';
 import { RequireTenantGuard } from '../common/tenant/require-tenant.guard';
 import { CreateOneOffInvoiceDto } from './dto/create-one-off-invoice.dto';
+import { MarkInvoicePaidDto } from './dto/mark-invoice-paid.dto';
 import { CurrentUser, CurrentUserPayload } from '../auth/decorators/current-user.decorator';
 import { AuditService } from '../audit/audit.service';
 import { PaymentService } from '../billing/payment.service';
@@ -343,6 +344,84 @@ export class SchoolInvoicesController {
 
     return {
       invoiceId: invoice.id,
+    };
+  }
+
+  @Post(':id/mark-paid')
+  @Roles('SCHOOL_ADMIN', 'FINANCE')
+  async markInvoiceAsPaid(
+    @Req() req: TenantRequest,
+    @Param('id') id: string,
+    @Body() dto: MarkInvoicePaidDto,
+    @CurrentUser() user: CurrentUserPayload
+  ) {
+    const tenantId = req.tenant!.id;
+
+    const invoice = await this.prisma.invoice.findFirst({
+      where: { id, tenantId },
+      select: {
+        id: true,
+        status: true,
+      },
+    });
+
+    if (!invoice) {
+      throw new NotFoundException({
+        code: 'invoice_not_found',
+        message: 'Invoice not found for this tenant',
+      });
+    }
+
+    if (invoice.status !== 'PENDING' && invoice.status !== 'OVERDUE') {
+      throw new BadRequestException({
+        code: 'invalid_status',
+        message: 'Only pending or overdue invoices can be marked as paid manually',
+      });
+    }
+
+    const paidAt = new Date(dto.paidAt);
+    if (Number.isNaN(paidAt.getTime())) {
+      throw new BadRequestException({
+        code: 'invalid_paid_at',
+        message: 'Invalid paidAt date',
+      });
+    }
+
+    const paidNote = dto.note?.trim() || null;
+    const receiptUrl =
+      dto.receiptUrl === undefined || dto.receiptUrl === null
+        ? null
+        : String(dto.receiptUrl).trim() || null;
+
+    await this.prisma.invoice.update({
+      where: { id: invoice.id },
+      data: {
+        status: 'PAID',
+        paidAt,
+        paidMethod: 'MANUAL',
+        paidNote,
+        receiptUrl,
+      } as any,
+    });
+
+    await this.auditService.log({
+      tenantId,
+      actorUserId: user.id,
+      actorType: 'USER',
+      action: 'invoice.manual_paid',
+      targetType: 'invoice',
+      targetId: invoice.id,
+      metadata: {
+        paidAt: paidAt.toISOString(),
+        paidMethod: 'MANUAL',
+        paidNote,
+        hasReceiptUrl: !!receiptUrl,
+      },
+    });
+
+    return {
+      success: true,
+      status: 'PAID',
     };
   }
 

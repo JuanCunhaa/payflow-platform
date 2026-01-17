@@ -350,7 +350,9 @@ export class PublicController {
       where: { id: invoice.id },
       data: {
         status: 'PAID',
-      },
+        paidAt: new Date(),
+        paidMethod: 'SANDBOX',
+      } as any,
     });
 
     const forwardedFor = req.headers['x-forwarded-for'];
