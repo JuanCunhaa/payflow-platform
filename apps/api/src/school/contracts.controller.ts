@@ -106,6 +106,41 @@ export class ContractsController {
     };
   }
 
+  @Get(':id')
+  @Roles('SCHOOL_ADMIN', 'FINANCE', 'SECRETARY', 'READONLY')
+  async getContract(
+    @Req() req: TenantRequest,
+    @Param('id') id: string
+  ) {
+    const tenantId = req.tenant!.id;
+
+    const contract = await this.prisma.contract.findFirst({
+      where: { id, tenantId },
+      include: {
+        contractStudents: {
+          include: {
+            student: true,
+          },
+        },
+      },
+    });
+
+    if (!contract) {
+      throw new NotFoundException({
+        code: 'contract_not_found',
+        message: 'Contract not found for this tenant',
+      });
+    }
+
+    const students = contract.contractStudents.map((cs) => cs.student);
+    const { contractStudents, ...rest } = contract;
+
+    return {
+      contract: rest,
+      students,
+    };
+  }
+
   @Post()
   @Roles('SCHOOL_ADMIN', 'FINANCE', 'SECRETARY')
   async createContract(
@@ -579,4 +614,3 @@ export class ContractsController {
     return { contract: updated };
   }
 }
-

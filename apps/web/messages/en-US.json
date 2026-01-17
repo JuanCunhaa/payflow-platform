@@ -278,6 +278,7 @@
       "dashboard": "School panel",
       "settings": "Settings",
       "classes": "Classes",
+      "contracts": "Contracts",
       "students": "Students",
       "guardians": "Guardians",
       "approvalsGuardians": "Guardian approvals"
@@ -287,6 +288,7 @@
       "dashboard": "Dashboard",
       "settings": "Settings",
       "classes": "Classes",
+      "contracts": "Contracts",
       "students": "Students",
       "guardians": "Guardians",
       "approvals": "Approvals",
@@ -346,6 +348,60 @@
         "saveError": "Could not save data. Please check the fields and try again.",
         "deleteError": "Could not remove the record. Please try again."
       }
+    },
+    "contractsUi": {
+      "filters": {
+        "status": "Status",
+        "statusAll": "All statuses",
+        "search": "Search contracts"
+      },
+      "table": {
+        "name": "Contract name",
+        "amount": "Amount",
+        "dueDay": "Due day",
+        "status": "Status",
+        "students": "Linked students",
+        "actions": "Actions"
+      },
+      "status": {
+        "active": "Active",
+        "paused": "Paused",
+        "canceled": "Canceled"
+      },
+      "actions": {
+        "create": "New contract",
+        "edit": "Edit",
+        "viewDetails": "View details",
+        "pause": "Pause",
+        "resume": "Resume",
+        "cancel": "Cancel"
+      },
+      "form": {
+        "name": "Contract name",
+        "amount": "Amount",
+        "dueDay": "Due day (1-28)",
+        "startDate": "Start date",
+        "endDate": "End date (optional)",
+        "status": "Status",
+        "save": "Save",
+        "cancel": "Cancel"
+      },
+      "detail": {
+        "title": "Contract details",
+        "studentsTitle": "Linked students",
+        "addStudents": "Add students to contract",
+        "remove": "Remove",
+        "confirmCancelTitle": "Cancel contract",
+        "confirmCancelDescription": "Are you sure you want to cancel this contract? New invoices will not be generated."
+      },
+      "feedback": {
+        "loadError": "Could not load contracts.",
+        "saveError": "Could not save contract. Please check the fields and try again.",
+        "linkError": "Could not link students to the contract.",
+        "unlinkError": "Could not unlink the student from this contract.",
+        "statusError": "Could not change contract status."
+      },
+      "empty": "No contracts found for the current filter."
     },
     "studentsUi": {
       "filters": {
@@ -439,6 +495,10 @@
       "students": {
         "title": "Students",
         "description": "List and manage students linked to this school."
+      },
+      "contracts": {
+        "title": "Contracts",
+        "description": "Manage tuition contracts and linked students."
       },
       "guardians": {
         "title": "Guardians",

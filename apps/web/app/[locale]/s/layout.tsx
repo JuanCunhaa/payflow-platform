@@ -53,6 +53,10 @@ function buildBreadcrumbs(
     crumbs.push({
       label: t(i18nKeys.school.breadcrumbs.students),
     });
+  } else if (first === 'contracts') {
+    crumbs.push({
+      label: t(i18nKeys.school.breadcrumbs.contracts),
+    });
   } else if (first === 'guardians') {
     crumbs.push({
       label: t(i18nKeys.school.breadcrumbs.guardians),
@@ -224,6 +228,12 @@ export default function SchoolLayout({ children }: { children: React.ReactNode }
             {t(i18nKeys.school.nav.classes)}
           </Link>
           <Link
+            href={`${basePath}/contracts`}
+            style={{ color: '#e5e7eb', textDecoration: 'none' }}
+          >
+            {t(i18nKeys.school.nav.contracts)}
+          </Link>
+          <Link
             href={`${basePath}/students`}
             style={{ color: '#e5e7eb', textDecoration: 'none' }}
           >
@@ -328,4 +338,3 @@ export default function SchoolLayout({ children }: { children: React.ReactNode }
     </div>
   );
 }
-

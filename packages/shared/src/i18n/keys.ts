@@ -281,6 +281,7 @@ export const i18nKeys = {
       students: 'school.nav.students',
       guardians: 'school.nav.guardians',
       approvalsGuardians: 'school.nav.approvalsGuardians',
+      contracts: 'school.nav.contracts',
     },
     breadcrumbs: {
       root: 'school.breadcrumbs.root',
@@ -291,6 +292,7 @@ export const i18nKeys = {
       guardians: 'school.breadcrumbs.guardians',
       approvals: 'school.breadcrumbs.approvals',
       approvalsGuardians: 'school.breadcrumbs.approvalsGuardians',
+      contracts: 'school.breadcrumbs.contracts',
     },
     layout: {
       unauthorizedTitle: 'school.layout.unauthorizedTitle',
@@ -342,6 +344,60 @@ export const i18nKeys = {
         saveError: 'school.classesUi.feedback.saveError',
         deleteError: 'school.classesUi.feedback.deleteError',
       },
+    },
+    contractsUi: {
+      filters: {
+        status: 'school.contractsUi.filters.status',
+        statusAll: 'school.contractsUi.filters.statusAll',
+        search: 'school.contractsUi.filters.search',
+      },
+      table: {
+        name: 'school.contractsUi.table.name',
+        amount: 'school.contractsUi.table.amount',
+        dueDay: 'school.contractsUi.table.dueDay',
+        status: 'school.contractsUi.table.status',
+        students: 'school.contractsUi.table.students',
+        actions: 'school.contractsUi.table.actions',
+      },
+      status: {
+        active: 'school.contractsUi.status.active',
+        paused: 'school.contractsUi.status.paused',
+        canceled: 'school.contractsUi.status.canceled',
+      },
+      actions: {
+        create: 'school.contractsUi.actions.create',
+        edit: 'school.contractsUi.actions.edit',
+        viewDetails: 'school.contractsUi.actions.viewDetails',
+        pause: 'school.contractsUi.actions.pause',
+        resume: 'school.contractsUi.actions.resume',
+        cancel: 'school.contractsUi.actions.cancel',
+      },
+      form: {
+        name: 'school.contractsUi.form.name',
+        amount: 'school.contractsUi.form.amount',
+        dueDay: 'school.contractsUi.form.dueDay',
+        startDate: 'school.contractsUi.form.startDate',
+        endDate: 'school.contractsUi.form.endDate',
+        status: 'school.contractsUi.form.status',
+        save: 'school.contractsUi.form.save',
+        cancel: 'school.contractsUi.form.cancel',
+      },
+      detail: {
+        title: 'school.contractsUi.detail.title',
+        studentsTitle: 'school.contractsUi.detail.studentsTitle',
+        addStudents: 'school.contractsUi.detail.addStudents',
+        remove: 'school.contractsUi.detail.remove',
+        confirmCancelTitle: 'school.contractsUi.detail.confirmCancelTitle',
+        confirmCancelDescription: 'school.contractsUi.detail.confirmCancelDescription',
+      },
+      feedback: {
+        loadError: 'school.contractsUi.feedback.loadError',
+        saveError: 'school.contractsUi.feedback.saveError',
+        linkError: 'school.contractsUi.feedback.linkError',
+        unlinkError: 'school.contractsUi.feedback.unlinkError',
+        statusError: 'school.contractsUi.feedback.statusError',
+      },
+      empty: 'school.contractsUi.empty',
     },
     studentsUi: {
       filters: {
@@ -443,6 +499,10 @@ export const i18nKeys = {
       approvalsGuardians: {
         title: 'school.pages.approvalsGuardians.title',
         description: 'school.pages.approvalsGuardians.description',
+      },
+      contracts: {
+        title: 'school.pages.contracts.title',
+        description: 'school.pages.contracts.description',
       },
     },
   },

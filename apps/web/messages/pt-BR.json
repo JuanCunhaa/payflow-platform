@@ -278,6 +278,7 @@
       "dashboard": "Painel da escola",
       "settings": "Configurações",
       "classes": "Turmas",
+      "contracts": "Contratos",
       "students": "Alunos",
       "guardians": "Responsáveis",
       "approvalsGuardians": "Aprovação de responsáveis"
@@ -287,6 +288,7 @@
       "dashboard": "Dashboard",
       "settings": "Configurações",
       "classes": "Turmas",
+      "contracts": "Contratos",
       "students": "Alunos",
       "guardians": "Responsáveis",
       "approvals": "Aprovações",
@@ -346,6 +348,60 @@
         "saveError": "Não foi possível salvar os dados. Verifique os campos e tente novamente.",
         "deleteError": "Não foi possível remover o registro. Tente novamente."
       }
+    },
+    "contractsUi": {
+      "filters": {
+        "status": "Status",
+        "statusAll": "Todos os status",
+        "search": "Buscar por contrato"
+      },
+      "table": {
+        "name": "Nome do contrato",
+        "amount": "Valor",
+        "dueDay": "Dia de vencimento",
+        "status": "Status",
+        "students": "Alunos vinculados",
+        "actions": "Ações"
+      },
+      "status": {
+        "active": "Ativo",
+        "paused": "Pausado",
+        "canceled": "Cancelado"
+      },
+      "actions": {
+        "create": "Novo contrato",
+        "edit": "Editar",
+        "viewDetails": "Ver detalhes",
+        "pause": "Pausar",
+        "resume": "Retomar",
+        "cancel": "Cancelar"
+      },
+      "form": {
+        "name": "Nome do contrato",
+        "amount": "Valor (R$)",
+        "dueDay": "Dia de vencimento (1-28)",
+        "startDate": "Início de vigência",
+        "endDate": "Fim de vigência (opcional)",
+        "status": "Status",
+        "save": "Salvar",
+        "cancel": "Cancelar"
+      },
+      "detail": {
+        "title": "Detalhes do contrato",
+        "studentsTitle": "Alunos vinculados",
+        "addStudents": "Adicionar alunos ao contrato",
+        "remove": "Remover",
+        "confirmCancelTitle": "Cancelar contrato",
+        "confirmCancelDescription": "Tem certeza que deseja cancelar este contrato? Novas cobranças não serão geradas."
+      },
+      "feedback": {
+        "loadError": "Não foi possível carregar os contratos.",
+        "saveError": "Não foi possível salvar o contrato. Verifique os campos e tente novamente.",
+        "linkError": "Não foi possível vincular os alunos ao contrato.",
+        "unlinkError": "Não foi possível desvincular o aluno deste contrato.",
+        "statusError": "Não foi possível alterar o status do contrato."
+      },
+      "empty": "Nenhum contrato encontrado para o filtro atual."
     },
     "studentsUi": {
       "filters": {
@@ -439,6 +495,10 @@
       "students": {
         "title": "Alunos",
         "description": "Liste e gerencie os alunos vinculados a esta escola."
+      },
+      "contracts": {
+        "title": "Contratos",
+        "description": "Gerencie contratos de mensalidade e alunos vinculados."
       },
       "guardians": {
         "title": "Responsáveis",
