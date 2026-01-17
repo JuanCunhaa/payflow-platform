@@ -350,6 +350,7 @@ model Invoice {
   status            InvoiceStatus   @default(DRAFT)
   provider          InvoiceProvider @default(SANDBOX)
   providerReference String?         @map("provider_reference")
+  paymentLink       String?         @map("payment_link")
   competenceYear    Int             @map("competence_year")
   competenceMonth   Int             @map("competence_month")
   createdAt         DateTime        @default(now()) @map("created_at")

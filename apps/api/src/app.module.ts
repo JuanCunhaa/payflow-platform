@@ -21,6 +21,9 @@ import { GuardianController } from './guardian/guardian.controller';
 import { ContractsController } from './school/contracts.controller';
 import { AdminJobsController } from './platform/admin-jobs.controller';
 import { InvoiceJobsService } from './billing/invoice-jobs.service';
+import { PaymentService } from './billing/payment.service';
+import { PAYMENT_PROVIDER_TOKEN } from './billing/payment-provider';
+import { SandboxPaymentProvider } from './billing/sandbox-payment.provider';
 import { SchoolInvoicesController } from './school/invoices.controller';
 
 @Module({
@@ -67,7 +70,17 @@ import { SchoolInvoicesController } from './school/invoices.controller';
     GuardianController,
     ContractsController,
   ],
-  providers: [PrismaService, EmailService, InvoiceJobsService],
+  providers: [
+    PrismaService,
+    EmailService,
+    InvoiceJobsService,
+    PaymentService,
+    {
+      provide: PAYMENT_PROVIDER_TOKEN,
+      useClass: SandboxPaymentProvider,
+    },
+    SandboxPaymentProvider,
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
