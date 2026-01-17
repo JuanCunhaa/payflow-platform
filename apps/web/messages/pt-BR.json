@@ -166,43 +166,47 @@
       "students": "Alunos",
       "invoices": "Cobranças"
     },
-    "invoicesUi": {
-      "filters": {
-        "status": "Status",
-        "statusAll": "Todos os status",
-        "from": "Data inicial",
-        "to": "Data final",
-        "student": "Aluno",
-        "search": "Buscar por aluno"
+      "invoicesUi": {
+        "filters": {
+          "status": "Status",
+          "statusAll": "Todos os status",
+          "from": "Data inicial",
+          "to": "Data final",
+          "student": "Aluno",
+          "search": "Buscar por aluno"
+        },
+        "table": {
+          "dueDate": "Vencimento",
+          "student": "Aluno",
+          "amount": "Valor",
+          "status": "Status",
+          "actions": "Ações"
+        },
+        "status": {
+          "draft": "Rascunho",
+          "pending": "Pendente",
+          "paid": "Pago",
+          "overdue": "Em atraso",
+          "canceled": "Cancelado",
+          "refunded": "Estornado"
+        },
+        "detail": {
+          "title": "Detalhes da cobrança",
+          "infoTitle": "Informações da cobrança",
+          "statusTimelineTitle": "Linha do tempo de status",
+          "paymentLinkLabel": "Pagamento online (sandbox para testes)",
+          "payNow": "Abrir página de pagamento",
+          "paidLabel": "Cobrança já paga.",
+          "generatePaymentLink": "Gerar link de pagamento",
+          "copyPaymentLink": "Copiar link de pagamento",
+          "copyPaymentLinkSuccess": "Link de pagamento copiado para a área de transferência.",
+          "openPaymentPage": "Abrir página de pagamento"
+        },
+        "feedback": {
+          "loadError": "Não foi possível carregar as cobranças."
+        },
+        "empty": "Nenhuma cobrança encontrada para o filtro atual."
       },
-      "table": {
-        "dueDate": "Vencimento",
-        "student": "Aluno",
-        "amount": "Valor",
-        "status": "Status",
-        "actions": "Ações"
-      },
-      "status": {
-        "draft": "Rascunho",
-        "pending": "Pendente",
-        "paid": "Pago",
-        "overdue": "Em atraso",
-        "canceled": "Cancelado",
-        "refunded": "Estornado"
-      },
-      "detail": {
-        "title": "Detalhes da cobrança",
-        "infoTitle": "Informações da cobrança",
-        "statusTimelineTitle": "Linha do tempo de status",
-        "paymentLinkLabel": "Pagamento online será habilitado em breve.",
-        "payNow": "Pagar agora",
-        "paidLabel": "Cobrança já paga."
-      },
-      "feedback": {
-        "loadError": "Não foi possível carregar as cobranças."
-      },
-      "empty": "Nenhuma cobrança encontrada para o filtro atual."
-    },
     "invoicesUi": {
       "filters": {
         "status": "Status",
@@ -237,7 +241,9 @@
         "statusTimelineTitle": "Linha do tempo de status",
         "paymentLinkLabel": "Link de pagamento",
         "copyPaymentLink": "Copiar link de pagamento",
-        "copyPaymentLinkSuccess": "Link de pagamento copiado para a área de transferência."
+        "copyPaymentLinkSuccess": "Link de pagamento copiado para a área de transferência.",
+        "generatePaymentLink": "Gerar link de pagamento",
+        "openPaymentPage": "Abrir página de pagamento"
       },
       "feedback": {
         "loadError": "Não foi possível carregar as cobranças."

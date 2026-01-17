@@ -78,6 +78,9 @@ export default function GuardianInvoicesPage() {
   const [selectedInvoice, setSelectedInvoice] = useState<GuardianInvoiceDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
   const [detailError, setDetailError] = useState<string | null>(null);
+  const [paymentLink, setPaymentLink] = useState<string | null>(null);
+  const [paymentLoading, setPaymentLoading] = useState(false);
+  const [copySuccess, setCopySuccess] = useState<string | null>(null);
 
   // Carrega alunos vinculados para filtro
   useEffect(() => {
@@ -203,6 +206,8 @@ export default function GuardianInvoicesPage() {
     setDetailLoading(true);
     setDetailError(null);
     setSelectedInvoice(null);
+    setPaymentLink(null);
+    setCopySuccess(null);
 
     try {
       const res = await apiFetch(`/guardian/invoices/${id}`);
@@ -217,6 +222,62 @@ export default function GuardianInvoicesPage() {
       setDetailError(t(i18nKeys.guardian.invoicesUi.feedback.loadError));
     } finally {
       setDetailLoading(false);
+    }
+  }
+
+  async function generatePaymentLink(): Promise<string | null> {
+    if (!selectedInvoice || paymentLoading) return null;
+
+    setPaymentLoading(true);
+    setDetailError(null);
+    try {
+      const res = await apiFetch(`/guardian/invoices/${selectedInvoice.id}/payment-link`, {
+        method: 'POST',
+      });
+      if (!res.ok) {
+        setDetailError(t(i18nKeys.guardian.invoicesUi.feedback.loadError));
+        return null;
+      }
+      const data = (await res.json()) as { paymentLink: string; provider: string };
+      setPaymentLink(data.paymentLink);
+      return data.paymentLink;
+    } catch {
+      setDetailError(t(i18nKeys.guardian.invoicesUi.feedback.loadError));
+      return null;
+    } finally {
+      setPaymentLoading(false);
+    }
+  }
+
+  async function handleCopyPaymentLink() {
+    if (!selectedInvoice) return;
+
+    let link = paymentLink;
+    if (!link) {
+      link = await generatePaymentLink();
+      if (!link) return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(link);
+      setCopySuccess(t(i18nKeys.guardian.invoicesUi.detail.copyPaymentLinkSuccess));
+      setTimeout(() => setCopySuccess(null), 3000);
+    } catch {
+      setCopySuccess(null);
+    }
+  }
+
+  async function handleOpenPaymentPage() {
+    if (!selectedInvoice) return;
+
+    let link = paymentLink;
+    if (!link) {
+      link = await generatePaymentLink();
+      if (!link) return;
+    }
+
+    if (typeof window !== 'undefined') {
+      window.open(link, '_blank', 'noopener,noreferrer');
     }
   }
 
@@ -686,20 +747,68 @@ export default function GuardianInvoicesPage() {
 
                 {selectedInvoice.status === 'PENDING' ||
                 selectedInvoice.status === 'OVERDUE' ? (
-                  <button
-                    type="button"
+                  <div
                     style={{
-                      padding: '6px 14px',
-                      borderRadius: '999px',
-                      border: 'none',
-                      backgroundColor: '#22c55e',
-                      color: '#ffffff',
-                      cursor: 'pointer',
-                      fontSize: '13px',
+                      display: 'flex',
+                      gap: '8px',
+                      flexWrap: 'wrap',
                     }}
                   >
-                    {t(i18nKeys.guardian.invoicesUi.detail.payNow)}
-                  </button>
+                    {paymentLink ? (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => void handleCopyPaymentLink()}
+                          disabled={paymentLoading}
+                          style={{
+                            padding: '6px 12px',
+                            borderRadius: '999px',
+                            border: '1px solid #e5e7eb',
+                            backgroundColor: '#ffffff',
+                            cursor: 'pointer',
+                            fontSize: '13px',
+                          }}
+                        >
+                          {t(i18nKeys.guardian.invoicesUi.detail.copyPaymentLink)}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => void handleOpenPaymentPage()}
+                          disabled={paymentLoading}
+                          style={{
+                            padding: '6px 14px',
+                            borderRadius: '999px',
+                            border: 'none',
+                            backgroundColor: '#22c55e',
+                            color: '#ffffff',
+                            cursor: 'pointer',
+                            fontSize: '13px',
+                          }}
+                        >
+                          {t(i18nKeys.guardian.invoicesUi.detail.openPaymentPage)}
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => void generatePaymentLink()}
+                        disabled={paymentLoading}
+                        style={{
+                          padding: '6px 14px',
+                          borderRadius: '999px',
+                          border: 'none',
+                          backgroundColor: '#22c55e',
+                          color: '#ffffff',
+                          cursor: 'pointer',
+                          fontSize: '13px',
+                        }}
+                      >
+                        {paymentLoading
+                          ? t(i18nKeys.common.loading)
+                          : t(i18nKeys.guardian.invoicesUi.detail.generatePaymentLink)}
+                      </button>
+                    )}
+                  </div>
                 ) : (
                   <span
                     style={{
@@ -711,6 +820,18 @@ export default function GuardianInvoicesPage() {
                   </span>
                 )}
               </div>
+
+              {copySuccess && (
+                <p
+                  style={{
+                    marginTop: '4px',
+                    fontSize: '12px',
+                    color: '#16a34a',
+                  }}
+                >
+                  {copySuccess}
+                </p>
+              )}
             </div>
           )}
         </div>

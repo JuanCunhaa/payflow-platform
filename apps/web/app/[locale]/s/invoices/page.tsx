@@ -91,6 +91,9 @@ export default function SchoolInvoicesPage() {
   const [detailLoading, setDetailLoading] = useState(false);
   const [detailError, setDetailError] = useState<string | null>(null);
   const [copySuccess, setCopySuccess] = useState<string | null>(null);
+  const [paymentLink, setPaymentLink] = useState<string | null>(null);
+  const [paymentLoading, setPaymentLoading] = useState(false);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
 
   const loadInvoices = useCallback(async () => {
     setLoading(true);
@@ -164,6 +167,8 @@ export default function SchoolInvoicesPage() {
     setDetailError(null);
     setSelectedInvoice(null);
     setCopySuccess(null);
+    setPaymentLink(null);
+    setPaymentError(null);
 
     try {
       const res = await apiFetch(`/school/invoices/${id}`);
@@ -245,12 +250,38 @@ export default function SchoolInvoicesPage() {
     return 'one_off';
   }, [selectedInvoice]);
 
+  async function generatePaymentLink(): Promise<string | null> {
+    if (!selectedInvoice || paymentLoading) return null;
+
+    setPaymentLoading(true);
+    setPaymentError(null);
+    try {
+      const res = await apiFetch(`/school/invoices/${selectedInvoice.id}/payment-link`, {
+        method: 'POST',
+      });
+      if (!res.ok) {
+        setPaymentError(t(i18nKeys.school.invoicesUi.feedback.loadError));
+        return null;
+      }
+      const data = (await res.json()) as { paymentLink: string; provider: string };
+      setPaymentLink(data.paymentLink);
+      return data.paymentLink;
+    } catch {
+      setPaymentError(t(i18nKeys.school.invoicesUi.feedback.loadError));
+      return null;
+    } finally {
+      setPaymentLoading(false);
+    }
+  }
+
   async function handleCopyPaymentLink() {
     if (!selectedInvoice) return;
 
-    const link =
-      selectedInvoice.receiptUrl ??
-      `${window.location.origin}/payment/${selectedInvoice.id}`;
+    let link = paymentLink;
+    if (!link) {
+      link = await generatePaymentLink();
+      if (!link) return;
+    }
 
     try {
       await navigator.clipboard.writeText(link);
@@ -260,6 +291,20 @@ export default function SchoolInvoicesPage() {
       }, 3000);
     } catch {
       setCopySuccess(null);
+    }
+  }
+
+  async function handleOpenPaymentPage() {
+    if (!selectedInvoice) return;
+
+    let link = paymentLink;
+    if (!link) {
+      link = await generatePaymentLink();
+      if (!link) return;
+    }
+
+    if (typeof window !== 'undefined') {
+      window.open(link, '_blank', 'noopener,noreferrer');
     }
   }
 
@@ -815,20 +860,81 @@ export default function SchoolInvoicesPage() {
               >
                 {t(i18nKeys.school.invoicesUi.detail.paymentLinkLabel)}
               </h3>
-              <button
-                type="button"
-                onClick={() => void handleCopyPaymentLink()}
-                style={{
-                  padding: '6px 12px',
-                  borderRadius: '999px',
-                  border: '1px solid #e5e7eb',
-                  backgroundColor: '#ffffff',
-                  cursor: 'pointer',
-                  fontSize: '13px',
-                }}
-              >
-                {t(i18nKeys.school.invoicesUi.detail.copyPaymentLink)}
-              </button>
+              {selectedInvoice.status === 'PENDING' || selectedInvoice.status === 'OVERDUE' ? (
+                <div
+                  style={{
+                    display: 'flex',
+                    gap: '8px',
+                    flexWrap: 'wrap',
+                    alignItems: 'center',
+                  }}
+                >
+                  {paymentLink ? (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => void handleCopyPaymentLink()}
+                        disabled={paymentLoading}
+                        style={{
+                          padding: '6px 12px',
+                          borderRadius: '999px',
+                          border: '1px solid #e5e7eb',
+                          backgroundColor: '#ffffff',
+                          cursor: 'pointer',
+                          fontSize: '13px',
+                        }}
+                      >
+                        {t(i18nKeys.school.invoicesUi.detail.copyPaymentLink)}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => void handleOpenPaymentPage()}
+                        disabled={paymentLoading}
+                        style={{
+                          padding: '6px 12px',
+                          borderRadius: '999px',
+                          border: 'none',
+                          backgroundColor: '#4f46e5',
+                          color: '#ffffff',
+                          cursor: 'pointer',
+                          fontSize: '13px',
+                        }}
+                      >
+                        {t(i18nKeys.school.invoicesUi.detail.openPaymentPage)}
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => void generatePaymentLink()}
+                      disabled={paymentLoading}
+                      style={{
+                        padding: '6px 12px',
+                        borderRadius: '999px',
+                        border: 'none',
+                        backgroundColor: '#2563eb',
+                        color: '#ffffff',
+                        cursor: 'pointer',
+                        fontSize: '13px',
+                      }}
+                    >
+                      {paymentLoading
+                        ? t(i18nKeys.common.loading)
+                        : t(i18nKeys.school.invoicesUi.detail.generatePaymentLink)}
+                    </button>
+                  )}
+                </div>
+              ) : (
+                <p
+                  style={{
+                    margin: 0,
+                    fontSize: '13px',
+                    color: '#64748b',
+                  }}
+                >
+                  {statusLabel(selectedInvoice.status)}
+                </p>
+              )}
               {copySuccess && (
                 <p
                   style={{
@@ -838,6 +944,17 @@ export default function SchoolInvoicesPage() {
                   }}
                 >
                   {copySuccess}
+                </p>
+              )}
+              {paymentError && (
+                <p
+                  style={{
+                    marginTop: '4px',
+                    fontSize: '12px',
+                    color: '#b91c1c',
+                  }}
+                >
+                  {paymentError}
                 </p>
               )}
             </div>
@@ -913,4 +1030,3 @@ export default function SchoolInvoicesPage() {
     </div>
   );
 }
-

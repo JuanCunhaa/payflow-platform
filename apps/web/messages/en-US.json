@@ -166,38 +166,42 @@
       "students": "Students",
       "invoices": "Invoices"
     },
-    "invoicesUi": {
-      "filters": {
-        "status": "Status",
-        "statusAll": "All statuses",
-        "from": "From date",
-        "to": "To date",
-        "student": "Student",
-        "search": "Search by student"
-      },
-      "table": {
-        "dueDate": "Due date",
-        "student": "Student",
-        "amount": "Amount",
-        "status": "Status",
-        "actions": "Actions"
-      },
-      "status": {
-        "draft": "Draft",
-        "pending": "Pending",
-        "paid": "Paid",
-        "overdue": "Overdue",
-        "canceled": "Canceled",
-        "refunded": "Refunded"
-      },
-      "detail": {
-        "title": "Invoice details",
-        "infoTitle": "Invoice information",
-        "statusTimelineTitle": "Status timeline",
-        "paymentLinkLabel": "Online payment will be available soon.",
-        "payNow": "Pay now",
-        "paidLabel": "This invoice is already paid."
-      },
+      "invoicesUi": {
+        "filters": {
+          "status": "Status",
+          "statusAll": "All statuses",
+          "from": "From date",
+          "to": "To date",
+          "student": "Student",
+          "search": "Search by student"
+        },
+        "table": {
+          "dueDate": "Due date",
+          "student": "Student",
+          "amount": "Amount",
+          "status": "Status",
+          "actions": "Actions"
+        },
+        "status": {
+          "draft": "Draft",
+          "pending": "Pending",
+          "paid": "Paid",
+          "overdue": "Overdue",
+          "canceled": "Canceled",
+          "refunded": "Refunded"
+        },
+        "detail": {
+          "title": "Invoice details",
+          "infoTitle": "Invoice information",
+          "statusTimelineTitle": "Status timeline",
+          "paymentLinkLabel": "Online payment (sandbox for tests)",
+          "payNow": "Open payment page",
+          "paidLabel": "This invoice is already paid.",
+          "generatePaymentLink": "Generate payment link",
+          "copyPaymentLink": "Copy payment link",
+          "copyPaymentLinkSuccess": "Payment link copied to clipboard.",
+          "openPaymentPage": "Open payment page"
+        },
       "feedback": {
         "loadError": "Could not load invoices."
       },
@@ -469,15 +473,17 @@
         "canceled": "Canceled",
         "refunded": "Refunded"
       },
-      "detail": {
-        "title": "Invoice details",
-        "infoTitle": "Invoice information",
-        "itemsTitle": "Invoice items",
-        "statusTimelineTitle": "Status timeline",
-        "paymentLinkLabel": "Payment link",
-        "copyPaymentLink": "Copy payment link",
-        "copyPaymentLinkSuccess": "Payment link copied to clipboard."
-      },
+        "detail": {
+          "title": "Invoice details",
+          "infoTitle": "Invoice information",
+          "itemsTitle": "Invoice items",
+          "statusTimelineTitle": "Status timeline",
+          "paymentLinkLabel": "Payment link",
+          "copyPaymentLink": "Copy payment link",
+          "copyPaymentLinkSuccess": "Payment link copied to clipboard.",
+          "generatePaymentLink": "Generate payment link",
+          "openPaymentPage": "Open payment page"
+        },
       "feedback": {
         "loadError": "Could not load invoices."
       },

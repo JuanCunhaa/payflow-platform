@@ -197,6 +197,10 @@ export const i18nKeys = {
         paymentLinkLabel: 'guardian.invoicesUi.detail.paymentLinkLabel',
         payNow: 'guardian.invoicesUi.detail.payNow',
         paidLabel: 'guardian.invoicesUi.detail.paidLabel',
+        generatePaymentLink: 'guardian.invoicesUi.detail.generatePaymentLink',
+        copyPaymentLink: 'guardian.invoicesUi.detail.copyPaymentLink',
+        copyPaymentLinkSuccess: 'guardian.invoicesUi.detail.copyPaymentLinkSuccess',
+        openPaymentPage: 'guardian.invoicesUi.detail.openPaymentPage',
       },
       feedback: {
         loadError: 'guardian.invoicesUi.feedback.loadError',
@@ -473,6 +477,8 @@ export const i18nKeys = {
         paymentLinkLabel: 'school.invoicesUi.detail.paymentLinkLabel',
         copyPaymentLink: 'school.invoicesUi.detail.copyPaymentLink',
         copyPaymentLinkSuccess: 'school.invoicesUi.detail.copyPaymentLinkSuccess',
+        generatePaymentLink: 'school.invoicesUi.detail.generatePaymentLink',
+        openPaymentPage: 'school.invoicesUi.detail.openPaymentPage',
       },
       feedback: {
         loadError: 'school.invoicesUi.feedback.loadError',
