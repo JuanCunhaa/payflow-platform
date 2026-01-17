@@ -279,6 +279,7 @@
       "settings": "Settings",
       "classes": "Classes",
       "contracts": "Contracts",
+      "invoices": "Invoices",
       "students": "Students",
       "guardians": "Guardians",
       "approvalsGuardians": "Guardian approvals"
@@ -289,6 +290,7 @@
       "settings": "Settings",
       "classes": "Classes",
       "contracts": "Contracts",
+      "invoices": "Invoices",
       "students": "Students",
       "guardians": "Guardians",
       "approvals": "Approvals",
@@ -403,6 +405,47 @@
       },
       "empty": "No contracts found for the current filter."
     },
+    "invoicesUi": {
+      "filters": {
+        "status": "Status",
+        "statusAll": "All statuses",
+        "from": "From date",
+        "to": "To date",
+        "student": "Student",
+        "guardian": "Guardian",
+        "search": "Search by student or guardian"
+      },
+      "table": {
+        "dueDate": "Due date",
+        "student": "Student",
+        "guardian": "Guardian",
+        "amount": "Amount",
+        "origin": "Origin",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "status": {
+        "draft": "Draft",
+        "pending": "Pending",
+        "paid": "Paid",
+        "overdue": "Overdue",
+        "canceled": "Canceled",
+        "refunded": "Refunded"
+      },
+      "detail": {
+        "title": "Invoice details",
+        "infoTitle": "Invoice information",
+        "itemsTitle": "Invoice items",
+        "statusTimelineTitle": "Status timeline",
+        "paymentLinkLabel": "Payment link",
+        "copyPaymentLink": "Copy payment link",
+        "copyPaymentLinkSuccess": "Payment link copied to clipboard."
+      },
+      "feedback": {
+        "loadError": "Could not load invoices."
+      },
+      "empty": "No invoices found for the current filter."
+    },
     "studentsUi": {
       "filters": {
         "class": "Class",
@@ -495,6 +538,10 @@
       "students": {
         "title": "Students",
         "description": "List and manage students linked to this school."
+      },
+      "invoices": {
+        "title": "Invoices",
+        "description": "Track the school's invoices, their status and details."
       },
       "contracts": {
         "title": "Contracts",

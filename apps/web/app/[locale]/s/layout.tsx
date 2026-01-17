@@ -53,6 +53,10 @@ function buildBreadcrumbs(
     crumbs.push({
       label: t(i18nKeys.school.breadcrumbs.students),
     });
+  } else if (first === 'invoices') {
+    crumbs.push({
+      label: t(i18nKeys.school.breadcrumbs.invoices),
+    });
   } else if (first === 'contracts') {
     crumbs.push({
       label: t(i18nKeys.school.breadcrumbs.contracts),
@@ -232,6 +236,12 @@ export default function SchoolLayout({ children }: { children: React.ReactNode }
             style={{ color: '#e5e7eb', textDecoration: 'none' }}
           >
             {t(i18nKeys.school.nav.contracts)}
+          </Link>
+          <Link
+            href={`${basePath}/invoices`}
+            style={{ color: '#e5e7eb', textDecoration: 'none' }}
+          >
+            {t(i18nKeys.school.nav.invoices)}
           </Link>
           <Link
             href={`${basePath}/students`}

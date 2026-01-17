@@ -166,6 +166,47 @@
       "students": "Alunos",
       "invoices": "Cobranças"
     },
+    "invoicesUi": {
+      "filters": {
+        "status": "Status",
+        "statusAll": "Todos os status",
+        "from": "Data inicial",
+        "to": "Data final",
+        "student": "Aluno",
+        "guardian": "Responsável",
+        "search": "Buscar por aluno ou responsável"
+      },
+      "table": {
+        "dueDate": "Vencimento",
+        "student": "Aluno",
+        "guardian": "Responsável",
+        "amount": "Valor",
+        "origin": "Origem",
+        "status": "Status",
+        "actions": "Ações"
+      },
+      "status": {
+        "draft": "Rascunho",
+        "pending": "Pendente",
+        "paid": "Pago",
+        "overdue": "Em atraso",
+        "canceled": "Cancelado",
+        "refunded": "Estornado"
+      },
+      "detail": {
+        "title": "Detalhes da cobrança",
+        "infoTitle": "Informações da cobrança",
+        "itemsTitle": "Itens da cobrança",
+        "statusTimelineTitle": "Linha do tempo de status",
+        "paymentLinkLabel": "Link de pagamento",
+        "copyPaymentLink": "Copiar link de pagamento",
+        "copyPaymentLinkSuccess": "Link de pagamento copiado para a área de transferência."
+      },
+      "feedback": {
+        "loadError": "Não foi possível carregar as cobranças."
+      },
+      "empty": "Nenhuma cobrança encontrada para o filtro atual."
+    },
     "pages": {
       "dashboard": {
         "title": "Portal do responsável",
@@ -279,6 +320,7 @@
       "settings": "Configurações",
       "classes": "Turmas",
       "contracts": "Contratos",
+      "invoices": "Cobranças",
       "students": "Alunos",
       "guardians": "Responsáveis",
       "approvalsGuardians": "Aprovação de responsáveis"
@@ -289,6 +331,7 @@
       "settings": "Configurações",
       "classes": "Turmas",
       "contracts": "Contratos",
+      "invoices": "Cobranças",
       "students": "Alunos",
       "guardians": "Responsáveis",
       "approvals": "Aprovações",
@@ -495,6 +538,10 @@
       "students": {
         "title": "Alunos",
         "description": "Liste e gerencie os alunos vinculados a esta escola."
+      },
+      "invoices": {
+        "title": "Cobranças",
+        "description": "Acompanhe as cobranças da escola, seus status e detalhes."
       },
       "contracts": {
         "title": "Contratos",

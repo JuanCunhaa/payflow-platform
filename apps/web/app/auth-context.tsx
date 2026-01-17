@@ -177,7 +177,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (!res.ok) {
           const code = data?.code as string | undefined;
 
-          let key = i18nKeys.login.error.generic;
+          let key: (typeof i18nKeys.login.error)[keyof typeof i18nKeys.login.error] =
+            i18nKeys.login.error.generic;
           if (code === 'rate_limit_exceeded') {
             key = i18nKeys.login.error.rateLimit;
           }

@@ -278,6 +278,7 @@ export const i18nKeys = {
       dashboard: 'school.nav.dashboard',
       settings: 'school.nav.settings',
       classes: 'school.nav.classes',
+      invoices: 'school.nav.invoices',
       students: 'school.nav.students',
       guardians: 'school.nav.guardians',
       approvalsGuardians: 'school.nav.approvalsGuardians',
@@ -288,6 +289,7 @@ export const i18nKeys = {
       dashboard: 'school.breadcrumbs.dashboard',
       settings: 'school.breadcrumbs.settings',
       classes: 'school.breadcrumbs.classes',
+      invoices: 'school.breadcrumbs.invoices',
       students: 'school.breadcrumbs.students',
       guardians: 'school.breadcrumbs.guardians',
       approvals: 'school.breadcrumbs.approvals',
@@ -399,6 +401,47 @@ export const i18nKeys = {
       },
       empty: 'school.contractsUi.empty',
     },
+    invoicesUi: {
+      filters: {
+        status: 'school.invoicesUi.filters.status',
+        statusAll: 'school.invoicesUi.filters.statusAll',
+        from: 'school.invoicesUi.filters.from',
+        to: 'school.invoicesUi.filters.to',
+        student: 'school.invoicesUi.filters.student',
+        guardian: 'school.invoicesUi.filters.guardian',
+        search: 'school.invoicesUi.filters.search',
+      },
+      table: {
+        dueDate: 'school.invoicesUi.table.dueDate',
+        student: 'school.invoicesUi.table.student',
+        guardian: 'school.invoicesUi.table.guardian',
+        amount: 'school.invoicesUi.table.amount',
+        origin: 'school.invoicesUi.table.origin',
+        status: 'school.invoicesUi.table.status',
+        actions: 'school.invoicesUi.table.actions',
+      },
+      status: {
+        draft: 'school.invoicesUi.status.draft',
+        pending: 'school.invoicesUi.status.pending',
+        paid: 'school.invoicesUi.status.paid',
+        overdue: 'school.invoicesUi.status.overdue',
+        canceled: 'school.invoicesUi.status.canceled',
+        refunded: 'school.invoicesUi.status.refunded',
+      },
+      detail: {
+        title: 'school.invoicesUi.detail.title',
+        infoTitle: 'school.invoicesUi.detail.infoTitle',
+        itemsTitle: 'school.invoicesUi.detail.itemsTitle',
+        statusTimelineTitle: 'school.invoicesUi.detail.statusTimelineTitle',
+        paymentLinkLabel: 'school.invoicesUi.detail.paymentLinkLabel',
+        copyPaymentLink: 'school.invoicesUi.detail.copyPaymentLink',
+        copyPaymentLinkSuccess: 'school.invoicesUi.detail.copyPaymentLinkSuccess',
+      },
+      feedback: {
+        loadError: 'school.invoicesUi.feedback.loadError',
+      },
+      empty: 'school.invoicesUi.empty',
+    },
     studentsUi: {
       filters: {
         class: 'school.studentsUi.filters.class',
@@ -491,6 +534,10 @@ export const i18nKeys = {
       students: {
         title: 'school.pages.students.title',
         description: 'school.pages.students.description',
+      },
+      invoices: {
+        title: 'school.pages.invoices.title',
+        description: 'school.pages.invoices.description',
       },
       guardians: {
         title: 'school.pages.guardians.title',
