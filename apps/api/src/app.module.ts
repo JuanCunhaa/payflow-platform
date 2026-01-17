@@ -21,6 +21,7 @@ import { GuardianController } from './guardian/guardian.controller';
 import { ContractsController } from './school/contracts.controller';
 import { AdminJobsController } from './platform/admin-jobs.controller';
 import { InvoiceJobsService } from './billing/invoice-jobs.service';
+import { SchoolInvoicesController } from './school/invoices.controller';
 
 @Module({
   imports: [
@@ -62,6 +63,7 @@ import { InvoiceJobsService } from './billing/invoice-jobs.service';
     GradesClassesController,
     StudentsController,
     GuardiansController,
+    SchoolInvoicesController,
     GuardianController,
     ContractsController,
   ],
