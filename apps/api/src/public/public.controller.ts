@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, NotFoundException, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 import type { Request } from 'express';
 import { PrismaService } from '../prisma/prisma.service';
@@ -181,6 +181,201 @@ export class PublicController {
     return {
       success: true,
       pendingApproval: true,
+    };
+  }
+
+  /**
+   * GET /public/pay/sandbox/:invoiceId
+   * Returns minimal public data for a sandbox invoice payment.
+   */
+  @Get('pay/sandbox/:invoiceId')
+  @Throttle({ medium: { ttl: 10 * 60 * 1000, limit: 20 } })
+  async getSandboxInvoice(
+    @Param('invoiceId') invoiceId: string,
+    @Req() req: Request
+  ) {
+    const token = (req.query.token as string | undefined) || '';
+    if (!token) {
+      throw new BadRequestException({
+        code: 'invalid_token',
+        message: 'Missing payment token',
+      });
+    }
+
+    const invoice = await this.prisma.invoice.findUnique({
+      where: { id: invoiceId },
+      include: {
+        student: {
+          select: {
+            name: true,
+          },
+        },
+        guardian: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+
+    if (!invoice) {
+      throw new NotFoundException({
+        code: 'invoice_not_found',
+        message: 'Invoice not found',
+      });
+    }
+
+    if (invoice.provider !== 'SANDBOX' || !invoice.providerReference) {
+      throw new BadRequestException({
+        code: 'invalid_provider',
+        message: 'Invoice is not using sandbox provider',
+      });
+    }
+
+    const expectedPrefix = 'sandbox_';
+    if (!invoice.providerReference.startsWith(expectedPrefix)) {
+      throw new BadRequestException({
+        code: 'invalid_token',
+        message: 'Payment token is invalid',
+      });
+    }
+
+    const storedToken = invoice.providerReference.slice(expectedPrefix.length);
+    if (!storedToken || storedToken !== token) {
+      throw new BadRequestException({
+        code: 'invalid_token',
+        message: 'Payment token is invalid',
+      });
+    }
+
+    // Simple expiration based on invoice creation time (24h)
+    const maxAgeMs = 24 * 60 * 60 * 1000;
+    const createdAt = invoice.createdAt;
+    const age = Date.now() - createdAt.getTime();
+    if (age > maxAgeMs) {
+      throw new BadRequestException({
+        code: 'token_expired',
+        message: 'Payment link has expired',
+      });
+    }
+
+    return {
+      invoiceId: invoice.id,
+      status: invoice.status,
+      amountCents: invoice.amountCents,
+      dueDate: invoice.dueDate.toISOString(),
+      studentName: invoice.student?.name ?? null,
+      guardianName: invoice.guardian?.name ?? null,
+    };
+  }
+
+  /**
+   * POST /public/pay/sandbox/:invoiceId/confirm
+   * Confirms a sandbox payment and marks invoice as PAID.
+   */
+  @Post('pay/sandbox/:invoiceId/confirm')
+  @Throttle({ medium: { ttl: 10 * 60 * 1000, limit: 20 } })
+  async confirmSandboxPayment(
+    @Param('invoiceId') invoiceId: string,
+    @Body() body: { method: 'PIX' | 'CARD' },
+    @Req() req: Request
+  ) {
+    const token = (req.query.token as string | undefined) || '';
+    if (!token) {
+      throw new BadRequestException({
+        code: 'invalid_token',
+        message: 'Missing payment token',
+      });
+    }
+
+    if (!body?.method || (body.method !== 'PIX' && body.method !== 'CARD')) {
+      throw new BadRequestException({
+        code: 'invalid_method',
+        message: 'Invalid payment method',
+      });
+    }
+
+    const invoice = await this.prisma.invoice.findUnique({
+      where: { id: invoiceId },
+    });
+
+    if (!invoice) {
+      throw new NotFoundException({
+        code: 'invoice_not_found',
+        message: 'Invoice not found',
+      });
+    }
+
+    if (invoice.provider !== 'SANDBOX' || !invoice.providerReference) {
+      throw new BadRequestException({
+        code: 'invalid_provider',
+        message: 'Invoice is not using sandbox provider',
+      });
+    }
+
+    const expectedPrefix = 'sandbox_';
+    if (!invoice.providerReference.startsWith(expectedPrefix)) {
+      throw new BadRequestException({
+        code: 'invalid_token',
+        message: 'Payment token is invalid',
+      });
+    }
+
+    const storedToken = invoice.providerReference.slice(expectedPrefix.length);
+    if (!storedToken || storedToken !== token) {
+      throw new BadRequestException({
+        code: 'invalid_token',
+        message: 'Payment token is invalid',
+      });
+    }
+
+    const maxAgeMs = 24 * 60 * 60 * 1000;
+    const createdAt = invoice.createdAt;
+    const age = Date.now() - createdAt.getTime();
+    if (age > maxAgeMs) {
+      throw new BadRequestException({
+        code: 'token_expired',
+        message: 'Payment link has expired',
+      });
+    }
+
+    if (invoice.status !== 'PENDING' && invoice.status !== 'OVERDUE') {
+      throw new BadRequestException({
+        code: 'invalid_status',
+        message: 'Only pending or overdue invoices can be marked as paid',
+      });
+    }
+
+    await this.prisma.invoice.update({
+      where: { id: invoice.id },
+      data: {
+        status: 'PAID',
+      },
+    });
+
+    const forwardedFor = req.headers['x-forwarded-for'];
+    const ip =
+      (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) || req.ip || null;
+    const userAgent = (req.headers['user-agent'] as string | undefined) || null;
+
+    await this.auditService.log({
+      tenantId: invoice.tenantId,
+      actorUserId: null,
+      actorType: 'PUBLIC',
+      action: 'invoice.sandbox_paid',
+      targetType: 'invoice',
+      targetId: invoice.id,
+      metadata: {
+        method: body.method,
+        provider: 'SANDBOX',
+      },
+      ip,
+      userAgent,
+    });
+
+    return {
+      success: true,
+      status: 'PAID',
     };
   }
 }

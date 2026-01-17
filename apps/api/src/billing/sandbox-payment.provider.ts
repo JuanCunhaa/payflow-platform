@@ -10,8 +10,8 @@ export class SandboxPaymentProvider implements PaymentProvider {
     amountCents: number;
     currency?: string;
   }): Promise<PaymentLinkResult> {
-    const reference = `sandbox_${randomUUID()}`;
     const token = randomUUID();
+    const reference = `sandbox_${token}`;
 
     const url = `/pay/sandbox/${encodeURIComponent(
       input.invoiceId
@@ -23,4 +23,3 @@ export class SandboxPaymentProvider implements PaymentProvider {
     };
   }
 }
-
