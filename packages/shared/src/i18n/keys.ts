@@ -166,6 +166,43 @@ export const i18nKeys = {
       students: 'guardian.nav.students',
       invoices: 'guardian.nav.invoices',
     },
+    invoicesUi: {
+      filters: {
+        status: 'guardian.invoicesUi.filters.status',
+        statusAll: 'guardian.invoicesUi.filters.statusAll',
+        from: 'guardian.invoicesUi.filters.from',
+        to: 'guardian.invoicesUi.filters.to',
+        student: 'guardian.invoicesUi.filters.student',
+        search: 'guardian.invoicesUi.filters.search',
+      },
+      table: {
+        dueDate: 'guardian.invoicesUi.table.dueDate',
+        student: 'guardian.invoicesUi.table.student',
+        amount: 'guardian.invoicesUi.table.amount',
+        status: 'guardian.invoicesUi.table.status',
+        actions: 'guardian.invoicesUi.table.actions',
+      },
+      status: {
+        draft: 'guardian.invoicesUi.status.draft',
+        pending: 'guardian.invoicesUi.status.pending',
+        paid: 'guardian.invoicesUi.status.paid',
+        overdue: 'guardian.invoicesUi.status.overdue',
+        canceled: 'guardian.invoicesUi.status.canceled',
+        refunded: 'guardian.invoicesUi.status.refunded',
+      },
+      detail: {
+        title: 'guardian.invoicesUi.detail.title',
+        infoTitle: 'guardian.invoicesUi.detail.infoTitle',
+        statusTimelineTitle: 'guardian.invoicesUi.detail.statusTimelineTitle',
+        paymentLinkLabel: 'guardian.invoicesUi.detail.paymentLinkLabel',
+        payNow: 'guardian.invoicesUi.detail.payNow',
+        paidLabel: 'guardian.invoicesUi.detail.paidLabel',
+      },
+      feedback: {
+        loadError: 'guardian.invoicesUi.feedback.loadError',
+      },
+      empty: 'guardian.invoicesUi.empty',
+    },
     pages: {
       dashboard: {
         title: 'guardian.pages.dashboard.title',
