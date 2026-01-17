@@ -242,7 +242,19 @@
       "feedback": {
         "loadError": "Não foi possível carregar as cobranças."
       },
-      "empty": "Nenhuma cobrança encontrada para o filtro atual."
+      "empty": "Nenhuma cobrança encontrada para o filtro atual.",
+      "newForm": {
+        "title": "Nova cobrança avulsa",
+        "description": "Selecione o aluno, responsável e preencha os dados da cobrança.",
+        "studentLabel": "Aluno",
+        "guardianLabel": "Responsável",
+        "guardianPlaceholder": "Selecione um responsável vinculado ao aluno",
+        "amountLabel": "Valor (R$)",
+        "dueDateLabel": "Data de vencimento",
+        "descriptionLabel": "Descrição",
+        "submit": "Criar cobrança",
+        "cancel": "Cancelar"
+      }
     },
     "pages": {
       "dashboard": {

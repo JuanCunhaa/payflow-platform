@@ -478,6 +478,18 @@ export const i18nKeys = {
         loadError: 'school.invoicesUi.feedback.loadError',
       },
       empty: 'school.invoicesUi.empty',
+      newForm: {
+        title: 'school.invoicesUi.newForm.title',
+        description: 'school.invoicesUi.newForm.description',
+        studentLabel: 'school.invoicesUi.newForm.studentLabel',
+        guardianLabel: 'school.invoicesUi.newForm.guardianLabel',
+        guardianPlaceholder: 'school.invoicesUi.newForm.guardianPlaceholder',
+        amountLabel: 'school.invoicesUi.newForm.amountLabel',
+        dueDateLabel: 'school.invoicesUi.newForm.dueDateLabel',
+        descriptionLabel: 'school.invoicesUi.newForm.descriptionLabel',
+        submit: 'school.invoicesUi.newForm.submit',
+        cancel: 'school.invoicesUi.newForm.cancel',
+      },
     },
     studentsUi: {
       filters: {

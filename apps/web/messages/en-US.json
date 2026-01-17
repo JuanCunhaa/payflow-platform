@@ -481,7 +481,19 @@
       "feedback": {
         "loadError": "Could not load invoices."
       },
-      "empty": "No invoices found for the current filter."
+      "empty": "No invoices found for the current filter.",
+      "newForm": {
+        "title": "New one-off invoice",
+        "description": "Select the student, guardian and fill in the invoice details.",
+        "studentLabel": "Student",
+        "guardianLabel": "Guardian",
+        "guardianPlaceholder": "Select a guardian linked to the student",
+        "amountLabel": "Amount (R$)",
+        "dueDateLabel": "Due date",
+        "descriptionLabel": "Description",
+        "submit": "Create invoice",
+        "cancel": "Cancel"
+      }
     },
     "studentsUi": {
       "filters": {
