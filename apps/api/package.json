@@ -7,7 +7,7 @@
     "build": "tsc -p tsconfig.json",
     "start": "node dist/main.js",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
-    "test": "ts-node src/auth/password.service.spec.ts && ts-node src/auth/auth.service.spec.ts && ts-node src/auth/guards/roles.guard.spec.ts && ts-node src/audit/audit.service.spec.ts && ts-node src/school/grades-classes.controller.spec.ts && ts-node src/school/students.controller.spec.ts && ts-node src/school/guardians.controller.spec.ts && ts-node src/school/invoices.controller.spec.ts && ts-node src/guardian/guardian.controller.spec.ts",
+    "test": "ts-node src/auth/password.service.spec.ts && ts-node src/auth/auth.service.spec.ts && ts-node src/auth/guards/roles.guard.spec.ts && ts-node src/audit/audit.service.spec.ts && ts-node src/school/grades-classes.controller.spec.ts && ts-node src/school/students.controller.spec.ts && ts-node src/school/guardians.controller.spec.ts && ts-node src/school/invoices.controller.spec.ts && ts-node src/guardian/guardian.controller.spec.ts && ts-node src/billing/billing.e2e.spec.ts",
     "typecheck": "tsc --noEmit",
     "db:migrate": "prisma migrate dev",
     "db:migrate:prod": "prisma migrate deploy",
