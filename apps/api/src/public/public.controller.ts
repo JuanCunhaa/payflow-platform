@@ -1,12 +1,26 @@
-import { BadRequestException, Body, Controller, Get, NotFoundException, Param, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  NotFoundException,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 import type { Request } from 'express';
+import { randomBytes } from 'crypto';
 import { PrismaService } from '../prisma/prisma.service';
 import { PasswordService } from '../auth/password.service';
 import { CustomThrottlerGuard } from '../common/guards/throttler.guard';
 import { CreateLeadDto } from './dto/create-lead.dto';
 import { RegisterGuardianDto } from './dto/register-guardian.dto';
 import { AuditService } from '../audit/audit.service';
+import { EmailService } from '../notifications/email.service';
+
+const EMAIL_VERIFY_TOKEN_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 @Controller('public')
 @UseGuards(CustomThrottlerGuard)
@@ -14,7 +28,8 @@ export class PublicController {
   constructor(
     private readonly prisma: PrismaService,
     private readonly passwordService: PasswordService,
-    private readonly auditService: AuditService
+    private readonly auditService: AuditService,
+    private readonly emailService: EmailService
   ) {}
 
   /**
@@ -176,6 +191,28 @@ export class PublicController {
       },
       ip,
       userAgent,
+    });
+
+    const verifyToken = randomBytes(32).toString('hex');
+    const expiresAt = new Date(Date.now() + EMAIL_VERIFY_TOKEN_TTL_MS);
+
+    await this.prisma.emailVerifyToken.create({
+      data: {
+        userId: result.userId,
+        token: verifyToken,
+        expiresAt,
+      },
+    });
+
+    const appBaseUrl = process.env.APP_PUBLIC_URL || 'http://localhost:3000';
+    const verifyLink = `${appBaseUrl}/public/verify-email?token=${encodeURIComponent(
+      verifyToken
+    )}`;
+
+    await this.emailService.sendEmailVerification(email, {
+      name,
+      school: '',
+      link: verifyLink,
     });
 
     return {

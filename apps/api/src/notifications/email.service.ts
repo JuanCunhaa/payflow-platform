@@ -68,4 +68,28 @@ export class EmailService {
       },
     });
   }
+
+  async sendEmailVerification(
+    recipient: string,
+    params: { name?: string; school?: string; link: string }
+  ): Promise<void> {
+    const variables = {
+      name: params.name ?? '',
+      school: params.school ?? '',
+      amount: '',
+      dueDate: '',
+      link: params.link,
+    };
+
+    const { html, text } = renderEmailTemplate('verify-email', variables);
+
+    await this.provider.send({
+      to: recipient,
+      subject: 'Confirme seu e-mail no PayFlow',
+      html,
+      text,
+      templateId: 'verify-email',
+      variables,
+    });
+  }
 }

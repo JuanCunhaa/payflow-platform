@@ -35,7 +35,12 @@ async function run() {
     paymentService
   );
 
-  const publicController = new PublicController(prisma, passwordService, auditService);
+  const publicController = new PublicController(
+    prisma,
+    passwordService,
+    auditService,
+    undefined as any
+  );
 
   const unique = randomUUID().slice(0, 8);
   const tenantSlug = `test-tenant-${unique}`;
