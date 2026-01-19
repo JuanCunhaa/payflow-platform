@@ -390,11 +390,22 @@ export class SchoolInvoicesController {
 
     const invoice = await this.prisma.invoice.findFirst({
       where: { id, tenantId },
-      select: {
-        id: true,
-        status: true,
+      include: {
+        tenant: {
+          select: { name: true },
+        },
+        student: {
+          select: { name: true },
+        },
+        guardian: {
+          include: {
+            user: {
+              select: { email: true },
+            },
+          },
+        },
       },
-    });
+    }) as any;
 
     if (!invoice) {
       throw new NotFoundException({
@@ -449,6 +460,18 @@ export class SchoolInvoicesController {
         hasReceiptUrl: !!receiptUrl,
       },
     });
+
+    const guardianEmail = invoice.guardian?.user?.email as string | undefined;
+    if (guardianEmail) {
+      await this.emailService.sendInvoicePaid({
+        recipient: guardianEmail,
+        studentName: invoice.student?.name ?? '',
+        schoolName: invoice.tenant?.name ?? '',
+        amountCents: invoice.amountCents,
+        dueDate: invoice.dueDate,
+        paidAt,
+      });
+    }
 
     return {
       success: true,

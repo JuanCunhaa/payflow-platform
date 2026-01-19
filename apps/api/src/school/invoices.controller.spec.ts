@@ -84,6 +84,8 @@ async function run() {
   const emailServiceMock = {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     sendInvoiceCreated: async (_params: unknown) => {},
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    sendInvoicePaid: async (_params: unknown) => {},
   } as unknown as EmailService;
 
   const controller = new SchoolInvoicesController(

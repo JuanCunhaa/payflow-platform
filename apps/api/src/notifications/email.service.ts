@@ -162,6 +162,39 @@ export class EmailService {
       variables,
     });
   }
+
+  async sendInvoicePaid(params: {
+    recipient: string;
+    studentName: string;
+    schoolName: string;
+    amountCents: number;
+    dueDate: Date;
+    paidAt: Date;
+  }): Promise<void> {
+    const amount = formatCurrencyBRL(params.amountCents);
+    const dueDateStr = formatDateBR(params.dueDate);
+    const paidDateStr = formatDateBR(params.paidAt);
+
+    const variables = {
+      name: params.studentName,
+      school: params.schoolName,
+      amount,
+      dueDate: dueDateStr,
+      paidDate: paidDateStr,
+      link: '',
+    };
+
+    const { html, text } = renderEmailTemplate('invoice-paid', variables);
+
+    await this.provider.send({
+      to: params.recipient,
+      subject: 'Pagamento confirmado',
+      html,
+      text,
+      templateId: 'invoice-paid',
+      variables,
+    });
+  }
 }
 
 function formatCurrencyBRL(amountCents: number): string {

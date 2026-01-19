@@ -332,9 +332,24 @@ export class PublicController {
       });
     }
 
-    const invoice = await this.prisma.invoice.findUnique({
+    const invoice = (await this.prisma.invoice.findUnique({
       where: { id: invoiceId },
-    });
+      include: {
+        tenant: {
+          select: { name: true },
+        },
+        student: {
+          select: { name: true },
+        },
+        guardian: {
+          include: {
+            user: {
+              select: { email: true },
+            },
+          },
+        },
+      },
+    })) as any;
 
     if (!invoice) {
       throw new NotFoundException({
@@ -383,11 +398,13 @@ export class PublicController {
       });
     }
 
+    const paidAt = new Date();
+
     await this.prisma.invoice.update({
       where: { id: invoice.id },
       data: {
         status: 'PAID',
-        paidAt: new Date(),
+        paidAt,
         paidMethod: 'SANDBOX',
       } as any,
     });
@@ -411,6 +428,18 @@ export class PublicController {
       ip,
       userAgent,
     });
+
+    const guardianEmail = invoice.guardian?.user?.email as string | undefined;
+    if (guardianEmail) {
+      await this.emailService.sendInvoicePaid({
+        recipient: guardianEmail,
+        studentName: invoice.student?.name ?? '',
+        schoolName: invoice.tenant?.name ?? '',
+        amountCents: invoice.amountCents,
+        dueDate: invoice.dueDate,
+        paidAt,
+      });
+    }
 
     return {
       success: true,
