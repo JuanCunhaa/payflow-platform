@@ -479,6 +479,11 @@ export const i18nKeys = {
         copyPaymentLinkSuccess: 'school.invoicesUi.detail.copyPaymentLinkSuccess',
         generatePaymentLink: 'school.invoicesUi.detail.generatePaymentLink',
         openPaymentPage: 'school.invoicesUi.detail.openPaymentPage',
+        communicationsTitle: 'school.invoicesUi.detail.communicationsTitle',
+        communicationsEmpty: 'school.invoicesUi.detail.communicationsEmpty',
+        communicationTypeCreated: 'school.invoicesUi.detail.communicationTypeCreated',
+        communicationTypeOverdue: 'school.invoicesUi.detail.communicationTypeOverdue',
+        communicationTypePaid: 'school.invoicesUi.detail.communicationTypePaid',
       },
       feedback: {
         loadError: 'school.invoicesUi.feedback.loadError',

@@ -34,8 +34,15 @@ type InvoiceItem = {
   amountCents: number;
 };
 
+type InvoiceCommunication = {
+  id: string;
+  type: 'CREATED' | 'OVERDUE' | 'PAID';
+  sentAt: string;
+};
+
 type InvoiceDetail = Invoice & {
   items: InvoiceItem[];
+  communications?: InvoiceCommunication[];
 };
 
 type PagedResponse<T> = {
@@ -222,6 +229,19 @@ export default function SchoolInvoicesPage() {
         return t(i18nKeys.school.invoicesUi.status.refunded);
       default:
         return status;
+    }
+  }
+
+  function communicationLabel(type: InvoiceCommunication['type']): string {
+    switch (type) {
+      case 'CREATED':
+        return t(i18nKeys.school.invoicesUi.detail.communicationTypeCreated);
+      case 'OVERDUE':
+        return t(i18nKeys.school.invoicesUi.detail.communicationTypeOverdue);
+      case 'PAID':
+        return t(i18nKeys.school.invoicesUi.detail.communicationTypePaid);
+      default:
+        return type;
     }
   }
 
@@ -1024,6 +1044,65 @@ export default function SchoolInvoicesPage() {
                 </ul>
               </div>
             )}
+            <div
+              style={{
+                marginTop: '12px',
+              }}
+            >
+              <h3
+                style={{
+                  fontSize: '16px',
+                  marginTop: 0,
+                  marginBottom: '6px',
+                }}
+              >
+                {t(i18nKeys.school.invoicesUi.detail.communicationsTitle)}
+              </h3>
+              {!selectedInvoice.communications ||
+              selectedInvoice.communications.length === 0 ? (
+                <p
+                  style={{
+                    fontSize: '13px',
+                    color: '#9ca3af',
+                    margin: 0,
+                  }}
+                >
+                  {t(i18nKeys.school.invoicesUi.detail.communicationsEmpty)}
+                </p>
+              ) : (
+                <ul
+                  style={{
+                    listStyle: 'none',
+                    padding: 0,
+                    margin: 0,
+                    fontSize: '13px',
+                    color: '#4b5563',
+                  }}
+                >
+                  {selectedInvoice.communications.map((comm) => (
+                    <li
+                      key={comm.id}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        padding: '4px 0',
+                        borderBottom: '1px solid #f3f4f6',
+                      }}
+                    >
+                      <span>{communicationLabel(comm.type)}</span>
+                      <span
+                        style={{
+                          fontSize: '12px',
+                          color: '#9ca3af',
+                        }}
+                      >
+                        {new Date(comm.sentAt).toLocaleString()}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </>
         )}
       </section>
