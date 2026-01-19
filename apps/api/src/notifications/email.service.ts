@@ -9,13 +9,17 @@ export class EmailService {
     private readonly provider: EmailProvider
   ) {}
 
-  async sendGuardianApprovalEmail(recipient: string): Promise<void> {
+  async sendGuardianApprovalEmail(
+    recipient: string,
+    params: { name?: string; school?: string; portalLink?: string }
+  ): Promise<void> {
+    const baseUrl = process.env.APP_PUBLIC_URL || 'http://localhost:3000';
     const variables = {
-      name: '',
-      school: '',
+      name: params.name ?? '',
+      school: params.school ?? '',
       amount: '',
       dueDate: '',
-      link: process.env.APP_PUBLIC_URL || 'http://localhost:3000',
+      link: params.portalLink ?? `${baseUrl}/g`,
     };
 
     const { html, text } = renderEmailTemplate('guardian-approved', variables);
@@ -30,13 +34,17 @@ export class EmailService {
     });
   }
 
-  async sendGuardianRejectionEmail(recipient: string): Promise<void> {
+  async sendGuardianRejectionEmail(
+    recipient: string,
+    params: { name?: string; school?: string; contactLink?: string }
+  ): Promise<void> {
+    const baseUrl = process.env.APP_PUBLIC_URL || 'http://localhost:3000';
     const variables = {
-      name: '',
-      school: '',
+      name: params.name ?? '',
+      school: params.school ?? '',
       amount: '',
       dueDate: '',
-      link: process.env.APP_PUBLIC_URL || 'http://localhost:3000',
+      link: params.contactLink ?? baseUrl,
     };
 
     const { html, text } = renderEmailTemplate('guardian-rejected', variables);
@@ -93,3 +101,4 @@ export class EmailService {
     });
   }
 }
+

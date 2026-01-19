@@ -260,9 +260,15 @@ async function run() {
 
   const emailMock = {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    sendGuardianApprovalEmail: async (_recipient: string) => {},
+    sendGuardianApprovalEmail: async (
+      _recipient: string,
+      _params: { name?: string; school?: string; portalLink?: string }
+    ) => {},
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    sendGuardianRejectionEmail: async (_recipient: string) => {},
+    sendGuardianRejectionEmail: async (
+      _recipient: string,
+      _params: { name?: string; school?: string; contactLink?: string }
+    ) => {},
   };
 
   const controller = new GuardiansController(

@@ -481,6 +481,11 @@ export class GuardiansController {
       data: { status: 'ACTIVE' },
     });
 
+    const tenant = await this.prisma.tenant.findUnique({
+      where: { id: tenantId },
+      select: { name: true },
+    });
+
     await this.auditService.log({
       tenantId,
       actorUserId: actor.id,
@@ -494,7 +499,10 @@ export class GuardiansController {
       },
     });
 
-    await this.emailService.sendGuardianApprovalEmail(guardian.user.email);
+    await this.emailService.sendGuardianApprovalEmail(guardian.user.email, {
+      name: guardian.name,
+      school: tenant?.name ?? '',
+    });
 
     return { success: true };
   }
@@ -532,6 +540,11 @@ export class GuardiansController {
       data: { status: 'INACTIVE' },
     });
 
+    const tenant = await this.prisma.tenant.findUnique({
+      where: { id: tenantId },
+      select: { name: true },
+    });
+
     await this.auditService.log({
       tenantId,
       actorUserId: actor.id,
@@ -545,7 +558,10 @@ export class GuardiansController {
       },
     });
 
-    await this.emailService.sendGuardianRejectionEmail(guardian.user.email);
+    await this.emailService.sendGuardianRejectionEmail(guardian.user.email, {
+      name: guardian.name,
+      school: tenant?.name ?? '',
+    });
 
     return { success: true };
   }
