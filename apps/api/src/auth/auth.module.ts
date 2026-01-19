@@ -8,6 +8,8 @@ import { PrismaService } from '../prisma/prisma.service';
 import { PasswordService } from './password.service';
 import { AuditService } from '../audit/audit.service';
 import { EmailService } from '../notifications/email.service';
+import { ConsoleEmailProvider } from '../notifications/console-email.provider';
+import { EMAIL_PROVIDER_TOKEN } from '../notifications/email-provider';
 
 @Module({
   imports: [
@@ -20,7 +22,27 @@ import { EmailService } from '../notifications/email.service';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, PrismaService, PasswordService, AuditService, EmailService],
-  exports: [AuthService, JwtModule, PasswordService, AuditService],
+  providers: [
+    AuthService,
+    JwtStrategy,
+    PrismaService,
+    PasswordService,
+    AuditService,
+    ConsoleEmailProvider,
+    {
+      provide: EMAIL_PROVIDER_TOKEN,
+      useFactory: (consoleProvider: ConsoleEmailProvider) => {
+        const providerName = (process.env.EMAIL_PROVIDER || 'console').toLowerCase();
+        switch (providerName) {
+          case 'console':
+          default:
+            return consoleProvider;
+        }
+      },
+      inject: [ConsoleEmailProvider],
+    },
+    EmailService,
+  ],
+  exports: [AuthService, JwtModule, PasswordService, AuditService, EmailService],
 })
 export class AuthModule {}

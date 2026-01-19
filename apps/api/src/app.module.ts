@@ -16,7 +16,6 @@ import { SchoolSettingsController } from './school/school-settings.controller';
 import { GradesClassesController } from './school/grades-classes.controller';
 import { StudentsController } from './school/students.controller';
 import { GuardiansController } from './school/guardians.controller';
-import { EmailService } from './notifications/email.service';
 import { GuardianController } from './guardian/guardian.controller';
 import { ContractsController } from './school/contracts.controller';
 import { AdminJobsController } from './platform/admin-jobs.controller';
@@ -72,7 +71,6 @@ import { SchoolInvoicesController } from './school/invoices.controller';
   ],
   providers: [
     PrismaService,
-    EmailService,
     InvoiceJobsService,
     PaymentService,
     {
