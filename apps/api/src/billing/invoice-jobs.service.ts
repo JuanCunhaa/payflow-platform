@@ -2,6 +2,7 @@ import { Injectable, Logger, OnModuleDestroy, OnModuleInit } from '@nestjs/commo
 
 import { PrismaService } from '../prisma/prisma.service';
 import { AuditService } from '../audit/audit.service';
+import { EmailService } from '../notifications/email.service';
 
 type ContractStatus = 'ACTIVE' | 'PAUSED' | 'CANCELED';
 
@@ -24,7 +25,8 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
 
   constructor(
     private readonly prisma: PrismaService,
-    private readonly auditService: AuditService
+    private readonly auditService: AuditService,
+    private readonly emailService: EmailService
   ) {}
 
   onModuleInit() {
@@ -97,7 +99,7 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
       }
 
       try {
-        await this.prisma.invoice.create({
+        const invoice = await this.prisma.invoice.create({
           data: {
             tenantId: contract.tenantId,
             contractId: contract.id,
@@ -110,6 +112,14 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
           },
         });
         createdCount += 1;
+
+        await this.sendInvoiceCreatedEmailsForContractInvoice(
+          contract.id,
+          contract.tenantId,
+          contract.amountCents,
+          dueDate,
+          invoice.paymentLink ?? undefined
+        );
       } catch (error) {
         this.logger.error(
           `Failed to create invoice for contract ${contract.id} (${year}-${month})`,
@@ -141,6 +151,62 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
       totalContracts: contracts.length,
       createdInvoices: createdCount,
     };
+  }
+
+  private async sendInvoiceCreatedEmailsForContractInvoice(
+    contractId: string,
+    tenantId: string,
+    amountCents: number,
+    dueDate: Date,
+    paymentLink?: string
+  ): Promise<void> {
+    const tenant = await this.prisma.tenant.findUnique({
+      where: { id: tenantId },
+      select: { name: true },
+    });
+
+    const contractStudents = await this.prisma.contractStudent.findMany({
+      where: { contractId },
+      include: {
+        student: {
+          select: {
+            id: true,
+            name: true,
+            guardians: {
+              include: {
+                guardian: {
+                  include: {
+                    user: {
+                      select: { email: true },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    for (const cs of contractStudents) {
+      const student = cs.student;
+      if (!student) continue;
+
+      for (const gs of student.guardians) {
+        const guardian = gs.guardian;
+        const email = guardian?.user?.email;
+        if (!email) continue;
+
+        await this.emailService.sendInvoiceCreated({
+          recipient: email,
+          studentName: student.name,
+          schoolName: tenant?.name ?? '',
+          amountCents,
+          dueDate,
+          paymentLink,
+        });
+      }
+    }
   }
 
   async recalculateOverdueInvoices(referenceDate: Date = new Date()) {

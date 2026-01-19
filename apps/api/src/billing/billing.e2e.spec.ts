@@ -8,6 +8,7 @@ import { SandboxPaymentProvider } from './sandbox-payment.provider';
 import { PaymentService } from './payment.service';
 import { SchoolInvoicesController } from '../school/invoices.controller';
 import { PublicController } from '../public/public.controller';
+import { EmailService } from '../notifications/email.service';
 import type { CurrentUserPayload } from '../auth/decorators/current-user.decorator';
 
 type TenantRequest = {
@@ -28,11 +29,16 @@ async function run() {
   const passwordService = new PasswordService();
   const paymentProvider = new SandboxPaymentProvider();
   const paymentService = new PaymentService(prisma, auditService, paymentProvider);
+  const emailServiceMock = {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    sendInvoiceCreated: async (_params: unknown) => {},
+  } as unknown as EmailService;
 
   const schoolInvoicesController = new SchoolInvoicesController(
     prisma,
     auditService,
-    paymentService
+    paymentService,
+    emailServiceMock
   );
 
   const publicController = new PublicController(

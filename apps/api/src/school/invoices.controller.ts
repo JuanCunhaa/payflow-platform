@@ -22,6 +22,7 @@ import { MarkInvoicePaidDto } from './dto/mark-invoice-paid.dto';
 import { CurrentUser, CurrentUserPayload } from '../auth/decorators/current-user.decorator';
 import { AuditService } from '../audit/audit.service';
 import { PaymentService } from '../billing/payment.service';
+import { EmailService } from '../notifications/email.service';
 
 type TenantRequest = Partial<Request> & {
   tenant?: { id: string; slug: string };
@@ -75,7 +76,8 @@ export class SchoolInvoicesController {
   constructor(
     private readonly prisma: PrismaService,
     private readonly auditService: AuditService,
-    private readonly paymentService: PaymentService
+    private readonly paymentService: PaymentService,
+    private readonly emailService: EmailService
   ) {}
 
   @Get()
@@ -286,14 +288,26 @@ export class SchoolInvoicesController {
     const competenceYear = normalizedDue.getFullYear();
     const competenceMonth = normalizedDue.getMonth() + 1;
 
-    const [student, guardian] = await Promise.all([
+    const [tenant, student, guardian] = await Promise.all([
+      this.prisma.tenant.findUnique({
+        where: { id: tenantId },
+        select: { name: true },
+      }),
       this.prisma.student.findFirst({
         where: { id: dto.studentId, tenantId },
-        select: { id: true },
+        select: { id: true, name: true },
       }),
       this.prisma.guardian.findFirst({
         where: { id: dto.guardianId, tenantId },
-        select: { id: true },
+        select: {
+          id: true,
+          name: true,
+          user: {
+            select: {
+              email: true,
+            },
+          },
+        },
       }),
     ]);
 
@@ -346,6 +360,18 @@ export class SchoolInvoicesController {
         dueDate: dueDate.toISOString(),
       },
     });
+
+    const guardianEmail = guardian.user?.email;
+    if (guardianEmail) {
+      await this.emailService.sendInvoiceCreated({
+        recipient: guardianEmail,
+        studentName: student.name,
+        schoolName: tenant?.name ?? '',
+        amountCents,
+        dueDate: normalizedDue,
+        paymentLink: invoice.paymentLink ?? undefined,
+      });
+    }
 
     return {
       invoiceId: invoice.id,

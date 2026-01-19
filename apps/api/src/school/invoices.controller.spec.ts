@@ -3,6 +3,7 @@ import { SchoolInvoicesController } from './invoices.controller';
 import { PrismaService } from '../prisma/prisma.service';
 import { AuditService } from '../audit/audit.service';
 import { PaymentService } from '../billing/payment.service';
+import { EmailService } from '../notifications/email.service';
 import type { CurrentUserPayload } from '../auth/decorators/current-user.decorator';
 
 type TenantRequest = {
@@ -25,18 +26,34 @@ async function run() {
   let lastPaymentLinkCall: { invoiceId: string } | null = null;
 
   const prismaMock = {
+    tenant: {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      findUnique: async (_args: { where: { id: string }; select?: { name?: true } }) => ({
+        name: 'Escola Teste',
+      }),
+    },
     student: {
-      findFirst: async (args: { where: { id: string; tenantId: string } }) => {
+      findFirst: async (args: {
+        where: { id: string; tenantId: string };
+        select?: { id?: true; name?: true };
+      }) => {
         if (args.where.id === studentId && args.where.tenantId === tenantId) {
-          return { id: studentId };
+          return { id: studentId, name: 'Aluno Teste' };
         }
         return null;
       },
     },
     guardian: {
-      findFirst: async (args: { where: { id: string; tenantId: string } }) => {
+      findFirst: async (args: {
+        where: { id: string; tenantId: string };
+        select?: { id?: true; name?: true; user?: { select: { email: true } } };
+      }) => {
         if (args.where.id === guardianId && args.where.tenantId === tenantId) {
-          return { id: guardianId };
+          return {
+            id: guardianId,
+            name: 'Responsável Teste',
+            user: { email: 'guardian@example.com' },
+          };
         }
         return null;
       },
@@ -64,10 +81,16 @@ async function run() {
     },
   } as unknown as PaymentService;
 
+  const emailServiceMock = {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    sendInvoiceCreated: async (_params: unknown) => {},
+  } as unknown as EmailService;
+
   const controller = new SchoolInvoicesController(
     prismaMock as unknown as PrismaService,
     auditMock as unknown as AuditService,
-    paymentServiceMock
+    paymentServiceMock,
+    emailServiceMock
   );
 
   const req = createTenantRequest(tenantId) as TenantRequest;

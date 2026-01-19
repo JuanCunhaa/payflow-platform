@@ -149,7 +149,7 @@ async function run() {
       },
       findFirst: async (args: {
         where: { id?: string; tenantId?: string };
-        select?: { id: true };
+        select?: { id?: true; name?: true };
       }) => {
         const { id, tenantId } = args.where;
         const guardian = guardians.find(
@@ -158,7 +158,15 @@ async function run() {
             (tenantId === undefined || g.tenantId === tenantId)
         );
         if (!guardian) return null;
-        if (args.select?.id) return { id: guardian.id };
+        if (args.select?.id || args.select?.name) {
+          return {
+            id: guardian.id,
+            name: guardian.name,
+            user: {
+              email: 'guardian@example.com',
+            },
+          };
+        }
         return guardian;
       },
       update: async (args: {

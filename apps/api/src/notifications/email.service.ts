@@ -100,5 +100,48 @@ export class EmailService {
       variables,
     });
   }
+
+  async sendInvoiceCreated(params: {
+    recipient: string;
+    studentName: string;
+    schoolName: string;
+    amountCents: number;
+    dueDate: Date;
+    paymentLink?: string | null;
+  }): Promise<void> {
+    const amount = formatCurrencyBRL(params.amountCents);
+    const dueDateStr = formatDateBR(params.dueDate);
+
+    const variables = {
+      name: params.studentName,
+      school: params.schoolName,
+      amount,
+      dueDate: dueDateStr,
+      link: params.paymentLink ?? '',
+    };
+
+    const { html, text } = renderEmailTemplate('invoice-created', variables);
+
+    await this.provider.send({
+      to: params.recipient,
+      subject: 'Nova cobrança criada',
+      html,
+      text,
+      templateId: 'invoice-created',
+      variables,
+    });
+  }
+}
+
+function formatCurrencyBRL(amountCents: number): string {
+  const value = amountCents / 100;
+  return `R$ ${value.toFixed(2).replace('.', ',')}`;
+}
+
+function formatDateBR(date: Date): string {
+  const day = `${date.getDate()}`.padStart(2, '0');
+  const month = `${date.getMonth() + 1}`.padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
 }
 
