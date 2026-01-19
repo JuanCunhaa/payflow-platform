@@ -263,6 +263,16 @@ export class SchoolInvoicesController {
           },
         },
         items: true,
+        communications: {
+          select: {
+            id: true,
+            type: true,
+            sentAt: true,
+          },
+          orderBy: {
+            sentAt: 'asc',
+          },
+        },
       },
     });
 
