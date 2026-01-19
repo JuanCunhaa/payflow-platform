@@ -131,6 +131,37 @@ export class EmailService {
       variables,
     });
   }
+
+  async sendInvoiceOverdue(params: {
+    recipient: string;
+    studentName: string;
+    schoolName: string;
+    amountCents: number;
+    dueDate: Date;
+    paymentLink?: string | null;
+  }): Promise<void> {
+    const amount = formatCurrencyBRL(params.amountCents);
+    const dueDateStr = formatDateBR(params.dueDate);
+
+    const variables = {
+      name: params.studentName,
+      school: params.schoolName,
+      amount,
+      dueDate: dueDateStr,
+      link: params.paymentLink ?? '',
+    };
+
+    const { html, text } = renderEmailTemplate('invoice-overdue', variables);
+
+    await this.provider.send({
+      to: params.recipient,
+      subject: 'Cobrança em atraso',
+      html,
+      text,
+      templateId: 'invoice-overdue',
+      variables,
+    });
+  }
 }
 
 function formatCurrencyBRL(amountCents: number): string {
@@ -144,4 +175,3 @@ function formatDateBR(date: Date): string {
   const year = date.getFullYear();
   return `${day}/${month}/${year}`;
 }
-

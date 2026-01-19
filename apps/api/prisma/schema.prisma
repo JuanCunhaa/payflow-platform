@@ -362,6 +362,7 @@ model Invoice {
   receiptUrl        String?         @map("receipt_url")
   competenceYear    Int             @map("competence_year")
   competenceMonth   Int             @map("competence_month")
+  lastReminderSentAt DateTime?      @map("last_reminder_sent_at")
   createdAt         DateTime        @default(now()) @map("created_at")
 
   items InvoiceItem[]

@@ -54,6 +54,7 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
       const now = new Date();
       await this.generateMonthlyInvoices(now);
       await this.recalculateOverdueInvoices(now);
+      await this.sendOverdueReminders(now);
     } catch (error) {
       this.logger.error('Failed to run invoice generation job', error as Error);
     }
@@ -244,6 +245,100 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
     return {
       asOf: now.toISOString(),
       affected,
+    };
+  }
+
+  async sendOverdueReminders(referenceDate: Date = new Date()) {
+    const REMINDER_INTERVAL_DAYS = 3;
+    const asOf = new Date(referenceDate.getTime());
+    const cutoff = new Date(
+      asOf.getFullYear(),
+      asOf.getMonth(),
+      asOf.getDate() - REMINDER_INTERVAL_DAYS
+    );
+
+    const invoices = await this.prisma.invoice.findMany({
+      where: {
+        status: 'OVERDUE',
+        dueDate: {
+          lt: asOf,
+        },
+        OR: [
+          { lastReminderSentAt: null },
+          {
+            lastReminderSentAt: {
+              lt: cutoff,
+            },
+          },
+        ],
+        guardian: {
+          user: {
+            email: {
+              not: null,
+            },
+          },
+        },
+      },
+      include: {
+        tenant: {
+          select: { name: true },
+        },
+        student: {
+          select: { name: true },
+        },
+        guardian: {
+          include: {
+            user: {
+              select: { email: true },
+            },
+          },
+        },
+      },
+    });
+
+    let sentReminders = 0;
+
+    for (const invoice of invoices) {
+      const email = invoice.guardian?.user?.email;
+      if (!email) continue;
+
+      await this.emailService.sendInvoiceOverdue({
+        recipient: email,
+        studentName: invoice.student?.name ?? '',
+        schoolName: invoice.tenant?.name ?? '',
+        amountCents: invoice.amountCents,
+        dueDate: invoice.dueDate,
+        paymentLink: invoice.paymentLink ?? undefined,
+      });
+
+      await this.prisma.invoice.update({
+        where: { id: invoice.id },
+        data: {
+          lastReminderSentAt: asOf,
+        },
+      });
+
+      sentReminders += 1;
+    }
+
+    await this.auditService.log({
+      tenantId: null,
+      actorUserId: null,
+      actorType: 'SYSTEM',
+      action: 'job.invoices.overdue_reminder',
+      targetType: 'job',
+      targetId: null,
+      metadata: {
+        asOf: asOf.toISOString(),
+        sentReminders,
+      },
+      ip: null,
+      userAgent: null,
+    });
+
+    return {
+      asOf: asOf.toISOString(),
+      sentReminders,
     };
   }
 }
