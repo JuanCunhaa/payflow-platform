@@ -24,6 +24,7 @@ import { PaymentService } from './billing/payment.service';
 import { PAYMENT_PROVIDER_TOKEN } from './billing/payment-provider';
 import { SandboxPaymentProvider } from './billing/sandbox-payment.provider';
 import { SchoolInvoicesController } from './school/invoices.controller';
+import { SchoolReportsController } from './school/reports.controller';
 
 @Module({
   imports: [
@@ -66,6 +67,7 @@ import { SchoolInvoicesController } from './school/invoices.controller';
     StudentsController,
     GuardiansController,
     SchoolInvoicesController,
+    SchoolReportsController,
     GuardianController,
     ContractsController,
   ],
