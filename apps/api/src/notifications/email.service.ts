@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { EMAIL_PROVIDER_TOKEN, type EmailProvider } from './email-provider';
+import { renderEmailTemplate } from '../emails/templates';
 
 @Injectable()
 export class EmailService {
@@ -9,20 +10,44 @@ export class EmailService {
   ) {}
 
   async sendGuardianApprovalEmail(recipient: string): Promise<void> {
+    const variables = {
+      name: '',
+      school: '',
+      amount: '',
+      dueDate: '',
+      link: process.env.APP_PUBLIC_URL || 'http://localhost:3000',
+    };
+
+    const { html, text } = renderEmailTemplate('guardian-approved', variables);
+
     await this.provider.send({
       to: recipient,
       subject: 'Sua conta de responsável foi aprovada',
-      text: 'Sua conta para acesso ao PayFlow foi aprovada. Você já pode fazer login.',
-      templateId: 'guardian.approval',
+      html,
+      text,
+      templateId: 'guardian-approved',
+      variables,
     });
   }
 
   async sendGuardianRejectionEmail(recipient: string): Promise<void> {
+    const variables = {
+      name: '',
+      school: '',
+      amount: '',
+      dueDate: '',
+      link: process.env.APP_PUBLIC_URL || 'http://localhost:3000',
+    };
+
+    const { html, text } = renderEmailTemplate('guardian-rejected', variables);
+
     await this.provider.send({
       to: recipient,
       subject: 'Sua solicitação de acesso não foi aprovada',
-      text: 'Sua solicitação de acesso ao portal do responsável não foi aprovada neste momento.',
-      templateId: 'guardian.rejection',
+      html,
+      text,
+      templateId: 'guardian-rejected',
+      variables,
     });
   }
 

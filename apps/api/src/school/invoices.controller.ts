@@ -276,12 +276,15 @@ export class SchoolInvoicesController {
     const normalizedDue = new Date(dueDate);
     normalizedDue.setHours(0, 0, 0, 0);
 
-    if (normalizedDue < today) {
+  if (normalizedDue < today) {
       throw new BadRequestException({
         code: 'invalid_due_date',
         message: 'Due date cannot be in the past',
       });
     }
+
+    const competenceYear = normalizedDue.getFullYear();
+    const competenceMonth = normalizedDue.getMonth() + 1;
 
     const [student, guardian] = await Promise.all([
       this.prisma.student.findFirst({
@@ -318,6 +321,8 @@ export class SchoolInvoicesController {
         dueDate,
         status: 'PENDING',
         provider: 'SANDBOX',
+        competenceYear,
+        competenceMonth,
         items: {
           create: {
             description: dto.description,
