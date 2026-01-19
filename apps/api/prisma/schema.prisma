@@ -89,6 +89,12 @@ enum InvoicePaidMethod {
   SANDBOX
 }
 
+enum InvoiceCommunicationType {
+  CREATED
+  OVERDUE
+  PAID
+}
+
 // ============ MODELS ============
 
 model Tenant {
@@ -366,6 +372,7 @@ model Invoice {
   createdAt         DateTime        @default(now()) @map("created_at")
 
   items InvoiceItem[]
+  communications InvoiceCommunication[]
 
   @@index([tenantId], map: "invoices_tenant_id_idx")
   @@index([contractId], map: "invoices_contract_id_idx")
@@ -385,4 +392,16 @@ model InvoiceItem {
 
   @@index([invoiceId], map: "invoice_items_invoice_id_idx")
   @@map("invoice_items")
+}
+
+model InvoiceCommunication {
+  id        String                   @id @default(uuid()) @db.Uuid
+  invoiceId String                   @db.Uuid @map("invoice_id")
+  invoice   Invoice                  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  type      InvoiceCommunicationType @map("type")
+  sentAt    DateTime                 @default(now()) @map("sent_at")
+
+  @@index([invoiceId], map: "invoice_communications_invoice_id_idx")
+  @@index([invoiceId, type, sentAt], map: "invoice_communications_invoice_type_sent_at_idx")
+  @@map("invoice_communications")
 }

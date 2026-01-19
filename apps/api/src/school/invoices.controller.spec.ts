@@ -66,6 +66,12 @@ async function run() {
         return record;
       },
     },
+    invoiceCommunication: {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      findFirst: async (_args: unknown) => null,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      create: async (_args: unknown) => {},
+    },
   };
 
   const auditMock = {

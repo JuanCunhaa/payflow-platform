@@ -18,6 +18,39 @@ function getDaysInMonth(year: number, month: number): number {
   return new Date(year, month, 0).getDate();
 }
 
+async function logInvoiceCommunicationOncePerDay(
+  prisma: PrismaService,
+  invoiceId: string,
+  type: 'CREATED' | 'OVERDUE' | 'PAID',
+  sentAt: Date
+): Promise<void> {
+  const start = new Date(sentAt);
+  start.setHours(0, 0, 0, 0);
+  const end = new Date(sentAt);
+  end.setHours(23, 59, 59, 999);
+
+  const existing = await prisma.invoiceCommunication.findFirst({
+    where: {
+      invoiceId,
+      type,
+      sentAt: {
+        gte: start,
+        lte: end,
+      },
+    },
+  });
+
+  if (existing) return;
+
+  await prisma.invoiceCommunication.create({
+    data: {
+      invoiceId,
+      type,
+      sentAt,
+    },
+  });
+}
+
 @Injectable()
 export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
   private readonly logger = new Logger(InvoiceJobsService.name);
@@ -198,6 +231,7 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
         const email = guardian?.user?.email;
         if (!email) continue;
 
+        const sentAt = new Date();
         await this.emailService.sendInvoiceCreated({
           recipient: email,
           studentName: student.name,
@@ -206,6 +240,12 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
           dueDate,
           paymentLink,
         });
+        await logInvoiceCommunicationOncePerDay(
+          this.prisma,
+          invoice.id,
+          'CREATED',
+          sentAt
+        );
       }
     }
   }
@@ -302,6 +342,7 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
       const email = invoice.guardian?.user?.email;
       if (!email) continue;
 
+      const sentAt = new Date(asOf.getTime());
       await this.emailService.sendInvoiceOverdue({
         recipient: email,
         studentName: invoice.student?.name ?? '',
@@ -310,6 +351,13 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
         dueDate: invoice.dueDate,
         paymentLink: invoice.paymentLink ?? undefined,
       });
+
+      await logInvoiceCommunicationOncePerDay(
+        this.prisma,
+        invoice.id,
+        'OVERDUE',
+        sentAt
+      );
 
       await this.prisma.invoice.update({
         where: { id: invoice.id },

@@ -439,6 +439,32 @@ export class PublicController {
         dueDate: invoice.dueDate,
         paidAt,
       });
+
+      const start = new Date(paidAt);
+      start.setHours(0, 0, 0, 0);
+      const end = new Date(paidAt);
+      end.setHours(23, 59, 59, 999);
+
+      const existing = await this.prisma.invoiceCommunication.findFirst({
+        where: {
+          invoiceId: invoice.id,
+          type: 'PAID',
+          sentAt: {
+            gte: start,
+            lte: end,
+          },
+        },
+      });
+
+      if (!existing) {
+        await this.prisma.invoiceCommunication.create({
+          data: {
+            invoiceId: invoice.id,
+            type: 'PAID',
+            sentAt: paidAt,
+          },
+        });
+      }
     }
 
     return {

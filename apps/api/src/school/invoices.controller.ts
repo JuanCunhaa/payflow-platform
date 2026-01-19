@@ -70,6 +70,39 @@ function parsePageParams(pageParam?: string, limitParam?: string) {
   return { page, pageSize };
 }
 
+async function logInvoiceCommunicationOncePerDay(
+  prisma: PrismaService,
+  invoiceId: string,
+  type: 'CREATED' | 'OVERDUE' | 'PAID',
+  sentAt: Date
+): Promise<void> {
+  const start = new Date(sentAt);
+  start.setHours(0, 0, 0, 0);
+  const end = new Date(sentAt);
+  end.setHours(23, 59, 59, 999);
+
+  const existing = await prisma.invoiceCommunication.findFirst({
+    where: {
+      invoiceId,
+      type,
+      sentAt: {
+        gte: start,
+        lte: end,
+      },
+    },
+  });
+
+  if (existing) return;
+
+  await prisma.invoiceCommunication.create({
+    data: {
+      invoiceId,
+      type,
+      sentAt,
+    },
+  });
+}
+
 @Controller('school/invoices')
 @UseGuards(JwtAuthGuard, RequireTenantGuard, RolesGuard)
 export class SchoolInvoicesController {
@@ -362,6 +395,7 @@ export class SchoolInvoicesController {
     });
 
     const guardianEmail = guardian.user?.email;
+    const sentAt = new Date();
     if (guardianEmail) {
       await this.emailService.sendInvoiceCreated({
         recipient: guardianEmail,
@@ -371,6 +405,12 @@ export class SchoolInvoicesController {
         dueDate: normalizedDue,
         paymentLink: invoice.paymentLink ?? undefined,
       });
+      await logInvoiceCommunicationOncePerDay(
+        this.prisma,
+        invoice.id,
+        'CREATED',
+        sentAt
+      );
     }
 
     return {
@@ -471,6 +511,12 @@ export class SchoolInvoicesController {
         dueDate: invoice.dueDate,
         paidAt,
       });
+      await logInvoiceCommunicationOncePerDay(
+        this.prisma,
+        invoice.id,
+        'PAID',
+        paidAt
+      );
     }
 
     return {
