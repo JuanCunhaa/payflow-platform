@@ -1,6 +1,7 @@
 'use client';
 
 import type { ChangeEvent, FormEvent } from 'react';
+import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { i18nKeys } from '@payflow/shared';
 import { useI18n } from '../../../i18n-context';
@@ -31,7 +32,7 @@ type PagedResponse<T> = {
 type FilterStatus = 'ALL' | StudentStatus;
 
 export default function SchoolStudentsPage() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const { apiFetch } = useAuth();
 
   const [classes, setClasses] = useState<ClassItem[]>([]);
@@ -542,6 +543,14 @@ export default function SchoolStudentsPage() {
                       : t(i18nKeys.school.studentsUi.status.inactive)}
                   </td>
                   <td>
+                    <Link
+                      href={`/${locale || 'pt-BR'}/s/students/${student.id}`}
+                      style={{
+                        marginRight: '8px',
+                      }}
+                    >
+                      {t(i18nKeys.school.reportsUi.student.title)}
+                    </Link>
                     <button type="button" onClick={() => openEditStudent(student)}>
                       {t(i18nKeys.school.studentsUi.actions.edit)}
                     </button>
@@ -603,4 +612,3 @@ export default function SchoolStudentsPage() {
     </section>
   );
 }
-

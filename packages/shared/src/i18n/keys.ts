@@ -625,6 +625,27 @@ export const i18nKeys = {
         },
         empty: 'school.reportsUi.overdue.empty',
       },
+      student: {
+        title: 'school.reportsUi.student.title',
+        description: 'school.reportsUi.student.description',
+        cards: {
+          totalPaid: 'school.reportsUi.student.cards.totalPaid',
+          totalOpen: 'school.reportsUi.student.cards.totalOpen',
+        },
+        table: {
+          dueDate: 'school.reportsUi.student.table.dueDate',
+          amount: 'school.reportsUi.student.table.amount',
+          status: 'school.reportsUi.student.table.status',
+          guardian: 'school.reportsUi.student.table.guardian',
+          contract: 'school.reportsUi.student.table.contract',
+          paidAt: 'school.reportsUi.student.table.paidAt',
+        },
+        feedback: {
+          loadError: 'school.reportsUi.student.feedback.loadError',
+        },
+        empty: 'school.reportsUi.student.empty',
+        backToList: 'school.reportsUi.student.backToList',
+      },
     },
     pages: {
       dashboard: {
