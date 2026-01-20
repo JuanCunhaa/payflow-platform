@@ -409,4 +409,95 @@ export class SchoolReportsController {
       invoices: mappedInvoices,
     };
   }
+
+  @Get('guardian/:id')
+  @Roles('SCHOOL_ADMIN', 'FINANCE', 'SECRETARY', 'READONLY')
+  async getGuardianReport(
+    @Req() req: TenantRequest,
+    @Param('id') id: string,
+  ) {
+    const tenantId = req.tenant!.id;
+
+    const guardian = await this.prisma.guardian.findFirst({
+      where: {
+        id,
+        tenantId,
+      } as any,
+      select: {
+        id: true,
+        name: true,
+        user: {
+          select: { email: true },
+        },
+      },
+    });
+
+    if (!guardian) {
+      throw new NotFoundException({
+        code: 'guardian_not_found',
+        message: 'Guardian not found for this tenant',
+      });
+    }
+
+    const invoices = await this.prisma.invoice.findMany({
+      where: {
+        tenantId,
+        guardianId: id,
+      } as any,
+      orderBy: {
+        dueDate: 'asc',
+      },
+      include: {
+        student: {
+          select: { name: true },
+        },
+        contract: {
+          select: { name: true },
+        },
+      },
+    });
+
+    let totalPaidCents = 0;
+    let totalOpenCents = 0;
+
+    for (const invoice of invoices as any[]) {
+      if (invoice.status === 'PAID') {
+        totalPaidCents += invoice.amountCents as number;
+      } else if (invoice.status === 'PENDING' || invoice.status === 'OVERDUE') {
+        totalOpenCents += invoice.amountCents as number;
+      }
+    }
+
+    const mappedInvoices = (invoices as any[]).map((invoice) => ({
+      id: invoice.id as string,
+      amountCents: invoice.amountCents as number,
+      currency: invoice.currency as string,
+      status: invoice.status as InvoiceStatus,
+      dueDate:
+        invoice.dueDate instanceof Date
+          ? (invoice.dueDate as Date).toISOString()
+          : String(invoice.dueDate),
+      paidAt:
+        invoice.paidAt instanceof Date
+          ? (invoice.paidAt as Date).toISOString()
+          : invoice.paidAt
+          ? String(invoice.paidAt)
+          : null,
+      contractName: (invoice.contract?.name as string | null) ?? null,
+      studentName: (invoice.student?.name as string | null) ?? null,
+    }));
+
+    return {
+      guardian: {
+        id: guardian.id,
+        name: guardian.name,
+        email: guardian.user?.email ?? null,
+      },
+      totals: {
+        totalPaidCents,
+        totalOpenCents,
+      },
+      invoices: mappedInvoices,
+    };
+  }
 }

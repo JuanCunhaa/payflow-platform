@@ -8,6 +8,7 @@ type InvoiceEntity = {
   id: string;
   tenantId: string;
   studentId?: string;
+  guardianId?: string;
   amountCents: number;
   dueDate: Date;
   status: InvoiceStatus;
@@ -34,6 +35,10 @@ function filterInvoices(invoices: InvoiceEntity[], where: any): InvoiceEntity[] 
     }
 
     if (where.studentId && invoice.studentId !== where.studentId) {
+      return false;
+    }
+
+    if (where.guardianId && invoice.guardianId !== where.guardianId) {
       return false;
     }
 
@@ -69,6 +74,7 @@ async function run() {
       id: 'inv-1',
       tenantId,
       studentId: 'student-1',
+      guardianId: 'guardian-1',
       amountCents: 10000,
       dueDate: mkDate('2026-01-10'),
       status: 'PAID',
@@ -81,6 +87,7 @@ async function run() {
       id: 'inv-2',
       tenantId,
       studentId: 'student-1',
+      guardianId: 'guardian-1',
       amountCents: 20000,
       dueDate: mkDate('2026-01-15'),
       status: 'PENDING',
@@ -89,6 +96,7 @@ async function run() {
       id: 'inv-3',
       tenantId,
       studentId: 'student-2',
+      guardianId: 'guardian-2',
       amountCents: 30000,
       dueDate: mkDate('2025-12-20'),
       status: 'OVERDUE',
@@ -100,6 +108,7 @@ async function run() {
       id: 'inv-4',
       tenantId: otherTenantId,
       studentId: 'student-3',
+      guardianId: 'guardian-3',
       amountCents: 50000,
       dueDate: mkDate('2026-01-12'),
       status: 'PAID',
@@ -111,6 +120,18 @@ async function run() {
       findFirst: async (args: { where: { id?: string; tenantId?: string } }) => {
         if (args.where.id === 'student-1' && args.where.tenantId === tenantId) {
           return { id: 'student-1', name: 'Aluno Focado' };
+        }
+        return null;
+      },
+    },
+    guardian: {
+      findFirst: async (args: { where: { id?: string; tenantId?: string } }) => {
+        if (args.where.id === 'guardian-1' && args.where.tenantId === tenantId) {
+          return {
+            id: 'guardian-1',
+            name: 'Responsável Focado',
+            user: { email: 'guardian1@example.com' },
+          };
         }
         return null;
       },
@@ -316,6 +337,36 @@ async function run() {
   if (studentReport.invoices.length !== 2) {
     throw new Error(
       `Expected 2 invoices in student report, got ${studentReport.invoices.length}`,
+    );
+  }
+
+  // Guardian report: only invoices for guardian-1 (inv-1 paid, inv-2 pending)
+  const guardianReport = await controller.getGuardianReport(
+    reqTenant,
+    'guardian-1',
+  );
+
+  if (guardianReport.guardian.id !== 'guardian-1') {
+    throw new Error(
+      `Expected guardian id guardian-1, got ${guardianReport.guardian.id}`,
+    );
+  }
+
+  if (guardianReport.totals.totalPaidCents !== 10000) {
+    throw new Error(
+      `Expected guardian totalPaidCents=10000, got ${guardianReport.totals.totalPaidCents}`,
+    );
+  }
+
+  if (guardianReport.totals.totalOpenCents !== 20000) {
+    throw new Error(
+      `Expected guardian totalOpenCents=20000, got ${guardianReport.totals.totalOpenCents}`,
+    );
+  }
+
+  if (guardianReport.invoices.length !== 2) {
+    throw new Error(
+      `Expected 2 invoices in guardian report, got ${guardianReport.invoices.length}`,
     );
   }
 
