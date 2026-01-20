@@ -84,6 +84,8 @@ async function run() {
       amountCents: 30000,
       dueDate: mkDate('2025-12-20'),
       status: 'OVERDUE',
+      studentName: 'Aluno Atrasado',
+      guardianName: 'Responsável Atrasado',
     },
     // Other tenant invoice (should be ignored)
     {
@@ -197,6 +199,26 @@ async function run() {
   }
   if (!invalidDateError) {
     throw new Error('Expected BadRequestException for invalid date filter');
+  }
+
+  // Overdue report should list only overdue invoices for the tenant
+  const overdue = await controller.getOverdue(reqTenant);
+
+  if (overdue.length !== 1) {
+    throw new Error(`Expected 1 overdue invoice, got ${overdue.length}`);
+  }
+
+  const firstOverdue = overdue[0];
+  if (firstOverdue.invoiceId !== 'inv-3') {
+    throw new Error(`Expected overdue invoice inv-3, got ${firstOverdue.invoiceId}`);
+  }
+
+  if (firstOverdue.student !== 'Aluno Atrasado') {
+    throw new Error(`Expected student name Aluno Atrasado, got ${firstOverdue.student}`);
+  }
+
+  if (typeof firstOverdue.daysOverdue !== 'number' || firstOverdue.daysOverdue <= 0) {
+    throw new Error(`Expected daysOverdue to be > 0, got ${firstOverdue.daysOverdue}`);
   }
 
   // CSV export with filters (2026-01, PAID)

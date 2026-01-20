@@ -155,6 +155,66 @@ export class SchoolReportsController {
     };
   }
 
+  @Get('overdue')
+  @Roles('SCHOOL_ADMIN', 'FINANCE', 'SECRETARY', 'READONLY')
+  async getOverdue(@Req() req: TenantRequest) {
+    const tenantId = req.tenant!.id;
+
+    const invoices = await this.prisma.invoice.findMany({
+      where: {
+        tenantId,
+        status: 'OVERDUE',
+      } as any,
+      orderBy: {
+        dueDate: 'asc',
+      },
+      include: {
+        student: {
+          select: { name: true },
+        },
+        guardian: {
+          select: {
+            name: true,
+            user: {
+              select: { email: true },
+            },
+          },
+        },
+      },
+    });
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    return (invoices as any[]).map((invoice) => {
+      const dueDate =
+        invoice.dueDate instanceof Date
+          ? (invoice.dueDate as Date)
+          : new Date(invoice.dueDate);
+      const due = new Date(dueDate);
+      due.setHours(0, 0, 0, 0);
+
+      const diffMs = today.getTime() - due.getTime();
+      const daysOverdue =
+        Number.isFinite(diffMs) && diffMs > 0
+          ? Math.floor(diffMs / (1000 * 60 * 60 * 24))
+          : 0;
+
+      return {
+        invoiceId: invoice.id as string,
+        student: (invoice.student?.name as string | null) ?? null,
+        guardian:
+          (invoice.guardian?.name as string | null) ??
+          (invoice.guardian?.user?.email as string | null) ??
+          null,
+        amountCents: invoice.amountCents as number,
+        dueDate: dueDate.toISOString(),
+        status: invoice.status as InvoiceStatus,
+        daysOverdue,
+      };
+    });
+  }
+
   @Get('invoices/export')
   @Roles('SCHOOL_ADMIN', 'FINANCE')
   async exportInvoicesCsv(
