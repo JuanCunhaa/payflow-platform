@@ -10,6 +10,10 @@ type InvoiceEntity = {
   amountCents: number;
   dueDate: Date;
   status: InvoiceStatus;
+  studentName?: string;
+  guardianName?: string;
+  paidAt?: Date | null;
+  paidMethod?: string | null;
 };
 
 type TenantRequest = {
@@ -62,6 +66,10 @@ async function run() {
       amountCents: 10000,
       dueDate: mkDate('2026-01-10'),
       status: 'PAID',
+      studentName: 'Aluno Pago',
+      guardianName: 'Responsável Pago',
+      paidAt: mkDate('2026-01-11'),
+      paidMethod: 'SANDBOX',
     },
     {
       id: 'inv-2',
@@ -103,6 +111,25 @@ async function run() {
       count: async (args: { where: any }) => {
         const filtered = filterInvoices(invoices, args.where ?? {});
         return filtered.length;
+      },
+      findMany: async (args: { where?: any }) => {
+        const filtered = filterInvoices(invoices, args.where ?? {});
+        return filtered.map((invoice) => ({
+          id: invoice.id,
+          tenantId: invoice.tenantId,
+          amountCents: invoice.amountCents,
+          dueDate: invoice.dueDate,
+          status: invoice.status,
+          paidAt: invoice.paidAt ?? null,
+          paidMethod: invoice.paidMethod ?? null,
+          student: invoice.studentName ? { name: invoice.studentName } : null,
+          guardian: invoice.guardianName
+            ? {
+                name: invoice.guardianName,
+                user: { email: 'guardian@example.com' },
+              }
+            : null,
+        }));
       },
     },
   } as unknown as PrismaService;
@@ -172,6 +199,62 @@ async function run() {
     throw new Error('Expected BadRequestException for invalid date filter');
   }
 
+  // CSV export with filters (2026-01, PAID)
+  const chunks: string[] = [];
+  const headers: Record<string, string> = {};
+
+  const resMock = {
+    setHeader: (name: string, value: string) => {
+      headers[name] = value;
+    },
+    write: (chunk: string) => {
+      chunks.push(String(chunk));
+    },
+    end: () => {},
+  } as any;
+
+  await controller.exportInvoicesCsv(
+    reqTenant,
+    '2026-01-01',
+    '2026-01-31',
+    'PAID',
+    resMock,
+  );
+
+  if (headers['Content-Type'] !== 'text/csv; charset=utf-8') {
+    throw new Error(
+      `Expected Content-Type to be text/csv; charset=utf-8, got ${headers['Content-Type']}`,
+    );
+  }
+
+  if (!headers['Content-Disposition']?.includes('invoices-export')) {
+    throw new Error('Expected Content-Disposition header with invoices-export');
+  }
+
+  const csv = chunks.join('');
+  const lines = csv.trim().split('\n');
+
+  if (lines.length !== 2) {
+    throw new Error(`Expected 2 CSV lines (header + 1 row), got ${lines.length}`);
+  }
+
+  const header = lines[0];
+  if (
+    header !==
+    'aluno,responsavel,valor,vencimento,status,pago_em,metodo_pagamento'
+  ) {
+    throw new Error(`Unexpected CSV header: ${header}`);
+  }
+
+  const row = lines[1];
+  if (!row.includes('Aluno Pago') || !row.includes('Responsável Pago')) {
+    throw new Error('CSV row must contain student and guardian names');
+  }
+
+  if (!row.includes('100.00') || !row.includes('PAID')) {
+    throw new Error('CSV row must contain amount 100.00 and status PAID');
+  }
+
   // eslint-disable-next-line no-console
   console.log('SchoolReportsController tests passed');
 }
@@ -181,4 +264,3 @@ run().catch((error) => {
   console.error(error);
   process.exit(1);
 });
-

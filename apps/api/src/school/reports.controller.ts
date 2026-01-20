@@ -4,9 +4,10 @@ import {
   Get,
   Query,
   Req,
+  Res,
   UseGuards,
 } from '@nestjs/common';
-import type { Request } from 'express';
+import type { Request, Response } from 'express';
 
 import { PrismaService } from '../prisma/prisma.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -17,6 +18,23 @@ import { RequireTenantGuard } from '../common/tenant/require-tenant.guard';
 type TenantRequest = Partial<Request> & {
   tenant?: { id: string; slug: string };
 };
+
+type InvoiceStatus =
+  | 'DRAFT'
+  | 'PENDING'
+  | 'PAID'
+  | 'OVERDUE'
+  | 'CANCELED'
+  | 'REFUNDED';
+
+const ALLOWED_STATUS: InvoiceStatus[] = [
+  'DRAFT',
+  'PENDING',
+  'PAID',
+  'OVERDUE',
+  'CANCELED',
+  'REFUNDED',
+];
 
 function parseDate(value?: string): Date | undefined {
   if (!value) return undefined;
@@ -30,6 +48,33 @@ function parseDate(value?: string): Date | undefined {
   }
 
   return date;
+}
+
+function parseInvoiceStatus(value?: string): InvoiceStatus | undefined {
+  if (!value) return undefined;
+  const upper = value.toUpperCase();
+  if (ALLOWED_STATUS.includes(upper as InvoiceStatus)) {
+    return upper as InvoiceStatus;
+  }
+  throw new BadRequestException({
+    code: 'invalid_status',
+    message: 'Invalid invoice status',
+  });
+}
+
+function escapeCsvValue(input: string): string {
+  let value = input;
+  if (value.includes('"')) {
+    value = value.replace(/"/g, '""');
+  }
+  if (/[",\r\n]/.test(value)) {
+    return `"${value}"`;
+  }
+  return value;
+}
+
+function formatAmount(amountCents: number): string {
+  return (amountCents / 100).toFixed(2);
 }
 
 @Controller('school/reports')
@@ -109,5 +154,102 @@ export class SchoolReportsController {
       overdueInvoicesCount: overdueCount,
     };
   }
-}
 
+  @Get('invoices/export')
+  @Roles('SCHOOL_ADMIN', 'FINANCE')
+  async exportInvoicesCsv(
+    @Req() req: TenantRequest,
+    @Query('from') fromParam: string | undefined,
+    @Query('to') toParam: string | undefined,
+    @Query('status') statusParam: string | undefined,
+    @Res() res: Response,
+  ): Promise<void> {
+    const tenantId = req.tenant!.id;
+    const from = parseDate(fromParam);
+    const to = parseDate(toParam);
+    const status = parseInvoiceStatus(statusParam);
+
+    const where: Record<string, unknown> = {
+      tenantId,
+    };
+
+    if (from || to) {
+      const dueDateFilter: { gte?: Date; lte?: Date } = {};
+      if (from) {
+        dueDateFilter.gte = from;
+      }
+      if (to) {
+        dueDateFilter.lte = to;
+      }
+      where.dueDate = dueDateFilter;
+    }
+
+    if (status) {
+      where.status = status;
+    }
+
+    const invoices = await this.prisma.invoice.findMany({
+      where: where as any,
+      orderBy: { dueDate: 'asc' },
+      include: {
+        student: {
+          select: { name: true },
+        },
+        guardian: {
+          select: {
+            name: true,
+            user: {
+              select: { email: true },
+            },
+          },
+        },
+      },
+    });
+
+    res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+    res.setHeader(
+      'Content-Disposition',
+      'attachment; filename="invoices-export.csv"',
+    );
+
+    res.write(
+      'aluno,responsavel,valor,vencimento,status,pago_em,metodo_pagamento\n',
+    );
+
+    for (const invoice of invoices as any[]) {
+      const aluno = escapeCsvValue(invoice.student?.name ?? '');
+      const responsavel = escapeCsvValue(
+        invoice.guardian?.name ?? invoice.guardian?.user?.email ?? '',
+      );
+      const valor = formatAmount(invoice.amountCents);
+      const vencimento =
+        invoice.dueDate instanceof Date
+          ? (invoice.dueDate as Date).toISOString()
+          : String(invoice.dueDate);
+      const statusValue = invoice.status ?? '';
+      const pagoEm =
+        invoice.paidAt instanceof Date
+          ? (invoice.paidAt as Date).toISOString()
+          : invoice.paidAt
+          ? String(invoice.paidAt)
+          : '';
+      const metodoPagamento = invoice.paidMethod ?? '';
+
+      const line = [
+        aluno,
+        responsavel,
+        valor,
+        vencimento,
+        statusValue,
+        pagoEm,
+        metodoPagamento,
+      ]
+        .map((value) => escapeCsvValue(value))
+        .join(',');
+
+      res.write(`${line}\n`);
+    }
+
+    res.end();
+  }
+}
