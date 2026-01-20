@@ -218,6 +218,29 @@
           "button": "Export CSV"
         }
       },
+      "reportsUi": {
+        "overdue": {
+          "title": "Overdue invoices",
+          "description": "Quickly see who is late and copy the payment link to follow up in an organized way.",
+          "table": {
+            "student": "Student",
+            "guardian": "Guardian",
+            "daysOverdue": "Days overdue",
+            "amount": "Amount",
+            "actions": "Actions"
+          },
+          "actions": {
+            "copyPaymentLink": "Copy payment link",
+            "copyPaymentLinkSuccess": "Payment link copied to clipboard.",
+            "generatePaymentLink": "Generate payment link"
+          },
+          "feedback": {
+            "loadError": "Could not load overdue invoices report.",
+            "paymentError": "Could not generate or copy the payment link."
+          },
+          "empty": "No overdue invoices found for the current filter."
+        }
+      },
     "pages": {
       "dashboard": {
         "title": "Guardian portal",

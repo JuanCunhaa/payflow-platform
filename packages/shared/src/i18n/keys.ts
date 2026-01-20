@@ -601,6 +601,31 @@ export const i18nKeys = {
       },
       empty: 'school.guardiansUi.empty',
     },
+    reportsUi: {
+      overdue: {
+        title: 'school.reportsUi.overdue.title',
+        description: 'school.reportsUi.overdue.description',
+        table: {
+          student: 'school.reportsUi.overdue.table.student',
+          guardian: 'school.reportsUi.overdue.table.guardian',
+          daysOverdue: 'school.reportsUi.overdue.table.daysOverdue',
+          amount: 'school.reportsUi.overdue.table.amount',
+          actions: 'school.reportsUi.overdue.table.actions',
+        },
+        actions: {
+          copyPaymentLink: 'school.reportsUi.overdue.actions.copyPaymentLink',
+          copyPaymentLinkSuccess:
+            'school.reportsUi.overdue.actions.copyPaymentLinkSuccess',
+          generatePaymentLink:
+            'school.reportsUi.overdue.actions.generatePaymentLink',
+        },
+        feedback: {
+          loadError: 'school.reportsUi.overdue.feedback.loadError',
+          paymentError: 'school.reportsUi.overdue.feedback.paymentError',
+        },
+        empty: 'school.reportsUi.overdue.empty',
+      },
+    },
     pages: {
       dashboard: {
         title: 'school.pages.dashboard.title',
