@@ -582,6 +582,18 @@
         "title": "School overview",
         "description": "Summary of classes, students and financial flows for this school (coming soon)."
       },
+      "dashboardUi": {
+        "periodLabel": "Period",
+        "cards": {
+          "totalBilled": "Billed",
+          "totalOpen": "Open",
+          "totalOverdue": "Overdue",
+          "overdueCount": "Overdue invoices"
+        },
+        "feedback": {
+          "loadError": "Could not load financial summary."
+        }
+      },
       "settings": {
         "title": "School settings",
         "description": "Configure basic information, billing rules and integrations for this school (coming soon)."

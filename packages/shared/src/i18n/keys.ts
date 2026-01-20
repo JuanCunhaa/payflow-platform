@@ -348,6 +348,18 @@ export const i18nKeys = {
         loadError: 'school.settings.feedback.loadError',
       },
     },
+    dashboardUi: {
+      periodLabel: 'school.dashboardUi.periodLabel',
+      cards: {
+        totalBilled: 'school.dashboardUi.cards.totalBilled',
+        totalOpen: 'school.dashboardUi.cards.totalOpen',
+        totalOverdue: 'school.dashboardUi.cards.totalOverdue',
+        overdueCount: 'school.dashboardUi.cards.overdueCount',
+      },
+      feedback: {
+        loadError: 'school.dashboardUi.feedback.loadError',
+      },
+    },
     classesUi: {
       tabs: {
         grades: 'school.classesUi.tabs.grades',

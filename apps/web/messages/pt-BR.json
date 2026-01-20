@@ -582,6 +582,18 @@
         "title": "Visão geral da escola",
         "description": "Resumo de turmas, alunos e fluxos financeiros desta escola (em breve)."
       },
+    "dashboardUi": {
+      "periodLabel": "Período",
+      "cards": {
+        "totalBilled": "Faturado",
+        "totalOpen": "Em aberto",
+        "totalOverdue": "Vencido",
+        "overdueCount": "Qtd. vencidas"
+      },
+      "feedback": {
+        "loadError": "Não foi possível carregar o resumo financeiro."
+      }
+    },
       "settings": {
         "title": "Configurações da escola",
         "description": "Configure informações básicas, regras de cobrança e integrações da escola (em breve)."
