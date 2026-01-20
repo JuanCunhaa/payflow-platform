@@ -101,6 +101,12 @@ export default function SchoolInvoicesPage() {
   const [paymentLink, setPaymentLink] = useState<string | null>(null);
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [paymentError, setPaymentError] = useState<string | null>(null);
+  const [exportModalOpen, setExportModalOpen] = useState(false);
+  const [exportFromDate, setExportFromDate] = useState('');
+  const [exportToDate, setExportToDate] = useState('');
+  const [exportStatus, setExportStatus] = useState<FilterStatus>('ALL');
+  const [exportLoading, setExportLoading] = useState(false);
+  const [exportError, setExportError] = useState<string | null>(null);
 
   const loadInvoices = useCallback(async () => {
     setLoading(true);
@@ -485,6 +491,7 @@ export default function SchoolInvoicesPage() {
               display: 'flex',
               alignItems: 'flex-end',
               justifyContent: 'flex-end',
+              gap: '8px',
             }}
           >
             <button
@@ -500,6 +507,27 @@ export default function SchoolInvoicesPage() {
               }}
             >
               {t(i18nKeys.common.ok)}
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setExportFromDate(fromDate);
+                setExportToDate(toDate);
+                setExportStatus(statusFilter);
+                setExportError(null);
+                setExportModalOpen(true);
+              }}
+              style={{
+                padding: '8px 12px',
+                borderRadius: '999px',
+                border: '1px solid #0f172a',
+                backgroundColor: '#ffffff',
+                color: '#0f172a',
+                cursor: 'pointer',
+                fontSize: '14px',
+              }}
+            >
+              {t(i18nKeys.school.invoicesUi.export.button)}
             </button>
           </div>
         </form>
@@ -1106,6 +1134,261 @@ export default function SchoolInvoicesPage() {
           </>
         )}
       </section>
+
+      {exportModalOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(15,23,42,0.4)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 40,
+          }}
+        >
+          <div
+            style={{
+              width: '100%',
+              maxWidth: '460px',
+              borderRadius: '12px',
+              backgroundColor: '#ffffff',
+              padding: '20px',
+              boxShadow: '0 15px 40px rgba(15,23,42,0.18)',
+            }}
+          >
+            <h2
+              style={{
+                marginTop: 0,
+                marginBottom: '6px',
+                fontSize: '18px',
+              }}
+            >
+              {t(i18nKeys.school.invoicesUi.export.title)}
+            </h2>
+            <p
+              style={{
+                marginTop: 0,
+                marginBottom: '16px',
+                fontSize: '14px',
+                color: '#6b7280',
+              }}
+            >
+              {t(i18nKeys.school.invoicesUi.export.description)}
+            </p>
+
+            {exportError && (
+              <div
+                style={{
+                  marginBottom: '12px',
+                  padding: '8px 10px',
+                  borderRadius: '8px',
+                  border: '1px solid #fecaca',
+                  backgroundColor: '#fef2f2',
+                  color: '#b91c1c',
+                  fontSize: '13px',
+                }}
+              >
+                {exportError}
+              </div>
+            )}
+
+            <form
+              onSubmit={async (event) => {
+                event.preventDefault();
+                setExportError(null);
+                setExportLoading(true);
+
+                try {
+                  const params = new URLSearchParams();
+                  if (exportFromDate) params.set('from', exportFromDate);
+                  if (exportToDate) params.set('to', exportToDate);
+                  if (exportStatus !== 'ALL') params.set('status', exportStatus);
+
+                  const path = `/school/reports/invoices/export${
+                    params.toString() ? `?${params.toString()}` : ''
+                  }`;
+
+                  const res = await apiFetch(path, {
+                    method: 'GET',
+                  });
+
+                  if (!res.ok) {
+                    setExportError(
+                      t(i18nKeys.school.invoicesUi.feedback.exportError),
+                    );
+                    setExportLoading(false);
+                    return;
+                  }
+
+                  const blob = await res.blob();
+                  const url = window.URL.createObjectURL(blob);
+                  const link = document.createElement('a');
+                  link.href = url;
+                  link.download = 'invoices-export.csv';
+                  document.body.appendChild(link);
+                  link.click();
+                  link.remove();
+                  window.URL.revokeObjectURL(url);
+
+                  setExportLoading(false);
+                  setExportModalOpen(false);
+                } catch {
+                  setExportError(
+                    t(i18nKeys.school.invoicesUi.feedback.exportError),
+                  );
+                  setExportLoading(false);
+                }
+              }}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px',
+              }}
+            >
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+                  gap: '12px',
+                }}
+              >
+                <label
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '4px',
+                    fontSize: '14px',
+                  }}
+                >
+                  <span>{t(i18nKeys.school.invoicesUi.export.periodFrom)}</span>
+                  <input
+                    type="date"
+                    value={exportFromDate}
+                    onChange={(event) => setExportFromDate(event.target.value)}
+                    style={{
+                      padding: '6px 8px',
+                      borderRadius: '8px',
+                      border: '1px solid #cbd5f5',
+                      fontSize: '14px',
+                    }}
+                  />
+                </label>
+                <label
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '4px',
+                    fontSize: '14px',
+                  }}
+                >
+                  <span>{t(i18nKeys.school.invoicesUi.export.periodTo)}</span>
+                  <input
+                    type="date"
+                    value={exportToDate}
+                    onChange={(event) => setExportToDate(event.target.value)}
+                    style={{
+                      padding: '6px 8px',
+                      borderRadius: '8px',
+                      border: '1px solid #cbd5f5',
+                      fontSize: '14px',
+                    }}
+                  />
+                </label>
+              </div>
+
+              <label
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '4px',
+                  fontSize: '14px',
+                }}
+              >
+                <span>{t(i18nKeys.school.invoicesUi.export.statusLabel)}</span>
+                <select
+                  value={exportStatus}
+                  onChange={(event) =>
+                    setExportStatus(event.target.value as FilterStatus)
+                  }
+                  style={{
+                    padding: '6px 8px',
+                    borderRadius: '8px',
+                    border: '1px solid #cbd5f5',
+                  }}
+                >
+                  <option value="ALL">
+                    {t(i18nKeys.school.invoicesUi.filters.statusAll)}
+                  </option>
+                  <option value="PENDING">
+                    {t(i18nKeys.school.invoicesUi.status.pending)}
+                  </option>
+                  <option value="OVERDUE">
+                    {t(i18nKeys.school.invoicesUi.status.overdue)}
+                  </option>
+                  <option value="PAID">
+                    {t(i18nKeys.school.invoicesUi.status.paid)}
+                  </option>
+                  <option value="CANCELED">
+                    {t(i18nKeys.school.invoicesUi.status.canceled)}
+                  </option>
+                  <option value="REFUNDED">
+                    {t(i18nKeys.school.invoicesUi.status.refunded)}
+                  </option>
+                </select>
+              </label>
+
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  marginTop: '12px',
+                  gap: '8px',
+                }}
+              >
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (!exportLoading) {
+                      setExportModalOpen(false);
+                    }
+                  }}
+                  style={{
+                    padding: '8px 12px',
+                    borderRadius: '999px',
+                    border: '1px solid #e5e7eb',
+                    backgroundColor: '#ffffff',
+                    color: '#374151',
+                    fontSize: '14px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {t(i18nKeys.school.invoicesUi.export.cancel)}
+                </button>
+                <button
+                  type="submit"
+                  disabled={exportLoading}
+                  style={{
+                    padding: '8px 12px',
+                    borderRadius: '999px',
+                    border: 'none',
+                    backgroundColor: exportLoading ? '#93c5fd' : '#2563eb',
+                    color: '#ffffff',
+                    fontSize: '14px',
+                    cursor: exportLoading ? 'default' : 'pointer',
+                  }}
+                >
+                  {exportLoading
+                    ? t(i18nKeys.common.loading)
+                    : t(i18nKeys.school.invoicesUi.export.submit)}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

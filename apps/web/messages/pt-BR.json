@@ -246,9 +246,20 @@
         "openPaymentPage": "Abrir página de pagamento"
       },
       "feedback": {
-        "loadError": "Não foi possível carregar as cobranças."
+        "loadError": "Não foi possível carregar as cobranças.",
+        "exportError": "Não foi possível exportar as cobranças para CSV."
       },
       "empty": "Nenhuma cobrança encontrada para o filtro atual.",
+      "export": {
+        "title": "Exportar cobranças em CSV",
+        "description": "Escolha o período e o status das cobranças que deseja exportar para planilha.",
+        "periodFrom": "Data inicial",
+        "periodTo": "Data final",
+        "statusLabel": "Status das cobranças",
+        "submit": "Exportar CSV",
+        "cancel": "Cancelar",
+        "button": "Exportar CSV"
+      },
       "newForm": {
         "title": "Nova cobrança avulsa",
         "description": "Selecione o aluno, responsável e preencha os dados da cobrança.",

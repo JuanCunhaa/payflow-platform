@@ -202,11 +202,22 @@
           "copyPaymentLinkSuccess": "Payment link copied to clipboard.",
           "openPaymentPage": "Open payment page"
         },
-      "feedback": {
-        "loadError": "Could not load invoices."
+        "feedback": {
+          "loadError": "Could not load invoices.",
+          "exportError": "Could not export invoices to CSV."
+        },
+        "empty": "No invoices found for the current filter.",
+        "export": {
+          "title": "Export invoices as CSV",
+          "description": "Select the period and status of the invoices you want to export to a spreadsheet.",
+          "periodFrom": "Start date",
+          "periodTo": "End date",
+          "statusLabel": "Invoice status",
+          "submit": "Export CSV",
+          "cancel": "Cancel",
+          "button": "Export CSV"
+        }
       },
-      "empty": "No invoices found for the current filter."
-    },
     "pages": {
       "dashboard": {
         "title": "Guardian portal",
