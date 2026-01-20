@@ -1,6 +1,7 @@
 'use client';
 
 import type { ChangeEvent, FormEvent } from 'react';
+import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 import { i18nKeys } from '@payflow/shared';
 import { useI18n } from '../../../i18n-context';
@@ -35,7 +36,7 @@ type PagedResponse<T> = {
 type FilterStatus = 'ALL' | GuardianStatus;
 
 export default function SchoolGuardiansPage() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const { apiFetch } = useAuth();
 
   const [guardians, setGuardians] = useState<Guardian[]>([]);
@@ -438,6 +439,14 @@ export default function SchoolGuardiansPage() {
                       : t(i18nKeys.school.guardiansUi.status.inactive)}
                   </td>
                   <td>
+                    <Link
+                      href={`/${locale || 'pt-BR'}/s/guardians/${guardian.id}`}
+                      style={{
+                        marginRight: '8px',
+                      }}
+                    >
+                      {t(i18nKeys.school.reportsUi.guardian.title)}
+                    </Link>
                     <button type="button" onClick={() => openEditGuardian(guardian)}>
                       {t(i18nKeys.school.guardiansUi.actions.edit)}
                     </button>
@@ -549,4 +558,3 @@ export default function SchoolGuardiansPage() {
     </div>
   );
 }
-
