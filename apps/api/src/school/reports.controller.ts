@@ -2,6 +2,8 @@ import {
   BadRequestException,
   Controller,
   Get,
+  NotFoundException,
+  Param,
   Query,
   Req,
   Res,
@@ -311,5 +313,100 @@ export class SchoolReportsController {
     }
 
     res.end();
+  }
+
+  @Get('student/:id')
+  @Roles('SCHOOL_ADMIN', 'FINANCE', 'SECRETARY', 'READONLY')
+  async getStudentReport(
+    @Req() req: TenantRequest,
+    @Param('id') id: string,
+  ) {
+    const tenantId = req.tenant!.id;
+
+    const student = await this.prisma.student.findFirst({
+      where: {
+        id,
+        tenantId,
+      } as any,
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+
+    if (!student) {
+      throw new NotFoundException({
+        code: 'student_not_found',
+        message: 'Student not found for this tenant',
+      });
+    }
+
+    const invoices = await this.prisma.invoice.findMany({
+      where: {
+        tenantId,
+        studentId: id,
+      } as any,
+      orderBy: {
+        dueDate: 'asc',
+      },
+      include: {
+        guardian: {
+          select: {
+            name: true,
+            user: {
+              select: { email: true },
+            },
+          },
+        },
+        contract: {
+          select: { name: true },
+        },
+      },
+    });
+
+    let totalPaidCents = 0;
+    let totalOpenCents = 0;
+
+    for (const invoice of invoices as any[]) {
+      if (invoice.status === 'PAID') {
+        totalPaidCents += invoice.amountCents as number;
+      } else if (invoice.status === 'PENDING' || invoice.status === 'OVERDUE') {
+        totalOpenCents += invoice.amountCents as number;
+      }
+    }
+
+    const mappedInvoices = (invoices as any[]).map((invoice) => ({
+      id: invoice.id as string,
+      amountCents: invoice.amountCents as number,
+      currency: invoice.currency as string,
+      status: invoice.status as InvoiceStatus,
+      dueDate:
+        invoice.dueDate instanceof Date
+          ? (invoice.dueDate as Date).toISOString()
+          : String(invoice.dueDate),
+      paidAt:
+        invoice.paidAt instanceof Date
+          ? (invoice.paidAt as Date).toISOString()
+          : invoice.paidAt
+          ? String(invoice.paidAt)
+          : null,
+      contractName: (invoice.contract?.name as string | null) ?? null,
+      guardianName:
+        (invoice.guardian?.name as string | null) ??
+        (invoice.guardian?.user?.email as string | null) ??
+        null,
+    }));
+
+    return {
+      student: {
+        id: student.id,
+        name: student.name,
+      },
+      totals: {
+        totalPaidCents,
+        totalOpenCents,
+      },
+      invoices: mappedInvoices,
+    };
   }
 }

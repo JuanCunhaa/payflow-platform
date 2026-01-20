@@ -7,6 +7,7 @@ type InvoiceStatus = 'DRAFT' | 'PENDING' | 'PAID' | 'OVERDUE' | 'CANCELED' | 'RE
 type InvoiceEntity = {
   id: string;
   tenantId: string;
+  studentId?: string;
   amountCents: number;
   dueDate: Date;
   status: InvoiceStatus;
@@ -29,6 +30,10 @@ function createTenantRequest(tenantId: string): TenantRequest {
 function filterInvoices(invoices: InvoiceEntity[], where: any): InvoiceEntity[] {
   return invoices.filter((invoice) => {
     if (where.tenantId && invoice.tenantId !== where.tenantId) {
+      return false;
+    }
+
+    if (where.studentId && invoice.studentId !== where.studentId) {
       return false;
     }
 
@@ -63,6 +68,7 @@ async function run() {
     {
       id: 'inv-1',
       tenantId,
+      studentId: 'student-1',
       amountCents: 10000,
       dueDate: mkDate('2026-01-10'),
       status: 'PAID',
@@ -74,6 +80,7 @@ async function run() {
     {
       id: 'inv-2',
       tenantId,
+      studentId: 'student-1',
       amountCents: 20000,
       dueDate: mkDate('2026-01-15'),
       status: 'PENDING',
@@ -81,6 +88,7 @@ async function run() {
     {
       id: 'inv-3',
       tenantId,
+      studentId: 'student-2',
       amountCents: 30000,
       dueDate: mkDate('2025-12-20'),
       status: 'OVERDUE',
@@ -91,6 +99,7 @@ async function run() {
     {
       id: 'inv-4',
       tenantId: otherTenantId,
+      studentId: 'student-3',
       amountCents: 50000,
       dueDate: mkDate('2026-01-12'),
       status: 'PAID',
@@ -98,6 +107,14 @@ async function run() {
   );
 
   const prismaMock = {
+    student: {
+      findFirst: async (args: { where: { id?: string; tenantId?: string } }) => {
+        if (args.where.id === 'student-1' && args.where.tenantId === tenantId) {
+          return { id: 'student-1', name: 'Aluno Focado' };
+        }
+        return null;
+      },
+    },
     invoice: {
       aggregate: async (args: { where: any; _sum: { amountCents?: true } }) => {
         const filtered = filterInvoices(invoices, args.where ?? {});
@@ -275,6 +292,31 @@ async function run() {
 
   if (!row.includes('100.00') || !row.includes('PAID')) {
     throw new Error('CSV row must contain amount 100.00 and status PAID');
+  }
+
+  // Student report: only invoices for student-1 (inv-1 paid, inv-2 pending)
+  const studentReport = await controller.getStudentReport(reqTenant, 'student-1');
+
+  if (studentReport.student.id !== 'student-1') {
+    throw new Error(`Expected student id student-1, got ${studentReport.student.id}`);
+  }
+
+  if (studentReport.totals.totalPaidCents !== 10000) {
+    throw new Error(
+      `Expected totalPaidCents=10000, got ${studentReport.totals.totalPaidCents}`,
+    );
+  }
+
+  if (studentReport.totals.totalOpenCents !== 20000) {
+    throw new Error(
+      `Expected totalOpenCents=20000, got ${studentReport.totals.totalOpenCents}`,
+    );
+  }
+
+  if (studentReport.invoices.length !== 2) {
+    throw new Error(
+      `Expected 2 invoices in student report, got ${studentReport.invoices.length}`,
+    );
   }
 
   // eslint-disable-next-line no-console
