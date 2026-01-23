@@ -92,6 +92,7 @@
   },
   "common": {
     "ok": "OK",
+    "back": "Back",
     "cancel": "Cancel",
     "error": "Error",
     "loading": "Loading...",
@@ -274,6 +275,7 @@
       "dashboard": "Platform",
       "tenants": "Tenants",
       "leads": "Leads",
+      "tickets": "Tickets",
       "audit": "Audit"
     },
     "tenants": {
@@ -342,8 +344,10 @@
         "from": "From",
         "to": "To",
         "apply": "Apply filters",
-        "clear": "Clear filters"
+        "clear": "Clear filters",
+        "actionPlaceholder": "Ex: login, update"
       },
+      "system": "System",
       "table": {
         "timestamp": "Date/time",
         "tenant": "Tenant",
@@ -676,11 +680,11 @@
   "legal": {
     "terms": {
       "title": "Terms of Service",
-      "content": "Terms content placeholder..."
+      "content": "TERMS OF SERVICE – PAYFLOW\n\nWelcome to PayFlow. These Terms of Service (\"Terms\") govern your access to and use of our school financial management platform (\"Platform\"). By accessing or using the Platform, you (\"User\") agree to these Terms. If you do not agree, strictly do not use our services.\n\n1. THE SERVICE\nPayFlow is a SaaS (Software as a Service) platform that facilitates the management of tuition, fees, and events between Schools and Financial Guardians. PayFlow acts as a technological intermediary and is not a bank.\n\n2. REGISTRATION AND ACCESS\n2.1. Access to the Platform requires an account. You warrant that all information provided is true, accurate, and current.\n2.2. The School is responsible for approving the registration of Guardians linked to its institution.\n2.3. You are responsible for maintaining the confidentiality of your password. Any activity conducted through your account is your responsibility.\n\n3. PAYMENTS AND BILLING\n3.1. The Platform allows the School to generate charges (invoices, bank transfers, cards) for Guardians.\n3.2. PayFlow does not set school prices or fees; these are the sole responsibility of the School.\n3.3. Payment processing is performed by third-party financial partners (payment gateways). PayFlow does not store full credit card data.\n3.4. In case of late payments, fines and interest configured by the School will be applied automatically.\n\n4. RESPONSIBILITIES\n4.1. The School: Ensures the legality of issued charges and maintains student data updated.\n4.2. The Guardian: Makes payments within stipulated deadlines and keeps contact info updated.\n4.3. PayFlow: Ensures Platform availability, data security, and correct processing of payment instructions with gateways.\n\n5. LIMITATION OF LIABILITY\nPayFlow is not liable for third-party failures (banks, card operators), scheduled maintenance interruptions, or force majeure events. In no event shall PayFlow be liable for indirect damages or lost profits arising from the use of the platform.\n\n6. INTELLECTUAL PROPERTY\nAll design, code, logos, and content of the Platform are the exclusive property of PayFlow or its licensors. Unauthorized use is prohibited.\n\n7. CHANGES\nWe may modify these Terms at any time. Continued use of the Platform after changes constitutes acceptance of the new terms.\n\n8. CONTACT\nFor questions regarding these terms, please contact our Support Center."
     },
     "privacy": {
       "title": "Privacy Policy",
-      "content": "Privacy content placeholder..."
+      "content": "PRIVACY POLICY – PAYFLOW\n\nAt PayFlow, we take your privacy seriously. This Policy describes how we collect, use, and protect your personal data, in compliance with applicable data protection laws.\n\n1. DATA COLLECTED\n1.1. Registration Data: Full name, ID number, email, phone, and address.\n1.2. Student Data: Name, class, and relationship to the guardian.\n1.3. Financial Data: Payment history, invoices, and, where applicable, partial card data (last 4 digits) for identification.\n1.4. Navigation Data: IP address, device type, and access logs for audit and security purposes.\n\n2. PURPOSE OF USE\nWe use your data to:\n- Process payments and issue invoices.\n- Identify you and ensure account security.\n- Send notifications about due dates, receipts, and school communications.\n- Provide technical support and improve our services.\n- Comply with legal and regulatory obligations.\n\n3. DATA SHARING\nWe do not sell your data. We share information only with:\n- The School linked to your account (for academic and financial management).\n- Payment Processors and Banks (strictly to process transactions).\n- Judicial or government authorities, when required by law.\n\n4. SECURITY\nWe adopt robust technical and administrative measures to protect your data, including encryption in transit (SSL/TLS), strict access control, and security monitoring.\n\n5. YOUR RIGHTS\nYou have the right to access your data, correct incomplete or outdated data, and request portability or deletion (except for data we are required by law to retain).\n\n6. CHANGES\nThis policy may be updated. We will notify you of significant changes via the Platform or email.\n\n7. CONTACT\nTo exercise your rights or ask questions about privacy, visit our Support Center."
     }
   },
   "support": {
@@ -692,6 +696,7 @@
       "subject": "Subject",
       "message": "Message",
       "submit": "Send ticket",
+      "sendAnother": "Send another request",
       "success": "Ticket created! We will contact you via email."
     }
   },
@@ -718,14 +723,19 @@
     },
     "list": {
       "title": "My Tickets",
+      "description": "Manage your support requests.",
       "create": "New Ticket",
+      "by": "By",
       "empty": "No tickets found."
     },
     "chat": {
       "placeholder": "Type your message...",
       "send": "Send",
       "escalate": "Escalate to Platform",
-      "close": "Close Ticket"
+      "close": "Close Ticket",
+      "confirmClose": "Are you sure you want to close this ticket?",
+      "confirmEscalate": "Escalate to Platform Admin?",
+      "escalatedLabel": "Escalated"
     },
     "create": {
       "title": "Open New Ticket",

@@ -92,6 +92,7 @@ export const i18nKeys = {
   },
   common: {
     ok: 'common.ok',
+    back: 'common.back',
     cancel: 'common.cancel',
     error: 'common.error',
     loading: 'common.loading',
@@ -310,7 +311,9 @@ export const i18nKeys = {
         to: 'platform.audit.filters.to',
         apply: 'platform.audit.filters.apply',
         clear: 'platform.audit.filters.clear',
+        actionPlaceholder: 'platform.audit.filters.actionPlaceholder',
       },
+      system: 'platform.audit.system',
       table: {
         timestamp: 'platform.audit.table.timestamp',
         tenant: 'platform.audit.table.tenant',
@@ -738,6 +741,7 @@ export const i18nKeys = {
       message: 'support.guestForm.message',
       submit: 'support.guestForm.submit',
       success: 'support.guestForm.success',
+      sendAnother: 'support.guestForm.sendAnother',
     },
   },
   tickets: {
@@ -763,7 +767,9 @@ export const i18nKeys = {
     },
     list: {
       title: 'tickets.list.title',
+      description: 'tickets.list.description',
       create: 'tickets.list.create',
+      by: 'tickets.list.by',
       empty: 'tickets.list.empty',
     },
     chat: {
@@ -771,6 +777,9 @@ export const i18nKeys = {
       send: 'tickets.chat.send',
       escalate: 'tickets.chat.escalate',
       close: 'tickets.chat.close',
+      confirmClose: 'tickets.chat.confirmClose',
+      confirmEscalate: 'tickets.chat.confirmEscalate',
+      escalatedLabel: 'tickets.chat.escalatedLabel',
     },
     create: {
       title: 'tickets.create.title',

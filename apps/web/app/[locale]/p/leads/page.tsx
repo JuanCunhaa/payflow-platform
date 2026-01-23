@@ -135,8 +135,8 @@ export default function PlatformLeadsPage() {
   }
 
   return (
-    <section className="space-y-6">
-      <div className="flex items-center justify-between">
+    <section className="flex flex-col h-[calc(100vh-10rem)] gap-4">
+      <div className="flex items-center justify-between pb-2">
         <h1 className="text-2xl font-bold tracking-tight">{t(i18nKeys.platform.leads.title)}</h1>
         <select
           value={statusFilter}
@@ -156,56 +156,56 @@ export default function PlatformLeadsPage() {
         </div>
       )}
 
-      {loading ? (
-        <div className="flex justify-center p-8 text-muted-foreground">{t(i18nKeys.common.loading)}</div>
-      ) : leads.length === 0 ? (
-        <p className="text-muted-foreground text-sm">{t(i18nKeys.platform.leads.empty)}</p>
-      ) : (
-        <div className="rounded-md border bg-card text-card-foreground">
-          <div className="relative w-full overflow-auto">
+      <div className="flex-1 overflow-hidden rounded-md border bg-card text-card-foreground shadow-sm flex flex-col">
+        {loading ? (
+          <div className="flex-1 flex items-center justify-center text-muted-foreground">{t(i18nKeys.common.loading)}</div>
+        ) : leads.length === 0 ? (
+          <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm p-4">{t(i18nKeys.platform.leads.empty)}</div>
+        ) : (
+          <div className="flex-1 overflow-y-auto">
             <table className="w-full caption-bottom text-sm">
-              <thead className="[&_tr]:border-b">
+              <thead className="sticky top-0 bg-secondary/90 backdrop-blur z-10 [&_tr]:border-b">
                 <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">
                     {t(i18nKeys.platform.leads.table.schoolName)}
                   </th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">
                     {t(i18nKeys.platform.leads.table.responsibleName)}
                   </th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">
                     {t(i18nKeys.platform.leads.table.email)}
                   </th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">
                     {t(i18nKeys.platform.leads.table.phone)}
                   </th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">
                     {t(i18nKeys.platform.leads.table.status)}
                   </th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">
                     {t(i18nKeys.platform.leads.table.createdAt)}
                   </th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">{t(i18nKeys.common.actions)}</th>
+                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">{t(i18nKeys.common.actions)}</th>
                 </tr>
               </thead>
               <tbody className="[&_tr:last-child]:border-0">
                 {leads.map((lead) => (
                   <tr key={lead.id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">{lead.schoolName}</td>
-                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">{lead.name}</td>
-                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">{lead.email}</td>
-                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">{lead.phone}</td>
-                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                      <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset ${lead.status === 'NEW'
-                          ? 'bg-blue-50 text-blue-700 ring-blue-600/20 dark:bg-blue-900/30 dark:text-blue-400 dark:ring-blue-900/50'
-                          : lead.status === 'CONTACTED'
-                            ? 'bg-yellow-50 text-yellow-700 ring-yellow-600/20 dark:bg-yellow-900/30 dark:text-yellow-400 dark:ring-yellow-900/50'
-                            : 'bg-green-50 text-green-700 ring-green-600/20 dark:bg-green-900/30 dark:text-green-400 dark:ring-green-900/50'
+                    <td className="p-3 align-middle">{lead.schoolName}</td>
+                    <td className="p-3 align-middle">{lead.name}</td>
+                    <td className="p-3 align-middle">{lead.email}</td>
+                    <td className="p-3 align-middle">{lead.phone}</td>
+                    <td className="p-3 align-middle">
+                      <span className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ring-inset ${lead.status === 'NEW'
+                        ? 'bg-blue-50 text-blue-700 ring-blue-600/20 dark:bg-blue-900/30 dark:text-blue-400 dark:ring-blue-900/50'
+                        : lead.status === 'CONTACTED'
+                          ? 'bg-yellow-50 text-yellow-700 ring-yellow-600/20 dark:bg-yellow-900/30 dark:text-yellow-400 dark:ring-yellow-900/50'
+                          : 'bg-green-50 text-green-700 ring-green-600/20 dark:bg-green-900/30 dark:text-green-400 dark:ring-green-900/50'
                         }`}>
                         {statusLabel(lead.status)}
                       </span>
                     </td>
-                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">{formatDate(lead.createdAt)}</td>
-                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                    <td className="p-3 align-middle">{formatDate(lead.createdAt)}</td>
+                    <td className="p-3 align-middle">
                       <div className="flex gap-2 flex-wrap">
                         {lead.status !== 'CONTACTED' && lead.status !== 'CONVERTED' && (
                           <button
@@ -244,8 +244,8 @@ export default function PlatformLeadsPage() {
               </tbody>
             </table>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </section>
   );
 }

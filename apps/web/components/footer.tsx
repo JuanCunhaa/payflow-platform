@@ -1,10 +1,11 @@
 'use client';
 
+import Link from "next/link";
 import { useI18n } from "@/app/i18n-context";
 import { i18nKeys } from "@payflow/shared";
 
 export function Footer() {
-    const { t } = useI18n();
+    const { t, locale } = useI18n();
 
     return (
         <footer className="border-t bg-muted/40 py-12">
@@ -15,9 +16,9 @@ export function Footer() {
                     </p>
                 </div>
                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                    <a href="#" className="hover:underline">{t(i18nKeys.footer.terms)}</a>
-                    <a href="#" className="hover:underline">{t(i18nKeys.footer.privacy)}</a>
-                    <a href="#" className="hover:underline">{t(i18nKeys.footer.support)}</a>
+                    <Link href={`/${locale}/terms`} className="hover:underline">{t(i18nKeys.footer.terms)}</Link>
+                    <Link href={`/${locale}/privacy`} className="hover:underline">{t(i18nKeys.footer.privacy)}</Link>
+                    <Link href={`/${locale}/support`} className="hover:underline">{t(i18nKeys.footer.support)}</Link>
                 </div>
             </div>
         </footer>

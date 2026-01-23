@@ -11,6 +11,7 @@ import { LanguageToggle } from '@/components/language-toggle';
 import { Button } from '@/components/ui/button';
 import { Activity, Building, LayoutDashboard, LogOut, Megaphone, LifeBuoy } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Footer } from '@/components/footer';
 
 export default function PlatformLayout({ children }: { children: React.ReactNode }) {
   const { user, sessionLoading, isLoggingOut, logout } = useAuth();
@@ -71,6 +72,7 @@ export default function PlatformLayout({ children }: { children: React.ReactNode
         <main className="flex-1 p-6 md:p-8 max-w-7xl mx-auto w-full">
           {children}
         </main>
+        <Footer />
       </div>
     </div>
   );

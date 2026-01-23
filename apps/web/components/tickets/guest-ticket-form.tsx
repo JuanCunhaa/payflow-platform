@@ -57,7 +57,7 @@ export function GuestTicketForm() {
             <div className="bg-green-50 text-green-900 p-6 rounded-lg text-center border border-green-200">
                 <h3 className="text-lg font-semibold mb-2">{dict.support.guestForm.success}</h3>
                 <Button onClick={() => setSuccess(false)} variant="outline" className="mt-4 bg-white hover:bg-green-50 text-green-900 border-green-200">
-                    Send another
+                    {dict.support.guestForm.sendAnother || 'Send another'}
                 </Button>
             </div>
         );

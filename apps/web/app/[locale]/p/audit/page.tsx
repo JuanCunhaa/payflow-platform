@@ -168,12 +168,14 @@ export default function PlatformAuditPage() {
   }
 
   return (
-    <section className="space-y-6">
-      <h1 className="text-2xl font-bold tracking-tight">{t(i18nKeys.platform.audit.title)}</h1>
+    <section className="flex flex-col h-[calc(100vh-10rem)] gap-4">
+      <div className="flex items-center justify-between pb-2">
+        <h1 className="text-2xl font-bold tracking-tight">{t(i18nKeys.platform.audit.title)}</h1>
+      </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4 rounded-xl border bg-card text-card-foreground shadow">
-        <div className="space-y-2">
-          <label htmlFor="audit-tenant" className="text-sm font-medium leading-none">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-3 p-4 rounded-xl border bg-card text-card-foreground shadow-sm">
+        <div className="space-y-1">
+          <label htmlFor="audit-tenant" className="text-xs font-semibold text-muted-foreground">
             {t(i18nKeys.platform.audit.filters.tenant)}
           </label>
           <select
@@ -185,79 +187,83 @@ export default function PlatformAuditPage() {
             <option value="">{t(i18nKeys.common.all)}</option>
             {tenants.map((tenant) => (
               <option key={tenant.id} value={tenant.id}>
-                {tenant.name} ({tenant.slug})
+                {tenant.name}
               </option>
             ))}
           </select>
         </div>
 
-        <div className="space-y-2">
-          <label htmlFor="audit-action" className="text-sm font-medium leading-none">
+        <div className="space-y-1">
+          <label htmlFor="audit-action" className="text-xs font-semibold text-muted-foreground">
             {t(i18nKeys.platform.audit.filters.action)}
           </label>
           <input
             id="audit-action"
             type="text"
+            placeholder={t(i18nKeys.platform.audit.filters.actionPlaceholder)}
             value={actionFilter}
             onChange={(event) => setActionFilter(event.target.value)}
-            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           />
         </div>
 
-        <div className="space-y-2">
-          <label htmlFor="audit-actorEmail" className="text-sm font-medium leading-none">
+        <div className="space-y-1">
+          <label htmlFor="audit-actorEmail" className="text-xs font-semibold text-muted-foreground">
             {t(i18nKeys.platform.audit.filters.actorEmail)}
           </label>
           <input
             id="audit-actorEmail"
             type="email"
+            placeholder="email@example.com"
             value={actorEmail}
             onChange={(event) => setActorEmail(event.target.value)}
-            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           />
         </div>
 
-        <div className="space-y-2">
-          <label htmlFor="audit-from" className="text-sm font-medium leading-none">
+        <div className="space-y-1">
+          <label className="text-xs font-semibold text-muted-foreground">
             {t(i18nKeys.platform.audit.filters.from)}
           </label>
           <input
-            id="audit-from"
             type="date"
             value={fromDate}
             onChange={(event) => setFromDate(event.target.value)}
-            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors"
           />
         </div>
 
-        <div className="space-y-2">
-          <label htmlFor="audit-to" className="text-sm font-medium leading-none">
-            {t(i18nKeys.platform.audit.filters.to)}
-          </label>
-          <input
-            id="audit-to"
-            type="date"
-            value={toDate}
-            onChange={(event) => setToDate(event.target.value)}
-            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-          />
-        </div>
+        <div className="space-y-1 flex items-end gap-2">
+          <div className="flex-1 space-y-1">
+            <label className="text-xs font-semibold text-muted-foreground">
+              {t(i18nKeys.platform.audit.filters.to)}
+            </label>
+            <input
+              type="date"
+              value={toDate}
+              onChange={(event) => setToDate(event.target.value)}
+              className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors"
+            />
+          </div>
 
-        <div className="flex items-end gap-2 col-span-1 sm:col-span-2 lg:col-span-1 xl:col-span-3 justify-end">
-          <button
-            type="button"
-            onClick={applyFilters}
-            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2"
-          >
-            {t(i18nKeys.platform.audit.filters.apply)}
-          </button>
-          <button
-            type="button"
-            onClick={clearFilters}
-            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
-          >
-            {t(i18nKeys.platform.audit.filters.clear)}
-          </button>
+          <div className="flex gap-1 pb-[1px]">
+            <button
+              type="button"
+              onClick={applyFilters}
+              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-3"
+              title={t(i18nKeys.platform.audit.filters.apply)}
+            >
+              ➔
+            </button>
+            <button
+              type="button"
+              onClick={clearFilters}
+              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-3"
+              title={t(i18nKeys.platform.audit.filters.clear)}
+            >
+              ✕
+            </button>
+          </div>
         </div>
       </div>
 
@@ -267,64 +273,73 @@ export default function PlatformAuditPage() {
         </div>
       )}
 
-      {loading ? (
-        <div className="flex justify-center p-8 text-muted-foreground">{t(i18nKeys.common.loading)}</div>
-      ) : items.length === 0 ? (
-        <p className="text-muted-foreground text-sm">{t(i18nKeys.platform.audit.empty)}</p>
-      ) : (
-        <div className="rounded-md border bg-card text-card-foreground">
-          <div className="relative w-full overflow-auto">
+      <div className="flex-1 overflow-hidden rounded-md border bg-card text-card-foreground shadow-sm flex flex-col">
+        {loading ? (
+          <div className="flex-1 flex items-center justify-center text-muted-foreground">{t(i18nKeys.common.loading)}</div>
+        ) : items.length === 0 ? (
+          <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm p-4">{t(i18nKeys.platform.audit.empty)}</div>
+        ) : (
+          <div className="flex-1 overflow-y-auto">
             <table className="w-full caption-bottom text-sm">
-              <thead className="[&_tr]:border-b">
-                <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+              <thead className="sticky top-0 bg-secondary/90 backdrop-blur z-10 [&_tr]:border-b">
+                <tr className="border-b transition-colors">
+                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">
                     {t(i18nKeys.platform.audit.table.timestamp)}
                   </th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
-                    {t(i18nKeys.platform.audit.table.tenant)}
-                  </th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
-                    {t(i18nKeys.platform.audit.table.actor)}
-                  </th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">
                     {t(i18nKeys.platform.audit.table.action)}
                   </th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">
+                    {t(i18nKeys.platform.audit.table.tenant)}
+                  </th>
+                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">
+                    {t(i18nKeys.platform.audit.table.actor)}
+                  </th>
+                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">
                     {t(i18nKeys.platform.audit.table.target)}
                   </th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
-                    {t(i18nKeys.platform.audit.table.ip)}
-                  </th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
-                    {t(i18nKeys.platform.audit.table.details)}
+                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground w-20">
                   </th>
                 </tr>
               </thead>
               <tbody className="[&_tr:last-child]:border-0">
                 {items.map((item) => (
-                  <tr key={item.id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0 whitespace-nowrap">{formatDate(item.timestamp)}</td>
-                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                      {item.tenant ? `${item.tenant.name}` : '-'}
-                      {item.tenant && <span className="block text-xs text-muted-foreground">{item.tenant.slug}</span>}
+                  <tr key={item.id} className="border-b transition-colors hover:bg-muted/50">
+                    <td className="p-3 align-middle whitespace-nowrap tabular-nums text-muted-foreground">
+                      {formatDate(item.timestamp)}
                     </td>
-                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0 max-w-[200px] truncate" title={item.actor?.email || ''}>
-                      {item.actor
-                        ? item.actor.name
-                          ? `${item.actor.name}`
-                          : item.actor.email
-                        : item.actorType}
+                    <td className="p-3 align-middle font-medium">
+                      <span className="inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary/10 text-primary-foreground hover:bg-primary/20 dark:text-primary">
+                        {item.action}
+                      </span>
                     </td>
-                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0 font-medium">{item.action}</td>
-                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                      {item.targetType
-                        ? item.targetId
-                          ? `${item.targetType} (${item.targetId.slice(0, 8)}...)`
-                          : item.targetType
-                        : '-'}
+                    <td className="p-3 align-middle">
+                      {item.tenant ? (
+                        <div className="flex flex-col">
+                          <span className="font-medium text-xs">{item.tenant.name}</span>
+                          {/* <span className="text-[10px] text-muted-foreground">{item.tenant.slug}</span> */}
+                        </div>
+                      ) : (
+                        <span className="text-muted-foreground text-xs">-</span>
+                      )}
                     </td>
-                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">{item.ip ?? '-'}</td>
-                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                    <td className="p-3 align-middle">
+                      <div className="flex items-center gap-2">
+                        <div className="h-6 w-6 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-xs font-bold ring-1 ring-border">
+                          {(item.actor?.name?.[0] || item.actor?.email?.[0] || '?').toUpperCase()}
+                        </div>
+                        <div className="flex flex-col max-w-[150px]">
+                          {item.actor?.name && <span className="text-xs font-medium truncate">{item.actor.name}</span>}
+                          <span className="text-[10px] text-muted-foreground truncate" title={item.actor?.email}>{item.actor?.email || item.actorType}</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="p-3 align-middle text-xs">
+                      {item.targetType ? (
+                        <span className="font-mono bg-muted px-1.5 py-0.5 rounded text-[10px]">{item.targetType}</span>
+                      ) : '-'}
+                    </td>
+                    <td className="p-3 align-middle text-right">
                       <button
                         type="button"
                         onClick={() => setSelectedItem(item)}
@@ -338,34 +353,32 @@ export default function PlatformAuditPage() {
               </tbody>
             </table>
           </div>
-        </div>
-      )}
+        )}
 
-      {totalPages > 1 && (
-        <div className="flex items-center justify-between text-sm py-2">
-          <span className="text-muted-foreground">
-            {t(i18nKeys.common.page)} {page} {t(i18nKeys.common.of)} {totalPages}
-          </span>
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={handlePrevPage}
-              disabled={page <= 1}
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0"
-            >
-              ‹
-            </button>
-            <button
-              type="button"
-              onClick={handleNextPage}
-              disabled={page >= totalPages}
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0"
-            >
-              ›
-            </button>
+        {totalPages > 0 && (
+          <div className="border-t bg-muted/40 p-2 flex items-center justify-between text-xs">
+            <span className="text-muted-foreground pl-2">
+              {t(i18nKeys.common.page)} <strong>{page}</strong> {t(i18nKeys.common.of)} <strong>{totalPages}</strong>
+            </span>
+            <div className="flex gap-1">
+              <button
+                onClick={handlePrevPage}
+                disabled={page <= 1}
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 w-8"
+              >
+                ‹
+              </button>
+              <button
+                onClick={handleNextPage}
+                disabled={page >= totalPages}
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 w-8"
+              >
+                ›
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       {selectedItem && (
         <div
@@ -376,10 +389,13 @@ export default function PlatformAuditPage() {
             className="w-full max-w-lg rounded-lg border bg-card text-card-foreground shadow-lg animate-in fade-in-0 zoom-in-95"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="flex flex-col space-y-1.5 p-6">
+            <div className="flex flex-col space-y-1.5 p-6 border-b">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold leading-none tracking-tight">
-                  {t(i18nKeys.platform.audit.modal.title)} – {selectedItem.action}
+                <h3 className="text-lg font-semibold leading-none tracking-tight flex items-center gap-2">
+                  {selectedItem.action}
+                  <span className="text-xs font-normal text-muted-foreground px-2 py-0.5 bg-muted rounded-full">
+                    {formatDate(selectedItem.timestamp)}
+                  </span>
                 </h3>
                 <button
                   type="button"
@@ -387,26 +403,33 @@ export default function PlatformAuditPage() {
                   className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                 >
                   <span className="text-xl">×</span>
-                  <span className="sr-only">Close</span>
                 </button>
               </div>
-              <p className="text-sm text-muted-foreground">
-                {formatDate(selectedItem.timestamp)} –{' '}
-                {selectedItem.tenant
-                  ? `${selectedItem.tenant.name} (${selectedItem.tenant.slug})`
-                  : '—'}
-              </p>
             </div>
-            <div className="p-6 pt-0">
-              <pre className="rounded-md bg-muted p-4 overflow-auto text-xs font-mono max-h-[60vh]">
-                {safeStringifyMetadata(selectedItem.metadata)}
-              </pre>
+            <div className="p-0">
+              <div className="grid grid-cols-2 gap-4 p-6 bg-muted/20 border-b text-sm">
+                <div>
+                  <span className="text-xs text-muted-foreground block mb-1">{t(i18nKeys.platform.audit.table.actor)}</span>
+                  <div className="font-medium">{selectedItem.actor?.name || selectedItem.actor?.email || t(i18nKeys.platform.audit.system)}</div>
+                  <div className="text-xs text-muted-foreground">{selectedItem.actor?.email}</div>
+                  <div className="text-xs text-muted-foreground mt-1">IP: {selectedItem.ip || '-'}</div>
+                </div>
+                <div>
+                  <span className="text-xs text-muted-foreground block mb-1">{t(i18nKeys.platform.audit.table.target)}</span>
+                  <div className="font-medium">{selectedItem.targetType || '-'}</div>
+                  <div className="text-xs text-muted-foreground">{selectedItem.targetId}</div>
+                  <div className="text-xs text-muted-foreground mt-1">{t(i18nKeys.platform.audit.table.tenant)}: {selectedItem.tenant?.name}</div>
+                </div>
+              </div>
+              <div className="p-4 bg-slate-950 text-slate-50 overflow-auto max-h-[300px] text-xs font-mono">
+                <pre>{safeStringifyMetadata(selectedItem.metadata)}</pre>
+              </div>
             </div>
-            <div className="flex items-center p-6 pt-0 justify-end">
+            <div className="flex items-center p-4 justify-end border-t bg-muted/20">
               <button
                 type="button"
                 onClick={() => setSelectedItem(null)}
-                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
               >
                 {t(i18nKeys.platform.audit.modal.close)}
               </button>

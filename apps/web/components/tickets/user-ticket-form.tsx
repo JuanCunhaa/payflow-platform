@@ -83,20 +83,20 @@ export function UserTicketForm() {
                 <div className="space-y-2">
                     <Label htmlFor="type">{tTickets.create?.type || 'Type'}</Label>
                     <select id="type" {...register('type')} className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
-                        <option value="GENERAL">General</option>
-                        <option value="FINANCIAL">Financial</option>
-                        <option value="ACADEMIC">Academic</option>
-                        <option value="TECHNICAL">Technical</option>
-                        <option value="OTHER">Other</option>
+                        <option value="GENERAL">{tTickets.type?.GENERAL || 'General'}</option>
+                        <option value="FINANCIAL">{tTickets.type?.FINANCIAL || 'Financial'}</option>
+                        <option value="ACADEMIC">{tTickets.type?.ACADEMIC || 'Academic'}</option>
+                        <option value="TECHNICAL">{tTickets.type?.TECHNICAL || 'Technical'}</option>
+                        <option value="OTHER">{tTickets.type?.OTHER || 'Other'}</option>
                     </select>
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="priority">{tTickets.create?.priority || 'Priority'}</Label>
                     <select id="priority" {...register('priority')} className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm">
-                        <option value="LOW">Low</option>
-                        <option value="MEDIUM">Medium</option>
-                        <option value="HIGH">High</option>
-                        <option value="URGENT">Urgent</option>
+                        <option value="LOW">{tTickets.priority?.LOW || 'Low'}</option>
+                        <option value="MEDIUM">{tTickets.priority?.MEDIUM || 'Medium'}</option>
+                        <option value="HIGH">{tTickets.priority?.HIGH || 'High'}</option>
+                        <option value="URGENT">{tTickets.priority?.URGENT || 'Urgent'}</option>
                     </select>
                 </div>
             </div>

@@ -222,8 +222,8 @@ export default function PlatformTenantsPage() {
   }
 
   return (
-    <section className="space-y-6">
-      <div className="flex items-center justify-between">
+    <section className="flex flex-col h-[calc(100vh-10rem)] gap-4">
+      <div className="flex items-center justify-between pb-2">
         <h1 className="text-2xl font-bold tracking-tight">{t(i18nKeys.platform.tenants.title)}</h1>
 
         <div className="flex items-center gap-2">
@@ -251,7 +251,7 @@ export default function PlatformTenantsPage() {
       {formVisible && (
         <form
           onSubmit={handleSubmit}
-          className="bg-card text-card-foreground rounded-xl border shadow p-6 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+          className="bg-card text-card-foreground rounded-xl border shadow p-6 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-4 animate-in fade-in slide-in-from-top-4"
         >
           <div className="col-span-full">
             <h2 className="text-lg font-semibold">
@@ -381,32 +381,32 @@ export default function PlatformTenantsPage() {
         </div>
       )}
 
-      {loading ? (
-        <div className="flex justify-center p-8 text-muted-foreground">{t(i18nKeys.common.loading)}</div>
-      ) : tenants.length === 0 ? (
-        <p className="text-muted-foreground text-sm">{t(i18nKeys.platform.tenants.empty)}</p>
-      ) : (
-        <div className="rounded-md border bg-card text-card-foreground">
-          <div className="relative w-full overflow-auto">
+      <div className="flex-1 overflow-hidden rounded-md border bg-card text-card-foreground shadow-sm flex flex-col">
+        {loading ? (
+          <div className="flex-1 flex items-center justify-center text-muted-foreground">{t(i18nKeys.common.loading)}</div>
+        ) : tenants.length === 0 ? (
+          <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm p-4">{t(i18nKeys.platform.tenants.empty)}</div>
+        ) : (
+          <div className="flex-1 overflow-y-auto">
             <table className="w-full caption-bottom text-sm">
-              <thead className="[&_tr]:border-b">
-                <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+              <thead className="sticky top-0 bg-secondary/90 backdrop-blur z-10 [&_tr]:border-b">
+                <tr className="border-b transition-colors">
+                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">
                     {t(i18nKeys.platform.tenants.table.name)}
                   </th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">
                     {t(i18nKeys.platform.tenants.table.slug)}
                   </th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">
                     {t(i18nKeys.platform.tenants.table.schoolCode)}
                   </th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">
                     {t(i18nKeys.platform.tenants.table.status)}
                   </th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">
                     {t(i18nKeys.platform.tenants.table.createdAt)}
                   </th>
-                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">
                     {t(i18nKeys.platform.tenants.table.actions)}
                   </th>
                 </tr>
@@ -414,11 +414,11 @@ export default function PlatformTenantsPage() {
               <tbody className="[&_tr:last-child]:border-0">
                 {tenants.map((tenant) => (
                   <tr key={tenant.id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">{tenant.name}</td>
-                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">{tenant.slug}</td>
-                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">{tenant.schoolCode}</td>
-                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
-                      <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset ${tenant.status === 'ACTIVE'
+                    <td className="p-3 align-middle font-medium">{tenant.name}</td>
+                    <td className="p-3 align-middle">{tenant.slug}</td>
+                    <td className="p-3 align-middle font-mono text-xs">{tenant.schoolCode}</td>
+                    <td className="p-3 align-middle">
+                      <span className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ring-inset ${tenant.status === 'ACTIVE'
                         ? 'bg-green-50 text-green-700 ring-green-600/20 dark:bg-green-900/30 dark:text-green-400 dark:ring-green-900/50'
                         : tenant.status === 'SUSPENDED'
                           ? 'bg-red-50 text-red-700 ring-red-600/20 dark:bg-red-900/30 dark:text-red-400 dark:ring-red-900/50'
@@ -427,8 +427,8 @@ export default function PlatformTenantsPage() {
                         {statusLabel(tenant.status)}
                       </span>
                     </td>
-                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">{formatDate(tenant.createdAt)}</td>
-                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                    <td className="p-3 align-middle text-muted-foreground text-xs">{formatDate(tenant.createdAt)}</td>
+                    <td className="p-3 align-middle">
                       <div className="flex gap-2 flex-wrap">
                         <button
                           type="button"
@@ -464,8 +464,8 @@ export default function PlatformTenantsPage() {
               </tbody>
             </table>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </section>
   );
 }

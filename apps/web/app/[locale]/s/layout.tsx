@@ -23,6 +23,7 @@ import {
   LifeBuoy,
 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Footer } from '@/components/footer';
 
 type Crumb = {
   label: string;
@@ -209,6 +210,7 @@ export default function SchoolLayout({ children }: { children: React.ReactNode }
         <main className="flex-1 p-6 md:p-8 max-w-7xl mx-auto w-full">
           {children}
         </main>
+        <Footer />
       </div>
     </div>
   );

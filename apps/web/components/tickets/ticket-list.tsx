@@ -50,13 +50,13 @@ export function TicketList({ adminView }: { adminView?: boolean }) {
                                         <h4 className="font-semibold">{ticket.subject}</h4>
                                         <p className="text-sm text-muted-foreground">
                                             #{ticket.id.slice(0, 8)} • {new Date(ticket.createdAt).toLocaleDateString()}
-                                            {ticket.createdBy && ` • By ${ticket.createdBy.name || ticket.createdBy.email}`}
+                                            {ticket.createdBy && ` • ${tTickets.list?.by || 'By'} ${ticket.createdBy.name || ticket.createdBy.email}`}
                                         </p>
                                     </div>
                                     <span className={`px-2 py-1 rounded text-xs font-medium ${ticket.status === 'OPEN' ? 'bg-green-100 text-green-800' :
-                                            ticket.status === 'CLOSED' ? 'bg-gray-100 text-gray-800' :
-                                                ticket.status === 'IN_PROGRESS' ? 'bg-blue-100 text-blue-800' :
-                                                    'bg-gray-100 text-gray-800'
+                                        ticket.status === 'CLOSED' ? 'bg-gray-100 text-gray-800' :
+                                            ticket.status === 'IN_PROGRESS' ? 'bg-blue-100 text-blue-800' :
+                                                'bg-gray-100 text-gray-800'
                                         }`}>
                                         {tTickets.status?.[ticket.status] || ticket.status}
                                     </span>

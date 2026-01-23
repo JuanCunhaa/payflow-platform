@@ -12,6 +12,7 @@ import { ModeToggle } from '@/components/mode-toggle';
 import { Button } from '@/components/ui/button';
 import { BookOpen, LayoutDashboard, LogOut, Receipt, UserCircle, LifeBuoy } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Footer } from '@/components/footer';
 
 type NavItem = {
   href: string;
@@ -118,6 +119,7 @@ export default function GuardianLayout({ children }: { children: React.ReactNode
         <main className="flex-1 p-6 md:p-8 max-w-7xl mx-auto w-full">
           {children}
         </main>
+        <Footer />
       </div>
     </div>
   );

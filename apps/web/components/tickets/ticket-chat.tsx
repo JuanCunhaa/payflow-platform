@@ -55,14 +55,14 @@ export function TicketChat({ ticketId }: { ticketId: string }) {
     };
 
     const closeTicket = async () => {
-        if (!confirm('Are you sure you want to close this ticket?')) return;
+        if (!confirm(tTickets.chat?.confirmClose || 'Are you sure you want to close this ticket?')) return;
         await apiFetch(`/tickets/${ticketId}/close`, { method: 'PATCH' });
         loadTicket();
     };
 
     // Escalate logic
     const escalateTicket = async () => {
-        if (!confirm('Escalate to Platform Admin?')) return;
+        if (!confirm(tTickets.chat?.confirmEscalate || 'Escalate to Platform Admin?')) return;
         setSending(true);
         try {
             await apiFetch(`/tickets/${ticketId}/escalate`, { method: 'PATCH' });
@@ -80,12 +80,12 @@ export function TicketChat({ ticketId }: { ticketId: string }) {
                     <h3 className="font-semibold">{ticket.subject}</h3>
                     <div className="flex gap-2 items-center mt-1">
                         <span className={`text-xs px-2 py-0.5 rounded ${ticket.status === 'OPEN' ? 'bg-green-100 text-green-800' :
-                                ticket.status === 'CLOSED' ? 'bg-gray-100 text-gray-800' :
-                                    'bg-blue-100 text-blue-800'
+                            ticket.status === 'CLOSED' ? 'bg-gray-100 text-gray-800' :
+                                'bg-blue-100 text-blue-800'
                             }`}>
                             {tTickets.status?.[ticket.status] || ticket.status}
                         </span>
-                        {ticket.escalatedToPid && <span className="text-xs bg-red-100 text-red-800 px-1 rounded">Escalated</span>}
+                        {ticket.escalatedToPid && <span className="text-xs bg-red-100 text-red-800 px-1 rounded">{tTickets.chat?.escalatedLabel || 'Escalated'}</span>}
                     </div>
                 </div>
                 <div className="flex gap-2">
