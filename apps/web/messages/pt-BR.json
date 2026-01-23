@@ -4,6 +4,12 @@
     "login": "Login",
     "logout": "Sair"
   },
+  "footer": {
+    "copyright": "Todos os direitos reservados.",
+    "terms": "Termos",
+    "privacy": "Privacidade",
+    "support": "Suporte"
+  },
   "landing": {
     "title": "PayFlow",
     "subtitle": "Gestão financeira para escolas e responsáveis",
@@ -170,7 +176,8 @@
       "dashboard": "Resumo",
       "profile": "Meu perfil",
       "students": "Alunos",
-      "invoices": "Cobranças"
+      "invoices": "Cobranças",
+      "tickets": "Chamados"
     },
     "invoicesUi": {
       "filters": {
@@ -349,7 +356,8 @@
         "createTitle": "Criar nova escola",
         "editTitle": "Editar escola",
         "submitCreate": "Nova escola",
-        "submitEdit": "Salvar alterações"
+        "submitEdit": "Salvar alterações",
+        "initialPasswordGenerated": "Senha inicial gerada:"
       },
       "empty": "Nenhuma escola encontrada para o filtro atual.",
       "errorGeneric": "Não foi possível carregar ou atualizar as escolas.",
@@ -663,6 +671,71 @@
         "title": "Aprovação de responsáveis",
         "description": "Revise e aprove novas contas de responsáveis que aguardam validação (em breve)."
       }
+    }
+  },
+  "legal": {
+    "terms": {
+      "title": "Termos de Uso",
+      "content": "Conteúdo dos termos..."
+    },
+    "privacy": {
+      "title": "Política de Privacidade",
+      "content": "Conteúdo da política..."
+    }
+  },
+  "support": {
+    "title": "Central de Suporte",
+    "description": "Como podemos ajudar você hoje?",
+    "guestForm": {
+      "name": "Nome",
+      "email": "Email",
+      "subject": "Assunto",
+      "message": "Mensagem",
+      "submit": "Enviar solicitação",
+      "success": "Solicitação criada! Entraremos em contato por email."
+    }
+  },
+  "tickets": {
+    "status": {
+      "OPEN": "Aberto",
+      "IN_PROGRESS": "Em Andamento",
+      "RESOLVED": "Resolvido",
+      "CLOSED": "Fechado",
+      "CANCELED": "Cancelado"
+    },
+    "priority": {
+      "LOW": "Baixa",
+      "MEDIUM": "Média",
+      "HIGH": "Alta",
+      "URGENT": "Urgente"
+    },
+    "type": {
+      "GENERAL": "Geral",
+      "FINANCIAL": "Financeiro",
+      "ACADEMIC": "Acadêmico",
+      "TECHNICAL": "Técnico",
+      "OTHER": "Outro"
+    },
+    "list": {
+      "title": "Meus Chamados",
+      "create": "Novo Chamado",
+      "empty": "Nenhum chamado encontrado."
+    },
+    "chat": {
+      "placeholder": "Digite sua mensagem...",
+      "send": "Enviar",
+      "escalate": "Escalar para Plataforma",
+      "close": "Fechar Chamado"
+    },
+    "create": {
+      "title": "Abrir Novo Chamado",
+      "subject": "Assunto",
+      "type": "Tópico",
+      "priority": "Prioridade",
+      "message": "Mensagem Inicial",
+      "submit": "Criar Chamado",
+      "cancel": "Cancelar",
+      "errorOneOpen": "Você já possui um chamado aberto. Por favor, aguarde a resolução antes de abrir outro."
     }
   }
 }

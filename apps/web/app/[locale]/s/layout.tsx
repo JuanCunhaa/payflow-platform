@@ -20,6 +20,7 @@ import {
   Settings,
   UserCheck,
   Users,
+  LifeBuoy,
 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -85,6 +86,10 @@ function buildBreadcrumbs(pathname: string, basePath: string, t: (key: string) =
         label: t(i18nKeys.school.breadcrumbs.approvalsGuardians),
       });
     }
+  } else if (first === 'tickets') {
+    crumbs.push({
+      label: t(i18nKeys.school.nav.tickets),
+    });
   }
 
   return crumbs;
@@ -121,6 +126,7 @@ export default function SchoolLayout({ children }: { children: React.ReactNode }
     { href: `${basePath}/students`, label: t(i18nKeys.school.nav.students), icon: Users },
     { href: `${basePath}/contracts`, label: t(i18nKeys.school.nav.contracts), icon: FileText },
     { href: `${basePath}/invoices`, label: t(i18nKeys.school.nav.invoices), icon: Receipt },
+    { href: `${basePath}/tickets`, label: t(i18nKeys.school.nav.tickets), icon: LifeBuoy },
     { href: `${basePath}/guardians`, label: t(i18nKeys.school.nav.guardians), icon: UserCheck },
     { href: `${basePath}/approvals/guardians`, label: t(i18nKeys.school.nav.approvalsGuardians), icon: CheckSquare },
     { href: `${basePath}/settings`, label: t(i18nKeys.school.nav.settings), icon: Settings },

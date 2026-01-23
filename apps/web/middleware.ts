@@ -36,13 +36,17 @@ export function middleware(request: NextRequest) {
     return maybeValidateTenant(request);
   }
 
-  // Redirect to default locale if no locale in pathname
+  // Check for NEXT_LOCALE cookie
+  const localeCookie = request.cookies.get('NEXT_LOCALE')?.value;
+  const preferredLocale = locales.includes(localeCookie as any) ? localeCookie : defaultLocale;
+
+  // Redirect to preferred locale if no locale in pathname
   if (pathname === '/' || !pathname.startsWith('/')) {
-    return NextResponse.redirect(new URL(`/${defaultLocale}${pathname}`, request.url));
+    return NextResponse.redirect(new URL(`/${preferredLocale}${pathname}`, request.url));
   }
 
-  // If pathname doesn't have locale, redirect to default locale
-  return NextResponse.redirect(new URL(`/${defaultLocale}${pathname}`, request.url));
+  // If pathname doesn't have locale, redirect to preferred locale
+  return NextResponse.redirect(new URL(`/${preferredLocale}${pathname}`, request.url));
 }
 
 async function maybeValidateTenant(request: NextRequest) {
@@ -97,7 +101,7 @@ async function maybeValidateTenant(request: NextRequest) {
       try {
         const data = await res.json();
         code = data?.code || '';
-      } catch {}
+      } catch { }
       if (code === 'tenant_not_found') {
         const url = request.nextUrl.clone();
         // Preserve current locale if present; otherwise use default

@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { TenantController } from './tenant/tenant.controller';
 import { HealthController } from './health/health.controller';
 import { AuthModule } from './auth/auth.module';
+import { TicketsModule } from './modules/tickets/tickets.module';
 import { PublicController } from './public/public.controller';
 import { WebhooksController } from './webhooks/webhooks.controller';
 import { PlatformLeadsController } from './platform/platform-leads.controller';
@@ -51,6 +52,7 @@ import { SchoolReportsController } from './school/reports.controller';
     ]),
     // Authentication module
     AuthModule,
+    TicketsModule,
   ],
   controllers: [
     AppController,

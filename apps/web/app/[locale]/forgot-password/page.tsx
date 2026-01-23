@@ -8,9 +8,10 @@ import { getApiBase } from '../../api-base';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { AlertCircle, ArrowLeft, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
+import { AuthLayout } from '@/components/auth-layout';
 
 export default function ForgotPasswordPage() {
   const { t, locale } = useI18n();
@@ -82,15 +83,12 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold">{t(i18nKeys.passwordReset.forgot.title)}</CardTitle>
-          <CardDescription>
-            {t(i18nKeys.passwordReset.forgot.description)}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+    <AuthLayout
+      title={t(i18nKeys.passwordReset.forgot.title)}
+      description={t(i18nKeys.passwordReset.forgot.description)}
+    >
+      <Card>
+        <CardContent className="pt-6">
           {success ? (
             <div className="flex flex-col items-center gap-4 py-4 text-center">
               <div className="rounded-full bg-green-100 p-3 text-green-600">
@@ -136,6 +134,6 @@ export default function ForgotPasswordPage() {
           </Link>
         </CardFooter>
       </Card>
-    </div>
+    </AuthLayout>
   );
 }

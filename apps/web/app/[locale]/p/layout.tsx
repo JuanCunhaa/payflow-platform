@@ -7,8 +7,9 @@ import { useAuth } from '../../auth-context';
 import { useI18n } from '../../i18n-context';
 import { MobileSidebar, Sidebar } from '@/components/sidebar';
 import { ModeToggle } from '@/components/mode-toggle';
+import { LanguageToggle } from '@/components/language-toggle';
 import { Button } from '@/components/ui/button';
-import { Activity, Building, LayoutDashboard, LogOut, Megaphone } from 'lucide-react';
+import { Activity, Building, LayoutDashboard, LogOut, Megaphone, LifeBuoy } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function PlatformLayout({ children }: { children: React.ReactNode }) {
@@ -30,6 +31,7 @@ export default function PlatformLayout({ children }: { children: React.ReactNode
     { href: basePath, label: t(i18nKeys.platform.nav.dashboard), icon: LayoutDashboard },
     { href: `${basePath}/tenants`, label: t(i18nKeys.platform.nav.tenants), icon: Building },
     { href: `${basePath}/leads`, label: t(i18nKeys.platform.nav.leads), icon: Megaphone },
+    { href: `${basePath}/tickets`, label: t(i18nKeys.platform.nav.tickets), icon: LifeBuoy },
     { href: `${basePath}/audit`, label: t(i18nKeys.platform.nav.audit), icon: Activity },
   ];
 
@@ -57,6 +59,7 @@ export default function PlatformLayout({ children }: { children: React.ReactNode
           </div>
 
           <div className="flex items-center gap-4">
+            <LanguageToggle />
             <ModeToggle />
             <Button size="sm" variant="ghost" className="text-destructive hover:text-destructive hover:bg-destructive/10" onClick={logout}>
               <LogOut className="h-4 w-4 mr-2" />

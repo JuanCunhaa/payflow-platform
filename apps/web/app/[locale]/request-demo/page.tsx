@@ -7,8 +7,9 @@ import { getApiBase } from '../../api-base';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { AlertCircle, CheckCircle2 } from 'lucide-react';
+import { AuthLayout } from '@/components/auth-layout';
 
 export default function RequestDemoPage() {
   const { t } = useI18n();
@@ -101,15 +102,12 @@ export default function RequestDemoPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4 py-8">
-      <Card className="w-full max-w-lg">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold">{t(i18nKeys.requestDemo.title)}</CardTitle>
-          <CardDescription>
-            {t(i18nKeys.requestDemo.description)}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+    <AuthLayout
+      title={t(i18nKeys.requestDemo.title)}
+      description={t(i18nKeys.requestDemo.description)}
+    >
+      <Card>
+        <CardContent className="pt-6">
           {success ? (
             <div className="flex flex-col items-center gap-4 py-4 text-center">
               <div className="rounded-full bg-green-100 p-3 text-green-600">
@@ -178,6 +176,6 @@ export default function RequestDemoPage() {
           )}
         </CardContent>
       </Card>
-    </div>
+    </AuthLayout>
   );
 }

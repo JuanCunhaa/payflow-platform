@@ -168,45 +168,19 @@ export default function PlatformAuditPage() {
   }
 
   return (
-    <section>
-      <h1
-        style={{
-          fontSize: '20px',
-          marginBottom: '12px',
-        }}
-      >
-        {t(i18nKeys.platform.audit.title)}
-      </h1>
+    <section className="space-y-6">
+      <h1 className="text-2xl font-bold tracking-tight">{t(i18nKeys.platform.audit.title)}</h1>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-          gap: '12px',
-          marginBottom: '16px',
-          padding: '12px',
-          borderRadius: '12px',
-          border: '1px solid #e2e8f0',
-          backgroundColor: '#ffffff',
-        }}
-      >
-        <div>
-          <label
-            htmlFor="audit-tenant"
-            style={{ display: 'block', fontSize: '13px', marginBottom: '4px' }}
-          >
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4 rounded-xl border bg-card text-card-foreground shadow">
+        <div className="space-y-2">
+          <label htmlFor="audit-tenant" className="text-sm font-medium leading-none">
             {t(i18nKeys.platform.audit.filters.tenant)}
           </label>
           <select
             id="audit-tenant"
             value={tenantId}
             onChange={(event) => setTenantId(event.target.value)}
-            style={{
-              width: '100%',
-              padding: '6px 8px',
-              borderRadius: '6px',
-              border: '1px solid #cbd5f5',
-            }}
+            className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           >
             <option value="">{t(i18nKeys.common.all)}</option>
             {tenants.map((tenant) => (
@@ -217,11 +191,8 @@ export default function PlatformAuditPage() {
           </select>
         </div>
 
-        <div>
-          <label
-            htmlFor="audit-action"
-            style={{ display: 'block', fontSize: '13px', marginBottom: '4px' }}
-          >
+        <div className="space-y-2">
+          <label htmlFor="audit-action" className="text-sm font-medium leading-none">
             {t(i18nKeys.platform.audit.filters.action)}
           </label>
           <input
@@ -229,20 +200,12 @@ export default function PlatformAuditPage() {
             type="text"
             value={actionFilter}
             onChange={(event) => setActionFilter(event.target.value)}
-            style={{
-              width: '100%',
-              padding: '6px 8px',
-              borderRadius: '6px',
-              border: '1px solid #cbd5f5',
-            }}
+            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
           />
         </div>
 
-        <div>
-          <label
-            htmlFor="audit-actorEmail"
-            style={{ display: 'block', fontSize: '13px', marginBottom: '4px' }}
-          >
+        <div className="space-y-2">
+          <label htmlFor="audit-actorEmail" className="text-sm font-medium leading-none">
             {t(i18nKeys.platform.audit.filters.actorEmail)}
           </label>
           <input
@@ -250,20 +213,12 @@ export default function PlatformAuditPage() {
             type="email"
             value={actorEmail}
             onChange={(event) => setActorEmail(event.target.value)}
-            style={{
-              width: '100%',
-              padding: '6px 8px',
-              borderRadius: '6px',
-              border: '1px solid #cbd5f5',
-            }}
+            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
           />
         </div>
 
-        <div>
-          <label
-            htmlFor="audit-from"
-            style={{ display: 'block', fontSize: '13px', marginBottom: '4px' }}
-          >
+        <div className="space-y-2">
+          <label htmlFor="audit-from" className="text-sm font-medium leading-none">
             {t(i18nKeys.platform.audit.filters.from)}
           </label>
           <input
@@ -271,20 +226,12 @@ export default function PlatformAuditPage() {
             type="date"
             value={fromDate}
             onChange={(event) => setFromDate(event.target.value)}
-            style={{
-              width: '100%',
-              padding: '6px 8px',
-              borderRadius: '6px',
-              border: '1px solid #cbd5f5',
-            }}
+            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
           />
         </div>
 
-        <div>
-          <label
-            htmlFor="audit-to"
-            style={{ display: 'block', fontSize: '13px', marginBottom: '4px' }}
-          >
+        <div className="space-y-2">
+          <label htmlFor="audit-to" className="text-sm font-medium leading-none">
             {t(i18nKeys.platform.audit.filters.to)}
           </label>
           <input
@@ -292,48 +239,22 @@ export default function PlatformAuditPage() {
             type="date"
             value={toDate}
             onChange={(event) => setToDate(event.target.value)}
-            style={{
-              width: '100%',
-              padding: '6px 8px',
-              borderRadius: '6px',
-              border: '1px solid #cbd5f5',
-            }}
+            className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
           />
         </div>
 
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'flex-end',
-            gap: '8px',
-          }}
-        >
+        <div className="flex items-end gap-2 col-span-1 sm:col-span-2 lg:col-span-1 xl:col-span-3 justify-end">
           <button
             type="button"
             onClick={applyFilters}
-            style={{
-              padding: '8px 12px',
-              fontSize: '14px',
-              borderRadius: '999px',
-              border: 'none',
-              backgroundColor: '#2563eb',
-              color: '#ffffff',
-              cursor: 'pointer',
-            }}
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2"
           >
             {t(i18nKeys.platform.audit.filters.apply)}
           </button>
           <button
             type="button"
             onClick={clearFilters}
-            style={{
-              padding: '8px 12px',
-              fontSize: '14px',
-              borderRadius: '999px',
-              border: '1px solid #e5e7eb',
-              backgroundColor: '#ffffff',
-              cursor: 'pointer',
-            }}
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
           >
             {t(i18nKeys.platform.audit.filters.clear)}
           </button>
@@ -341,137 +262,96 @@ export default function PlatformAuditPage() {
       </div>
 
       {error && (
-        <div
-          style={{
-            marginBottom: '12px',
-            padding: '10px',
-            borderRadius: '8px',
-            border: '1px solid #fecaca',
-            backgroundColor: '#fef2f2',
-            color: '#b91c1c',
-            fontSize: '13px',
-          }}
-        >
+        <div className="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-sm text-destructive font-medium">
           {error}
         </div>
       )}
 
       {loading ? (
-        <p>{t(i18nKeys.common.loading)}</p>
+        <div className="flex justify-center p-8 text-muted-foreground">{t(i18nKeys.common.loading)}</div>
       ) : items.length === 0 ? (
-        <p style={{ fontSize: '14px', color: '#6b7280' }}>{t(i18nKeys.platform.audit.empty)}</p>
+        <p className="text-muted-foreground text-sm">{t(i18nKeys.platform.audit.empty)}</p>
       ) : (
-        <div
-          style={{
-            borderRadius: '8px',
-            border: '1px solid #e2e8f0',
-            overflowX: 'auto',
-            backgroundColor: '#ffffff',
-            marginBottom: '12px',
-          }}
-        >
-          <table
-            style={{
-              width: '100%',
-              borderCollapse: 'collapse',
-              fontSize: '14px',
-            }}
-          >
-            <thead style={{ backgroundColor: '#f9fafb' }}>
-              <tr>
-                <th style={{ textAlign: 'left', padding: '8px 12px' }}>
-                  {t(i18nKeys.platform.audit.table.timestamp)}
-                </th>
-                <th style={{ textAlign: 'left', padding: '8px 12px' }}>
-                  {t(i18nKeys.platform.audit.table.tenant)}
-                </th>
-                <th style={{ textAlign: 'left', padding: '8px 12px' }}>
-                  {t(i18nKeys.platform.audit.table.actor)}
-                </th>
-                <th style={{ textAlign: 'left', padding: '8px 12px' }}>
-                  {t(i18nKeys.platform.audit.table.action)}
-                </th>
-                <th style={{ textAlign: 'left', padding: '8px 12px' }}>
-                  {t(i18nKeys.platform.audit.table.target)}
-                </th>
-                <th style={{ textAlign: 'left', padding: '8px 12px' }}>
-                  {t(i18nKeys.platform.audit.table.ip)}
-                </th>
-                <th style={{ textAlign: 'left', padding: '8px 12px' }}>
-                  {t(i18nKeys.platform.audit.table.details)}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((item) => (
-                <tr key={item.id} style={{ borderTop: '1px solid #e5e7eb' }}>
-                  <td style={{ padding: '8px 12px' }}>{formatDate(item.timestamp)}</td>
-                  <td style={{ padding: '8px 12px' }}>
-                    {item.tenant ? `${item.tenant.name} (${item.tenant.slug})` : '-'}
-                  </td>
-                  <td style={{ padding: '8px 12px' }}>
-                    {item.actor
-                      ? item.actor.name
-                        ? `${item.actor.name} <${item.actor.email}>`
-                        : item.actor.email
-                      : item.actorType}
-                  </td>
-                  <td style={{ padding: '8px 12px' }}>{item.action}</td>
-                  <td style={{ padding: '8px 12px' }}>
-                    {item.targetType
-                      ? item.targetId
-                        ? `${item.targetType} (${item.targetId})`
-                        : item.targetType
-                      : '-'}
-                  </td>
-                  <td style={{ padding: '8px 12px' }}>{item.ip ?? '-'}</td>
-                  <td style={{ padding: '8px 12px' }}>
-                    <button
-                      type="button"
-                      onClick={() => setSelectedItem(item)}
-                      style={{
-                        padding: '4px 8px',
-                        fontSize: '12px',
-                        borderRadius: '999px',
-                        border: '1px solid #e5e7eb',
-                        backgroundColor: '#f9fafb',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      {t(i18nKeys.platform.audit.table.details)}
-                    </button>
-                  </td>
+        <div className="rounded-md border bg-card text-card-foreground">
+          <div className="relative w-full overflow-auto">
+            <table className="w-full caption-bottom text-sm">
+              <thead className="[&_tr]:border-b">
+                <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                    {t(i18nKeys.platform.audit.table.timestamp)}
+                  </th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                    {t(i18nKeys.platform.audit.table.tenant)}
+                  </th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                    {t(i18nKeys.platform.audit.table.actor)}
+                  </th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                    {t(i18nKeys.platform.audit.table.action)}
+                  </th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                    {t(i18nKeys.platform.audit.table.target)}
+                  </th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                    {t(i18nKeys.platform.audit.table.ip)}
+                  </th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                    {t(i18nKeys.platform.audit.table.details)}
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="[&_tr:last-child]:border-0">
+                {items.map((item) => (
+                  <tr key={item.id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0 whitespace-nowrap">{formatDate(item.timestamp)}</td>
+                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                      {item.tenant ? `${item.tenant.name}` : '-'}
+                      {item.tenant && <span className="block text-xs text-muted-foreground">{item.tenant.slug}</span>}
+                    </td>
+                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0 max-w-[200px] truncate" title={item.actor?.email || ''}>
+                      {item.actor
+                        ? item.actor.name
+                          ? `${item.actor.name}`
+                          : item.actor.email
+                        : item.actorType}
+                    </td>
+                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0 font-medium">{item.action}</td>
+                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                      {item.targetType
+                        ? item.targetId
+                          ? `${item.targetType} (${item.targetId.slice(0, 8)}...)`
+                          : item.targetType
+                        : '-'}
+                    </td>
+                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">{item.ip ?? '-'}</td>
+                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                      <button
+                        type="button"
+                        onClick={() => setSelectedItem(item)}
+                        className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-7 px-3"
+                      >
+                        {t(i18nKeys.platform.audit.table.details)}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 
       {totalPages > 1 && (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            fontSize: '13px',
-          }}
-        >
-          <span>
+        <div className="flex items-center justify-between text-sm py-2">
+          <span className="text-muted-foreground">
             {t(i18nKeys.common.page)} {page} {t(i18nKeys.common.of)} {totalPages}
           </span>
-          <div style={{ display: 'flex', gap: '8px' }}>
+          <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={handlePrevPage}
               disabled={page <= 1}
-              style={{
-                padding: '6px 10px',
-                borderRadius: '999px',
-                border: '1px solid #e5e7eb',
-                backgroundColor: '#ffffff',
-                cursor: page <= 1 ? 'not-allowed' : 'pointer',
-              }}
+              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0"
             >
               ‹
             </button>
@@ -479,13 +359,7 @@ export default function PlatformAuditPage() {
               type="button"
               onClick={handleNextPage}
               disabled={page >= totalPages}
-              style={{
-                padding: '6px 10px',
-                borderRadius: '999px',
-                border: '1px solid #e5e7eb',
-                backgroundColor: '#ffffff',
-                cursor: page >= totalPages ? 'not-allowed' : 'pointer',
-              }}
+              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0"
             >
               ›
             </button>
@@ -495,97 +369,44 @@ export default function PlatformAuditPage() {
 
       {selectedItem && (
         <div
-          style={{
-            position: 'fixed',
-            inset: 0,
-            backgroundColor: 'rgba(15,23,42,0.4)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: 50,
-          }}
+          className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm flex items-center justify-center p-4"
           onClick={() => setSelectedItem(null)}
         >
           <div
-            style={{
-              maxWidth: '600px',
-              width: '100%',
-              maxHeight: '80vh',
-              backgroundColor: '#ffffff',
-              borderRadius: '12px',
-              padding: '16px',
-              boxShadow: '0 10px 25px rgba(15, 23, 42, 0.3)',
-              overflow: 'auto',
-            }}
+            className="w-full max-w-lg rounded-lg border bg-card text-card-foreground shadow-lg animate-in fade-in-0 zoom-in-95"
             onClick={(event) => event.stopPropagation()}
           >
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: '8px',
-              }}
-            >
-              <h2
-                style={{
-                  fontSize: '16px',
-                  margin: 0,
-                }}
-              >
-                {t(i18nKeys.platform.audit.modal.title)} – {selectedItem.action}
-              </h2>
-              <button
-                type="button"
-                onClick={() => setSelectedItem(null)}
-                style={{
-                  border: 'none',
-                  background: 'transparent',
-                  cursor: 'pointer',
-                  fontSize: '16px',
-                }}
-              >
-                ×
-              </button>
+            <div className="flex flex-col space-y-1.5 p-6">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold leading-none tracking-tight">
+                  {t(i18nKeys.platform.audit.modal.title)} – {selectedItem.action}
+                </h3>
+                <button
+                  type="button"
+                  onClick={() => setSelectedItem(null)}
+                  className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                >
+                  <span className="text-xl">×</span>
+                  <span className="sr-only">Close</span>
+                </button>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                {formatDate(selectedItem.timestamp)} –{' '}
+                {selectedItem.tenant
+                  ? `${selectedItem.tenant.name} (${selectedItem.tenant.slug})`
+                  : '—'}
+              </p>
             </div>
-
-            <p
-              style={{
-                fontSize: '13px',
-                color: '#6b7280',
-                marginBottom: '8px',
-              }}
-            >
-              {formatDate(selectedItem.timestamp)} –{' '}
-              {selectedItem.tenant
-                ? `${selectedItem.tenant.name} (${selectedItem.tenant.slug})`
-                : '—'}
-            </p>
-
-            <pre
-              style={{
-                fontSize: '12px',
-                backgroundColor: '#0f172a',
-                color: '#e5e7eb',
-                padding: '12px',
-                borderRadius: '8px',
-                overflowX: 'auto',
-              }}
-            >
-              {safeStringifyMetadata(selectedItem.metadata)}
-            </pre>
-
-            <div style={{ marginTop: '8px', textAlign: 'right' }}>
+            <div className="p-6 pt-0">
+              <pre className="rounded-md bg-muted p-4 overflow-auto text-xs font-mono max-h-[60vh]">
+                {safeStringifyMetadata(selectedItem.metadata)}
+              </pre>
+            </div>
+            <div className="flex items-center p-6 pt-0 justify-end">
               <button
                 type="button"
                 onClick={() => setSelectedItem(null)}
-                style={{
-                  padding: '6px 10px',
-                  borderRadius: '999px',
-                  border: '1px solid #e5e7eb',
-                  backgroundColor: '#ffffff',
-                  cursor: 'pointer',
-                }}
+                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
               >
                 {t(i18nKeys.platform.audit.modal.close)}
               </button>

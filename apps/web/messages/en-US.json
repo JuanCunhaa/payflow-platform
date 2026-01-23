@@ -4,6 +4,12 @@
     "login": "Login",
     "logout": "Logout"
   },
+  "footer": {
+    "copyright": "All rights reserved.",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "support": "Support"
+  },
   "landing": {
     "title": "PayFlow",
     "subtitle": "Financial flows made simple for schools and families",
@@ -170,7 +176,8 @@
       "dashboard": "Overview",
       "profile": "My profile",
       "students": "Students",
-      "invoices": "Invoices"
+      "invoices": "Invoices",
+      "tickets": "Tickets"
     },
     "invoicesUi": {
       "filters": {
@@ -294,7 +301,8 @@
         "createTitle": "Create new school",
         "editTitle": "Edit school",
         "submitCreate": "New school",
-        "submitEdit": "Save changes"
+        "submitEdit": "Save changes",
+        "initialPasswordGenerated": "Initial password generated:"
       },
       "empty": "No tenants found for the current filter.",
       "errorGeneric": "Could not load or update tenants.",
@@ -663,6 +671,71 @@
         "title": "Guardian approvals",
         "description": "Review and approve new guardian accounts waiting for validation (coming soon)."
       }
+    }
+  },
+  "legal": {
+    "terms": {
+      "title": "Terms of Service",
+      "content": "Terms content placeholder..."
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "content": "Privacy content placeholder..."
+    }
+  },
+  "support": {
+    "title": "Support Center",
+    "description": "How can we help you today?",
+    "guestForm": {
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Message",
+      "submit": "Send ticket",
+      "success": "Ticket created! We will contact you via email."
+    }
+  },
+  "tickets": {
+    "status": {
+      "OPEN": "Open",
+      "IN_PROGRESS": "In Progress",
+      "RESOLVED": "Resolved",
+      "CLOSED": "Closed",
+      "CANCELED": "Canceled"
+    },
+    "priority": {
+      "LOW": "Low",
+      "MEDIUM": "Medium",
+      "HIGH": "High",
+      "URGENT": "Urgent"
+    },
+    "type": {
+      "GENERAL": "General",
+      "FINANCIAL": "Financial",
+      "ACADEMIC": "Academic",
+      "TECHNICAL": "Technical",
+      "OTHER": "Other"
+    },
+    "list": {
+      "title": "My Tickets",
+      "create": "New Ticket",
+      "empty": "No tickets found."
+    },
+    "chat": {
+      "placeholder": "Type your message...",
+      "send": "Send",
+      "escalate": "Escalate to Platform",
+      "close": "Close Ticket"
+    },
+    "create": {
+      "title": "Open New Ticket",
+      "subject": "Subject",
+      "type": "Topic",
+      "priority": "Priority",
+      "message": "Initial Message",
+      "submit": "Create Ticket",
+      "cancel": "Cancel",
+      "errorOneOpen": "You already have an open ticket. Please resolve it before creating a new one."
     }
   }
 }

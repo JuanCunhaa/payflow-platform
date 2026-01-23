@@ -4,6 +4,12 @@ export const i18nKeys = {
     login: 'nav.login',
     logout: 'nav.logout',
   },
+  footer: {
+    copyright: 'footer.copyright',
+    terms: 'footer.terms',
+    privacy: 'footer.privacy',
+    support: 'footer.support',
+  },
   landing: {
     title: 'landing.title',
     subtitle: 'landing.subtitle',
@@ -171,6 +177,7 @@ export const i18nKeys = {
       profile: 'guardian.nav.profile',
       students: 'guardian.nav.students',
       invoices: 'guardian.nav.invoices',
+      tickets: 'guardian.nav.tickets',
     },
     invoicesUi: {
       filters: {
@@ -234,6 +241,7 @@ export const i18nKeys = {
       tenants: 'platform.nav.tenants',
       leads: 'platform.nav.leads',
       audit: 'platform.nav.audit',
+      tickets: 'platform.nav.tickets',
     },
     tenants: {
       title: 'platform.tenants.title',
@@ -261,6 +269,7 @@ export const i18nKeys = {
         editTitle: 'platform.tenants.form.editTitle',
         submitCreate: 'platform.tenants.form.submitCreate',
         submitEdit: 'platform.tenants.form.submitEdit',
+        initialPasswordGenerated: 'platform.tenants.form.initialPasswordGenerated',
       },
       empty: 'platform.tenants.empty',
       errorGeneric: 'platform.tenants.errorGeneric',
@@ -331,6 +340,7 @@ export const i18nKeys = {
       guardians: 'school.nav.guardians',
       approvalsGuardians: 'school.nav.approvalsGuardians',
       contracts: 'school.nav.contracts',
+      tickets: 'school.nav.tickets',
     },
     breadcrumbs: {
       root: 'school.breadcrumbs.root',
@@ -706,6 +716,71 @@ export const i18nKeys = {
         title: 'school.pages.contracts.title',
         description: 'school.pages.contracts.description',
       },
+    },
+  },
+  legal: {
+    terms: {
+      title: 'legal.terms.title',
+      content: 'legal.terms.content',
+    },
+    privacy: {
+      title: 'legal.privacy.title',
+      content: 'legal.privacy.content',
+    },
+  },
+  support: {
+    title: 'support.title',
+    description: 'support.description',
+    guestForm: {
+      name: 'support.guestForm.name',
+      email: 'support.guestForm.email',
+      subject: 'support.guestForm.subject',
+      message: 'support.guestForm.message',
+      submit: 'support.guestForm.submit',
+      success: 'support.guestForm.success',
+    },
+  },
+  tickets: {
+    status: {
+      OPEN: 'tickets.status.OPEN',
+      IN_PROGRESS: 'tickets.status.IN_PROGRESS',
+      RESOLVED: 'tickets.status.RESOLVED',
+      CLOSED: 'tickets.status.CLOSED',
+      CANCELED: 'tickets.status.CANCELED',
+    },
+    priority: {
+      LOW: 'tickets.priority.LOW',
+      MEDIUM: 'tickets.priority.MEDIUM',
+      HIGH: 'tickets.priority.HIGH',
+      URGENT: 'tickets.priority.URGENT',
+    },
+    type: {
+      GENERAL: 'tickets.type.GENERAL',
+      FINANCIAL: 'tickets.type.FINANCIAL',
+      ACADEMIC: 'tickets.type.ACADEMIC',
+      TECHNICAL: 'tickets.type.TECHNICAL',
+      OTHER: 'tickets.type.OTHER',
+    },
+    list: {
+      title: 'tickets.list.title',
+      create: 'tickets.list.create',
+      empty: 'tickets.list.empty',
+    },
+    chat: {
+      placeholder: 'tickets.chat.placeholder',
+      send: 'tickets.chat.send',
+      escalate: 'tickets.chat.escalate',
+      close: 'tickets.chat.close',
+    },
+    create: {
+      title: 'tickets.create.title',
+      subject: 'tickets.create.subject',
+      type: 'tickets.create.type',
+      priority: 'tickets.create.priority',
+      message: 'tickets.create.message',
+      submit: 'tickets.create.submit',
+      cancel: 'tickets.create.cancel',
+      errorOneOpen: 'tickets.create.errorOneOpen',
     },
   },
 } as const;

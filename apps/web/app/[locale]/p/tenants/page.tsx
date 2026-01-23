@@ -222,34 +222,15 @@ export default function PlatformTenantsPage() {
   }
 
   return (
-    <section>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '16px',
-        }}
-      >
-        <h1
-          style={{
-            fontSize: '20px',
-            marginBottom: 0,
-          }}
-        >
-          {t(i18nKeys.platform.tenants.title)}
-        </h1>
+    <section className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold tracking-tight">{t(i18nKeys.platform.tenants.title)}</h1>
 
-        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+        <div className="flex items-center gap-2">
           <select
             value={statusFilter}
             onChange={(event) => setStatusFilter(event.target.value as StatusFilter)}
-            style={{
-              padding: '6px 10px',
-              borderRadius: '999px',
-              border: '1px solid #cbd5f5',
-              fontSize: '14px',
-            }}
+            className="h-9 rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
           >
             <option value="all">{t(i18nKeys.common.all)}</option>
             <option value="DRAFT">{t(i18nKeys.platform.tenants.status.draft)}</option>
@@ -260,15 +241,7 @@ export default function PlatformTenantsPage() {
           <button
             type="button"
             onClick={openCreateForm}
-            style={{
-              padding: '8px 12px',
-              fontSize: '14px',
-              borderRadius: '999px',
-              border: 'none',
-              backgroundColor: '#2563eb',
-              color: '#ffffff',
-              cursor: 'pointer',
-            }}
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2"
           >
             {t(i18nKeys.platform.tenants.form.submitCreate)}
           </button>
@@ -278,30 +251,18 @@ export default function PlatformTenantsPage() {
       {formVisible && (
         <form
           onSubmit={handleSubmit}
-          style={{
-            marginBottom: '20px',
-            borderRadius: '12px',
-            border: '1px solid #e2e8f0',
-            padding: '16px',
-            backgroundColor: '#ffffff',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: '12px',
-          }}
+          className="bg-card text-card-foreground rounded-xl border shadow p-6 grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
         >
-          <div style={{ gridColumn: '1 / -1' }}>
-            <strong>
+          <div className="col-span-full">
+            <h2 className="text-lg font-semibold">
               {formMode === 'create'
                 ? t(i18nKeys.platform.tenants.form.createTitle)
                 : t(i18nKeys.platform.tenants.form.editTitle)}
-            </strong>
+            </h2>
           </div>
 
-          <div>
-            <label
-              htmlFor="tenant-name"
-              style={{ display: 'block', marginBottom: '4px', fontSize: '13px' }}
-            >
+          <div className="space-y-2">
+            <label htmlFor="tenant-name" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               {t(i18nKeys.platform.tenants.form.name)}
             </label>
             <input
@@ -309,20 +270,12 @@ export default function PlatformTenantsPage() {
               type="text"
               value={name}
               onChange={(event) => setName(event.target.value)}
-              style={{
-                width: '100%',
-                padding: '6px 8px',
-                borderRadius: '6px',
-                border: '1px solid #cbd5f5',
-              }}
+              className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
             />
           </div>
 
-          <div>
-            <label
-              htmlFor="tenant-slug"
-              style={{ display: 'block', marginBottom: '4px', fontSize: '13px' }}
-            >
+          <div className="space-y-2">
+            <label htmlFor="tenant-slug" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               {t(i18nKeys.platform.tenants.form.slug)}
             </label>
             <input
@@ -332,20 +285,12 @@ export default function PlatformTenantsPage() {
               onChange={(event) =>
                 setSlug(event.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '-'))
               }
-              style={{
-                width: '100%',
-                padding: '6px 8px',
-                borderRadius: '6px',
-                border: '1px solid #cbd5f5',
-              }}
+              className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
             />
           </div>
 
-          <div>
-            <label
-              htmlFor="tenant-schoolCode"
-              style={{ display: 'block', marginBottom: '4px', fontSize: '13px' }}
-            >
+          <div className="space-y-2">
+            <label htmlFor="tenant-schoolCode" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
               {t(i18nKeys.platform.tenants.form.schoolCode)}
             </label>
             <input
@@ -353,26 +298,14 @@ export default function PlatformTenantsPage() {
               type="text"
               value={schoolCode}
               onChange={(event) => setSchoolCode(event.target.value)}
-              style={{
-                width: '100%',
-                padding: '6px 8px',
-                borderRadius: '6px',
-                border: '1px solid #cbd5f5',
-              }}
+              className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
             />
           </div>
 
           {formMode === 'create' && (
             <>
-              <div>
-                <label
-                  htmlFor="tenant-adminEmail"
-                  style={{
-                    display: 'block',
-                    marginBottom: '4px',
-                    fontSize: '13px',
-                  }}
-                >
+              <div className="space-y-2">
+                <label htmlFor="tenant-adminEmail" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                   {t(i18nKeys.platform.tenants.form.adminEmail)}
                 </label>
                 <input
@@ -380,24 +313,12 @@ export default function PlatformTenantsPage() {
                   type="email"
                   value={adminEmail}
                   onChange={(event) => setAdminEmail(event.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '6px 8px',
-                    borderRadius: '6px',
-                    border: '1px solid #cbd5f5',
-                  }}
+                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                 />
               </div>
 
-              <div>
-                <label
-                  htmlFor="tenant-adminName"
-                  style={{
-                    display: 'block',
-                    marginBottom: '4px',
-                    fontSize: '13px',
-                  }}
-                >
+              <div className="space-y-2">
+                <label htmlFor="tenant-adminName" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                   {t(i18nKeys.platform.tenants.form.adminName)}
                 </label>
                 <input
@@ -405,24 +326,12 @@ export default function PlatformTenantsPage() {
                   type="text"
                   value={adminName}
                   onChange={(event) => setAdminName(event.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '6px 8px',
-                    borderRadius: '6px',
-                    border: '1px solid #cbd5f5',
-                  }}
+                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                 />
               </div>
 
-              <div>
-                <label
-                  htmlFor="tenant-adminPassword"
-                  style={{
-                    display: 'block',
-                    marginBottom: '4px',
-                    fontSize: '13px',
-                  }}
-                >
+              <div className="space-y-2">
+                <label htmlFor="tenant-adminPassword" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                   {t(i18nKeys.platform.tenants.form.adminPassword)}
                 </label>
                 <input
@@ -430,55 +339,27 @@ export default function PlatformTenantsPage() {
                   type="password"
                   value={adminPassword}
                   onChange={(event) => setAdminPassword(event.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '6px 8px',
-                    borderRadius: '6px',
-                    border: '1px solid #cbd5f5',
-                  }}
+                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                 />
               </div>
             </>
           )}
 
-          <div
-            style={{
-              gridColumn: '1 / -1',
-              display: 'flex',
-              justifyContent: 'flex-end',
-              gap: '8px',
-              marginTop: '8px',
-            }}
-          >
+          <div className="col-span-full flex justify-end gap-2 pt-2">
             <button
               type="button"
               onClick={() => {
                 setFormVisible(false);
                 resetForm();
               }}
-              style={{
-                padding: '8px 12px',
-                fontSize: '14px',
-                borderRadius: '999px',
-                border: '1px solid #e5e7eb',
-                backgroundColor: '#ffffff',
-                cursor: 'pointer',
-              }}
+              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
             >
               {t(i18nKeys.common.cancel)}
             </button>
             <button
               type="submit"
               disabled={formSubmitting}
-              style={{
-                padding: '8px 12px',
-                fontSize: '14px',
-                borderRadius: '999px',
-                border: 'none',
-                backgroundColor: '#2563eb',
-                color: '#ffffff',
-                cursor: formSubmitting ? 'not-allowed' : 'pointer',
-              }}
+              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2"
             >
               {formMode === 'create'
                 ? t(i18nKeys.platform.tenants.form.submitCreate)
@@ -487,150 +368,102 @@ export default function PlatformTenantsPage() {
           </div>
 
           {generatedPassword && (
-            <div
-              style={{
-                gridColumn: '1 / -1',
-                marginTop: '4px',
-                fontSize: '13px',
-                color: '#166534',
-              }}
-            >
-              <strong>Senha inicial gerada:</strong> {generatedPassword}
+            <div className="col-span-full mt-2 text-sm text-green-600 dark:text-green-400 font-medium p-3 bg-green-50 dark:bg-green-900/10 rounded-md border border-green-200 dark:border-green-900">
+              <strong>{t(i18nKeys.platform.tenants.form.initialPasswordGenerated)}</strong> {generatedPassword}
             </div>
           )}
         </form>
       )}
 
       {error && (
-        <div
-          style={{
-            marginBottom: '12px',
-            padding: '10px',
-            borderRadius: '8px',
-            border: '1px solid #fecaca',
-            backgroundColor: '#fef2f2',
-            color: '#b91c1c',
-            fontSize: '13px',
-          }}
-        >
+        <div className="rounded-md border border-destructive/20 bg-destructive/10 p-3 text-sm text-destructive font-medium">
           {error}
         </div>
       )}
 
       {loading ? (
-        <p>{t(i18nKeys.common.loading)}</p>
+        <div className="flex justify-center p-8 text-muted-foreground">{t(i18nKeys.common.loading)}</div>
       ) : tenants.length === 0 ? (
-        <p style={{ fontSize: '14px', color: '#6b7280' }}>{t(i18nKeys.platform.tenants.empty)}</p>
+        <p className="text-muted-foreground text-sm">{t(i18nKeys.platform.tenants.empty)}</p>
       ) : (
-        <div
-          style={{
-            borderRadius: '8px',
-            border: '1px solid #e2e8f0',
-            overflowX: 'auto',
-            backgroundColor: '#ffffff',
-          }}
-        >
-          <table
-            style={{
-              width: '100%',
-              borderCollapse: 'collapse',
-              fontSize: '14px',
-            }}
-          >
-            <thead style={{ backgroundColor: '#f9fafb' }}>
-              <tr>
-                <th style={{ textAlign: 'left', padding: '8px 12px' }}>
-                  {t(i18nKeys.platform.tenants.table.name)}
-                </th>
-                <th style={{ textAlign: 'left', padding: '8px 12px' }}>
-                  {t(i18nKeys.platform.tenants.table.slug)}
-                </th>
-                <th style={{ textAlign: 'left', padding: '8px 12px' }}>
-                  {t(i18nKeys.platform.tenants.table.schoolCode)}
-                </th>
-                <th style={{ textAlign: 'left', padding: '8px 12px' }}>
-                  {t(i18nKeys.platform.tenants.table.status)}
-                </th>
-                <th style={{ textAlign: 'left', padding: '8px 12px' }}>
-                  {t(i18nKeys.platform.tenants.table.createdAt)}
-                </th>
-                <th style={{ textAlign: 'left', padding: '8px 12px' }}>
-                  {t(i18nKeys.platform.tenants.table.actions)}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {tenants.map((tenant) => (
-                <tr key={tenant.id} style={{ borderTop: '1px solid #e5e7eb' }}>
-                  <td style={{ padding: '8px 12px' }}>{tenant.name}</td>
-                  <td style={{ padding: '8px 12px' }}>{tenant.slug}</td>
-                  <td style={{ padding: '8px 12px' }}>{tenant.schoolCode}</td>
-                  <td style={{ padding: '8px 12px' }}>{statusLabel(tenant.status)}</td>
-                  <td style={{ padding: '8px 12px' }}>{formatDate(tenant.createdAt)}</td>
-                  <td style={{ padding: '8px 12px' }}>
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        gap: '6px',
-                      }}
-                    >
-                      <button
-                        type="button"
-                        onClick={() => openEditForm(tenant)}
-                        style={{
-                          padding: '4px 8px',
-                          fontSize: '12px',
-                          borderRadius: '999px',
-                          border: '1px solid #e5e7eb',
-                          backgroundColor: '#f9fafb',
-                          cursor: 'pointer',
-                        }}
-                      >
-                        {t(i18nKeys.platform.tenants.form.submitEdit)}
-                      </button>
-                      {tenant.status !== 'ACTIVE' && (
-                        <button
-                          type="button"
-                          onClick={() => void handleStatusChange(tenant.id, 'ACTIVE')}
-                          disabled={actionId === tenant.id}
-                          style={{
-                            padding: '4px 8px',
-                            fontSize: '12px',
-                            borderRadius: '999px',
-                            border: '1px solid #bbf7d0',
-                            backgroundColor: '#ecfdf3',
-                            color: '#166534',
-                            cursor: actionId === tenant.id ? 'not-allowed' : 'pointer',
-                          }}
-                        >
-                          {t(i18nKeys.platform.tenants.status.active)}
-                        </button>
-                      )}
-                      {tenant.status === 'ACTIVE' && (
-                        <button
-                          type="button"
-                          onClick={() => void handleStatusChange(tenant.id, 'SUSPENDED')}
-                          disabled={actionId === tenant.id}
-                          style={{
-                            padding: '4px 8px',
-                            fontSize: '12px',
-                            borderRadius: '999px',
-                            border: '1px solid #fecaca',
-                            backgroundColor: '#fef2f2',
-                            color: '#b91c1c',
-                            cursor: actionId === tenant.id ? 'not-allowed' : 'pointer',
-                          }}
-                        >
-                          {t(i18nKeys.platform.tenants.status.suspended)}
-                        </button>
-                      )}
-                    </div>
-                  </td>
+        <div className="rounded-md border bg-card text-card-foreground">
+          <div className="relative w-full overflow-auto">
+            <table className="w-full caption-bottom text-sm">
+              <thead className="[&_tr]:border-b">
+                <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                    {t(i18nKeys.platform.tenants.table.name)}
+                  </th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                    {t(i18nKeys.platform.tenants.table.slug)}
+                  </th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                    {t(i18nKeys.platform.tenants.table.schoolCode)}
+                  </th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                    {t(i18nKeys.platform.tenants.table.status)}
+                  </th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                    {t(i18nKeys.platform.tenants.table.createdAt)}
+                  </th>
+                  <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0">
+                    {t(i18nKeys.platform.tenants.table.actions)}
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="[&_tr:last-child]:border-0">
+                {tenants.map((tenant) => (
+                  <tr key={tenant.id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">{tenant.name}</td>
+                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">{tenant.slug}</td>
+                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">{tenant.schoolCode}</td>
+                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                      <span className={`inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset ${tenant.status === 'ACTIVE'
+                        ? 'bg-green-50 text-green-700 ring-green-600/20 dark:bg-green-900/30 dark:text-green-400 dark:ring-green-900/50'
+                        : tenant.status === 'SUSPENDED'
+                          ? 'bg-red-50 text-red-700 ring-red-600/20 dark:bg-red-900/30 dark:text-red-400 dark:ring-red-900/50'
+                          : 'bg-gray-50 text-gray-600 ring-gray-500/10 dark:bg-gray-800 dark:text-gray-300 dark:ring-gray-700'
+                        }`}>
+                        {statusLabel(tenant.status)}
+                      </span>
+                    </td>
+                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">{formatDate(tenant.createdAt)}</td>
+                    <td className="p-4 align-middle [&:has([role=checkbox])]:pr-0">
+                      <div className="flex gap-2 flex-wrap">
+                        <button
+                          type="button"
+                          onClick={() => openEditForm(tenant)}
+                          className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-7 px-3"
+                        >
+                          {t(i18nKeys.platform.tenants.form.submitEdit)}
+                        </button>
+                        {tenant.status !== 'ACTIVE' && (
+                          <button
+                            type="button"
+                            onClick={() => void handleStatusChange(tenant.id, 'ACTIVE')}
+                            disabled={actionId === tenant.id}
+                            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-green-100 text-green-900 shadow-sm hover:bg-green-200 dark:bg-green-900/30 dark:text-green-300 dark:hover:bg-green-900/50 h-7 px-3"
+                          >
+                            {t(i18nKeys.platform.tenants.status.active)}
+                          </button>
+                        )}
+                        {tenant.status === 'ACTIVE' && (
+                          <button
+                            type="button"
+                            onClick={() => void handleStatusChange(tenant.id, 'SUSPENDED')}
+                            disabled={actionId === tenant.id}
+                            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-red-100 text-red-900 shadow-sm hover:bg-red-200 dark:bg-red-900/30 dark:text-red-300 dark:hover:bg-red-900/50 h-7 px-3"
+                          >
+                            {t(i18nKeys.platform.tenants.status.suspended)}
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </section>

@@ -207,6 +207,41 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         const path = computeRedirectPath(nextUser);
         const base = locale || 'pt-BR';
+
+        // Handle Tenant/Subdomain Redirection
+        if (typeof window !== 'undefined') {
+          const hostname = window.location.hostname;
+          const port = window.location.port ? `:${window.location.port}` : '';
+          const parts = hostname.split('.');
+
+          let currentSub = '';
+          let baseDomain = hostname;
+
+          // Assumes 2-part top-level domains like localtest.me, payflow.com
+          // For localhost, parts.length is 1, so baseDomain=localhost, sub=''
+          if (parts.length >= 3) {
+            currentSub = parts[0];
+            baseDomain = parts.slice(1).join('.');
+          }
+
+          let targetSub = '';
+          if (nextUser.userType === 'PLATFORM') {
+            targetSub = 'admin';
+          } else if (nextUser.tenant?.slug) {
+            targetSub = nextUser.tenant.slug;
+          }
+
+          // If target defined and different from current, full redirect
+          if (targetSub && targetSub !== currentSub) {
+            const protocol = window.location.protocol;
+            const newHost = `${targetSub}.${baseDomain}${port}`;
+            // Construct absolute URL
+            const newUrl = `${protocol}//${newHost}/${base}${path}`;
+            window.location.href = newUrl;
+            return; // Stop execution (router.push not needed)
+          }
+        }
+
         router.push(`/${base}${path}`);
       } catch (err) {
         setLoginError((prev) => {

@@ -7,9 +7,11 @@ import { useI18n } from '../../../i18n-context';
 import { getApiBase } from '../../../api-base';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { PasswordInput } from '@/components/ui/password-input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { AlertCircle, CheckCircle2 } from 'lucide-react';
+import { AuthLayout } from '@/components/auth-layout';
 
 export default function RegisterGuardianPage() {
   const { t } = useI18n();
@@ -136,15 +138,12 @@ export default function RegisterGuardianPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4 py-8">
-      <Card className="w-full max-w-xl">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold">{t(i18nKeys.guardianRegister.title)}</CardTitle>
-          <CardDescription>
-            {t(i18nKeys.guardianRegister.description)}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+    <AuthLayout
+      title={t(i18nKeys.guardianRegister.title)}
+      description={t(i18nKeys.guardianRegister.description)}
+    >
+      <Card>
+        <CardContent className="pt-6">
           {success ? (
             <div className="flex flex-col items-center gap-4 py-4 text-center">
               <div className="rounded-full bg-green-100 p-3 text-green-600">
@@ -202,9 +201,8 @@ export default function RegisterGuardianPage() {
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="guardian-password">{t(i18nKeys.guardianRegister.form.password)}</Label>
-                  <Input
+                  <PasswordInput
                     id="guardian-password"
-                    type="password"
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
                   />
@@ -212,9 +210,8 @@ export default function RegisterGuardianPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="guardian-confirm">{t(i18nKeys.guardianRegister.form.confirmPassword)}</Label>
-                  <Input
+                  <PasswordInput
                     id="guardian-confirm"
-                    type="password"
                     value={confirmPassword}
                     onChange={(event) => setConfirmPassword(event.target.value)}
                   />
@@ -237,6 +234,6 @@ export default function RegisterGuardianPage() {
           )}
         </CardContent>
       </Card>
-    </div>
+    </AuthLayout>
   );
 }

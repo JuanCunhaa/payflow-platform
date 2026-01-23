@@ -10,7 +10,7 @@ import { useI18n } from '../../i18n-context';
 import { MobileSidebar, Sidebar } from '@/components/sidebar';
 import { ModeToggle } from '@/components/mode-toggle';
 import { Button } from '@/components/ui/button';
-import { BookOpen, LayoutDashboard, LogOut, Receipt, UserCircle } from 'lucide-react';
+import { BookOpen, LayoutDashboard, LogOut, Receipt, UserCircle, LifeBuoy } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 type NavItem = {
@@ -24,6 +24,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/profile', labelKey: i18nKeys.guardian.nav.profile, icon: UserCircle },
   { href: '/students', labelKey: i18nKeys.guardian.nav.students, icon: BookOpen },
   { href: '/invoices', labelKey: i18nKeys.guardian.nav.invoices, icon: Receipt },
+  { href: '/tickets', labelKey: i18nKeys.guardian.nav.tickets, icon: LifeBuoy },
 ];
 
 export default function GuardianLayout({ children }: { children: React.ReactNode }) {

@@ -114,6 +114,7 @@ model Tenant {
   guardians   Guardian[]
   contracts   Contract[]
   invoices    Invoice[]
+  tickets     Ticket[]
 
   @@map("tenants")
 }
@@ -135,6 +136,9 @@ model User {
   emailVerifyTokens EmailVerifyToken[]
   passwordResetTokens PasswordResetToken[]
   createdContracts Contract[] @relation("UserCreatedContracts")
+  createdTickets   Ticket[]   @relation("UserCreatedTickets")
+  assignedTickets  Ticket[]   @relation("UserAssignedTickets")
+  ticketMessages   TicketMessage[]
 
   @@map("users")
 }
@@ -404,4 +408,81 @@ model InvoiceCommunication {
   @@index([invoiceId], map: "invoice_communications_invoice_id_idx")
   @@index([invoiceId, type, sentAt], map: "invoice_communications_invoice_type_sent_at_idx")
   @@map("invoice_communications")
+}
+
+// ============ SUPPORT SYSTEM ============
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+  CANCELED
+}
+
+enum TicketPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
+
+enum TicketType {
+  GENERAL
+  FINANCIAL
+  ACADEMIC
+  TECHNICAL
+  OTHER
+}
+
+model Ticket {
+  id              String         @id @default(uuid()) @db.Uuid
+  tenantId        String?        @db.Uuid @map("tenant_id") // Optional for guest tickets
+  tenant          Tenant?        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  createdById     String?        @db.Uuid @map("created_by_id") // Nullable for guest tickets
+  createdBy       User?          @relation("UserCreatedTickets", fields: [createdById], references: [id], onDelete: SetNull)
+  
+  assignedToId    String?        @db.Uuid @map("assigned_to_id")
+  assignedTo      User?          @relation("UserAssignedTickets", fields: [assignedToId], references: [id], onDelete: SetNull)
+
+  subject         String
+  status          TicketStatus   @default(OPEN)
+  priority        TicketPriority @default(MEDIUM)
+  type            TicketType     @default(GENERAL)
+  
+  guestName       String?        @map("guest_name")
+  guestEmail      String?        @map("guest_email")
+  
+  escalatedToPid  Boolean        @default(false) @map("escalated_to_pid") // If true, escalated to platform
+  
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
+  closedAt        DateTime?      @map("closed_at")
+
+  messages        TicketMessage[]
+
+  @@index([tenantId], map: "tickets_tenant_id_idx")
+  @@index([createdById], map: "tickets_created_by_id_idx")
+  @@index([assignedToId], map: "tickets_assigned_to_id_idx")
+  @@index([status], map: "tickets_status_idx")
+  @@map("tickets")
+}
+
+model TicketMessage {
+  id        String   @id @default(uuid()) @db.Uuid
+  ticketId  String   @db.Uuid @map("ticket_id")
+  ticket    Ticket   @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  
+  userId    String?  @db.Uuid @map("user_id") // Null if system or guest message
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  message   String
+  isInternal Boolean @default(false) @map("is_internal") // For internal notes
+  readAt    DateTime? @map("read_at")
+  
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([ticketId], map: "ticket_messages_ticket_id_idx")
+  @@map("ticket_messages")
 }
