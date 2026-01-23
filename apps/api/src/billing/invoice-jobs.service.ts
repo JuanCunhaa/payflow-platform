@@ -60,7 +60,7 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
     private readonly prisma: PrismaService,
     private readonly auditService: AuditService,
     private readonly emailService: EmailService
-  ) {}
+  ) { }
 
   onModuleInit() {
     if (process.env.DISABLE_INVOICE_SCHEDULER === '1') {
@@ -149,6 +149,7 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
 
         await this.sendInvoiceCreatedEmailsForContractInvoice(
           contract.id,
+          invoice.id,
           contract.tenantId,
           contract.amountCents,
           dueDate,
@@ -189,6 +190,7 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
 
   private async sendInvoiceCreatedEmailsForContractInvoice(
     contractId: string,
+    invoiceId: string,
     tenantId: string,
     amountCents: number,
     dueDate: Date,
@@ -240,7 +242,7 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
           dueDate,
           paymentLink,
         });
-        await logInvoiceCommunicationOncePerDay(this.prisma, invoice.id, 'CREATED', sentAt);
+        await logInvoiceCommunicationOncePerDay(this.prisma, invoiceId, 'CREATED', sentAt);
       }
     }
   }
@@ -309,7 +311,7 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
         guardian: {
           user: {
             email: {
-              not: null,
+              not: null as any,
             },
           },
         },
@@ -333,7 +335,7 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
 
     let sentReminders = 0;
 
-    for (const invoice of invoices) {
+    for (const invoice of invoices as any[]) {
       const email = invoice.guardian?.user?.email;
       if (!email) continue;
 

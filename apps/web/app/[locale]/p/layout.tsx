@@ -1,14 +1,18 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { i18nKeys } from '@payflow/shared';
 import { useAuth } from '../../auth-context';
 import { useI18n } from '../../i18n-context';
+import { MobileSidebar, Sidebar } from '@/components/sidebar';
+import { ModeToggle } from '@/components/mode-toggle';
+import { Button } from '@/components/ui/button';
+import { Activity, Building, LayoutDashboard, LogOut, Megaphone } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function PlatformLayout({ children }: { children: React.ReactNode }) {
-  const { user, sessionLoading, isLoggingOut } = useAuth();
+  const { user, sessionLoading, isLoggingOut, logout } = useAuth();
   const { locale, t } = useI18n();
   const router = useRouter();
 
@@ -20,78 +24,51 @@ export default function PlatformLayout({ children }: { children: React.ReactNode
     }
   }, [user, sessionLoading, isLoggingOut, router, locale]);
 
+  const basePath = `/${locale}/p`;
+
+  const sidebarItems = [
+    { href: basePath, label: t(i18nKeys.platform.nav.dashboard), icon: LayoutDashboard },
+    { href: `${basePath}/tenants`, label: t(i18nKeys.platform.nav.tenants), icon: Building },
+    { href: `${basePath}/leads`, label: t(i18nKeys.platform.nav.leads), icon: Megaphone },
+    { href: `${basePath}/audit`, label: t(i18nKeys.platform.nav.audit), icon: Activity },
+  ];
+
   if (sessionLoading || isLoggingOut || !user || user.userType !== 'PLATFORM') {
     return (
-      <main
-        style={{
-          padding: '24px',
-          fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-        }}
-      >
-        {t(i18nKeys.common.loading)}
-      </main>
+      <div className="flex min-h-screen items-center justify-center p-4">
+        <p className="text-muted-foreground animate-pulse">{t(i18nKeys.common.loading)}</p>
+      </div>
     );
   }
 
-  const basePath = `/${locale}/p`;
-
   return (
-    <div
-      style={{
-        display: 'flex',
-        minHeight: '100vh',
-        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-      }}
-    >
-      <aside
-        style={{
-          width: '220px',
-          borderRight: '1px solid #e2e8f0',
-          padding: '20px 16px',
-          backgroundColor: '#0f172a',
-          color: '#e5e7eb',
-        }}
-      >
-        <div
-          style={{
-            fontWeight: 700,
-            fontSize: '18px',
-            marginBottom: '24px',
-          }}
-        >
-          PayFlow Admin
-        </div>
-        <nav
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '8px',
-            fontSize: '14px',
-          }}
-        >
-          <Link href={basePath} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
-            {t(i18nKeys.platform.nav.dashboard)}
-          </Link>
-          <Link href={`${basePath}/tenants`} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
-            {t(i18nKeys.platform.nav.tenants)}
-          </Link>
-          <Link href={`${basePath}/leads`} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
-            {t(i18nKeys.platform.nav.leads)}
-          </Link>
-          <Link href={`${basePath}/audit`} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
-            {t(i18nKeys.platform.nav.audit)}
-          </Link>
-        </nav>
-      </aside>
-      <main
-        style={{
-          flex: 1,
-          padding: '24px',
-          backgroundColor: '#f8fafc',
-        }}
-      >
-        {children}
-      </main>
+    <div className="flex min-h-screen">
+      <div className="hidden md:block w-64 shrink-0">
+        <Sidebar title="PayFlow Admin" items={sidebarItems} className="fixed w-64 h-full" />
+      </div>
+
+      <div className="flex-1 flex flex-col min-w-0 bg-muted/40">
+        <header className="sticky top-0 z-40 bg-background border-b px-6 py-3 flex items-center justify-between shadow-sm">
+          <div className="flex items-center gap-4">
+            <MobileSidebar title="PayFlow Admin" items={sidebarItems} />
+            <div className="font-semibold text-lg text-foreground">
+              {t(i18nKeys.platform.nav.dashboard)}
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <ModeToggle />
+            <Button size="sm" variant="ghost" className="text-destructive hover:text-destructive hover:bg-destructive/10" onClick={logout}>
+              <LogOut className="h-4 w-4 mr-2" />
+              {t(i18nKeys.nav.logout)}
+            </Button>
+          </div>
+        </header>
+
+        <main className="flex-1 p-6 md:p-8 max-w-7xl mx-auto w-full">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

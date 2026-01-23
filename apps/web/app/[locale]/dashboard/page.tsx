@@ -7,6 +7,9 @@ import { i18nKeys } from '@payflow/shared';
 import { useI18n } from '../../i18n-context';
 import { useTenant } from '../../tenant-context';
 import { useAuth } from '../../auth-context';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Building, Home, LogOut, Mail, User } from 'lucide-react';
 
 export default function DashboardPage() {
   const { t, locale } = useI18n();
@@ -23,123 +26,112 @@ export default function DashboardPage() {
 
   if (sessionLoading || isLoggingOut || !user) {
     return (
-      <main
-        style={{
-          padding: '24px',
-          fontFamily: 'sans-serif',
-          maxWidth: '800px',
-          margin: '50px auto',
-        }}
-      >
-        <p>{t(i18nKeys.common.loading)}</p>
-      </main>
+      <div className="flex min-h-screen items-center justify-center p-4">
+        <p className="text-muted-foreground animate-pulse">{t(i18nKeys.common.loading)}</p>
+      </div>
     );
   }
 
   return (
-    <main
-      style={{ padding: '24px', fontFamily: 'sans-serif', maxWidth: '800px', margin: '50px auto' }}
-    >
-      <header
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '32px',
-          paddingBottom: '16px',
-          borderBottom: '1px solid #e5e7eb',
-        }}
-      >
+    <div className="container py-8 max-w-4xl">
+      <header className="flex items-center justify-between mb-8 pb-4 border-b">
         <div>
-          <h1 style={{ margin: 0 }}>{t(i18nKeys.dashboard.title)}</h1>
+          <h1 className="text-3xl font-bold tracking-tight">{t(i18nKeys.dashboard.title)}</h1>
           {(user.tenant || contextTenant) && (
-            <span style={{ color: '#6b7280', fontSize: '14px' }}>
+            <p className="text-muted-foreground mt-1">
               {user.tenant?.name || contextTenant?.name}
-            </span>
+            </p>
           )}
         </div>
-        <button
-          onClick={logout}
-          style={{
-            padding: '8px 16px',
-            cursor: 'pointer',
-            background: '#ef4444',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-          }}
-        >
+        <Button variant="destructive" onClick={logout} className="gap-2">
+          <LogOut className="h-4 w-4" />
           {t(i18nKeys.nav.logout)}
-        </button>
+        </Button>
       </header>
 
-      <div
-        style={{
-          padding: '24px',
-          background: '#f9fafb',
-          borderRadius: '8px',
-          marginBottom: '24px',
-        }}
-      >
-        <h2 style={{ marginTop: 0 }}>
-          {t(i18nKeys.dashboard.welcome).replace('{name}', user.name ?? '')}
-        </h2>
-        <p style={{ margin: 0, color: '#6b7280' }}>
-          {t(i18nKeys.dashboard.userTypeLabel)} <strong>{user.userType}</strong>
-        </p>
-      </div>
-
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '16px',
-        }}
-      >
-        <div
-          style={{
-            padding: '20px',
-            background: 'white',
-            borderRadius: '8px',
-            border: '1px solid #e5e7eb',
-          }}
-        >
-          <h3 style={{ marginTop: 0 }}>📧 {t(i18nKeys.dashboard.emailLabel)}</h3>
-          <p style={{ margin: 0, wordBreak: 'break-all' }}>{user.email}</p>
-        </div>
-
-        <div
-          style={{
-            padding: '20px',
-            background: 'white',
-            borderRadius: '8px',
-            border: '1px solid #e5e7eb',
-          }}
-        >
-          <h3 style={{ marginTop: 0 }}>🏫 {t(i18nKeys.dashboard.tenantLabel)}</h3>
-          <p style={{ margin: 0 }}>
-            {user.tenant?.name ||
-              contextTenant?.name ||
-              t(i18nKeys.dashboard.platformTenantFallback)}
+      <Card className="mb-8 bg-muted/30 border-dashed">
+        <CardHeader>
+          <CardTitle className="text-xl">
+            {t(i18nKeys.dashboard.welcome).replace('{name}', user.name ?? '')}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground">
+            {t(i18nKeys.dashboard.userTypeLabel)} <strong className="text-foreground">{user.userType}</strong>
           </p>
-        </div>
+        </CardContent>
+      </Card>
 
-        <div
-          style={{
-            padding: '20px',
-            background: 'white',
-            borderRadius: '8px',
-            border: '1px solid #e5e7eb',
-          }}
-        >
-          <h3 style={{ marginTop: 0 }}>👤 {t(i18nKeys.dashboard.userTypeLabel)}</h3>
-          <p style={{ margin: 0 }}>{user.userType}</p>
-        </div>
+      <div className="grid gap-6 md:grid-cols-3">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">
+              {t(i18nKeys.dashboard.emailLabel)}
+            </CardTitle>
+            <Mail className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-sm font-medium truncate" title={user.email ?? ''}>{user.email}</div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">
+              {t(i18nKeys.dashboard.tenantLabel)}
+            </CardTitle>
+            <Building className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-sm font-medium">
+              {user.tenant?.name ||
+                contextTenant?.name ||
+                t(i18nKeys.dashboard.platformTenantFallback)}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">
+              {t(i18nKeys.dashboard.userTypeLabel)}
+            </CardTitle>
+            <User className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-sm font-medium">{user.userType}</div>
+          </CardContent>
+        </Card>
       </div>
 
-      <div style={{ marginTop: '32px' }}>
-        <Link href={`/${locale}`}>← {t(i18nKeys.dashboard.backToHome)}</Link>
+      <div className="mt-8">
+        <Link href={`/${locale}`}>
+          <Button variant="link" className="pl-0 gap-2 text-muted-foreground hover:text-primary">
+            <ArrowLeftIcon className="h-4 w-4" />
+            {t(i18nKeys.dashboard.backToHome)}
+          </Button>
+        </Link>
       </div>
-    </main>
+    </div>
   );
+}
+
+function ArrowLeftIcon(props: any) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="m12 19-7-7 7-7" />
+      <path d="M19 12H5" />
+    </svg>
+  )
 }

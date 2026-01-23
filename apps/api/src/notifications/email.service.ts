@@ -7,11 +7,12 @@ export class EmailService {
   constructor(
     @Inject(EMAIL_PROVIDER_TOKEN)
     private readonly provider: EmailProvider
-  ) {}
+  ) { }
 
   async sendGuardianApprovalEmail(
     recipient: string,
-    params: { name?: string; school?: string; portalLink?: string }
+    params: { name?: string; school?: string; portalLink?: string },
+    locale: string = 'pt-BR'
   ): Promise<void> {
     const baseUrl = process.env.APP_PUBLIC_URL || 'http://localhost:3000';
     const variables = {
@@ -22,11 +23,11 @@ export class EmailService {
       link: params.portalLink ?? `${baseUrl}/g`,
     };
 
-    const { html, text } = renderEmailTemplate('guardian-approved', variables);
+    const { html, text, subject } = renderEmailTemplate('guardian-approved', variables, locale);
 
     await this.provider.send({
       to: recipient,
-      subject: 'Sua conta de responsável foi aprovada',
+      subject,
       html,
       text,
       templateId: 'guardian-approved',
@@ -36,7 +37,8 @@ export class EmailService {
 
   async sendGuardianRejectionEmail(
     recipient: string,
-    params: { name?: string; school?: string; contactLink?: string }
+    params: { name?: string; school?: string; contactLink?: string },
+    locale: string = 'pt-BR'
   ): Promise<void> {
     const baseUrl = process.env.APP_PUBLIC_URL || 'http://localhost:3000';
     const variables = {
@@ -47,11 +49,11 @@ export class EmailService {
       link: params.contactLink ?? baseUrl,
     };
 
-    const { html, text } = renderEmailTemplate('guardian-rejected', variables);
+    const { html, text, subject } = renderEmailTemplate('guardian-rejected', variables, locale);
 
     await this.provider.send({
       to: recipient,
-      subject: 'Sua solicitação de acesso não foi aprovada',
+      subject,
       html,
       text,
       templateId: 'guardian-rejected',
@@ -59,27 +61,30 @@ export class EmailService {
     });
   }
 
-  async sendPasswordResetEmail(recipient: string, token: string): Promise<void> {
+  async sendPasswordResetEmail(recipient: string, token: string, locale: string = 'pt-BR'): Promise<void> {
     const baseUrl = process.env.APP_PUBLIC_URL || 'http://localhost:3000';
     const resetUrl = `${baseUrl}/reset-password?token=${encodeURIComponent(token)}`;
+    const variables = {
+      resetUrl,
+      resetToken: token,
+    };
+
+    const { html, text, subject } = renderEmailTemplate('auth.password_reset', variables, locale);
 
     await this.provider.send({
       to: recipient,
-      subject: 'Instruções para redefinir sua senha',
-      text:
-        'Recebemos um pedido para redefinir sua senha. ' +
-        'Se você não fez este pedido, pode ignorar este e-mail.',
+      subject,
+      html,
+      text,
       templateId: 'auth.password_reset',
-      variables: {
-        resetUrl,
-        resetToken: token,
-      },
+      variables,
     });
   }
 
   async sendEmailVerification(
     recipient: string,
-    params: { name?: string; school?: string; link: string }
+    params: { name?: string; school?: string; link: string },
+    locale: string = 'pt-BR'
   ): Promise<void> {
     const variables = {
       name: params.name ?? '',
@@ -89,11 +94,11 @@ export class EmailService {
       link: params.link,
     };
 
-    const { html, text } = renderEmailTemplate('verify-email', variables);
+    const { html, text, subject } = renderEmailTemplate('verify-email', variables, locale);
 
     await this.provider.send({
       to: recipient,
-      subject: 'Confirme seu e-mail no PayFlow',
+      subject,
       html,
       text,
       templateId: 'verify-email',
@@ -108,7 +113,7 @@ export class EmailService {
     amountCents: number;
     dueDate: Date;
     paymentLink?: string | null;
-  }): Promise<void> {
+  }, locale: string = 'pt-BR'): Promise<void> {
     const amount = formatCurrencyBRL(params.amountCents);
     const dueDateStr = formatDateBR(params.dueDate);
 
@@ -120,11 +125,11 @@ export class EmailService {
       link: params.paymentLink ?? '',
     };
 
-    const { html, text } = renderEmailTemplate('invoice-created', variables);
+    const { html, text, subject } = renderEmailTemplate('invoice-created', variables, locale);
 
     await this.provider.send({
       to: params.recipient,
-      subject: 'Nova cobrança criada',
+      subject,
       html,
       text,
       templateId: 'invoice-created',
@@ -139,7 +144,7 @@ export class EmailService {
     amountCents: number;
     dueDate: Date;
     paymentLink?: string | null;
-  }): Promise<void> {
+  }, locale: string = 'pt-BR'): Promise<void> {
     const amount = formatCurrencyBRL(params.amountCents);
     const dueDateStr = formatDateBR(params.dueDate);
 
@@ -151,11 +156,11 @@ export class EmailService {
       link: params.paymentLink ?? '',
     };
 
-    const { html, text } = renderEmailTemplate('invoice-overdue', variables);
+    const { html, text, subject } = renderEmailTemplate('invoice-overdue', variables, locale);
 
     await this.provider.send({
       to: params.recipient,
-      subject: 'Cobrança em atraso',
+      subject,
       html,
       text,
       templateId: 'invoice-overdue',
@@ -170,7 +175,7 @@ export class EmailService {
     amountCents: number;
     dueDate: Date;
     paidAt: Date;
-  }): Promise<void> {
+  }, locale: string = 'pt-BR'): Promise<void> {
     const amount = formatCurrencyBRL(params.amountCents);
     const dueDateStr = formatDateBR(params.dueDate);
     const paidDateStr = formatDateBR(params.paidAt);
@@ -184,11 +189,11 @@ export class EmailService {
       link: '',
     };
 
-    const { html, text } = renderEmailTemplate('invoice-paid', variables);
+    const { html, text, subject } = renderEmailTemplate('invoice-paid', variables, locale);
 
     await this.provider.send({
       to: params.recipient,
-      subject: 'Pagamento confirmado',
+      subject,
       html,
       text,
       templateId: 'invoice-paid',

@@ -325,12 +325,12 @@ async function run() {
     throw new Error('getStudents should throw NotFoundException when guardian is missing');
   }
 
-  // eslint-disable-next-line no-console
+  // console.log('GuardianController tests passed');
   console.log('GuardianController tests passed');
 }
 
 run().catch((error) => {
-  // eslint-disable-next-line no-console
+  // console.error(error);
   console.error(error);
   process.exit(1);
 });

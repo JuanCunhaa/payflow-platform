@@ -249,23 +249,20 @@ async function run() {
   } as unknown as PrismaService;
 
   const auditMock = {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     log: async (_entry: unknown) => {
       // no-op for unit tests
     },
   };
 
   const emailMock = {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     sendGuardianApprovalEmail: async (
       _recipient: string,
       _params: { name?: string; school?: string; portalLink?: string }
-    ) => {},
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ) => { },
     sendGuardianRejectionEmail: async (
       _recipient: string,
       _params: { name?: string; school?: string; contactLink?: string }
-    ) => {},
+    ) => { },
   };
 
   const controller = new GuardiansController(prismaMock, auditMock as any, emailMock as any);
@@ -446,12 +443,12 @@ async function run() {
     throw new Error('listGuardians should be tenant-scoped');
   }
 
-  // eslint-disable-next-line no-console
+  // console.log('GuardiansController tests passed');
   console.log('GuardiansController tests passed');
 }
 
 run().catch((error) => {
-  // eslint-disable-next-line no-console
+  // console.error(error);
   console.error(error);
   process.exit(1);
 });

@@ -251,7 +251,7 @@ export default function PlatformTenantsPage() {
               fontSize: '14px',
             }}
           >
-            <option value="all">Todos</option>
+            <option value="all">{t(i18nKeys.common.all)}</option>
             <option value="DRAFT">{t(i18nKeys.platform.tenants.status.draft)}</option>
             <option value="ACTIVE">{t(i18nKeys.platform.tenants.status.active)}</option>
             <option value="SUSPENDED">{t(i18nKeys.platform.tenants.status.suspended)}</option>
@@ -465,7 +465,7 @@ export default function PlatformTenantsPage() {
                 cursor: 'pointer',
               }}
             >
-              Cancelar
+              {t(i18nKeys.common.cancel)}
             </button>
             <button
               type="submit"

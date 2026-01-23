@@ -6,6 +6,12 @@ import { i18nKeys } from '@payflow/shared';
 import { useI18n } from '../../i18n-context';
 import { useTenant } from '../../tenant-context';
 import { useAuth } from '../../auth-context';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { AlertCircle, ArrowLeft } from 'lucide-react';
+import { ModeToggle } from '@/components/mode-toggle';
 
 export default function LoginPage() {
   const { t, locale } = useI18n();
@@ -31,112 +37,93 @@ export default function LoginPage() {
   };
 
   return (
-    <main
-      style={{
-        padding: '24px',
-        fontFamily: 'sans-serif',
-        maxWidth: '400px',
-        margin: '50px auto',
-      }}
-    >
-      <nav style={{ marginBottom: '32px' }}>
-        <Link href={locale === 'pt-BR' ? '/en-US' : '/pt-BR'}>
+    <div className="flex min-h-screen items-center justify-center bg-muted/40 p-4">
+      <Card className="w-full max-w-md">
+        <CardHeader className="space-y-1">
+          <div className="flex justify-between items-center mb-2">
+            <Link
+              href={`/${locale}`}
+              className="text-sm font-medium text-muted-foreground hover:text-primary flex items-center gap-1"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              {t(i18nKeys.nav.home)}
+            </Link>
+            <div className="text-sm text-muted-foreground">
+              <span className="font-semibold text-primary">PayFlow</span>
+              {tenant && <span className="mx-1">&middot; {tenant.name}</span>}
+            </div>
+          </div>
+          <CardTitle className="text-2xl font-bold">{t(i18nKeys.login.title)}</CardTitle>
+          <CardDescription>
+            Entre com suas credenciais para acessar o portal
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {loginError && (
+              <div className="flex items-center gap-2 rounded-md bg-destructive/15 p-3 text-sm text-destructive">
+                <AlertCircle className="h-4 w-4" />
+                <p>{loginError}</p>
+              </div>
+            )}
+
+            <div className="space-y-2">
+              <Label htmlFor="email">{t(i18nKeys.login.email)}</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="nome@exemplo.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password">{t(i18nKeys.login.password)}</Label>
+                <Link
+                  href={`/${locale}/forgot-password`}
+                  className="text-sm font-medium text-primary hover:underline"
+                >
+                  {t(i18nKeys.login.forgotPassword)}
+                </Link>
+              </div>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? t(i18nKeys.common.loading) : t(i18nKeys.login.submit)}
+            </Button>
+          </form>
+        </CardContent>
+        <CardFooter className="flex justify-center border-t p-6">
+          <p className="text-sm text-muted-foreground">
+            {t(i18nKeys.login.noAccount)}{' '}
+            <Link href={`/${locale}/register/guardian`} className="font-medium text-primary hover:underline">
+              {t(i18nKeys.login.signup)}
+            </Link>
+          </p>
+        </CardFooter>
+      </Card>
+
+      <div className="absolute top-4 right-4 flex items-center gap-2">
+        <ModeToggle />
+        <Link
+          href={locale === 'pt-BR' ? '/en-US' : '/pt-BR'}
+          className="text-sm font-medium text-muted-foreground hover:text-foreground"
+        >
           {locale === 'pt-BR'
             ? t(i18nKeys.common.language.english)
             : t(i18nKeys.common.language.portuguese)}
         </Link>
-      </nav>
-
-      {tenant && (
-        <div
-          style={{
-            marginBottom: '16px',
-            padding: '12px',
-            background: '#f0f9ff',
-            borderRadius: '8px',
-            border: '1px solid #bae6fd',
-          }}
-        >
-          <strong>{tenant.name}</strong>
-        </div>
-      )}
-
-      <h1>{t(i18nKeys.login.title)}</h1>
-
-      {loginError && (
-        <div
-          style={{
-            padding: '12px',
-            background: '#fef2f2',
-            color: '#dc2626',
-            borderRadius: '8px',
-            marginBottom: '16px',
-            border: '1px solid #fecaca',
-          }}
-        >
-          {loginError}
-        </div>
-      )}
-
-      <form
-        onSubmit={handleSubmit}
-        style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
-      >
-        <div>
-          <label htmlFor="email" style={{ display: 'block', marginBottom: '8px' }}>
-            {t(i18nKeys.login.email)}
-          </label>
-          <input
-            id="email"
-            type="email"
-            placeholder="user@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={{ width: '100%', padding: '8px' }}
-            required
-          />
-        </div>
-
-        <div>
-          <label htmlFor="password" style={{ display: 'block', marginBottom: '8px' }}>
-            {t(i18nKeys.login.password)}
-          </label>
-          <input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={{ width: '100%', padding: '8px' }}
-            required
-          />
-        </div>
-
-        <div style={{ textAlign: 'right', fontSize: '13px' }}>
-          <Link href={`/${locale}/forgot-password`}>{t(i18nKeys.login.forgotPassword)}</Link>
-        </div>
-
-        <button
-          type="submit"
-          disabled={loading}
-          style={{
-            padding: '10px',
-            fontSize: '16px',
-            cursor: loading ? 'not-allowed' : 'pointer',
-            opacity: loading ? 0.7 : 1,
-          }}
-        >
-          {loading ? t(i18nKeys.common.loading) : t(i18nKeys.login.submit)}
-        </button>
-      </form>
-
-      <p style={{ marginTop: '24px', textAlign: 'center' }}>
-        {t(i18nKeys.login.noAccount)}{' '}
-        <Link href={`/${locale}/signup`}>{t(i18nKeys.login.signup)}</Link>
-      </p>
-
-      <Link href={`/${locale}`} style={{ marginTop: '24px', display: 'block' }}>
-        ← {t(i18nKeys.nav.home)}
-      </Link>
-    </main>
+      </div>
+    </div >
   );
 }

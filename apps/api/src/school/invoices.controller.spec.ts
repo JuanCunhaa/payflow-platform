@@ -23,11 +23,9 @@ async function run() {
 
   const createdInvoices: any[] = [];
   let lastAudit: any | null = null;
-  let lastPaymentLinkCall: { invoiceId: string } | null = null;
 
   const prismaMock = {
     tenant: {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       findUnique: async (_args: { where: { id: string }; select?: { name?: true } }) => ({
         name: 'Escola Teste',
       }),
@@ -67,10 +65,8 @@ async function run() {
       },
     },
     invoiceCommunication: {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       findFirst: async (_args: unknown) => null,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      create: async (_args: unknown) => {},
+      create: async (_args: unknown) => { },
     },
   };
 
@@ -82,16 +78,13 @@ async function run() {
 
   const paymentServiceMock = {
     createPaymentLinkForInvoice: async (invoiceId: string) => {
-      lastPaymentLinkCall = { invoiceId };
       return { paymentLink: `https://sandbox/${invoiceId}`, provider: 'SANDBOX' };
     },
   } as unknown as PaymentService;
 
   const emailServiceMock = {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    sendInvoiceCreated: async (_params: unknown) => {},
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    sendInvoicePaid: async (_params: unknown) => {},
+    sendInvoiceCreated: async (_params: unknown) => { },
+    sendInvoicePaid: async (_params: unknown) => { },
   } as unknown as EmailService;
 
   const controller = new SchoolInvoicesController(
@@ -174,12 +167,10 @@ async function run() {
     throw new Error('Expected BadRequestException for past due date');
   }
 
-  // eslint-disable-next-line no-console
   console.log('SchoolInvoicesController tests passed');
 }
 
 run().catch((error) => {
-  // eslint-disable-next-line no-console
   console.error(error);
   process.exit(1);
 });

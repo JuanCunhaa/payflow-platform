@@ -24,7 +24,7 @@ function parseDate(value?: string): Date | undefined {
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles('PLATFORM_ADMIN', 'PLATFORM_SUPPORT')
 export class PlatformAuditController {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   @Get()
   async listAuditLogs(
@@ -87,9 +87,10 @@ export class PlatformAuditController {
       }
     }
 
-    const [total, logs] = await prisma.$transaction([
-      prisma.auditLog.count({ where }),
-      prisma.auditLog.findMany({
+    const tx = prisma as any;
+    const [total, logs] = await tx.$transaction([
+      tx.auditLog.count({ where }),
+      tx.auditLog.findMany({
         where,
         orderBy: { createdAt: 'desc' },
         skip: (page - 1) * pageSize,
@@ -98,32 +99,33 @@ export class PlatformAuditController {
     ]);
 
     const tenantIds = Array.from(
-      new Set(logs.map((log) => log.tenantId).filter((id): id is string => !!id))
-    );
+      new Set(logs.map((log: any) => log.tenantId).filter((id: any): id is string => !!id))
+    ) as string[];
+
     const actorIds = Array.from(
-      new Set(logs.map((log) => log.actorUserId).filter((id): id is string => !!id))
-    );
+      new Set(logs.map((log: any) => log.actorUserId).filter((id: any): id is string => !!id))
+    ) as string[];
 
     const [tenants, actors] = await Promise.all([
       tenantIds.length
-        ? prisma.tenant.findMany({
-            where: { id: { in: tenantIds } },
-            select: { id: true, name: true, slug: true },
-          })
+        ? tx.tenant.findMany({
+          where: { id: { in: tenantIds } },
+          select: { id: true, name: true, slug: true },
+        })
         : Promise.resolve([]),
       actorIds.length
-        ? prisma.user.findMany({
-            where: { id: { in: actorIds } },
-            select: { id: true, email: true, name: true },
-          })
+        ? tx.user.findMany({
+          where: { id: { in: actorIds } },
+          select: { id: true, email: true, name: true },
+        })
         : Promise.resolve([]),
     ]);
 
-    const tenantMap = new Map(tenants.map((t) => [t.id, t]));
-    const actorMap = new Map(actors.map((u) => [u.id, u]));
+    const tenantMap = new Map((tenants as any[]).map((t) => [t.id, t]));
+    const actorMap = new Map((actors as any[]).map((u) => [u.id, u]));
 
     return {
-      items: logs.map((log) => ({
+      items: logs.map((log: any) => ({
         id: log.id,
         timestamp: log.createdAt.toISOString(),
         tenant: log.tenantId ? (tenantMap.get(log.tenantId) ?? null) : null,

@@ -56,7 +56,9 @@
       "title": "Esqueci minha senha",
       "description": "Informe o seu email. Se existir uma conta, enviaremos instruções para redefinir a senha.",
       "emailLabel": "Email",
+      "emailPlaceholder": "Seu e-mail cadastrado",
       "submit": "Enviar instruções",
+      "backToLogin": "Voltar para Login",
       "success": "Se existir uma conta com este email, você receberá instruções para redefinir a senha em alguns minutos.",
       "error": {
         "validation": "Informe um email válido.",
@@ -90,7 +92,11 @@
     "language": {
       "english": "Inglês",
       "portuguese": "Português"
-    }
+    },
+    "all": "Todos",
+    "actions": "Ações",
+    "page": "Página",
+    "of": "de"
   },
   "tenant": {
     "notFound": {
@@ -357,7 +363,8 @@
         "email": "Email",
         "phone": "Telefone",
         "status": "Status",
-        "createdAt": "Criado em"
+        "createdAt": "Criado em",
+        "actions": "Ações"
       },
       "status": {
         "new": "Novo",

@@ -564,7 +564,7 @@ export default function SchoolStudentsPage() {
 
           <div>
             <span>
-              {page} / {totalPages}
+              {t(i18nKeys.common.page)} {page} {t(i18nKeys.common.of)} {totalPages}
             </span>
             <button type="button" onClick={handlePrevPage} disabled={page <= 1}>
               ‹

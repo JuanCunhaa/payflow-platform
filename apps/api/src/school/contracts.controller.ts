@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   NotFoundException,
   Param,
@@ -10,7 +11,6 @@ import {
   Query,
   Req,
   UseGuards,
-  Delete,
 } from '@nestjs/common';
 import type { Request } from 'express';
 
@@ -58,7 +58,7 @@ export class ContractsController {
   constructor(
     private readonly prisma: PrismaService,
     private readonly auditService: AuditService
-  ) {}
+  ) { }
 
   @Get()
   @Roles('SCHOOL_ADMIN', 'FINANCE', 'SECRETARY', 'READONLY')
@@ -131,7 +131,7 @@ export class ContractsController {
     }
 
     const students = contract.contractStudents.map((cs) => cs.student);
-    const { contractStudents, ...rest } = contract;
+    const { contractStudents: _contractStudents, ...rest } = contract;
 
     return {
       contract: rest,

@@ -44,14 +44,10 @@ export default async function LocaleLayout({
   const tenantSlug = extractFirstSubdomain(host);
 
   return (
-    <html lang={params.locale === 'pt-BR' ? 'pt' : 'en'}>
-      <body>
-        <TenantProvider slug={tenantSlug}>
-          <I18nProvider locale={params.locale} dict={dict}>
-            <AuthProvider>{children}</AuthProvider>
-          </I18nProvider>
-        </TenantProvider>
-      </body>
-    </html>
+    <TenantProvider slug={tenantSlug}>
+      <I18nProvider locale={params.locale} dict={dict}>
+        <AuthProvider>{children}</AuthProvider>
+      </I18nProvider>
+    </TenantProvider>
   );
 }

@@ -6,6 +6,11 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { i18nKeys } from '@payflow/shared';
 import { useI18n } from '../../i18n-context';
 import { getApiBase } from '../../api-base';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { AlertCircle, CheckCircle2 } from 'lucide-react';
 
 export default function ResetPasswordPage() {
   const { t, locale } = useI18n();
@@ -118,151 +123,65 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <main
-      style={{
-        padding: '24px',
-        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-        maxWidth: '480px',
-        margin: '50px auto',
-      }}
-    >
-      <h1
-        style={{
-          fontSize: '24px',
-          marginBottom: '8px',
-        }}
-      >
-        {t(i18nKeys.passwordReset.reset.title)}
-      </h1>
-      <p
-        style={{
-          fontSize: '14px',
-          color: '#475569',
-          marginBottom: '24px',
-        }}
-      >
-        {t(i18nKeys.passwordReset.reset.description)}
-      </p>
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold">{t(i18nKeys.passwordReset.reset.title)}</CardTitle>
+          <CardDescription>
+            {t(i18nKeys.passwordReset.reset.description)}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {success ? (
+            <div className="flex flex-col items-center gap-4 py-4 text-center">
+              <div className="rounded-full bg-green-100 p-3 text-green-600">
+                <CheckCircle2 className="h-6 w-6" />
+              </div>
+              <p className="text-sm text-green-800">
+                {t(i18nKeys.passwordReset.reset.success)}
+              </p>
+              <Button onClick={handleGoToLogin} className="w-full">
+                {t(i18nKeys.login.title)}
+              </Button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {error && (
+                <div className="flex items-center gap-2 rounded-md bg-destructive/15 p-3 text-sm text-destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <p>{error}</p>
+                </div>
+              )}
 
-      {error && (
-        <div
-          style={{
-            marginBottom: '16px',
-            padding: '12px',
-            borderRadius: '8px',
-            backgroundColor: '#fef2f2',
-            border: '1px solid #fecaca',
-            color: '#b91c1c',
-            fontSize: '14px',
-          }}
-        >
-          {error}
-        </div>
-      )}
+              <div className="space-y-2">
+                <Label htmlFor="reset-password">{t(i18nKeys.passwordReset.reset.newPasswordLabel)}</Label>
+                <Input
+                  id="reset-password"
+                  type="password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                  required
+                />
+              </div>
 
-      {success && (
-        <div
-          style={{
-            marginBottom: '16px',
-            padding: '12px',
-            borderRadius: '8px',
-            backgroundColor: '#ecfdf3',
-            border: '1px solid #bbf7d0',
-            color: '#166534',
-            fontSize: '14px',
-          }}
-        >
-          <p style={{ margin: 0 }}>{t(i18nKeys.passwordReset.reset.success)}</p>
-          <button
-            type="button"
-            onClick={handleGoToLogin}
-            style={{
-              marginTop: '8px',
-              padding: '8px 14px',
-              borderRadius: '999px',
-              border: 'none',
-              backgroundColor: '#6366f1',
-              color: '#ffffff',
-              cursor: 'pointer',
-              fontSize: '13px',
-              fontWeight: 500,
-            }}
-          >
-            {t(i18nKeys.login.title)}
-          </button>
-        </div>
-      )}
+              <div className="space-y-2">
+                <Label htmlFor="reset-password-confirm">{t(i18nKeys.passwordReset.reset.confirmPasswordLabel)}</Label>
+                <Input
+                  id="reset-password-confirm"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(event) => setConfirmPassword(event.target.value)}
+                  required
+                />
+              </div>
 
-      {!success && (
-        <form
-          onSubmit={handleSubmit}
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '16px',
-          }}
-        >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-            <label
-              htmlFor="reset-password"
-              style={{ fontSize: '14px', fontWeight: 500, color: '#0f172a' }}
-            >
-              {t(i18nKeys.passwordReset.reset.newPasswordLabel)}
-            </label>
-            <input
-              id="reset-password"
-              type="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              style={{
-                padding: '8px 10px',
-                borderRadius: '6px',
-                border: '1px solid #e2e8f0',
-                fontSize: '14px',
-              }}
-            />
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-            <label
-              htmlFor="reset-password-confirm"
-              style={{ fontSize: '14px', fontWeight: 500, color: '#0f172a' }}
-            >
-              {t(i18nKeys.passwordReset.reset.confirmPasswordLabel)}
-            </label>
-            <input
-              id="reset-password-confirm"
-              type="password"
-              value={confirmPassword}
-              onChange={(event) => setConfirmPassword(event.target.value)}
-              style={{
-                padding: '8px 10px',
-                borderRadius: '6px',
-                border: '1px solid #e2e8f0',
-                fontSize: '14px',
-              }}
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={submitting || !token}
-            style={{
-              marginTop: '4px',
-              padding: '10px 16px',
-              borderRadius: '999px',
-              border: 'none',
-              backgroundColor: submitting || !token ? '#94a3b8' : '#6366f1',
-              color: '#ffffff',
-              cursor: submitting || !token ? 'default' : 'pointer',
-              fontSize: '14px',
-              fontWeight: 500,
-            }}
-          >
-            {submitting ? t(i18nKeys.common.loading) : t(i18nKeys.passwordReset.reset.submit)}
-          </button>
-        </form>
-      )}
-    </main>
+              <Button type="submit" className="w-full" disabled={submitting || !token}>
+                {submitting ? t(i18nKeys.common.loading) : t(i18nKeys.passwordReset.reset.submit)}
+              </Button>
+            </form>
+          )}
+        </CardContent>
+      </Card>
+    </div>
   );
 }

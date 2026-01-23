@@ -208,7 +208,7 @@ export default function PlatformAuditPage() {
               border: '1px solid #cbd5f5',
             }}
           >
-            <option value="">Todos</option>
+            <option value="">{t(i18nKeys.common.all)}</option>
             {tenants.map((tenant) => (
               <option key={tenant.id} value={tenant.id}>
                 {tenant.name} ({tenant.slug})
@@ -458,7 +458,7 @@ export default function PlatformAuditPage() {
           }}
         >
           <span>
-            Página {page} de {totalPages}
+            {t(i18nKeys.common.page)} {page} {t(i18nKeys.common.of)} {totalPages}
           </span>
           <div style={{ display: 'flex', gap: '8px' }}>
             <button

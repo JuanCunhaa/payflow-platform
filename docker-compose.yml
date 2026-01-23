@@ -1,0 +1,57 @@
+services:
+  # Database Service
+  db:
+    image: postgres:15-alpine
+    container_name: payflow-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: payflow
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - payflow-network
+
+  # Backend Service (NestJS)
+  api:
+    build:
+      context: .
+      dockerfile: docker/api.Dockerfile
+    container_name: payflow-api
+    depends_on:
+      - db
+    ports:
+      - "3333:3333"
+    environment:
+      DATABASE_URL: "postgresql://admin:password123@db:5432/payflow?schema=public"
+      PORT: 3333
+      JWT_SECRET: "changemeplease_jwt_secret_dev_key" 
+      # Add other necessary env vars here or use env_file
+    networks:
+      - payflow-network
+
+  # Frontend Service (Next.js)
+  web:
+    build:
+      context: .
+      dockerfile: docker/web.Dockerfile
+    container_name: payflow-web
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: "http://localhost:3333" # Browser connects to 3333
+      # Note: Server-side calls from Next to API might need internal name http://api:3333
+      # But usually client-side data fetching prevails in dashboard apps or handled via proxy.
+    networks:
+      - payflow-network
+
+volumes:
+  postgres_data:
+
+networks:
+  payflow-network:
+    driver: bridge

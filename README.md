@@ -60,6 +60,24 @@ Você pode sobrescrever a senha padrão definindo a variável de ambiente antes 
 SEED_DEFAULT_PASSWORD="MinhaSenha@Forte" npm run db:seed
 ```
 
+## 🐳 Docker
+
+Para rodar o projeto utilizando Docker:
+
+1. Certifique-se de ter o Docker e Docker Compose instalados.
+2. Na raiz do projeto, execute:
+
+```bash
+docker-compose up --build
+```
+
+Isso iniciará:
+- **Banco de dados (PostgreSQL)** na porta `5432`
+- **API (Back-end)** em `http://localhost:3333`
+- **Web (Front-end)** em `http://localhost:3000`
+
+> **Nota:** As variáveis de ambiente no `docker-compose.yml` estão configuradas para desenvolvimento local. Para produção, lembre-se de usar um arquivo .env seguro.
+
 ## Scripts úteis
 
 - `npm run lint` – Lint em web e api.

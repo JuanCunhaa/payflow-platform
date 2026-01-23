@@ -5,6 +5,11 @@ import { useState } from 'react';
 import { i18nKeys, isEmailValid } from '@payflow/shared';
 import { useI18n } from '../../../i18n-context';
 import { getApiBase } from '../../../api-base';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { AlertCircle, CheckCircle2 } from 'lucide-react';
 
 export default function RegisterGuardianPage() {
   const { t } = useI18n();
@@ -131,224 +136,107 @@ export default function RegisterGuardianPage() {
   }
 
   return (
-    <main
-      style={{
-        padding: '24px',
-        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-        maxWidth: '640px',
-        margin: '50px auto',
-      }}
-    >
-      <h1
-        style={{
-          fontSize: '24px',
-          marginBottom: '8px',
-        }}
-      >
-        {t(i18nKeys.guardianRegister.title)}
-      </h1>
-      <p
-        style={{
-          fontSize: '14px',
-          color: '#475569',
-          marginBottom: '24px',
-        }}
-      >
-        {t(i18nKeys.guardianRegister.description)}
-      </p>
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4 py-8">
+      <Card className="w-full max-w-xl">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold">{t(i18nKeys.guardianRegister.title)}</CardTitle>
+          <CardDescription>
+            {t(i18nKeys.guardianRegister.description)}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {success ? (
+            <div className="flex flex-col items-center gap-4 py-4 text-center">
+              <div className="rounded-full bg-green-100 p-3 text-green-600">
+                <CheckCircle2 className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-green-900 mb-1">
+                  {t(i18nKeys.guardianRegister.success.title)}
+                </h3>
+                <p className="text-sm text-green-800">
+                  {t(i18nKeys.guardianRegister.success.description)}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {error && (
+                <div className="flex items-center gap-2 rounded-md bg-destructive/15 p-3 text-sm text-destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <p>{error}</p>
+                </div>
+              )}
 
-      {success && (
-        <div
-          style={{
-            marginBottom: '16px',
-            padding: '12px',
-            borderRadius: '8px',
-            border: '1px solid #bbf7d0',
-            backgroundColor: '#ecfdf3',
-            color: '#166534',
-            fontSize: '14px',
-          }}
-        >
-          <strong>{t(i18nKeys.guardianRegister.success.title)}</strong>
-          <br />
-          {t(i18nKeys.guardianRegister.success.description)}
-        </div>
-      )}
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="guardian-name">{t(i18nKeys.guardianRegister.form.name)}</Label>
+                  <Input
+                    id="guardian-name"
+                    value={name}
+                    onChange={(event) => setName(event.target.value)}
+                  />
+                </div>
 
-      {error && (
-        <div
-          style={{
-            marginBottom: '16px',
-            padding: '12px',
-            borderRadius: '8px',
-            border: '1px solid #fecaca',
-            backgroundColor: '#fef2f2',
-            color: '#b91c1c',
-            fontSize: '14px',
-          }}
-        >
-          {error}
-        </div>
-      )}
+                <div className="space-y-2">
+                  <Label htmlFor="guardian-email">{t(i18nKeys.guardianRegister.form.email)}</Label>
+                  <Input
+                    id="guardian-email"
+                    type="email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                  />
+                </div>
+              </div>
 
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '16px',
-          borderRadius: '12px',
-          border: '1px solid #e2e8f0',
-          padding: '20px',
-          backgroundColor: '#ffffff',
-          boxShadow: '0 10px 25px rgba(15, 23, 42, 0.04)',
-        }}
-      >
-        <div>
-          <label
-            htmlFor="guardian-name"
-            style={{ display: 'block', marginBottom: '6px', fontSize: '14px' }}
-          >
-            {t(i18nKeys.guardianRegister.form.name)}
-          </label>
-          <input
-            id="guardian-name"
-            type="text"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-            style={{
-              width: '100%',
-              padding: '8px 10px',
-              borderRadius: '8px',
-              border: '1px solid #cbd5f5',
-            }}
-          />
-        </div>
+              <div className="space-y-2">
+                <Label htmlFor="guardian-phone">{t(i18nKeys.guardianRegister.form.phone)}</Label>
+                <Input
+                  id="guardian-phone"
+                  type="tel"
+                  value={phone}
+                  onChange={(event) => setPhone(event.target.value)}
+                />
+              </div>
 
-        <div>
-          <label
-            htmlFor="guardian-email"
-            style={{ display: 'block', marginBottom: '6px', fontSize: '14px' }}
-          >
-            {t(i18nKeys.guardianRegister.form.email)}
-          </label>
-          <input
-            id="guardian-email"
-            type="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            style={{
-              width: '100%',
-              padding: '8px 10px',
-              borderRadius: '8px',
-              border: '1px solid #cbd5f5',
-            }}
-          />
-        </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="space-y-2">
+                  <Label htmlFor="guardian-password">{t(i18nKeys.guardianRegister.form.password)}</Label>
+                  <Input
+                    id="guardian-password"
+                    type="password"
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                  />
+                </div>
 
-        <div>
-          <label
-            htmlFor="guardian-phone"
-            style={{ display: 'block', marginBottom: '6px', fontSize: '14px' }}
-          >
-            {t(i18nKeys.guardianRegister.form.phone)}
-          </label>
-          <input
-            id="guardian-phone"
-            type="tel"
-            value={phone}
-            onChange={(event) => setPhone(event.target.value)}
-            style={{
-              width: '100%',
-              padding: '8px 10px',
-              borderRadius: '8px',
-              border: '1px solid #cbd5f5',
-            }}
-          />
-        </div>
+                <div className="space-y-2">
+                  <Label htmlFor="guardian-confirm">{t(i18nKeys.guardianRegister.form.confirmPassword)}</Label>
+                  <Input
+                    id="guardian-confirm"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={(event) => setConfirmPassword(event.target.value)}
+                  />
+                </div>
+              </div>
 
-        <div>
-          <label
-            htmlFor="guardian-password"
-            style={{ display: 'block', marginBottom: '6px', fontSize: '14px' }}
-          >
-            {t(i18nKeys.guardianRegister.form.password)}
-          </label>
-          <input
-            id="guardian-password"
-            type="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            style={{
-              width: '100%',
-              padding: '8px 10px',
-              borderRadius: '8px',
-              border: '1px solid #cbd5f5',
-            }}
-          />
-        </div>
+              <div className="space-y-2">
+                <Label htmlFor="guardian-school-code">{t(i18nKeys.guardianRegister.form.schoolCode)}</Label>
+                <Input
+                  id="guardian-school-code"
+                  value={schoolCode}
+                  onChange={(event) => setSchoolCode(event.target.value)}
+                />
+              </div>
 
-        <div>
-          <label
-            htmlFor="guardian-confirm-password"
-            style={{ display: 'block', marginBottom: '6px', fontSize: '14px' }}
-          >
-            {t(i18nKeys.guardianRegister.form.confirmPassword)}
-          </label>
-          <input
-            id="guardian-confirm-password"
-            type="password"
-            value={confirmPassword}
-            onChange={(event) => setConfirmPassword(event.target.value)}
-            style={{
-              width: '100%',
-              padding: '8px 10px',
-              borderRadius: '8px',
-              border: '1px solid #cbd5f5',
-            }}
-          />
-        </div>
-
-        <div>
-          <label
-            htmlFor="guardian-school-code"
-            style={{ display: 'block', marginBottom: '6px', fontSize: '14px' }}
-          >
-            {t(i18nKeys.guardianRegister.form.schoolCode)}
-          </label>
-
-          <input
-            id="guardian-school-code"
-            type="text"
-            value={schoolCode}
-            onChange={(event) => setSchoolCode(event.target.value)}
-            style={{
-              width: '100%',
-              padding: '8px 10px',
-              borderRadius: '8px',
-              border: '1px solid #cbd5f5',
-            }}
-          />
-        </div>
-
-        <button
-          type="submit"
-          disabled={submitting}
-          style={{
-            marginTop: '4px',
-            padding: '10px 16px',
-            fontSize: '15px',
-            borderRadius: '999px',
-            border: 'none',
-            cursor: submitting ? 'not-allowed' : 'pointer',
-            opacity: submitting ? 0.7 : 1,
-            backgroundColor: '#2563eb',
-            color: '#ffffff',
-          }}
-        >
-          {submitting ? t(i18nKeys.common.loading) : t(i18nKeys.guardianRegister.form.submit)}
-        </button>
-      </form>
-    </main>
+              <Button type="submit" className="w-full" disabled={submitting}>
+                {submitting ? t(i18nKeys.common.loading) : t(i18nKeys.guardianRegister.form.submit)}
+              </Button>
+            </form>
+          )}
+        </CardContent>
+      </Card>
+    </div>
   );
 }

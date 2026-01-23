@@ -7,17 +7,23 @@ import { usePathname, useRouter } from 'next/navigation';
 import { i18nKeys } from '@payflow/shared';
 import { useAuth } from '../../auth-context';
 import { useI18n } from '../../i18n-context';
+import { MobileSidebar, Sidebar } from '@/components/sidebar';
+import { ModeToggle } from '@/components/mode-toggle';
+import { Button } from '@/components/ui/button';
+import { BookOpen, LayoutDashboard, LogOut, Receipt, UserCircle } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 type NavItem = {
   href: string;
   labelKey: string;
+  icon: any;
 };
 
 const NAV_ITEMS: NavItem[] = [
-  { href: '', labelKey: i18nKeys.guardian.nav.dashboard },
-  { href: '/profile', labelKey: i18nKeys.guardian.nav.profile },
-  { href: '/students', labelKey: i18nKeys.guardian.nav.students },
-  { href: '/invoices', labelKey: i18nKeys.guardian.nav.invoices },
+  { href: '', labelKey: i18nKeys.guardian.nav.dashboard, icon: LayoutDashboard },
+  { href: '/profile', labelKey: i18nKeys.guardian.nav.profile, icon: UserCircle },
+  { href: '/students', labelKey: i18nKeys.guardian.nav.students, icon: BookOpen },
+  { href: '/invoices', labelKey: i18nKeys.guardian.nav.invoices, icon: Receipt },
 ];
 
 export default function GuardianLayout({ children }: { children: React.ReactNode }) {
@@ -43,14 +49,9 @@ export default function GuardianLayout({ children }: { children: React.ReactNode
 
   if (sessionLoading || isLoggingOut || !user) {
     return (
-      <main
-        style={{
-          padding: '24px',
-          fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-        }}
-      >
-        {t(i18nKeys.common.loading)}
-      </main>
+      <div className="flex min-h-screen items-center justify-center p-4">
+        <p className="text-muted-foreground animate-pulse">{t(i18nKeys.common.loading)}</p>
+      </div>
     );
   }
 
@@ -60,153 +61,63 @@ export default function GuardianLayout({ children }: { children: React.ReactNode
 
   if (user.status !== 'ACTIVE') {
     return (
-      <main
-        style={{
-          padding: '24px',
-          fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-          maxWidth: '600px',
-          margin: '50px auto',
-        }}
-      >
-        <h1>{t(i18nKeys.auth.pendingApproval.title)}</h1>
-        <p>{t(i18nKeys.auth.pendingApproval.description)}</p>
-      </main>
+      <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle>{t(i18nKeys.auth.pendingApproval.title)}</CardTitle>
+            <CardDescription>{t(i18nKeys.auth.pendingApproval.description)}</CardDescription>
+          </CardHeader>
+          <CardContent className="flex justify-center">
+            <Button onClick={logout} variant="outline">
+              {t(i18nKeys.nav.logout)}
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
     );
   }
 
   const basePath = `/${locale}/g`;
+  const sidebarItems = NAV_ITEMS.map(item => ({
+    href: `${basePath}${item.href}`,
+    label: t(item.labelKey),
+    icon: item.icon
+  }));
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        minHeight: '100vh',
-        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-      }}
-    >
-      <aside
-        style={{
-          width: '220px',
-          borderRight: '1px solid #e2e8f0',
-          padding: '20px 16px',
-          backgroundColor: '#020617',
-          color: '#e5e7eb',
-        }}
-      >
-        <div
-          style={{
-            fontWeight: 700,
-            fontSize: '18px',
-            marginBottom: '24px',
-          }}
-        >
-          PayFlow
-        </div>
-        <nav
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '8px',
-            fontSize: '14px',
-          }}
-        >
-          {NAV_ITEMS.map((item) => {
-            const href = `${basePath}${item.href}`;
-            const isActive = pathname === href;
-            return (
-              <Link
-                key={item.href}
-                href={href}
-                style={{
-                  color: isActive ? '#e5e7eb' : '#9ca3af',
-                  textDecoration: 'none',
-                  fontWeight: isActive ? 600 : 400,
-                }}
-              >
-                {t(item.labelKey)}
-              </Link>
-            );
-          })}
-        </nav>
-      </aside>
-      <main
-        style={{
-          flex: 1,
-          padding: '24px',
-          backgroundColor: '#f8fafc',
-        }}
-      >
-        <header
-          style={{
-            marginBottom: '16px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <div>
-            <div
-              style={{
-                fontSize: '18px',
-                fontWeight: 600,
-                marginBottom: '4px',
-              }}
-            >
-              {t(i18nKeys.guardian.pages.dashboard.title)}
-            </div>
-            <p
-              style={{
-                fontSize: '14px',
-                color: '#64748b',
-                margin: 0,
-              }}
-            >
-              {t(i18nKeys.guardian.pages.dashboard.description)}
-            </p>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px',
-            }}
-          >
-            <div
-              style={{
-                textAlign: 'right',
-                fontSize: '13px',
-                color: '#0f172a',
-              }}
-            >
-              <div>{user.name || user.email}</div>
-              <div
-                style={{
-                  color: '#64748b',
-                }}
-              >
-                {user.email}
+    <div className="flex min-h-screen">
+      <div className="hidden md:block w-64 shrink-0">
+        <Sidebar title="PayFlow" items={sidebarItems} className="fixed w-64 h-full" />
+      </div>
+
+      <div className="flex-1 flex flex-col min-w-0 bg-muted/40">
+        <header className="sticky top-0 z-40 bg-background border-b px-6 py-3 flex items-center justify-between shadow-sm">
+          <div className="flex items-center gap-4">
+            <MobileSidebar title="PayFlow" items={sidebarItems} />
+            <div>
+              <div className="font-semibold text-lg text-foreground">
+                {t(i18nKeys.guardian.pages.dashboard.title)}
               </div>
             </div>
-            <button
-              type="button"
-              onClick={logout}
-              style={{
-                padding: '6px 10px',
-                borderRadius: '999px',
-                border: 'none',
-                backgroundColor: '#ef4444',
-                color: '#ffffff',
-                cursor: 'pointer',
-                fontSize: '13px',
-              }}
-            >
+          </div>
+
+          <div className="flex items-center gap-4">
+            <ModeToggle />
+            <div className="text-right hidden sm:block">
+              <div className="text-sm font-medium text-foreground">{user.name || user.email}</div>
+              <div className="text-xs text-muted-foreground">{user.email}</div>
+            </div>
+            <Button size="sm" variant="ghost" className="text-destructive hover:text-destructive hover:bg-destructive/10" onClick={logout}>
+              <LogOut className="h-4 w-4 mr-2" />
               {t(i18nKeys.nav.logout)}
-            </button>
+            </Button>
           </div>
         </header>
 
-        <section>{children}</section>
-      </main>
+        <main className="flex-1 p-6 md:p-8 max-w-7xl mx-auto w-full">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

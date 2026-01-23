@@ -222,7 +222,6 @@ async function run() {
   } as unknown as PrismaService;
 
   const auditServiceMock: AuditService = {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     log: async (input) => {
       auditLogs.push({ action: input.action, tenantId: input.tenantId });
     },
@@ -440,7 +439,6 @@ async function run() {
 }
 
 run().catch((error) => {
-  // eslint-disable-next-line no-console
   console.error(error);
   process.exit(1);
 });

@@ -90,12 +90,13 @@ async function main() {
     for (const template of templates) {
         try {
             console.log(`Sending template: ${template.id}...`);
-            const { html, text } = renderEmailTemplate(template.id, template.variables);
+            // Add en-US variant testing
+            const { html, text, subject } = renderEmailTemplate(template.id, template.variables, 'en-US');
 
             const { data, error } = await resend.emails.send({
                 from: fromEmail,
                 to: targetEmail,
-                subject: `[TEST] ${template.id}`,
+                subject: `[TEST] ${subject} (en-US)`,
                 html,
                 text,
             });

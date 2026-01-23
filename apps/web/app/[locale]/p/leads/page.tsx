@@ -162,7 +162,7 @@ export default function PlatformLeadsPage() {
             fontSize: '14px',
           }}
         >
-          <option value="all">Todos</option>
+          <option value="all">{t(i18nKeys.common.all)}</option>
           <option value="NEW">{t(i18nKeys.platform.leads.status.new)}</option>
           <option value="CONTACTED">{t(i18nKeys.platform.leads.status.contacted)}</option>
           <option value="CONVERTED">{t(i18nKeys.platform.leads.status.converted)}</option>
@@ -225,7 +225,7 @@ export default function PlatformLeadsPage() {
                 <th style={{ textAlign: 'left', padding: '8px 12px' }}>
                   {t(i18nKeys.platform.leads.table.createdAt)}
                 </th>
-                <th style={{ textAlign: 'left', padding: '8px 12px' }}>Ações</th>
+                <th style={{ textAlign: 'left', padding: '8px 12px' }}>{t(i18nKeys.common.actions)}</th>
               </tr>
             </thead>
             <tbody>

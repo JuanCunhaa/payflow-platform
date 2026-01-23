@@ -56,7 +56,9 @@ export const i18nKeys = {
       title: 'passwordReset.forgot.title',
       description: 'passwordReset.forgot.description',
       emailLabel: 'passwordReset.forgot.emailLabel',
+      emailPlaceholder: 'passwordReset.forgot.emailPlaceholder',
       submit: 'passwordReset.forgot.submit',
+      backToLogin: 'passwordReset.forgot.backToLogin',
       success: 'passwordReset.forgot.success',
       error: {
         validation: 'passwordReset.forgot.error.validation',
@@ -91,6 +93,10 @@ export const i18nKeys = {
       english: 'common.language.english',
       portuguese: 'common.language.portuguese',
     },
+    all: 'common.all',
+    actions: 'common.actions',
+    page: 'common.page',
+    of: 'common.of',
   },
   auth: {
     pendingApproval: {
@@ -272,6 +278,7 @@ export const i18nKeys = {
         phone: 'platform.leads.table.phone',
         status: 'platform.leads.table.status',
         createdAt: 'platform.leads.table.createdAt',
+        actions: 'platform.leads.table.actions',
       },
       status: {
         new: 'platform.leads.status.new',

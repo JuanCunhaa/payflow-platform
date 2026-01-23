@@ -165,9 +165,9 @@ async function run() {
           student: invoice.studentName ? { name: invoice.studentName } : null,
           guardian: invoice.guardianName
             ? {
-                name: invoice.guardianName,
-                user: { email: 'guardian@example.com' },
-              }
+              name: invoice.guardianName,
+              user: { email: 'guardian@example.com' },
+            }
             : null,
         }));
       },
@@ -268,7 +268,7 @@ async function run() {
     write: (chunk: string) => {
       chunks.push(String(chunk));
     },
-    end: () => {},
+    end: () => { },
   } as any;
 
   await controller.exportInvoicesCsv(reqTenant, '2026-01-01', '2026-01-31', 'PAID', resMock);
@@ -348,12 +348,11 @@ async function run() {
     );
   }
 
-  // eslint-disable-next-line no-console
+  // console.log('SchoolReportsController tests passed');
   console.log('SchoolReportsController tests passed');
 }
 
 run().catch((error) => {
-  // eslint-disable-next-line no-console
   console.error(error);
   process.exit(1);
 });

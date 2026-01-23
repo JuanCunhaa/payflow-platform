@@ -7,6 +7,21 @@ import { i18nKeys } from '@payflow/shared';
 import { useAuth } from '../../auth-context';
 import { useTenant } from '../../tenant-context';
 import { useI18n } from '../../i18n-context';
+import { MobileSidebar, Sidebar } from '@/components/sidebar';
+import { ModeToggle } from '@/components/mode-toggle';
+import { Button } from '@/components/ui/button';
+import {
+  BarChart3,
+  CheckSquare,
+  FileText,
+  GraduationCap,
+  LogOut,
+  Receipt,
+  Settings,
+  UserCheck,
+  Users,
+} from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 type Crumb = {
   label: string;
@@ -100,77 +115,40 @@ export default function SchoolLayout({ children }: { children: React.ReactNode }
     [pathname, basePath, t]
   );
 
+  const sidebarItems = [
+    { href: basePath, label: t(i18nKeys.school.nav.dashboard), icon: BarChart3 },
+    { href: `${basePath}/classes`, label: t(i18nKeys.school.nav.classes), icon: GraduationCap },
+    { href: `${basePath}/students`, label: t(i18nKeys.school.nav.students), icon: Users },
+    { href: `${basePath}/contracts`, label: t(i18nKeys.school.nav.contracts), icon: FileText },
+    { href: `${basePath}/invoices`, label: t(i18nKeys.school.nav.invoices), icon: Receipt },
+    { href: `${basePath}/guardians`, label: t(i18nKeys.school.nav.guardians), icon: UserCheck },
+    { href: `${basePath}/approvals/guardians`, label: t(i18nKeys.school.nav.approvalsGuardians), icon: CheckSquare },
+    { href: `${basePath}/settings`, label: t(i18nKeys.school.nav.settings), icon: Settings },
+  ];
+
   if (sessionLoading || isLoggingOut || !user) {
     return (
-      <main
-        style={{
-          padding: '24px',
-          fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-        }}
-      >
-        {t(i18nKeys.common.loading)}
-      </main>
+      <div className="flex min-h-screen items-center justify-center p-4">
+        <p className="text-muted-foreground animate-pulse">{t(i18nKeys.common.loading)}</p>
+      </div>
     );
   }
 
   if (!isStaff || !hasTenantContext) {
     return (
-      <main
-        style={{
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '24px',
-          fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-          backgroundColor: '#f8fafc',
-        }}
-      >
-        <div
-          style={{
-            maxWidth: '480px',
-            width: '100%',
-            padding: '24px',
-            borderRadius: '12px',
-            backgroundColor: '#ffffff',
-            border: '1px solid #e2e8f0',
-            boxShadow: '0 10px 25px rgba(15,23,42,0.08)',
-          }}
-        >
-          <h1
-            style={{
-              fontSize: '20px',
-              marginBottom: '8px',
-            }}
-          >
-            {t(i18nKeys.school.layout.unauthorizedTitle)}
-          </h1>
-          <p
-            style={{
-              fontSize: '14px',
-              color: '#64748b',
-              marginBottom: '16px',
-            }}
-          >
-            {t(i18nKeys.school.layout.unauthorizedDescription)}
-          </p>
-          <button
-            type="button"
-            onClick={logout}
-            style={{
-              padding: '8px 14px',
-              borderRadius: '999px',
-              border: 'none',
-              backgroundColor: '#ef4444',
-              color: '#ffffff',
-              cursor: 'pointer',
-              fontSize: '14px',
-            }}
-          >
-            {t(i18nKeys.nav.logout)}
-          </button>
-        </div>
-      </main>
+      <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
+        <Card className="w-full max-w-md">
+          <CardHeader>
+            <CardTitle>{t(i18nKeys.school.layout.unauthorizedTitle)}</CardTitle>
+            <CardDescription>{t(i18nKeys.school.layout.unauthorizedDescription)}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button variant="destructive" onClick={logout} className="w-full">
+              {t(i18nKeys.nav.logout)}
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
     );
   }
 
@@ -179,150 +157,53 @@ export default function SchoolLayout({ children }: { children: React.ReactNode }
   const userLabel = user.name || user.email;
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        minHeight: '100vh',
-        fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-      }}
-    >
-      <aside
-        style={{
-          width: '220px',
-          borderRight: '1px solid #e2e8f0',
-          padding: '20px 16px',
-          backgroundColor: '#020617',
-          color: '#e5e7eb',
-        }}
-      >
-        <div
-          style={{
-            fontWeight: 700,
-            fontSize: '18px',
-            marginBottom: '24px',
-          }}
-        >
-          PayFlow
-        </div>
-        <nav
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '8px',
-            fontSize: '14px',
-          }}
-        >
-          <Link href={basePath} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
-            {t(i18nKeys.school.nav.dashboard)}
-          </Link>
-          <Link href={`${basePath}/settings`} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
-            {t(i18nKeys.school.nav.settings)}
-          </Link>
-          <Link href={`${basePath}/classes`} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
-            {t(i18nKeys.school.nav.classes)}
-          </Link>
-          <Link href={`${basePath}/contracts`} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
-            {t(i18nKeys.school.nav.contracts)}
-          </Link>
-          <Link href={`${basePath}/invoices`} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
-            {t(i18nKeys.school.nav.invoices)}
-          </Link>
-          <Link href={`${basePath}/students`} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
-            {t(i18nKeys.school.nav.students)}
-          </Link>
-          <Link href={`${basePath}/guardians`} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
-            {t(i18nKeys.school.nav.guardians)}
-          </Link>
-          <Link
-            href={`${basePath}/approvals/guardians`}
-            style={{ color: '#e5e7eb', textDecoration: 'none' }}
-          >
-            {t(i18nKeys.school.nav.approvalsGuardians)}
-          </Link>
-        </nav>
-      </aside>
-      <main
-        style={{
-          flex: 1,
-          padding: '24px',
-          backgroundColor: '#f8fafc',
-        }}
-      >
-        <header
-          style={{
-            marginBottom: '16px',
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <div>
-            <div
-              style={{
-                fontSize: '14px',
-                color: '#94a3b8',
-                marginBottom: '4px',
-              }}
-            >
-              {breadcrumbs.map((crumb, index) => (
-                <span key={`${crumb.label}-${index}`}>
-                  {index > 0 && ' / '}
-                  {crumb.href ? (
-                    <Link href={crumb.href} style={{ color: '#64748b', textDecoration: 'none' }}>
-                      {crumb.label}
-                    </Link>
-                  ) : (
-                    <span>{crumb.label}</span>
-                  )}
-                </span>
-              ))}
-            </div>
-            <div
-              style={{
-                fontSize: '18px',
-                fontWeight: 600,
-              }}
-            >
-              {schoolName}
+    <div className="flex min-h-screen">
+      <div className="hidden md:block w-64 shrink-0">
+        <Sidebar title="PayFlow" items={sidebarItems} className="fixed w-64 h-full" />
+      </div>
+
+      <div className="flex-1 flex flex-col min-w-0 bg-slate-50/50 dark:bg-slate-950">
+        <header className="sticky top-0 z-40 bg-white dark:bg-slate-900 border-b px-6 py-3 flex items-center justify-between shadow-sm">
+          <div className="flex items-center gap-4">
+            <MobileSidebar title="PayFlow" items={sidebarItems} />
+            <div>
+              <nav className="flex items-center text-sm text-muted-foreground mb-0.5">
+                {breadcrumbs.map((crumb, index) => (
+                  <span key={`${crumb.label}-${index}`} className="flex items-center">
+                    {index > 0 && <span className="mx-2">/</span>}
+                    {crumb.href ? (
+                      <Link href={crumb.href} className="hover:text-foreground transition-colors">
+                        {crumb.label}
+                      </Link>
+                    ) : (
+                      <span className="text-foreground font-medium">{crumb.label}</span>
+                    )}
+                  </span>
+                ))}
+              </nav>
+              <div className="text-base font-semibold text-slate-800 dark:text-slate-100">
+                {schoolName}
+              </div>
             </div>
           </div>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '12px',
-            }}
-          >
-            <div
-              style={{
-                textAlign: 'right',
-                fontSize: '13px',
-                color: '#0f172a',
-              }}
-            >
-              <div>{userLabel}</div>
-              <div style={{ color: '#64748b' }}>{user.email}</div>
+
+          <div className="flex items-center gap-4">
+            <ModeToggle />
+            <div className="text-right hidden sm:block">
+              <div className="text-sm font-medium text-slate-900 dark:text-slate-100">{userLabel}</div>
+              <div className="text-xs text-muted-foreground">{user.email}</div>
             </div>
-            <button
-              type="button"
-              onClick={logout}
-              style={{
-                padding: '6px 10px',
-                borderRadius: '999px',
-                border: 'none',
-                backgroundColor: '#ef4444',
-                color: '#ffffff',
-                cursor: 'pointer',
-                fontSize: '13px',
-              }}
-            >
+            <Button size="sm" variant="ghost" className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/10" onClick={logout}>
+              <LogOut className="h-4 w-4 mr-2" />
               {t(i18nKeys.nav.logout)}
-            </button>
+            </Button>
           </div>
         </header>
 
-        <section>{children}</section>
-      </main>
+        <main className="flex-1 p-6 md:p-8 max-w-7xl mx-auto w-full">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

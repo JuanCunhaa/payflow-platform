@@ -56,7 +56,9 @@
       "title": "Forgot your password?",
       "description": "Enter your email. If there is an account, we will send instructions to reset your password.",
       "emailLabel": "Email",
+      "emailPlaceholder": "Your registered email",
       "submit": "Send instructions",
+      "backToLogin": "Back to login",
       "success": "If an account exists with this email, you will receive password reset instructions in a few minutes.",
       "error": {
         "validation": "Please enter a valid email address.",
@@ -90,7 +92,11 @@
     "language": {
       "english": "English",
       "portuguese": "Portuguese"
-    }
+    },
+    "all": "All",
+    "actions": "Actions",
+    "page": "Page",
+    "of": "of"
   },
   "tenant": {
     "notFound": {
@@ -302,7 +308,8 @@
         "email": "Email",
         "phone": "Phone",
         "status": "Status",
-        "createdAt": "Created at"
+        "createdAt": "Created at",
+        "actions": "Actions"
       },
       "status": {
         "new": "New",
