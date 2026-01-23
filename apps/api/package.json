@@ -15,7 +15,8 @@
     "db:seed": "ts-node prisma/seed.ts",
     "db:studio": "prisma studio",
     "db:generate": "prisma generate",
-    "db:reset": "prisma migrate reset"
+    "db:reset": "prisma migrate reset",
+    "test:email": "ts-node scripts/send-test-emails.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -34,12 +35,14 @@
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.1.13",
+    "resend": "^6.8.0",
     "rxjs": "^7.8.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
     "@types/node": "^20.11.0",
     "@types/passport-jwt": "^4.0.1",
+    "@types/react": "^18.3.27",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "eslint": "^9.0.0",
@@ -53,4 +56,3 @@
     "seed": "ts-node prisma/seed.ts"
   }
 }
- 

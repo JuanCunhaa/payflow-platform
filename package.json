@@ -14,7 +14,8 @@
     "test": "npm run -w @payflow/web test && npm run -w @payflow/api test",
     "db:migrate": "npm run -w @payflow/api db:migrate",
     "db:seed": "npm run -w @payflow/api db:seed",
-    "db:studio": "npm run -w @payflow/api db:studio"
+    "db:studio": "npm run -w @payflow/api db:studio",
+    "test:email": "npm run -w @payflow/api test:email --"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",

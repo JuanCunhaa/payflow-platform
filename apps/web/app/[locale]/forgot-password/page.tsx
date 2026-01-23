@@ -181,9 +181,7 @@ export default function ForgotPasswordPage() {
             fontWeight: 500,
           }}
         >
-          {submitting
-            ? t(i18nKeys.common.loading)
-            : t(i18nKeys.passwordReset.forgot.submit)}
+          {submitting ? t(i18nKeys.common.loading) : t(i18nKeys.passwordReset.forgot.submit)}
         </button>
       </form>
     </main>

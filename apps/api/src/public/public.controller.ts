@@ -174,8 +174,7 @@ export class PublicController {
     });
 
     const forwardedFor = req.headers['x-forwarded-for'];
-    const ip =
-      (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) || req.ip || null;
+    const ip = (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) || req.ip || null;
     const userAgent = (req.headers['user-agent'] as string | undefined) || null;
 
     await this.auditService.log({
@@ -205,9 +204,7 @@ export class PublicController {
     });
 
     const appBaseUrl = process.env.APP_PUBLIC_URL || 'http://localhost:3000';
-    const verifyLink = `${appBaseUrl}/public/verify-email?token=${encodeURIComponent(
-      verifyToken
-    )}`;
+    const verifyLink = `${appBaseUrl}/public/verify-email?token=${encodeURIComponent(verifyToken)}`;
 
     await this.emailService.sendEmailVerification(email, {
       name,
@@ -227,10 +224,7 @@ export class PublicController {
    */
   @Get('pay/sandbox/:invoiceId')
   @Throttle({ medium: { ttl: 10 * 60 * 1000, limit: 20 } })
-  async getSandboxInvoice(
-    @Param('invoiceId') invoiceId: string,
-    @Req() req: Request
-  ) {
+  async getSandboxInvoice(@Param('invoiceId') invoiceId: string, @Req() req: Request) {
     const token = (req.query.token as string | undefined) || '';
     if (!token) {
       throw new BadRequestException({
@@ -410,8 +404,7 @@ export class PublicController {
     });
 
     const forwardedFor = req.headers['x-forwarded-for'];
-    const ip =
-      (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) || req.ip || null;
+    const ip = (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) || req.ip || null;
     const userAgent = (req.headers['user-agent'] as string | undefined) || null;
 
     await this.auditService.log({

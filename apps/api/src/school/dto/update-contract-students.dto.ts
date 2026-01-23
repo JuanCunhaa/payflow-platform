@@ -1,9 +1,4 @@
-import {
-  ArrayNotEmpty,
-  ArrayUnique,
-  IsArray,
-  IsUUID,
-} from 'class-validator';
+import { ArrayNotEmpty, ArrayUnique, IsArray, IsUUID } from 'class-validator';
 
 export class UpdateContractStudentsDto {
   @IsArray()
@@ -12,4 +7,3 @@ export class UpdateContractStudentsDto {
   @IsUUID('4', { each: true })
   studentIds!: string[];
 }
-

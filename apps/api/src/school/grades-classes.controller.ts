@@ -106,10 +106,10 @@ export class GradesClassesController {
           message: 'A grade with this name already exists for this school',
         });
       }
-       this.logger.error(
-         `Failed to create grade for tenant ${tenantId}`,
-         (error as Error)?.stack ?? String(error)
-       );
+      this.logger.error(
+        `Failed to create grade for tenant ${tenantId}`,
+        (error as Error)?.stack ?? String(error)
+      );
       throw error;
     }
   }

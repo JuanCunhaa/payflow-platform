@@ -10,11 +10,9 @@ test.describe('Public landing and navigation', () => {
     await expect(
       page.getByRole('heading', {
         name: /Planilha, WhatsApp e comprovantes perdidos/i,
-      }),
+      })
     ).toBeVisible();
-    await expect(
-      page.getByText('Uma plataforma pensada para a rotina da escola'),
-    ).toBeVisible();
+    await expect(page.getByText('Uma plataforma pensada para a rotina da escola')).toBeVisible();
   });
 
   test('CTAs navigate to login, guardian and request demo', async ({ page }) => {
@@ -28,10 +26,7 @@ test.describe('Public landing and navigation', () => {
     await expect(page).toHaveURL(new RegExp(`/${LOCALE}/register/guardian$`));
 
     await page.goto(`/${LOCALE}`);
-    await page
-      .getByRole('button', { name: 'Quero na minha escola' })
-      .first()
-      .click();
+    await page.getByRole('button', { name: 'Quero na minha escola' }).first().click();
     await expect(page).toHaveURL(new RegExp(`/${LOCALE}/request-demo$`));
   });
 
@@ -40,7 +35,7 @@ test.describe('Public landing and navigation', () => {
 
     await page.getByRole('button', { name: 'Solicitar demonstração' }).click();
     await expect(
-      page.getByText('Verifique se todos os campos estão preenchidos corretamente.'),
+      page.getByText('Verifique se todos os campos estão preenchidos corretamente.')
     ).toBeVisible();
 
     const email = `e2e+${Date.now()}@example.com`;
@@ -52,8 +47,6 @@ test.describe('Public landing and navigation', () => {
 
     await page.getByRole('button', { name: 'Solicitar demonstração' }).click();
 
-    await expect(
-      page.getByText('Recebemos seu pedido!', { exact: false }),
-    ).toBeVisible();
+    await expect(page.getByText('Recebemos seu pedido!', { exact: false })).toBeVisible();
   });
 });

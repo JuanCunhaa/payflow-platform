@@ -10,4 +10,3 @@ export class UpdateClassDto {
   @MaxLength(120)
   name?: string;
 }
-

@@ -64,7 +64,10 @@ async function run() {
 
   const prismaMock = {
     guardian: {
-      findFirst: async (args: { where: { tenantId?: string; userId?: string; id?: string }; include?: any }) => {
+      findFirst: async (args: {
+        where: { tenantId?: string; userId?: string; id?: string };
+        include?: any;
+      }) => {
         const { tenantId, userId, id } = args.where;
         const guardian = guardians.find((g) => {
           if (tenantId && g.tenantId !== tenantId) return false;

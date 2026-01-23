@@ -330,15 +330,9 @@ export default function SchoolGuardiansPage() {
         <label>
           {t(i18nKeys.school.guardiansUi.filters.status)}
           <select value={filterStatus} onChange={handleFilterStatusChange}>
-            <option value="ALL">
-              {t(i18nKeys.school.guardiansUi.filters.statusAll)}
-            </option>
-            <option value="ACTIVE">
-              {t(i18nKeys.school.guardiansUi.status.active)}
-            </option>
-            <option value="INACTIVE">
-              {t(i18nKeys.school.guardiansUi.status.inactive)}
-            </option>
+            <option value="ALL">{t(i18nKeys.school.guardiansUi.filters.statusAll)}</option>
+            <option value="ACTIVE">{t(i18nKeys.school.guardiansUi.status.active)}</option>
+            <option value="INACTIVE">{t(i18nKeys.school.guardiansUi.status.inactive)}</option>
           </select>
         </label>
 
@@ -389,12 +383,8 @@ export default function SchoolGuardiansPage() {
               value={formStatus}
               onChange={(event) => setFormStatus(event.target.value as GuardianStatus)}
             >
-              <option value="ACTIVE">
-                {t(i18nKeys.school.guardiansUi.status.active)}
-              </option>
-              <option value="INACTIVE">
-                {t(i18nKeys.school.guardiansUi.status.inactive)}
-              </option>
+              <option value="ACTIVE">{t(i18nKeys.school.guardiansUi.status.active)}</option>
+              <option value="INACTIVE">{t(i18nKeys.school.guardiansUi.status.inactive)}</option>
             </select>
           </label>
 
@@ -450,18 +440,12 @@ export default function SchoolGuardiansPage() {
                     <button type="button" onClick={() => openEditGuardian(guardian)}>
                       {t(i18nKeys.school.guardiansUi.actions.edit)}
                     </button>
-                    <button
-                      type="button"
-                      onClick={() => void handleToggleStatus(guardian)}
-                    >
+                    <button type="button" onClick={() => void handleToggleStatus(guardian)}>
                       {guardian.status === 'ACTIVE'
                         ? t(i18nKeys.school.guardiansUi.actions.inactivate)
                         : t(i18nKeys.school.guardiansUi.actions.activate)}
                     </button>
-                    <button
-                      type="button"
-                      onClick={() => setSelectedGuardianId(guardian.id)}
-                    >
+                    <button type="button" onClick={() => setSelectedGuardianId(guardian.id)}>
                       {t(i18nKeys.school.guardiansUi.actions.viewDetails)}
                     </button>
                   </td>
@@ -477,11 +461,7 @@ export default function SchoolGuardiansPage() {
             <button type="button" onClick={handlePrevPage} disabled={page <= 1}>
               ‹
             </button>
-            <button
-              type="button"
-              onClick={handleNextPage}
-              disabled={page >= totalPages}
-            >
+            <button type="button" onClick={handleNextPage} disabled={page >= totalPages}>
               ›
             </button>
           </div>
@@ -535,9 +515,7 @@ export default function SchoolGuardiansPage() {
                     value={linkStudentId}
                     onChange={(event) => setLinkStudentId(event.target.value)}
                   >
-                    <option value="">
-                      {t(i18nKeys.school.guardiansUi.actions.linkStudent)}
-                    </option>
+                    <option value="">{t(i18nKeys.school.guardiansUi.actions.linkStudent)}</option>
                     {availableStudents.map((student) => (
                       <option key={student.id} value={student.id}>
                         {student.name}

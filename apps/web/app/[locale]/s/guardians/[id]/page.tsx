@@ -7,13 +7,7 @@ import { i18nKeys } from '@payflow/shared';
 import { useI18n } from '../../../../i18n-context';
 import { useAuth } from '../../../../auth-context';
 
-type InvoiceStatus =
-  | 'DRAFT'
-  | 'PENDING'
-  | 'PAID'
-  | 'OVERDUE'
-  | 'CANCELED'
-  | 'REFUNDED';
+type InvoiceStatus = 'DRAFT' | 'PENDING' | 'PAID' | 'OVERDUE' | 'CANCELED' | 'REFUNDED';
 
 type GuardianReportInvoice = {
   id: string;
@@ -364,24 +358,12 @@ export default function GuardianFinancialReportPage() {
                           borderBottom: '1px solid #f3f4f6',
                         }}
                       >
-                        <td style={{ padding: '8px' }}>
-                          {formatDate(invoice.dueDate)}
-                        </td>
-                        <td style={{ padding: '8px' }}>
-                          {formatAmountBRL(invoice.amountCents)}
-                        </td>
-                        <td style={{ padding: '8px' }}>
-                          {statusLabel(invoice.status)}
-                        </td>
-                        <td style={{ padding: '8px' }}>
-                          {invoice.studentName ?? '—'}
-                        </td>
-                        <td style={{ padding: '8px' }}>
-                          {invoice.contractName ?? '—'}
-                        </td>
-                        <td style={{ padding: '8px' }}>
-                          {formatDate(invoice.paidAt)}
-                        </td>
+                        <td style={{ padding: '8px' }}>{formatDate(invoice.dueDate)}</td>
+                        <td style={{ padding: '8px' }}>{formatAmountBRL(invoice.amountCents)}</td>
+                        <td style={{ padding: '8px' }}>{statusLabel(invoice.status)}</td>
+                        <td style={{ padding: '8px' }}>{invoice.studentName ?? '—'}</td>
+                        <td style={{ padding: '8px' }}>{invoice.contractName ?? '—'}</td>
+                        <td style={{ padding: '8px' }}>{formatDate(invoice.paidAt)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -394,4 +376,3 @@ export default function GuardianFinancialReportPage() {
     </div>
   );
 }
-

@@ -614,10 +614,8 @@ export const i18nKeys = {
         },
         actions: {
           copyPaymentLink: 'school.reportsUi.overdue.actions.copyPaymentLink',
-          copyPaymentLinkSuccess:
-            'school.reportsUi.overdue.actions.copyPaymentLinkSuccess',
-          generatePaymentLink:
-            'school.reportsUi.overdue.actions.generatePaymentLink',
+          copyPaymentLinkSuccess: 'school.reportsUi.overdue.actions.copyPaymentLinkSuccess',
+          generatePaymentLink: 'school.reportsUi.overdue.actions.generatePaymentLink',
         },
         feedback: {
           loadError: 'school.reportsUi.overdue.feedback.loadError',

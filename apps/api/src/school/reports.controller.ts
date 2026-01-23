@@ -21,13 +21,7 @@ type TenantRequest = Partial<Request> & {
   tenant?: { id: string; slug: string };
 };
 
-type InvoiceStatus =
-  | 'DRAFT'
-  | 'PENDING'
-  | 'PAID'
-  | 'OVERDUE'
-  | 'CANCELED'
-  | 'REFUNDED';
+type InvoiceStatus = 'DRAFT' | 'PENDING' | 'PAID' | 'OVERDUE' | 'CANCELED' | 'REFUNDED';
 
 const ALLOWED_STATUS: InvoiceStatus[] = [
   'DRAFT',
@@ -111,42 +105,41 @@ export class SchoolReportsController {
       baseWhere.dueDate = dueDateFilter;
     }
 
-    const [paidSum, openSum, overdueSum, openCount, overdueCount] =
-      await Promise.all([
-        this.prisma.invoice.aggregate({
-          where: {
-            ...baseWhere,
-            status: 'PAID',
-          } as any,
-          _sum: { amountCents: true },
-        }),
-        this.prisma.invoice.aggregate({
-          where: {
-            ...baseWhere,
-            status: { in: ['PENDING', 'OVERDUE'] },
-          } as any,
-          _sum: { amountCents: true },
-        }),
-        this.prisma.invoice.aggregate({
-          where: {
-            ...baseWhere,
-            status: 'OVERDUE',
-          } as any,
-          _sum: { amountCents: true },
-        }),
-        this.prisma.invoice.count({
-          where: {
-            ...baseWhere,
-            status: { in: ['PENDING', 'OVERDUE'] },
-          } as any,
-        }),
-        this.prisma.invoice.count({
-          where: {
-            ...baseWhere,
-            status: 'OVERDUE',
-          } as any,
-        }),
-      ]);
+    const [paidSum, openSum, overdueSum, openCount, overdueCount] = await Promise.all([
+      this.prisma.invoice.aggregate({
+        where: {
+          ...baseWhere,
+          status: 'PAID',
+        } as any,
+        _sum: { amountCents: true },
+      }),
+      this.prisma.invoice.aggregate({
+        where: {
+          ...baseWhere,
+          status: { in: ['PENDING', 'OVERDUE'] },
+        } as any,
+        _sum: { amountCents: true },
+      }),
+      this.prisma.invoice.aggregate({
+        where: {
+          ...baseWhere,
+          status: 'OVERDUE',
+        } as any,
+        _sum: { amountCents: true },
+      }),
+      this.prisma.invoice.count({
+        where: {
+          ...baseWhere,
+          status: { in: ['PENDING', 'OVERDUE'] },
+        } as any,
+      }),
+      this.prisma.invoice.count({
+        where: {
+          ...baseWhere,
+          status: 'OVERDUE',
+        } as any,
+      }),
+    ]);
 
     return {
       totalBilledCents: paidSum._sum.amountCents ?? 0,
@@ -190,17 +183,13 @@ export class SchoolReportsController {
 
     return (invoices as any[]).map((invoice) => {
       const dueDate =
-        invoice.dueDate instanceof Date
-          ? (invoice.dueDate as Date)
-          : new Date(invoice.dueDate);
+        invoice.dueDate instanceof Date ? (invoice.dueDate as Date) : new Date(invoice.dueDate);
       const due = new Date(dueDate);
       due.setHours(0, 0, 0, 0);
 
       const diffMs = today.getTime() - due.getTime();
       const daysOverdue =
-        Number.isFinite(diffMs) && diffMs > 0
-          ? Math.floor(diffMs / (1000 * 60 * 60 * 24))
-          : 0;
+        Number.isFinite(diffMs) && diffMs > 0 ? Math.floor(diffMs / (1000 * 60 * 60 * 24)) : 0;
 
       return {
         invoiceId: invoice.id as string,
@@ -224,7 +213,7 @@ export class SchoolReportsController {
     @Query('from') fromParam: string | undefined,
     @Query('to') toParam: string | undefined,
     @Query('status') statusParam: string | undefined,
-    @Res() res: Response,
+    @Res() res: Response
   ): Promise<void> {
     const tenantId = req.tenant!.id;
     const from = parseDate(fromParam);
@@ -269,19 +258,14 @@ export class SchoolReportsController {
     });
 
     res.setHeader('Content-Type', 'text/csv; charset=utf-8');
-    res.setHeader(
-      'Content-Disposition',
-      'attachment; filename="invoices-export.csv"',
-    );
+    res.setHeader('Content-Disposition', 'attachment; filename="invoices-export.csv"');
 
-    res.write(
-      'aluno,responsavel,valor,vencimento,status,pago_em,metodo_pagamento\n',
-    );
+    res.write('aluno,responsavel,valor,vencimento,status,pago_em,metodo_pagamento\n');
 
     for (const invoice of invoices as any[]) {
       const aluno = escapeCsvValue(invoice.student?.name ?? '');
       const responsavel = escapeCsvValue(
-        invoice.guardian?.name ?? invoice.guardian?.user?.email ?? '',
+        invoice.guardian?.name ?? invoice.guardian?.user?.email ?? ''
       );
       const valor = formatAmount(invoice.amountCents);
       const vencimento =
@@ -293,19 +277,11 @@ export class SchoolReportsController {
         invoice.paidAt instanceof Date
           ? (invoice.paidAt as Date).toISOString()
           : invoice.paidAt
-          ? String(invoice.paidAt)
-          : '';
+            ? String(invoice.paidAt)
+            : '';
       const metodoPagamento = invoice.paidMethod ?? '';
 
-      const line = [
-        aluno,
-        responsavel,
-        valor,
-        vencimento,
-        statusValue,
-        pagoEm,
-        metodoPagamento,
-      ]
+      const line = [aluno, responsavel, valor, vencimento, statusValue, pagoEm, metodoPagamento]
         .map((value) => escapeCsvValue(value))
         .join(',');
 
@@ -317,10 +293,7 @@ export class SchoolReportsController {
 
   @Get('student/:id')
   @Roles('SCHOOL_ADMIN', 'FINANCE', 'SECRETARY', 'READONLY')
-  async getStudentReport(
-    @Req() req: TenantRequest,
-    @Param('id') id: string,
-  ) {
+  async getStudentReport(@Req() req: TenantRequest, @Param('id') id: string) {
     const tenantId = req.tenant!.id;
 
     const student = await this.prisma.student.findFirst({
@@ -388,8 +361,8 @@ export class SchoolReportsController {
         invoice.paidAt instanceof Date
           ? (invoice.paidAt as Date).toISOString()
           : invoice.paidAt
-          ? String(invoice.paidAt)
-          : null,
+            ? String(invoice.paidAt)
+            : null,
       contractName: (invoice.contract?.name as string | null) ?? null,
       guardianName:
         (invoice.guardian?.name as string | null) ??
@@ -412,10 +385,7 @@ export class SchoolReportsController {
 
   @Get('guardian/:id')
   @Roles('SCHOOL_ADMIN', 'FINANCE', 'SECRETARY', 'READONLY')
-  async getGuardianReport(
-    @Req() req: TenantRequest,
-    @Param('id') id: string,
-  ) {
+  async getGuardianReport(@Req() req: TenantRequest, @Param('id') id: string) {
     const tenantId = req.tenant!.id;
 
     const guardian = await this.prisma.guardian.findFirst({
@@ -481,8 +451,8 @@ export class SchoolReportsController {
         invoice.paidAt instanceof Date
           ? (invoice.paidAt as Date).toISOString()
           : invoice.paidAt
-          ? String(invoice.paidAt)
-          : null,
+            ? String(invoice.paidAt)
+            : null,
       contractName: (invoice.contract?.name as string | null) ?? null,
       studentName: (invoice.student?.name as string | null) ?? null,
     }));

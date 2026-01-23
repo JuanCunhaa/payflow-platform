@@ -18,4 +18,3 @@ export class CreateStudentDto {
   @IsIn(STUDENT_STATUSES)
   status?: StudentStatusDto;
 }
-

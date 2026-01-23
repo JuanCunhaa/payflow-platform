@@ -50,7 +50,11 @@ export default function RegisterGuardianPage() {
       return false;
     }
 
-    if (trimmedPassword.length < 8 || !/[A-Za-z]/.test(trimmedPassword) || !/\d/.test(trimmedPassword)) {
+    if (
+      trimmedPassword.length < 8 ||
+      !/[A-Za-z]/.test(trimmedPassword) ||
+      !/\d/.test(trimmedPassword)
+    ) {
       setError(t(i18nKeys.guardianRegister.error.weakPassword));
       return false;
     }
@@ -342,9 +346,7 @@ export default function RegisterGuardianPage() {
             color: '#ffffff',
           }}
         >
-          {submitting
-            ? t(i18nKeys.common.loading)
-            : t(i18nKeys.guardianRegister.form.submit)}
+          {submitting ? t(i18nKeys.common.loading) : t(i18nKeys.guardianRegister.form.submit)}
         </button>
       </form>
     </main>

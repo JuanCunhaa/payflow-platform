@@ -318,8 +318,7 @@ export default function SchoolGuardiansApprovalsPage() {
                           padding: '4px 8px',
                           borderRadius: '999px',
                           border: '1px solid #22c55e',
-                          backgroundColor:
-                            actionGuardianId === guardian.id ? '#bbf7d0' : '#22c55e',
+                          backgroundColor: actionGuardianId === guardian.id ? '#bbf7d0' : '#22c55e',
                           color: '#ffffff',
                           cursor: actionGuardianId === guardian.id ? 'not-allowed' : 'pointer',
                         }}
@@ -334,8 +333,7 @@ export default function SchoolGuardiansApprovalsPage() {
                           padding: '4px 8px',
                           borderRadius: '999px',
                           border: '1px solid #fecaca',
-                          backgroundColor:
-                            actionGuardianId === guardian.id ? '#fecaca' : '#fef2f2',
+                          backgroundColor: actionGuardianId === guardian.id ? '#fecaca' : '#fef2f2',
                           color: '#b91c1c',
                           cursor: actionGuardianId === guardian.id ? 'not-allowed' : 'pointer',
                         }}

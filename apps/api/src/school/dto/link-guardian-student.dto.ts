@@ -5,4 +5,3 @@ export class LinkGuardianStudentDto {
   @IsNotEmpty()
   studentId!: string;
 }
-

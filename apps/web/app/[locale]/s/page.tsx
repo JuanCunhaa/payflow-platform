@@ -65,9 +65,7 @@ export default function SchoolDashboardPage() {
         const fromStr = from.toISOString().slice(0, 10);
         const toStr = to.toISOString().slice(0, 10);
 
-        const res = await apiFetch(
-          `/school/reports/summary?from=${fromStr}&to=${toStr}`
-        );
+        const res = await apiFetch(`/school/reports/summary?from=${fromStr}&to=${toStr}`);
 
         if (!res.ok) {
           throw new Error(`request_failed_${res.status}`);
@@ -213,9 +211,7 @@ export default function SchoolDashboardPage() {
         />
         <DashboardCard
           label={t(i18nKeys.school.dashboardUi.cards.overdueCount)}
-          value={
-            summary ? String(summary.overdueInvoicesCount) : loading ? '' : '0'
-          }
+          value={summary ? String(summary.overdueInvoicesCount) : loading ? '' : '0'}
         />
       </div>
     </div>

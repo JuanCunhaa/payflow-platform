@@ -13,11 +13,7 @@ type Crumb = {
   href?: string;
 };
 
-function buildBreadcrumbs(
-  pathname: string,
-  basePath: string,
-  t: (key: string) => string
-): Crumb[] {
+function buildBreadcrumbs(pathname: string, basePath: string, t: (key: string) => string): Crumb[] {
   const withoutQuery = pathname.split('?')[0]?.split('#')[0] ?? pathname;
   const segments = withoutQuery.split('/').filter(Boolean);
 
@@ -219,40 +215,22 @@ export default function SchoolLayout({ children }: { children: React.ReactNode }
           <Link href={basePath} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
             {t(i18nKeys.school.nav.dashboard)}
           </Link>
-          <Link
-            href={`${basePath}/settings`}
-            style={{ color: '#e5e7eb', textDecoration: 'none' }}
-          >
+          <Link href={`${basePath}/settings`} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
             {t(i18nKeys.school.nav.settings)}
           </Link>
-          <Link
-            href={`${basePath}/classes`}
-            style={{ color: '#e5e7eb', textDecoration: 'none' }}
-          >
+          <Link href={`${basePath}/classes`} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
             {t(i18nKeys.school.nav.classes)}
           </Link>
-          <Link
-            href={`${basePath}/contracts`}
-            style={{ color: '#e5e7eb', textDecoration: 'none' }}
-          >
+          <Link href={`${basePath}/contracts`} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
             {t(i18nKeys.school.nav.contracts)}
           </Link>
-          <Link
-            href={`${basePath}/invoices`}
-            style={{ color: '#e5e7eb', textDecoration: 'none' }}
-          >
+          <Link href={`${basePath}/invoices`} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
             {t(i18nKeys.school.nav.invoices)}
           </Link>
-          <Link
-            href={`${basePath}/students`}
-            style={{ color: '#e5e7eb', textDecoration: 'none' }}
-          >
+          <Link href={`${basePath}/students`} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
             {t(i18nKeys.school.nav.students)}
           </Link>
-          <Link
-            href={`${basePath}/guardians`}
-            style={{ color: '#e5e7eb', textDecoration: 'none' }}
-          >
+          <Link href={`${basePath}/guardians`} style={{ color: '#e5e7eb', textDecoration: 'none' }}>
             {t(i18nKeys.school.nav.guardians)}
           </Link>
           <Link

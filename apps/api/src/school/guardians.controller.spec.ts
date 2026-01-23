@@ -108,9 +108,7 @@ async function run() {
         });
 
         const ordered =
-          (args.orderBy?.createdAt ?? 'desc') === 'desc'
-            ? [...filtered].reverse()
-            : filtered;
+          (args.orderBy?.createdAt ?? 'desc') === 'desc' ? [...filtered].reverse() : filtered;
 
         return ordered.slice(skip, skip + take).map((guardian) => ({
           ...guardian,
@@ -154,8 +152,7 @@ async function run() {
         const { id, tenantId } = args.where;
         const guardian = guardians.find(
           (g) =>
-            (id === undefined || g.id === id) &&
-            (tenantId === undefined || g.tenantId === tenantId)
+            (id === undefined || g.id === id) && (tenantId === undefined || g.tenantId === tenantId)
         );
         if (!guardian) return null;
         if (args.select?.id || args.select?.name) {
@@ -208,8 +205,7 @@ async function run() {
         const { id, tenantId } = args.where;
         const student = students.find(
           (s) =>
-            (id === undefined || s.id === id) &&
-            (tenantId === undefined || s.tenantId === tenantId)
+            (id === undefined || s.id === id) && (tenantId === undefined || s.tenantId === tenantId)
         );
         if (!student) return null;
         if (args.select?.id) return { id: student.id };
@@ -217,13 +213,9 @@ async function run() {
       },
     },
     guardianStudent: {
-      create: async (args: {
-        data: { guardianId: string; studentId: string };
-      }) => {
+      create: async (args: { data: { guardianId: string; studentId: string } }) => {
         const exists = guardianStudents.some(
-          (gs) =>
-            gs.guardianId === args.data.guardianId &&
-            gs.studentId === args.data.studentId
+          (gs) => gs.guardianId === args.data.guardianId && gs.studentId === args.data.studentId
         );
         if (exists) {
           const error = new Error('Unique') as Error & { code?: string };
@@ -238,9 +230,7 @@ async function run() {
         guardianStudents.push(link);
         return link;
       },
-      deleteMany: async (args: {
-        where: { guardianId: string; studentId: string };
-      }) => {
+      deleteMany: async (args: { where: { guardianId: string; studentId: string } }) => {
         const { guardianId, studentId } = args.where;
         const before = guardianStudents.length;
         for (let i = guardianStudents.length - 1; i >= 0; i -= 1) {
@@ -255,8 +245,7 @@ async function run() {
         return { count };
       },
     },
-    $transaction: async (operations: Array<Promise<unknown>>) =>
-      Promise.all(operations),
+    $transaction: async (operations: Array<Promise<unknown>>) => Promise.all(operations),
   } as unknown as PrismaService;
 
   const auditMock = {
@@ -279,11 +268,7 @@ async function run() {
     ) => {},
   };
 
-  const controller = new GuardiansController(
-    prismaMock,
-    auditMock as any,
-    emailMock as any
-  );
+  const controller = new GuardiansController(prismaMock, auditMock as any, emailMock as any);
 
   const tenantId = 'tenant-1';
   const otherTenantId = 'tenant-2';

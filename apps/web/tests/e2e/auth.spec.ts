@@ -14,9 +14,7 @@ test.describe('Authentication flows', () => {
     await page.getByLabel('Senha').fill('invalid');
     await page.getByRole('button', { name: 'Entrar' }).click();
 
-    await expect(
-      page.getByText(/Falha no login|Erro de conexão|Muitas tentativas/i),
-    ).toBeVisible();
+    await expect(page.getByText(/Falha no login|Erro de conexão|Muitas tentativas/i)).toBeVisible();
   });
 
   test('platform admin login on admin host redirects to /p', async ({ page }) => {
@@ -38,9 +36,7 @@ test.describe('Authentication flows', () => {
     await page.getByRole('button', { name: 'Entrar' }).click();
 
     await expect(page).toHaveURL(new RegExp(`vidal\\.localtest\\.me:3000/${LOCALE}/s`));
-    await expect(
-      page.getByRole('heading', { name: 'Visão geral da escola' }),
-    ).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Visão geral da escola' })).toBeVisible();
   });
 
   test('logout redirects back to login', async ({ page }) => {

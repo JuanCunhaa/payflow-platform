@@ -6,4 +6,3 @@ export class CreateGradeDto {
   @MaxLength(120)
   name!: string;
 }
-

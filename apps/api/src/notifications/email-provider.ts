@@ -12,4 +12,3 @@ export interface EmailProvider {
 }
 
 export const EMAIL_PROVIDER_TOKEN = 'EMAIL_PROVIDER';
-

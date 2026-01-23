@@ -240,12 +240,7 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
           dueDate,
           paymentLink,
         });
-        await logInvoiceCommunicationOncePerDay(
-          this.prisma,
-          invoice.id,
-          'CREATED',
-          sentAt
-        );
+        await logInvoiceCommunicationOncePerDay(this.prisma, invoice.id, 'CREATED', sentAt);
       }
     }
   }
@@ -352,12 +347,7 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
         paymentLink: invoice.paymentLink ?? undefined,
       });
 
-      await logInvoiceCommunicationOncePerDay(
-        this.prisma,
-        invoice.id,
-        'OVERDUE',
-        sentAt
-      );
+      await logInvoiceCommunicationOncePerDay(this.prisma, invoice.id, 'OVERDUE', sentAt);
 
       await this.prisma.invoice.update({
         where: { id: invoice.id },

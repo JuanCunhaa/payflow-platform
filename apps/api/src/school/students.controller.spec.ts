@@ -43,10 +43,14 @@ async function run() {
 
   const prismaMock = {
     grade: {
-      findFirst: async (args: { where: { id?: string; tenantId?: string }; select?: { id: true } }) => {
+      findFirst: async (args: {
+        where: { id?: string; tenantId?: string };
+        select?: { id: true };
+      }) => {
         const { id, tenantId } = args.where;
         const grade = grades.find(
-          (g) => (id === undefined || g.id === id) && (tenantId === undefined || g.tenantId === tenantId)
+          (g) =>
+            (id === undefined || g.id === id) && (tenantId === undefined || g.tenantId === tenantId)
         );
         if (!grade) return null;
         if (args.select?.id) return { id: grade.id };
@@ -54,12 +58,14 @@ async function run() {
       },
     },
     class: {
-      findFirst: async (args: { where: { id?: string; tenantId?: string }; select?: { id: true } }) => {
+      findFirst: async (args: {
+        where: { id?: string; tenantId?: string };
+        select?: { id: true };
+      }) => {
         const { id, tenantId } = args.where;
         const classEntity = classes.find(
           (c) =>
-            (id === undefined || c.id === id) &&
-            (tenantId === undefined || c.tenantId === tenantId)
+            (id === undefined || c.id === id) && (tenantId === undefined || c.tenantId === tenantId)
         );
         if (!classEntity) return null;
         if (args.select?.id) return { id: classEntity.id };
@@ -114,9 +120,7 @@ async function run() {
         });
 
         const ordered =
-          (args.orderBy?.createdAt ?? 'desc') === 'desc'
-            ? [...filtered].reverse()
-            : filtered;
+          (args.orderBy?.createdAt ?? 'desc') === 'desc' ? [...filtered].reverse() : filtered;
 
         return ordered.slice(skip, skip + take);
       },
@@ -156,8 +160,7 @@ async function run() {
         const { id, tenantId } = args.where;
         const student = students.find(
           (s) =>
-            (id === undefined || s.id === id) &&
-            (tenantId === undefined || s.tenantId === tenantId)
+            (id === undefined || s.id === id) && (tenantId === undefined || s.tenantId === tenantId)
         );
         if (!student) return null;
         if (args.select?.id) return { id: student.id };
@@ -204,10 +207,7 @@ async function run() {
       deleteMany: async (args: { where: { id: string; tenantId: string } }) => {
         const before = students.length;
         for (let i = students.length - 1; i >= 0; i -= 1) {
-          if (
-            students[i].id === args.where.id &&
-            students[i].tenantId === args.where.tenantId
-          ) {
+          if (students[i].id === args.where.id && students[i].tenantId === args.where.tenantId) {
             students.splice(i, 1);
           }
         }
@@ -215,8 +215,7 @@ async function run() {
         return { count };
       },
     },
-    $transaction: async (operations: Array<Promise<unknown>>) =>
-      Promise.all(operations),
+    $transaction: async (operations: Array<Promise<unknown>>) => Promise.all(operations),
   } as unknown as PrismaService;
 
   const controller = new StudentsController(prismaMock);

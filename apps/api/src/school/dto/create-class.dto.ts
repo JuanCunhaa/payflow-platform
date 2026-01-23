@@ -10,4 +10,3 @@ export class CreateClassDto {
   @MaxLength(120)
   name!: string;
 }
-

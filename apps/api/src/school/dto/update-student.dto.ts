@@ -1,11 +1,4 @@
-import {
-  IsIn,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  IsUUID,
-  MaxLength,
-} from 'class-validator';
+import { IsIn, IsNotEmpty, IsOptional, IsString, IsUUID, MaxLength } from 'class-validator';
 
 const STUDENT_STATUSES = ['ACTIVE', 'INACTIVE'] as const;
 
@@ -26,4 +19,3 @@ export class UpdateStudentDto {
   @IsIn(STUDENT_STATUSES)
   status?: StudentStatusDto;
 }
-

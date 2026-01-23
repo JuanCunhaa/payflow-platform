@@ -1,7 +1,4 @@
-import {
-  BadRequestException,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { ContractsController } from './contracts.controller';
 import { PrismaService } from '../prisma/prisma.service';
 import { AuditService } from '../audit/audit.service';
@@ -65,7 +62,9 @@ async function run() {
 
   const prismaMock = {
     contract: {
-      count: async (args: { where: { tenantId: string; status?: ContractStatus; name?: { contains: string } } }) => {
+      count: async (args: {
+        where: { tenantId: string; status?: ContractStatus; name?: { contains: string } };
+      }) => {
         const { tenantId, status, name } = args.where;
         return contracts.filter((c) => {
           if (c.tenantId !== tenantId) return false;
@@ -138,14 +137,18 @@ async function run() {
         const { id, tenantId } = args.where;
         const contract = contracts.find(
           (c) =>
-            (id === undefined || c.id === id) &&
-            (tenantId === undefined || c.tenantId === tenantId)
+            (id === undefined || c.id === id) && (tenantId === undefined || c.tenantId === tenantId)
         );
         return contract ?? null;
       },
       update: async (args: {
         where: { id: string };
-        data: Partial<Pick<ContractEntity, 'name' | 'amountCents' | 'currency' | 'dueDay' | 'startDate' | 'endDate' | 'status'>>;
+        data: Partial<
+          Pick<
+            ContractEntity,
+            'name' | 'amountCents' | 'currency' | 'dueDay' | 'startDate' | 'endDate' | 'status'
+          >
+        >;
       }) => {
         const contract = contracts.find((c) => c.id === args.where.id);
         if (!contract) {
@@ -156,7 +159,10 @@ async function run() {
       },
     },
     student: {
-      findMany: async (args: { where: { id: { in: string[] }; tenantId: string }; select?: { id: true } }) => {
+      findMany: async (args: {
+        where: { id: { in: string[] }; tenantId: string };
+        select?: { id: true };
+      }) => {
         const { id, tenantId } = args.where;
         const found = students.filter((s) => id.in.includes(s.id) && s.tenantId === tenantId);
         if (args.select?.id) {
@@ -164,12 +170,14 @@ async function run() {
         }
         return found;
       },
-      findFirst: async (args: { where: { id?: string; tenantId?: string }; select?: { id: true } }) => {
+      findFirst: async (args: {
+        where: { id?: string; tenantId?: string };
+        select?: { id: true };
+      }) => {
         const { id, tenantId } = args.where;
         const student = students.find(
           (s) =>
-            (id === undefined || s.id === id) &&
-            (tenantId === undefined || s.tenantId === tenantId)
+            (id === undefined || s.id === id) && (tenantId === undefined || s.tenantId === tenantId)
         );
         if (!student) return null;
         if (args.select?.id) return { id: student.id };
@@ -183,9 +191,7 @@ async function run() {
       }) => {
         for (const row of args.data) {
           const exists = contractStudents.some(
-            (cs) =>
-              cs.contractId === row.contractId &&
-              cs.studentId === row.studentId
+            (cs) => cs.contractId === row.contractId && cs.studentId === row.studentId
           );
           if (exists && args.skipDuplicates) continue;
           const entity: ContractStudentEntity = {
@@ -198,9 +204,7 @@ async function run() {
         }
         return { count: args.data.length };
       },
-      deleteMany: async (args: {
-        where: { contractId: string; studentId: string };
-      }) => {
+      deleteMany: async (args: { where: { contractId: string; studentId: string } }) => {
         const before = contractStudents.length;
         for (let i = contractStudents.length - 1; i >= 0; i -= 1) {
           if (
@@ -214,8 +218,7 @@ async function run() {
         return { count };
       },
     },
-    $transaction: async (operations: Array<Promise<unknown>>) =>
-      Promise.all(operations),
+    $transaction: async (operations: Array<Promise<unknown>>) => Promise.all(operations),
   } as unknown as PrismaService;
 
   const auditServiceMock: AuditService = {
@@ -259,13 +262,17 @@ async function run() {
   students.push(studentA, studentOtherTenant);
 
   // ---- Create contract ----
-  const createResult = await controller.createContract(reqTenant, {
-    name: 'Mensalidade 2026 - João',
-    amountCents: 95000,
-    currency: 'BRL',
-    dueDay: 10,
-    startDate: new Date('2026-01-01').toISOString(),
-  }, user);
+  const createResult = await controller.createContract(
+    reqTenant,
+    {
+      name: 'Mensalidade 2026 - João',
+      amountCents: 95000,
+      currency: 'BRL',
+      dueDay: 10,
+      startDate: new Date('2026-01-01').toISOString(),
+    },
+    user
+  );
 
   if (!createResult.contract || createResult.contract.name !== 'Mensalidade 2026 - João') {
     throw new Error('createContract should return created contract');
@@ -278,17 +285,21 @@ async function run() {
   const contractId = createResult.contract.id;
 
   // ---- List contracts tenant scoped ----
-  await controller.createContract(otherReq, {
-    name: 'Mensalidade outro tenant',
-    amountCents: 50000,
-    currency: 'BRL',
-    dueDay: 5,
-    startDate: new Date('2026-01-01').toISOString(),
-  }, {
-    ...user,
-    id: 'user-2',
-    tenantId: otherTenantId,
-  });
+  await controller.createContract(
+    otherReq,
+    {
+      name: 'Mensalidade outro tenant',
+      amountCents: 50000,
+      currency: 'BRL',
+      dueDay: 5,
+      startDate: new Date('2026-01-01').toISOString(),
+    },
+    {
+      ...user,
+      id: 'user-2',
+      tenantId: otherTenantId,
+    }
+  );
 
   const list = await controller.listContracts(reqTenant, 'Mensalidade', 'ACTIVE', '1', '10');
   if (list.total !== 1 || list.items[0].tenantId !== tenantId) {
@@ -303,7 +314,7 @@ async function run() {
       name: 'Mensalidade 2026 - João Silva',
       dueDay: 15,
     },
-    user,
+    user
   );
 
   if (updated.contract.name !== 'Mensalidade 2026 - João Silva' || updated.contract.dueDay !== 15) {
@@ -359,7 +370,7 @@ async function run() {
       dueDay: 12,
       startDate: new Date('2026-02-01').toISOString(),
     },
-    user,
+    user
   );
   const contractForStudentsId = contractForStudentsResult.contract.id;
 
@@ -367,12 +378,12 @@ async function run() {
     reqTenant,
     contractForStudentsId,
     { studentIds: [studentA.id] },
-    user,
+    user
   );
 
   if (
     !contractStudents.some(
-      (cs) => cs.contractId === contractForStudentsId && cs.studentId === studentA.id,
+      (cs) => cs.contractId === contractForStudentsId && cs.studentId === studentA.id
     )
   ) {
     throw new Error('addStudents should create contract_student link');
@@ -384,7 +395,7 @@ async function run() {
       reqTenant,
       contractForStudentsId,
       { studentIds: [studentOtherTenant.id] },
-      user,
+      user
     );
   } catch (error) {
     invalidStudentError = error instanceof BadRequestException;
@@ -397,7 +408,7 @@ async function run() {
   await controller.removeStudent(reqTenant, contractForStudentsId, studentA.id, user);
   if (
     contractStudents.some(
-      (cs) => cs.contractId === contractForStudentsId && cs.studentId === studentA.id,
+      (cs) => cs.contractId === contractForStudentsId && cs.studentId === studentA.id
     )
   ) {
     throw new Error('removeStudent should delete contract_student link');
@@ -417,12 +428,7 @@ async function run() {
   // ---- Not found contract ----
   let notFoundError = false;
   try {
-    await controller.updateContract(
-      reqTenant,
-      'non-existent',
-      { name: 'X' },
-      user,
-    );
+    await controller.updateContract(reqTenant, 'non-existent', { name: 'X' }, user);
   } catch (error) {
     notFoundError = error instanceof NotFoundException;
   }
@@ -438,4 +444,3 @@ run().catch((error) => {
   console.error(error);
   process.exit(1);
 });
-

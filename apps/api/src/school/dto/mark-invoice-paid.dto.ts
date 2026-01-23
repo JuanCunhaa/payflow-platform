@@ -13,4 +13,3 @@ export class MarkInvoicePaidDto {
   @IsString()
   receiptUrl?: string | null;
 }
-

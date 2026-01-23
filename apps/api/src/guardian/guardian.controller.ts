@@ -123,9 +123,7 @@ export class GuardianController {
       });
     }
 
-    const studentIds = guardian.students.map(
-      (link: { studentId: string }) => link.studentId
-    );
+    const studentIds = guardian.students.map((link: { studentId: string }) => link.studentId);
 
     return { guardian, tenantId, studentIds };
   }
@@ -338,12 +336,8 @@ export class GuardianController {
       dueDate: invoice.dueDate,
       amountCents: invoice.amountCents,
       status: invoice.status as InvoiceStatus,
-      student: invoice.student
-        ? { id: invoice.student.id, name: invoice.student.name }
-        : null,
-      contract: invoice.contract
-        ? { id: invoice.contract.id, name: invoice.contract.name }
-        : null,
+      student: invoice.student ? { id: invoice.student.id, name: invoice.student.name } : null,
+      contract: invoice.contract ? { id: invoice.contract.id, name: invoice.contract.name } : null,
       description: invoice.contract?.name ?? null,
       paymentLink: null as string | null,
     }));
@@ -408,9 +402,7 @@ export class GuardianController {
         dueDate: invoice.dueDate,
         amountCents: invoice.amountCents,
         status: invoice.status as InvoiceStatus,
-        student: invoice.student
-          ? { id: invoice.student.id, name: invoice.student.name }
-          : null,
+        student: invoice.student ? { id: invoice.student.id, name: invoice.student.name } : null,
         contract: invoice.contract
           ? { id: invoice.contract.id, name: invoice.contract.name }
           : null,

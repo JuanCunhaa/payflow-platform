@@ -321,7 +321,7 @@ export class SchoolInvoicesController {
     const normalizedDue = new Date(dueDate);
     normalizedDue.setHours(0, 0, 0, 0);
 
-  if (normalizedDue < today) {
+    if (normalizedDue < today) {
       throw new BadRequestException({
         code: 'invalid_due_date',
         message: 'Due date cannot be in the past',
@@ -415,12 +415,7 @@ export class SchoolInvoicesController {
         dueDate: normalizedDue,
         paymentLink: invoice.paymentLink ?? undefined,
       });
-      await logInvoiceCommunicationOncePerDay(
-        this.prisma,
-        invoice.id,
-        'CREATED',
-        sentAt
-      );
+      await logInvoiceCommunicationOncePerDay(this.prisma, invoice.id, 'CREATED', sentAt);
     }
 
     return {
@@ -438,7 +433,7 @@ export class SchoolInvoicesController {
   ) {
     const tenantId = req.tenant!.id;
 
-    const invoice = await this.prisma.invoice.findFirst({
+    const invoice = (await this.prisma.invoice.findFirst({
       where: { id, tenantId },
       include: {
         tenant: {
@@ -455,7 +450,7 @@ export class SchoolInvoicesController {
           },
         },
       },
-    }) as any;
+    })) as any;
 
     if (!invoice) {
       throw new NotFoundException({
@@ -521,12 +516,7 @@ export class SchoolInvoicesController {
         dueDate: invoice.dueDate,
         paidAt,
       });
-      await logInvoiceCommunicationOncePerDay(
-        this.prisma,
-        invoice.id,
-        'PAID',
-        paidAt
-      );
+      await logInvoiceCommunicationOncePerDay(this.prisma, invoice.id, 'PAID', paidAt);
     }
 
     return {

@@ -392,24 +392,12 @@ export default function SchoolInvoicesPage() {
                 border: '1px solid #cbd5f5',
               }}
             >
-              <option value="ALL">
-                {t(i18nKeys.school.invoicesUi.filters.statusAll)}
-              </option>
-              <option value="PENDING">
-                {t(i18nKeys.school.invoicesUi.status.pending)}
-              </option>
-              <option value="OVERDUE">
-                {t(i18nKeys.school.invoicesUi.status.overdue)}
-              </option>
-              <option value="PAID">
-                {t(i18nKeys.school.invoicesUi.status.paid)}
-              </option>
-              <option value="CANCELED">
-                {t(i18nKeys.school.invoicesUi.status.canceled)}
-              </option>
-              <option value="REFUNDED">
-                {t(i18nKeys.school.invoicesUi.status.refunded)}
-              </option>
+              <option value="ALL">{t(i18nKeys.school.invoicesUi.filters.statusAll)}</option>
+              <option value="PENDING">{t(i18nKeys.school.invoicesUi.status.pending)}</option>
+              <option value="OVERDUE">{t(i18nKeys.school.invoicesUi.status.overdue)}</option>
+              <option value="PAID">{t(i18nKeys.school.invoicesUi.status.paid)}</option>
+              <option value="CANCELED">{t(i18nKeys.school.invoicesUi.status.canceled)}</option>
+              <option value="REFUNDED">{t(i18nKeys.school.invoicesUi.status.refunded)}</option>
             </select>
           </label>
 
@@ -1064,9 +1052,7 @@ export default function SchoolInvoicesPage() {
                       }}
                     >
                       <span>{item.description}</span>
-                      <span>
-                        {formatAmount(item.amountCents, selectedInvoice.currency)}
-                      </span>
+                      <span>{formatAmount(item.amountCents, selectedInvoice.currency)}</span>
                     </li>
                   ))}
                 </ul>
@@ -1086,8 +1072,7 @@ export default function SchoolInvoicesPage() {
               >
                 {t(i18nKeys.school.invoicesUi.detail.communicationsTitle)}
               </h3>
-              {!selectedInvoice.communications ||
-              selectedInvoice.communications.length === 0 ? (
+              {!selectedInvoice.communications || selectedInvoice.communications.length === 0 ? (
                 <p
                   style={{
                     fontSize: '13px',
@@ -1216,9 +1201,7 @@ export default function SchoolInvoicesPage() {
                   });
 
                   if (!res.ok) {
-                    setExportError(
-                      t(i18nKeys.school.invoicesUi.feedback.exportError),
-                    );
+                    setExportError(t(i18nKeys.school.invoicesUi.feedback.exportError));
                     setExportLoading(false);
                     return;
                   }
@@ -1236,9 +1219,7 @@ export default function SchoolInvoicesPage() {
                   setExportLoading(false);
                   setExportModalOpen(false);
                 } catch {
-                  setExportError(
-                    t(i18nKeys.school.invoicesUi.feedback.exportError),
-                  );
+                  setExportError(t(i18nKeys.school.invoicesUi.feedback.exportError));
                   setExportLoading(false);
                 }
               }}
@@ -1310,33 +1291,19 @@ export default function SchoolInvoicesPage() {
                 <span>{t(i18nKeys.school.invoicesUi.export.statusLabel)}</span>
                 <select
                   value={exportStatus}
-                  onChange={(event) =>
-                    setExportStatus(event.target.value as FilterStatus)
-                  }
+                  onChange={(event) => setExportStatus(event.target.value as FilterStatus)}
                   style={{
                     padding: '6px 8px',
                     borderRadius: '8px',
                     border: '1px solid #cbd5f5',
                   }}
                 >
-                  <option value="ALL">
-                    {t(i18nKeys.school.invoicesUi.filters.statusAll)}
-                  </option>
-                  <option value="PENDING">
-                    {t(i18nKeys.school.invoicesUi.status.pending)}
-                  </option>
-                  <option value="OVERDUE">
-                    {t(i18nKeys.school.invoicesUi.status.overdue)}
-                  </option>
-                  <option value="PAID">
-                    {t(i18nKeys.school.invoicesUi.status.paid)}
-                  </option>
-                  <option value="CANCELED">
-                    {t(i18nKeys.school.invoicesUi.status.canceled)}
-                  </option>
-                  <option value="REFUNDED">
-                    {t(i18nKeys.school.invoicesUi.status.refunded)}
-                  </option>
+                  <option value="ALL">{t(i18nKeys.school.invoicesUi.filters.statusAll)}</option>
+                  <option value="PENDING">{t(i18nKeys.school.invoicesUi.status.pending)}</option>
+                  <option value="OVERDUE">{t(i18nKeys.school.invoicesUi.status.overdue)}</option>
+                  <option value="PAID">{t(i18nKeys.school.invoicesUi.status.paid)}</option>
+                  <option value="CANCELED">{t(i18nKeys.school.invoicesUi.status.canceled)}</option>
+                  <option value="REFUNDED">{t(i18nKeys.school.invoicesUi.status.refunded)}</option>
                 </select>
               </label>
 

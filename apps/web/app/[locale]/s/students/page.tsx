@@ -285,9 +285,7 @@ export default function SchoolStudentsPage() {
         return;
       }
 
-      const headers = lines[0]
-        .split(',')
-        .map((header) => header.trim().toLowerCase());
+      const headers = lines[0].split(',').map((header) => header.trim().toLowerCase());
 
       const findColumnIndex = (candidates: string[]): number => {
         for (const candidate of candidates) {
@@ -312,7 +310,7 @@ export default function SchoolStudentsPage() {
         const parts = lines[i].split(',');
         const rawName = parts[nameIndex]?.trim() ?? '';
         const rawClass = parts[classIndex]?.trim() ?? '';
-        const rawStatus = statusIndex >= 0 ? parts[statusIndex]?.trim() ?? '' : '';
+        const rawStatus = statusIndex >= 0 ? (parts[statusIndex]?.trim() ?? '') : '';
 
         if (!rawName || !rawClass) {
           // eslint-disable-next-line no-continue
@@ -406,9 +404,7 @@ export default function SchoolStudentsPage() {
             onChange={handleFilterClassChange}
             disabled={classesLoading}
           >
-            <option value="">
-              {t(i18nKeys.school.studentsUi.filters.statusAll)}
-            </option>
+            <option value="">{t(i18nKeys.school.studentsUi.filters.statusAll)}</option>
             {classes.map((item) => (
               <option key={item.id} value={item.id}>
                 {item.name}
@@ -420,15 +416,9 @@ export default function SchoolStudentsPage() {
         <label>
           {t(i18nKeys.school.studentsUi.filters.status)}
           <select value={filterStatus} onChange={handleFilterStatusChange}>
-            <option value="ALL">
-              {t(i18nKeys.school.studentsUi.filters.statusAll)}
-            </option>
-            <option value="ACTIVE">
-              {t(i18nKeys.school.studentsUi.status.active)}
-            </option>
-            <option value="INACTIVE">
-              {t(i18nKeys.school.studentsUi.status.inactive)}
-            </option>
+            <option value="ALL">{t(i18nKeys.school.studentsUi.filters.statusAll)}</option>
+            <option value="ACTIVE">{t(i18nKeys.school.studentsUi.status.active)}</option>
+            <option value="INACTIVE">{t(i18nKeys.school.studentsUi.status.inactive)}</option>
           </select>
         </label>
 
@@ -448,9 +438,7 @@ export default function SchoolStudentsPage() {
           onClick={handleClickImportButton}
           disabled={importing || classes.length === 0}
         >
-          {importing
-            ? t(i18nKeys.common.loading)
-            : t(i18nKeys.school.studentsUi.actions.importCsv)}
+          {importing ? t(i18nKeys.common.loading) : t(i18nKeys.school.studentsUi.actions.importCsv)}
         </button>
         <input
           ref={fileInputRef}
@@ -474,13 +462,8 @@ export default function SchoolStudentsPage() {
 
           <label>
             {t(i18nKeys.school.studentsUi.filters.class)}
-            <select
-              value={formClassId}
-              onChange={(event) => setFormClassId(event.target.value)}
-            >
-              <option value="">
-                {t(i18nKeys.school.studentsUi.filters.class)}
-              </option>
+            <select value={formClassId} onChange={(event) => setFormClassId(event.target.value)}>
+              <option value="">{t(i18nKeys.school.studentsUi.filters.class)}</option>
               {classes.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.name}
@@ -495,12 +478,8 @@ export default function SchoolStudentsPage() {
               value={formStatus}
               onChange={(event) => setFormStatus(event.target.value as StudentStatus)}
             >
-              <option value="ACTIVE">
-                {t(i18nKeys.school.studentsUi.status.active)}
-              </option>
-              <option value="INACTIVE">
-                {t(i18nKeys.school.studentsUi.status.inactive)}
-              </option>
+              <option value="ACTIVE">{t(i18nKeys.school.studentsUi.status.active)}</option>
+              <option value="INACTIVE">{t(i18nKeys.school.studentsUi.status.inactive)}</option>
             </select>
           </label>
 
@@ -554,20 +533,14 @@ export default function SchoolStudentsPage() {
                     <button type="button" onClick={() => openEditStudent(student)}>
                       {t(i18nKeys.school.studentsUi.actions.edit)}
                     </button>
-                    <button
-                      type="button"
-                      onClick={() => void handleToggleStatus(student)}
-                    >
+                    <button type="button" onClick={() => void handleToggleStatus(student)}>
                       {student.status === 'ACTIVE'
                         ? t(i18nKeys.school.studentsUi.actions.inactivate)
                         : t(i18nKeys.school.studentsUi.actions.activate)}
                     </button>
                     {deleteCandidateId === student.id ? (
                       <>
-                        <button
-                          type="button"
-                          onClick={() => setDeleteCandidateId(null)}
-                        >
+                        <button type="button" onClick={() => setDeleteCandidateId(null)}>
                           {t(i18nKeys.common.cancel)}
                         </button>
                         <button
@@ -579,10 +552,7 @@ export default function SchoolStudentsPage() {
                         </button>
                       </>
                     ) : (
-                      <button
-                        type="button"
-                        onClick={() => setDeleteCandidateId(student.id)}
-                      >
+                      <button type="button" onClick={() => setDeleteCandidateId(student.id)}>
                         {t(i18nKeys.school.studentsUi.actions.delete)}
                       </button>
                     )}
@@ -599,11 +569,7 @@ export default function SchoolStudentsPage() {
             <button type="button" onClick={handlePrevPage} disabled={page <= 1}>
               ‹
             </button>
-            <button
-              type="button"
-              onClick={handleNextPage}
-              disabled={page >= totalPages}
-            >
+            <button type="button" onClick={handleNextPage} disabled={page >= totalPages}>
               ›
             </button>
           </div>

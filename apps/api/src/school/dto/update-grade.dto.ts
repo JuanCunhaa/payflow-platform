@@ -6,4 +6,3 @@ export class UpdateGradeDto {
   @MaxLength(120)
   name?: string;
 }
-

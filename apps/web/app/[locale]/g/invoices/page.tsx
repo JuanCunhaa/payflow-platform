@@ -347,12 +347,8 @@ export default function GuardianInvoicesPage() {
             }}
           >
             <option value="ALL">{t(i18nKeys.guardian.invoicesUi.filters.statusAll)}</option>
-            <option value="PENDING">
-              {t(i18nKeys.guardian.invoicesUi.status.pending)}
-            </option>
-            <option value="OVERDUE">
-              {t(i18nKeys.guardian.invoicesUi.status.overdue)}
-            </option>
+            <option value="PENDING">{t(i18nKeys.guardian.invoicesUi.status.pending)}</option>
+            <option value="OVERDUE">{t(i18nKeys.guardian.invoicesUi.status.overdue)}</option>
             <option value="PAID">{t(i18nKeys.guardian.invoicesUi.status.paid)}</option>
           </select>
         </label>
@@ -689,8 +685,7 @@ export default function GuardianInvoicesPage() {
                   }}
                 >
                   {formatAmountBRL(selectedInvoice.amountCents)} •{' '}
-                  {formatDate(selectedInvoice.dueDate)} •{' '}
-                  {statusLabel(selectedInvoice.status)}
+                  {formatDate(selectedInvoice.dueDate)} • {statusLabel(selectedInvoice.status)}
                 </p>
                 <p
                   style={{
@@ -745,8 +740,7 @@ export default function GuardianInvoicesPage() {
                   {t(i18nKeys.guardian.invoicesUi.detail.paymentLinkLabel)}
                 </p>
 
-                {selectedInvoice.status === 'PENDING' ||
-                selectedInvoice.status === 'OVERDUE' ? (
+                {selectedInvoice.status === 'PENDING' || selectedInvoice.status === 'OVERDUE' ? (
                   <div
                     style={{
                       display: 'flex',

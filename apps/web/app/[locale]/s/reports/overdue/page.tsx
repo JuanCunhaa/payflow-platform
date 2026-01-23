@@ -5,13 +5,7 @@ import { i18nKeys } from '@payflow/shared';
 import { useI18n } from '../../../../i18n-context';
 import { useAuth } from '../../../../auth-context';
 
-type InvoiceStatus =
-  | 'DRAFT'
-  | 'PENDING'
-  | 'PAID'
-  | 'OVERDUE'
-  | 'CANCELED'
-  | 'REFUNDED';
+type InvoiceStatus = 'DRAFT' | 'PENDING' | 'PAID' | 'OVERDUE' | 'CANCELED' | 'REFUNDED';
 
 type OverdueItem = {
   invoiceId: string;
@@ -280,9 +274,7 @@ export default function SchoolOverdueReportPage() {
                   <td style={{ padding: '8px' }}>{item.student ?? '—'}</td>
                   <td style={{ padding: '8px' }}>{item.guardian ?? '—'}</td>
                   <td style={{ padding: '8px' }}>{item.daysOverdue}</td>
-                  <td style={{ padding: '8px' }}>
-                    {formatAmountBRL(item.amountCents)}
-                  </td>
+                  <td style={{ padding: '8px' }}>{formatAmountBRL(item.amountCents)}</td>
                   <td style={{ padding: '8px' }}>
                     <button
                       type="button"
@@ -292,22 +284,13 @@ export default function SchoolOverdueReportPage() {
                         padding: '6px 10px',
                         borderRadius: '999px',
                         border: 'none',
-                        backgroundColor:
-                          actionLoadingId === item.invoiceId
-                            ? '#93c5fd'
-                            : '#2563eb',
+                        backgroundColor: actionLoadingId === item.invoiceId ? '#93c5fd' : '#2563eb',
                         color: '#ffffff',
-                        cursor:
-                          actionLoadingId === item.invoiceId
-                            ? 'default'
-                            : 'pointer',
+                        cursor: actionLoadingId === item.invoiceId ? 'default' : 'pointer',
                         fontSize: '13px',
                       }}
                     >
-                      {t(
-                        i18nKeys.school.reportsUi.overdue.actions
-                          .copyPaymentLink,
-                      )}
+                      {t(i18nKeys.school.reportsUi.overdue.actions.copyPaymentLink)}
                     </button>
                   </td>
                 </tr>
@@ -319,4 +302,3 @@ export default function SchoolOverdueReportPage() {
     </div>
   );
 }
-

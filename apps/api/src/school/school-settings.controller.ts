@@ -1,12 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Logger,
-  Put,
-  Req,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Get, Logger, Put, Req, UseGuards } from '@nestjs/common';
 import { Request } from 'express';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RequireTenantGuard } from '../common/tenant/require-tenant.guard';
@@ -28,7 +20,7 @@ export class SchoolSettingsController {
 
   constructor(
     private readonly prisma: PrismaService,
-    private readonly auditService: AuditService,
+    private readonly auditService: AuditService
   ) {}
 
   @Get('settings')
@@ -44,7 +36,12 @@ export class SchoolSettingsController {
       },
     });
 
-    const settings = (tenant?.settingsJson as { displayName?: string; contactEmail?: string; contactPhone?: string } | null) || {};
+    const settings =
+      (tenant?.settingsJson as {
+        displayName?: string;
+        contactEmail?: string;
+        contactPhone?: string;
+      } | null) || {};
 
     return {
       displayName: settings.displayName ?? tenant?.name ?? null,
@@ -58,7 +55,7 @@ export class SchoolSettingsController {
   async updateSettings(
     @Req() req: TenantRequest,
     @Body() dto: UpdateSchoolSettingsDto,
-    @CurrentUser() user: CurrentUserPayload,
+    @CurrentUser() user: CurrentUserPayload
   ) {
     const tenantId = req.tenant!.id;
 
@@ -72,8 +69,11 @@ export class SchoolSettingsController {
     });
 
     const previous =
-      (tenant?.settingsJson as { displayName?: string; contactEmail?: string; contactPhone?: string } | null) ||
-      {};
+      (tenant?.settingsJson as {
+        displayName?: string;
+        contactEmail?: string;
+        contactPhone?: string;
+      } | null) || {};
 
     const nextSettings = {
       displayName: dto.displayName ?? previous.displayName ?? tenant?.name ?? null,
@@ -91,16 +91,14 @@ export class SchoolSettingsController {
     } catch (error) {
       this.logger.error(
         `Failed to update school settings for tenant ${tenantId}`,
-        (error as Error)?.stack ?? String(error),
+        (error as Error)?.stack ?? String(error)
       );
       throw error;
     }
 
     const changes: Record<string, { before: string | null; after: string | null }> = {};
     for (const key of ['displayName', 'contactEmail', 'contactPhone'] as const) {
-      const beforeValue =
-        previous[key] ??
-        (key === 'displayName' ? tenant?.name ?? null : null);
+      const beforeValue = previous[key] ?? (key === 'displayName' ? (tenant?.name ?? null) : null);
       const afterValue = nextSettings[key];
       if (beforeValue !== afterValue) {
         changes[key] = {

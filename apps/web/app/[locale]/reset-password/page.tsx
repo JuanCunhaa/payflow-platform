@@ -34,7 +34,11 @@ export default function ResetPasswordPage() {
       return false;
     }
 
-    if (trimmedPassword.length < 8 || !/[A-Za-z]/.test(trimmedPassword) || !/\d/.test(trimmedPassword)) {
+    if (
+      trimmedPassword.length < 8 ||
+      !/[A-Za-z]/.test(trimmedPassword) ||
+      !/\d/.test(trimmedPassword)
+    ) {
       setError(t(i18nKeys.passwordReset.reset.error.weakPassword));
       return false;
     }
@@ -255,9 +259,7 @@ export default function ResetPasswordPage() {
               fontWeight: 500,
             }}
           >
-            {submitting
-              ? t(i18nKeys.common.loading)
-              : t(i18nKeys.passwordReset.reset.submit)}
+            {submitting ? t(i18nKeys.common.loading) : t(i18nKeys.passwordReset.reset.submit)}
           </button>
         </form>
       )}

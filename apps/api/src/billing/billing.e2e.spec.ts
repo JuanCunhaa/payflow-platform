@@ -169,11 +169,7 @@ async function run() {
     ip: '127.0.0.1',
   } as unknown as Request;
 
-  await publicController.confirmSandboxPayment(
-    invoiceId,
-    { method: 'PIX' },
-    fakeReqConfirm
-  );
+  await publicController.confirmSandboxPayment(invoiceId, { method: 'PIX' }, fakeReqConfirm);
 
   const finalInvoice = (await prisma.invoice.findUnique({
     where: { id: invoiceId },

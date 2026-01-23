@@ -78,10 +78,7 @@ async function run() {
         grades.push(grade);
         return grade;
       },
-      update: async (args: {
-        where: { id: string };
-        data: { name?: string };
-      }) => {
+      update: async (args: { where: { id: string }; data: { name?: string } }) => {
         const { id } = args.where;
         const grade = grades.find((g) => g.id === id);
         if (!grade) {
@@ -115,10 +112,14 @@ async function run() {
         const count = before - grades.length;
         return { count };
       },
-      findFirst: async (args: { where: { id?: string; tenantId?: string }; select?: { id: true } }) => {
+      findFirst: async (args: {
+        where: { id?: string; tenantId?: string };
+        select?: { id: true };
+      }) => {
         const { id, tenantId } = args.where;
         const found = grades.find(
-          (g) => (id === undefined || g.id === id) && (tenantId === undefined || g.tenantId === tenantId)
+          (g) =>
+            (id === undefined || g.id === id) && (tenantId === undefined || g.tenantId === tenantId)
         );
         if (!found) return null;
         if (args.select?.id) {
@@ -213,7 +214,8 @@ async function run() {
       }) => {
         const { id, tenantId } = args.where;
         const found = classes.find(
-          (c) => (id === undefined || c.id === id) && (tenantId === undefined || c.tenantId === tenantId)
+          (c) =>
+            (id === undefined || c.id === id) && (tenantId === undefined || c.tenantId === tenantId)
         );
         if (!found) return null;
         if (args.select?.id) {

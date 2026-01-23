@@ -9,6 +9,7 @@ import { PasswordService } from './password.service';
 import { AuditService } from '../audit/audit.service';
 import { EmailService } from '../notifications/email.service';
 import { ConsoleEmailProvider } from '../notifications/console-email.provider';
+import { ResendEmailProvider } from '../notifications/resend-email.provider';
 import { EMAIL_PROVIDER_TOKEN } from '../notifications/email-provider';
 
 @Module({
@@ -28,18 +29,23 @@ import { EMAIL_PROVIDER_TOKEN } from '../notifications/email-provider';
     PrismaService,
     PasswordService,
     AuditService,
+    PasswordService,
+    AuditService,
     ConsoleEmailProvider,
+    ResendEmailProvider,
     {
       provide: EMAIL_PROVIDER_TOKEN,
-      useFactory: (consoleProvider: ConsoleEmailProvider) => {
+      useFactory: (consoleProvider: ConsoleEmailProvider, resendProvider: ResendEmailProvider) => {
         const providerName = (process.env.EMAIL_PROVIDER || 'console').toLowerCase();
         switch (providerName) {
+          case 'resend':
+            return resendProvider;
           case 'console':
           default:
             return consoleProvider;
         }
       },
-      inject: [ConsoleEmailProvider],
+      inject: [ConsoleEmailProvider, ResendEmailProvider],
     },
     EmailService,
   ],

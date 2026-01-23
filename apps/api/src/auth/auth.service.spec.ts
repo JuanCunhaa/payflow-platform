@@ -151,7 +151,10 @@ async function run() {
       }
       throw new Error(`Unsupported $executeRaw SQL in test: ${sql}`);
     },
-    $queryRaw: async <T = unknown>(strings: TemplateStringsArray, ...values: unknown[]): Promise<T> => {
+    $queryRaw: async <T = unknown>(
+      strings: TemplateStringsArray,
+      ...values: unknown[]
+    ): Promise<T> => {
       const sql = strings.join(' ');
       if (sql.includes('FROM "password_reset_tokens"')) {
         const [id] = values as [string];
@@ -272,11 +275,7 @@ async function run() {
 
   // ---- Prepare an active refresh token for reset tests ----
   const resLogin2 = createResponseMock();
-  await authService.login(
-    loginDto,
-    undefined,
-    resLogin2 as unknown as import('express').Response
-  );
+  await authService.login(loginDto, undefined, resLogin2 as unknown as import('express').Response);
 
   const activeBeforeReset = refreshTokens.filter(
     (t) => t.userId === user.id && t.revokedAt === null

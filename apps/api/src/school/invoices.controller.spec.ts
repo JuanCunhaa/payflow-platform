@@ -113,13 +113,17 @@ async function run() {
   const today = new Date();
   const dueDate = new Date(today.getTime() + 24 * 60 * 60 * 1000);
 
-  const result = await controller.createOneOffInvoice(req, {
-    studentId,
-    guardianId,
-    amountCents: 15000,
-    dueDate: dueDate.toISOString().slice(0, 10),
-    description: 'Passeio pedagógico',
-  }, user);
+  const result = await controller.createOneOffInvoice(
+    req,
+    {
+      studentId,
+      guardianId,
+      amountCents: 15000,
+      dueDate: dueDate.toISOString().slice(0, 10),
+      description: 'Passeio pedagógico',
+    },
+    user
+  );
 
   if (!result.invoiceId) {
     throw new Error('Expected invoiceId in response');
@@ -151,13 +155,17 @@ async function run() {
   try {
     const past = new Date();
     past.setDate(past.getDate() - 1);
-    await controller.createOneOffInvoice(req, {
-      studentId,
-      guardianId,
-      amountCents: 15000,
-      dueDate: past.toISOString().slice(0, 10),
-      description: 'Old date',
-    }, user);
+    await controller.createOneOffInvoice(
+      req,
+      {
+        studentId,
+        guardianId,
+        amountCents: 15000,
+        dueDate: past.toISOString().slice(0, 10),
+        description: 'Old date',
+      },
+      user
+    );
   } catch (error) {
     threw = error instanceof BadRequestException;
   }

@@ -293,9 +293,7 @@ export default function SchoolInvoiceNewPage() {
               border: '1px solid #e5e7eb',
             }}
           >
-            <option value="">
-              {t(i18nKeys.school.invoicesUi.newForm.guardianPlaceholder)}
-            </option>
+            <option value="">{t(i18nKeys.school.invoicesUi.newForm.guardianPlaceholder)}</option>
             {suggestedGuardians.map((guardian) => (
               <option key={guardian.id} value={guardian.id}>
                 {guardian.name}
@@ -444,4 +442,3 @@ export default function SchoolInvoiceNewPage() {
     </section>
   );
 }
-

@@ -10,6 +10,7 @@ import {
   Query,
   Req,
   UseGuards,
+  Delete,
 } from '@nestjs/common';
 import type { Request } from 'express';
 
@@ -108,10 +109,7 @@ export class ContractsController {
 
   @Get(':id')
   @Roles('SCHOOL_ADMIN', 'FINANCE', 'SECRETARY', 'READONLY')
-  async getContract(
-    @Req() req: TenantRequest,
-    @Param('id') id: string
-  ) {
+  async getContract(@Req() req: TenantRequest, @Param('id') id: string) {
     const tenantId = req.tenant!.id;
 
     const contract = await this.prisma.contract.findFirst({

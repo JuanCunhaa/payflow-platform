@@ -18,7 +18,7 @@ type AuthUser = {
   name: string | null;
   userType: string;
   status?: string;
-   role?: string;
+  role?: string;
   tenant?: AuthTenant;
 };
 

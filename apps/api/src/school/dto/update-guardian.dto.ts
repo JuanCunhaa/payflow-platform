@@ -21,4 +21,3 @@ export class UpdateGuardianDto {
   @IsIn(GUARDIAN_STATUSES)
   status?: GuardianStatusDto;
 }
-

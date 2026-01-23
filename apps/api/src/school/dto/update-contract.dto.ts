@@ -49,4 +49,3 @@ export class UpdateContractDto {
   @IsIn(CONTRACT_STATUSES)
   status?: ContractStatusDto;
 }
-

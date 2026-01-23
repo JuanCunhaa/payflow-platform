@@ -166,81 +166,81 @@
       "students": "Students",
       "invoices": "Invoices"
     },
-      "invoicesUi": {
-        "filters": {
-          "status": "Status",
-          "statusAll": "All statuses",
-          "from": "From date",
-          "to": "To date",
-          "student": "Student",
-          "search": "Search by student"
-        },
+    "invoicesUi": {
+      "filters": {
+        "status": "Status",
+        "statusAll": "All statuses",
+        "from": "From date",
+        "to": "To date",
+        "student": "Student",
+        "search": "Search by student"
+      },
+      "table": {
+        "dueDate": "Due date",
+        "student": "Student",
+        "amount": "Amount",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "status": {
+        "draft": "Draft",
+        "pending": "Pending",
+        "paid": "Paid",
+        "overdue": "Overdue",
+        "canceled": "Canceled",
+        "refunded": "Refunded"
+      },
+      "detail": {
+        "title": "Invoice details",
+        "infoTitle": "Invoice information",
+        "statusTimelineTitle": "Status timeline",
+        "paymentLinkLabel": "Online payment (sandbox for tests)",
+        "payNow": "Open payment page",
+        "paidLabel": "This invoice is already paid.",
+        "generatePaymentLink": "Generate payment link",
+        "copyPaymentLink": "Copy payment link",
+        "copyPaymentLinkSuccess": "Payment link copied to clipboard.",
+        "openPaymentPage": "Open payment page"
+      },
+      "feedback": {
+        "loadError": "Could not load invoices.",
+        "exportError": "Could not export invoices to CSV."
+      },
+      "empty": "No invoices found for the current filter.",
+      "export": {
+        "title": "Export invoices as CSV",
+        "description": "Select the period and status of the invoices you want to export to a spreadsheet.",
+        "periodFrom": "Start date",
+        "periodTo": "End date",
+        "statusLabel": "Invoice status",
+        "submit": "Export CSV",
+        "cancel": "Cancel",
+        "button": "Export CSV"
+      }
+    },
+    "reportsUi": {
+      "overdue": {
+        "title": "Overdue invoices",
+        "description": "Quickly see who is late and copy the payment link to follow up in an organized way.",
         "table": {
-          "dueDate": "Due date",
           "student": "Student",
+          "guardian": "Guardian",
+          "daysOverdue": "Days overdue",
           "amount": "Amount",
-          "status": "Status",
           "actions": "Actions"
         },
-        "status": {
-          "draft": "Draft",
-          "pending": "Pending",
-          "paid": "Paid",
-          "overdue": "Overdue",
-          "canceled": "Canceled",
-          "refunded": "Refunded"
-        },
-        "detail": {
-          "title": "Invoice details",
-          "infoTitle": "Invoice information",
-          "statusTimelineTitle": "Status timeline",
-          "paymentLinkLabel": "Online payment (sandbox for tests)",
-          "payNow": "Open payment page",
-          "paidLabel": "This invoice is already paid.",
-          "generatePaymentLink": "Generate payment link",
+        "actions": {
           "copyPaymentLink": "Copy payment link",
           "copyPaymentLinkSuccess": "Payment link copied to clipboard.",
-          "openPaymentPage": "Open payment page"
+          "generatePaymentLink": "Generate payment link"
         },
         "feedback": {
-          "loadError": "Could not load invoices.",
-          "exportError": "Could not export invoices to CSV."
+          "loadError": "Could not load overdue invoices report.",
+          "paymentError": "Could not generate or copy the payment link."
         },
-        "empty": "No invoices found for the current filter.",
-        "export": {
-          "title": "Export invoices as CSV",
-          "description": "Select the period and status of the invoices you want to export to a spreadsheet.",
-          "periodFrom": "Start date",
-          "periodTo": "End date",
-          "statusLabel": "Invoice status",
-          "submit": "Export CSV",
-          "cancel": "Cancel",
-          "button": "Export CSV"
-        }
-      },
-      "reportsUi": {
-        "overdue": {
-          "title": "Overdue invoices",
-          "description": "Quickly see who is late and copy the payment link to follow up in an organized way.",
-          "table": {
-            "student": "Student",
-            "guardian": "Guardian",
-            "daysOverdue": "Days overdue",
-            "amount": "Amount",
-            "actions": "Actions"
-          },
-          "actions": {
-            "copyPaymentLink": "Copy payment link",
-            "copyPaymentLinkSuccess": "Payment link copied to clipboard.",
-            "generatePaymentLink": "Generate payment link"
-          },
-          "feedback": {
-            "loadError": "Could not load overdue invoices report.",
-            "paymentError": "Could not generate or copy the payment link."
-          },
-          "empty": "No overdue invoices found for the current filter."
-        }
-      },
+        "empty": "No overdue invoices found for the current filter."
+      }
+    },
     "pages": {
       "dashboard": {
         "title": "Guardian portal",
@@ -507,17 +507,17 @@
         "canceled": "Canceled",
         "refunded": "Refunded"
       },
-        "detail": {
-          "title": "Invoice details",
-          "infoTitle": "Invoice information",
-          "itemsTitle": "Invoice items",
-          "statusTimelineTitle": "Status timeline",
-          "paymentLinkLabel": "Payment link",
-          "copyPaymentLink": "Copy payment link",
-          "copyPaymentLinkSuccess": "Payment link copied to clipboard.",
-          "generatePaymentLink": "Generate payment link",
-          "openPaymentPage": "Open payment page"
-        },
+      "detail": {
+        "title": "Invoice details",
+        "infoTitle": "Invoice information",
+        "itemsTitle": "Invoice items",
+        "statusTimelineTitle": "Status timeline",
+        "paymentLinkLabel": "Payment link",
+        "copyPaymentLink": "Copy payment link",
+        "copyPaymentLinkSuccess": "Payment link copied to clipboard.",
+        "generatePaymentLink": "Generate payment link",
+        "openPaymentPage": "Open payment page"
+      },
       "feedback": {
         "loadError": "Could not load invoices."
       },

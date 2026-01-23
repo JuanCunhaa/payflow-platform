@@ -15,4 +15,3 @@ export class UpdateSchoolSettingsDto {
   @MinLength(8)
   contactPhone?: string;
 }
-

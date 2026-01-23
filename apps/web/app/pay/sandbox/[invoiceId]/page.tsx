@@ -168,9 +168,7 @@ export default function SandboxPaymentPage() {
     return (
       <main style={containerStyle}>
         <section style={cardStyle}>
-          <h1 style={{ marginTop: 0, marginBottom: '8px', fontSize: '20px' }}>
-            Pagamento Sandbox
-          </h1>
+          <h1 style={{ marginTop: 0, marginBottom: '8px', fontSize: '20px' }}>Pagamento Sandbox</h1>
           <p style={{ margin: 0, fontSize: '14px', color: '#9ca3af' }}>Carregando cobrança...</p>
         </section>
       </main>
@@ -181,9 +179,7 @@ export default function SandboxPaymentPage() {
     return (
       <main style={containerStyle}>
         <section style={cardStyle}>
-          <h1 style={{ marginTop: 0, marginBottom: '8px', fontSize: '20px' }}>
-            Pagamento Sandbox
-          </h1>
+          <h1 style={{ marginTop: 0, marginBottom: '8px', fontSize: '20px' }}>Pagamento Sandbox</h1>
           <p style={{ margin: 0, fontSize: '14px', color: '#fca5a5' }}>{state.message}</p>
         </section>
       </main>
@@ -223,8 +219,7 @@ export default function SandboxPaymentPage() {
             marginBottom: '16px',
             padding: '12px',
             borderRadius: '12px',
-            background:
-              'linear-gradient(135deg, rgba(56,189,248,0.15), rgba(59,130,246,0.15))',
+            background: 'linear-gradient(135deg, rgba(56,189,248,0.15), rgba(59,130,246,0.15))',
             border: '1px solid rgba(148,163,184,0.3)',
           }}
         >
@@ -237,9 +232,7 @@ export default function SandboxPaymentPage() {
             }}
           >
             <span style={{ fontSize: '13px', color: '#cbd5f5' }}>Aluno</span>
-            <span style={{ fontSize: '14px', fontWeight: 500 }}>
-              {invoice.studentName ?? '-'}
-            </span>
+            <span style={{ fontSize: '14px', fontWeight: 500 }}>{invoice.studentName ?? '-'}</span>
           </div>
           <div
             style={{
@@ -250,9 +243,7 @@ export default function SandboxPaymentPage() {
             }}
           >
             <span style={{ fontSize: '13px', color: '#cbd5f5' }}>Responsável</span>
-            <span style={{ fontSize: '14px', fontWeight: 500 }}>
-              {invoice.guardianName ?? '-'}
-            </span>
+            <span style={{ fontSize: '14px', fontWeight: 500 }}>{invoice.guardianName ?? '-'}</span>
           </div>
           <div
             style={{
@@ -350,4 +341,3 @@ export default function SandboxPaymentPage() {
     </main>
   );
 }
-

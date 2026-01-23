@@ -324,10 +324,9 @@ export default function SchoolContractsPage() {
     setLinkError(null);
 
     try {
-      const res = await apiFetch(
-        `/school/contracts/${selectedContract.id}/students/${studentId}`,
-        { method: 'DELETE' }
-      );
+      const res = await apiFetch(`/school/contracts/${selectedContract.id}/students/${studentId}`, {
+        method: 'DELETE',
+      });
 
       if (!res.ok) {
         setLinkError(t(i18nKeys.school.contractsUi.feedback.unlinkError));
@@ -348,9 +347,7 @@ export default function SchoolContractsPage() {
     if (
       next === 'CANCELED' &&
       typeof window !== 'undefined' &&
-      !window.confirm(
-        t(i18nKeys.school.contractsUi.detail.confirmCancelDescription)
-      )
+      !window.confirm(t(i18nKeys.school.contractsUi.detail.confirmCancelDescription))
     ) {
       return;
     }
@@ -359,17 +356,11 @@ export default function SchoolContractsPage() {
     setDetailError(null);
 
     try {
-      const actionPath =
-        next === 'ACTIVE'
-          ? 'resume'
-          : next === 'PAUSED'
-            ? 'pause'
-            : 'cancel';
+      const actionPath = next === 'ACTIVE' ? 'resume' : next === 'PAUSED' ? 'pause' : 'cancel';
 
-      const res = await apiFetch(
-        `/school/contracts/${selectedContract.id}/${actionPath}`,
-        { method: 'POST' }
-      );
+      const res = await apiFetch(`/school/contracts/${selectedContract.id}/${actionPath}`, {
+        method: 'POST',
+      });
 
       if (!res.ok) {
         setDetailError(t(i18nKeys.school.contractsUi.feedback.statusError));
@@ -379,9 +370,7 @@ export default function SchoolContractsPage() {
       const data = (await res.json()) as { contract: Contract };
       setSelectedContract(data.contract);
       setContracts((prev) =>
-        prev.map((contract) =>
-          contract.id === data.contract.id ? data.contract : contract
-        )
+        prev.map((contract) => (contract.id === data.contract.id ? data.contract : contract))
       );
     } catch {
       setDetailError(t(i18nKeys.school.contractsUi.feedback.statusError));
@@ -409,18 +398,10 @@ export default function SchoolContractsPage() {
           placeholder={t(i18nKeys.school.contractsUi.filters.search)}
         />
         <select value={filterStatus} onChange={handleFilterStatusChange}>
-          <option value="ALL">
-            {t(i18nKeys.school.contractsUi.filters.statusAll)}
-          </option>
-          <option value="ACTIVE">
-            {t(i18nKeys.school.contractsUi.status.active)}
-          </option>
-          <option value="PAUSED">
-            {t(i18nKeys.school.contractsUi.status.paused)}
-          </option>
-          <option value="CANCELED">
-            {t(i18nKeys.school.contractsUi.status.canceled)}
-          </option>
+          <option value="ALL">{t(i18nKeys.school.contractsUi.filters.statusAll)}</option>
+          <option value="ACTIVE">{t(i18nKeys.school.contractsUi.status.active)}</option>
+          <option value="PAUSED">{t(i18nKeys.school.contractsUi.status.paused)}</option>
+          <option value="CANCELED">{t(i18nKeys.school.contractsUi.status.canceled)}</option>
         </select>
         <button type="submit">{t(i18nKeys.common.ok)}</button>
       </form>
@@ -454,16 +435,10 @@ export default function SchoolContractsPage() {
                 <td>{contract.dueDay}</td>
                 <td>{statusLabel(contract.status)}</td>
                 <td>
-                  <button
-                    type="button"
-                    onClick={() => void loadContractDetail(contract.id)}
-                  >
+                  <button type="button" onClick={() => void loadContractDetail(contract.id)}>
                     {t(i18nKeys.school.contractsUi.actions.viewDetails)}
                   </button>
-                  <button
-                    type="button"
-                    onClick={() => openEditContract(contract)}
-                  >
+                  <button type="button" onClick={() => openEditContract(contract)}>
                     {t(i18nKeys.school.contractsUi.actions.edit)}
                   </button>
                 </td>
@@ -530,9 +505,7 @@ export default function SchoolContractsPage() {
             {t(i18nKeys.school.contractsUi.form.cancel)}
           </button>
           <button type="submit" disabled={saving}>
-            {saving
-              ? t(i18nKeys.common.loading)
-              : t(i18nKeys.school.contractsUi.form.save)}
+            {saving ? t(i18nKeys.common.loading) : t(i18nKeys.school.contractsUi.form.save)}
           </button>
         </form>
       )}
@@ -617,10 +590,7 @@ export default function SchoolContractsPage() {
                   ))}
                 </select>
               </label>
-              <button
-                type="submit"
-                disabled={linking || studentIdsToAdd.length === 0}
-              >
+              <button type="submit" disabled={linking || studentIdsToAdd.length === 0}>
                 {linking
                   ? t(i18nKeys.common.loading)
                   : t(i18nKeys.school.contractsUi.detail.addStudents)}
@@ -632,4 +602,3 @@ export default function SchoolContractsPage() {
     </div>
   );
 }
-

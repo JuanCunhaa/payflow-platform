@@ -256,4 +256,3 @@ export default function GuardianProfilePage() {
     </section>
   );
 }
-

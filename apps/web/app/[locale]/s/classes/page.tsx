@@ -459,9 +459,7 @@ export default function SchoolClassesPage() {
                   opacity: gradeSaving ? 0.7 : 1,
                 }}
               >
-                {gradeSaving
-                  ? t(i18nKeys.common.loading)
-                  : t(i18nKeys.school.classesUi.form.save)}
+                {gradeSaving ? t(i18nKeys.common.loading) : t(i18nKeys.school.classesUi.form.save)}
               </button>
             </form>
           )}
@@ -633,9 +631,7 @@ export default function SchoolClassesPage() {
                   minWidth: '160px',
                 }}
               >
-                <option value="">
-                  {t(i18nKeys.school.classesUi.classes.filterByGrade)}
-                </option>
+                <option value="">{t(i18nKeys.school.classesUi.classes.filterByGrade)}</option>
                 {grades.map((grade) => (
                   <option key={grade.id} value={grade.id}>
                     {grade.name}
@@ -739,9 +735,7 @@ export default function SchoolClassesPage() {
                   fontSize: '14px',
                 }}
               >
-                <option value="">
-                  {t(i18nKeys.school.classesUi.form.classGrade)}
-                </option>
+                <option value="">{t(i18nKeys.school.classesUi.form.classGrade)}</option>
                 {grades.map((grade) => (
                   <option key={grade.id} value={grade.id}>
                     {grade.name}
@@ -762,9 +756,7 @@ export default function SchoolClassesPage() {
                   opacity: classSaving ? 0.7 : 1,
                 }}
               >
-                {classSaving
-                  ? t(i18nKeys.common.loading)
-                  : t(i18nKeys.school.classesUi.form.save)}
+                {classSaving ? t(i18nKeys.common.loading) : t(i18nKeys.school.classesUi.form.save)}
               </button>
             </form>
           )}

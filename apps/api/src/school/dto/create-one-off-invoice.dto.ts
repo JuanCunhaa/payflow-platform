@@ -19,4 +19,3 @@ export class CreateOneOffInvoiceDto {
   @IsNotEmpty()
   description!: string;
 }
-

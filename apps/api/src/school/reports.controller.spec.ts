@@ -202,11 +202,7 @@ async function run() {
   }
 
   // Summary with date range (2026-01-01 to 2026-01-31) should ignore overdue from 2025-12-20
-  const summaryRange = await controller.getSummary(
-    reqTenant,
-    '2026-01-01',
-    '2026-01-31'
-  );
+  const summaryRange = await controller.getSummary(reqTenant, '2026-01-01', '2026-01-31');
 
   if (summaryRange.totalBilledCents !== 10000) {
     throw new Error(`Expected range totalBilledCents=10000, got ${summaryRange.totalBilledCents}`);
@@ -225,7 +221,9 @@ async function run() {
   }
 
   if (summaryRange.overdueInvoicesCount !== 0) {
-    throw new Error(`Expected range overdueInvoicesCount=0, got ${summaryRange.overdueInvoicesCount}`);
+    throw new Error(
+      `Expected range overdueInvoicesCount=0, got ${summaryRange.overdueInvoicesCount}`
+    );
   }
 
   // Invalid date should throw BadRequestException
@@ -273,17 +271,11 @@ async function run() {
     end: () => {},
   } as any;
 
-  await controller.exportInvoicesCsv(
-    reqTenant,
-    '2026-01-01',
-    '2026-01-31',
-    'PAID',
-    resMock,
-  );
+  await controller.exportInvoicesCsv(reqTenant, '2026-01-01', '2026-01-31', 'PAID', resMock);
 
   if (headers['Content-Type'] !== 'text/csv; charset=utf-8') {
     throw new Error(
-      `Expected Content-Type to be text/csv; charset=utf-8, got ${headers['Content-Type']}`,
+      `Expected Content-Type to be text/csv; charset=utf-8, got ${headers['Content-Type']}`
     );
   }
 
@@ -299,10 +291,7 @@ async function run() {
   }
 
   const header = lines[0];
-  if (
-    header !==
-    'aluno,responsavel,valor,vencimento,status,pago_em,metodo_pagamento'
-  ) {
+  if (header !== 'aluno,responsavel,valor,vencimento,status,pago_em,metodo_pagamento') {
     throw new Error(`Unexpected CSV header: ${header}`);
   }
 
@@ -323,50 +312,39 @@ async function run() {
   }
 
   if (studentReport.totals.totalPaidCents !== 10000) {
-    throw new Error(
-      `Expected totalPaidCents=10000, got ${studentReport.totals.totalPaidCents}`,
-    );
+    throw new Error(`Expected totalPaidCents=10000, got ${studentReport.totals.totalPaidCents}`);
   }
 
   if (studentReport.totals.totalOpenCents !== 20000) {
-    throw new Error(
-      `Expected totalOpenCents=20000, got ${studentReport.totals.totalOpenCents}`,
-    );
+    throw new Error(`Expected totalOpenCents=20000, got ${studentReport.totals.totalOpenCents}`);
   }
 
   if (studentReport.invoices.length !== 2) {
-    throw new Error(
-      `Expected 2 invoices in student report, got ${studentReport.invoices.length}`,
-    );
+    throw new Error(`Expected 2 invoices in student report, got ${studentReport.invoices.length}`);
   }
 
   // Guardian report: only invoices for guardian-1 (inv-1 paid, inv-2 pending)
-  const guardianReport = await controller.getGuardianReport(
-    reqTenant,
-    'guardian-1',
-  );
+  const guardianReport = await controller.getGuardianReport(reqTenant, 'guardian-1');
 
   if (guardianReport.guardian.id !== 'guardian-1') {
-    throw new Error(
-      `Expected guardian id guardian-1, got ${guardianReport.guardian.id}`,
-    );
+    throw new Error(`Expected guardian id guardian-1, got ${guardianReport.guardian.id}`);
   }
 
   if (guardianReport.totals.totalPaidCents !== 10000) {
     throw new Error(
-      `Expected guardian totalPaidCents=10000, got ${guardianReport.totals.totalPaidCents}`,
+      `Expected guardian totalPaidCents=10000, got ${guardianReport.totals.totalPaidCents}`
     );
   }
 
   if (guardianReport.totals.totalOpenCents !== 20000) {
     throw new Error(
-      `Expected guardian totalOpenCents=20000, got ${guardianReport.totals.totalOpenCents}`,
+      `Expected guardian totalOpenCents=20000, got ${guardianReport.totals.totalOpenCents}`
     );
   }
 
   if (guardianReport.invoices.length !== 2) {
     throw new Error(
-      `Expected 2 invoices in guardian report, got ${guardianReport.invoices.length}`,
+      `Expected 2 invoices in guardian report, got ${guardianReport.invoices.length}`
     );
   }
 

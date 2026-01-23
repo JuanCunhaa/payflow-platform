@@ -1,5 +1,4 @@
-const FALLBACK_API_BASE =
-  process.env.NEXT_PUBLIC_API_URL || 'http://localtest.me:3333';
+const FALLBACK_API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localtest.me:3333';
 
 export function getApiBase(): string {
   if (typeof window === 'undefined') {
@@ -19,4 +18,3 @@ export function getApiBase(): string {
 
   return FALLBACK_API_BASE;
 }
-
