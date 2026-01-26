@@ -32,7 +32,7 @@ npm run dev
 
 O seed da API (`apps/api/prisma/seed.ts`) é idempotente e cria:
 
-- Tenants
+- Tenant
   - `vidal` (`school_code: VIDAL-0001`)
   - `alpha` (`school_code: ALPHA-0001`)
 - Usuários
