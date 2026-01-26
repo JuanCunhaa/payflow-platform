@@ -16,8 +16,8 @@
     "db:seed": "npm run -w @payflow/api db:seed",
     "db:studio": "npm run -w @payflow/api db:studio",
     "test:email": "npm run -w @payflow/api test:email --",
-    "build:web": "npm install && npm run -w @payflow/shared build && npm run -w @payflow/web build",
-    "build:api": "npm install && npm run -w @payflow/shared build && npm run -w @payflow/api db:generate && npm run -w @payflow/api build"
+    "build:web": "npm run -w @payflow/shared build && npm run -w @payflow/web build",
+    "build:api": "npm run -w @payflow/shared build && npm run -w @payflow/api db:generate && npm run -w @payflow/api build"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
