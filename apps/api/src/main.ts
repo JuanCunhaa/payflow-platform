@@ -13,8 +13,19 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Enable CORS for frontend
+  const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localtest.me:3000',
+    /\.localtest\.me(:\d+)?$/,
+    'https://payflow-platform-web.vercel.app',
+  ];
+
+  if (process.env.FRONTEND_URL) {
+    allowedOrigins.push(process.env.FRONTEND_URL);
+  }
+
   app.enableCors({
-    origin: ['http://localhost:3000', 'http://localtest.me:3000', /\.localtest\.me(:\d+)?$/],
+    origin: allowedOrigins,
     credentials: true,
   });
 

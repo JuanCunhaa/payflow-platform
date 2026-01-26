@@ -89,7 +89,8 @@ async function maybeValidateTenant(request: NextRequest) {
 
   // Validate against API by calling /tenant/ping with appropriate Host header
   try {
-    const apiUrl = 'http://localhost:3333/tenant/ping';
+    const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333';
+    const apiUrl = `${apiBase}/tenant/ping`;
     const apiHost = `${sub}.${domain}:3333`;
     const res = await fetch(apiUrl, {
       headers: { Host: apiHost },
