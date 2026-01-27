@@ -209,14 +209,25 @@
       },
       "detail": {
         "title": "Detalhes da cobrança",
+        "emptySelection": "Selecione uma cobrança para ver os detalhes.",
         "infoTitle": "Informações da cobrança",
+        "studentTitle": "Beneficiário",
+        "guardianTitle": "Cliente",
         "itemsTitle": "Itens da cobrança",
         "statusTimelineTitle": "Linha do tempo de status",
+        "paymentTitle": "Pagamento",
         "paymentLinkLabel": "Link de pagamento",
+        "copyLink": "Copiar Link",
+        "openLink": "Abrir Link",
         "copyPaymentLink": "Copiar link de pagamento",
-        "copyPaymentLinkSuccess": "Link de pagamento copiado para a área de transferência.",
+        "copyPaymentLinkSuccess": "Link de pagamento copiado.",
         "generatePaymentLink": "Gerar link de pagamento",
-        "openPaymentPage": "Abrir página de pagamento"
+        "openPaymentPage": "Abrir página de pagamento",
+        "communicationsTitle": "Comunicações",
+        "communicationsEmpty": "Nenhuma comunicação registrada.",
+        "communicationTypeCreated": "Cobrança criada",
+        "communicationTypeOverdue": "Cobrança vencida",
+        "communicationTypePaid": "Pagamento confirmado"
       },
       "feedback": {
         "loadError": "Não foi possível carregar as cobranças.",
@@ -390,7 +401,8 @@
       "invoices": "Cobranças",
       "students": "Beneficiários",
       "guardians": "Clientes",
-      "approvalsGuardians": "Aprovação de clientes"
+      "approvalsGuardians": "Aprovação de clientes",
+      "tickets": "Chamados"
     },
     "breadcrumbs": {
       "root": "Empresa",
@@ -413,6 +425,18 @@
         "saveSuccess": "Configurações da escola salvas com sucesso.",
         "saveError": "Não foi possível salvar as configurações da escola.",
         "loadError": "Não foi possível carregar as configurações da escola."
+      }
+    },
+    "dashboardUi": {
+      "periodLabel": "Período",
+      "cards": {
+        "totalBilled": "Faturado",
+        "totalOpen": "Em aberto",
+        "totalOverdue": "Vencido",
+        "overdueCount": "Qtd. vencidas"
+      },
+      "feedback": {
+        "loadError": "Não foi possível carregar o resumo financeiro."
       }
     },
     "classesUi": {
@@ -589,22 +613,50 @@
       },
       "empty": "Nenhum responsável encontrado para o filtro atual."
     },
+    "invoicesUi": {
+      "filters": {
+        "status": "Status",
+        "statusAll": "Todos os status",
+        "search": "Buscar por contrato ou cliente",
+        "from": "Data inicial",
+        "to": "Data final"
+      },
+      "table": {
+        "dueDate": "Vencimento",
+        "student": "Beneficiário",
+        "guardian": "Cliente",
+        "amount": "Valor",
+        "status": "Status",
+        "actions": "Ações"
+      },
+      "status": {
+        "draft": "Rascunho",
+        "pending": "Pendente",
+        "paid": "Pago",
+        "overdue": "Em atraso",
+        "canceled": "Cancelado",
+        "refunded": "Estornado"
+      },
+      "detail": {
+        "title": "Detalhes da cobrança"
+      },
+      "feedback": {
+        "loadError": "Não foi possível carregar as cobranças.",
+        "exportError": "Não foi possível exportar as cobranças."
+      },
+      "empty": "Nenhuma cobrança encontrada para o filtro atual.",
+      "export": {
+        "button": "Exportar CSV",
+        "title": "Exportar cobranças",
+        "description": "Selecione o período.",
+        "submit": "Exportar",
+        "cancel": "Cancelar"
+      }
+    },
     "pages": {
       "dashboard": {
         "title": "Visão geral da empresa",
         "description": "Resumo de grupos, beneficiários e fluxos financeiros desta empresa (em breve)."
-      },
-      "dashboardUi": {
-        "periodLabel": "Período",
-        "cards": {
-          "totalBilled": "Faturado",
-          "totalOpen": "Em aberto",
-          "totalOverdue": "Vencido",
-          "overdueCount": "Qtd. vencidas"
-        },
-        "feedback": {
-          "loadError": "Não foi possível carregar o resumo financeiro."
-        }
       },
       "settings": {
         "title": "Configurações da empresa",

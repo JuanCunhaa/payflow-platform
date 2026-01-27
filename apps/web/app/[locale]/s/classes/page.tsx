@@ -276,68 +276,32 @@ export default function SchoolClassesPage() {
   }
 
   return (
-    <div
-      style={{
-        borderRadius: '12px',
-        border: '1px solid #e2e8f0',
-        padding: '20px',
-        backgroundColor: '#ffffff',
-        boxShadow: '0 10px 25px rgba(15,23,42,0.04)',
-      }}
-    >
-      <h1
-        style={{
-          fontSize: '20px',
-          marginTop: 0,
-          marginBottom: '4px',
-        }}
-      >
+    <div className="rounded-xl border bg-card p-6 shadow-sm">
+      <h1 className="mb-1 mt-0 text-xl font-semibold">
         {t(i18nKeys.school.pages.classes.title)}
       </h1>
-      <p
-        style={{
-          fontSize: '14px',
-          color: '#64748b',
-          marginBottom: '16px',
-        }}
-      >
+      <p className="mb-4 text-sm text-muted-foreground">
         {t(i18nKeys.school.pages.classes.description)}
       </p>
 
-      <div
-        style={{
-          display: 'inline-flex',
-          borderRadius: '999px',
-          border: '1px solid #e2e8f0',
-          overflow: 'hidden',
-          marginBottom: '16px',
-        }}
-      >
+      <div className="mb-4 inline-flex overflow-hidden rounded-full border">
         <button
           type="button"
           onClick={() => setActiveTab('grades')}
-          style={{
-            padding: '6px 14px',
-            border: 'none',
-            backgroundColor: activeTab === 'grades' ? '#0f172a' : 'transparent',
-            color: activeTab === 'grades' ? '#f9fafb' : '#4b5563',
-            cursor: 'pointer',
-            fontSize: '13px',
-          }}
+          className={`cursor-pointer border-none px-3.5 py-1.5 text-sm ${activeTab === 'grades'
+            ? 'bg-primary text-primary-foreground'
+            : 'bg-transparent text-muted-foreground hover:bg-muted'
+            }`}
         >
           {t(i18nKeys.school.classesUi.tabs.grades)}
         </button>
         <button
           type="button"
           onClick={() => setActiveTab('classes')}
-          style={{
-            padding: '6px 14px',
-            border: 'none',
-            backgroundColor: activeTab === 'classes' ? '#0f172a' : 'transparent',
-            color: activeTab === 'classes' ? '#f9fafb' : '#4b5563',
-            cursor: 'pointer',
-            fontSize: '13px',
-          }}
+          className={`cursor-pointer border-none px-3.5 py-1.5 text-sm ${activeTab === 'classes'
+            ? 'bg-primary text-primary-foreground'
+            : 'bg-transparent text-muted-foreground hover:bg-muted'
+            }`}
         >
           {t(i18nKeys.school.classesUi.tabs.classes)}
         </button>
@@ -345,34 +309,15 @@ export default function SchoolClassesPage() {
 
       {activeTab === 'grades' && (
         <section>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: '12px',
-            }}
-          >
-            <h2
-              style={{
-                margin: 0,
-                fontSize: '16px',
-              }}
-            >
+          <div className="mb-3 flex items-center justify-between">
+            <h2 className="m-0 text-base font-semibold">
               {t(i18nKeys.school.classesUi.grades.title)}
             </h2>
             {gradeFormMode ? (
               <button
                 type="button"
                 onClick={resetGradeForm}
-                style={{
-                  padding: '6px 10px',
-                  borderRadius: '999px',
-                  border: '1px solid #e5e7eb',
-                  backgroundColor: '#ffffff',
-                  fontSize: '13px',
-                  cursor: 'pointer',
-                }}
+                className="cursor-pointer rounded-full border bg-background px-2.5 py-1.5 text-xs hover:bg-muted"
               >
                 {t(i18nKeys.school.classesUi.form.cancel)}
               </button>
@@ -380,15 +325,7 @@ export default function SchoolClassesPage() {
               <button
                 type="button"
                 onClick={openCreateGrade}
-                style={{
-                  padding: '6px 12px',
-                  borderRadius: '999px',
-                  border: 'none',
-                  backgroundColor: '#2563eb',
-                  color: '#ffffff',
-                  fontSize: '13px',
-                  cursor: 'pointer',
-                }}
+                className="cursor-pointer rounded-full border-none bg-primary px-3 py-1.5 text-xs text-primary-foreground hover:bg-primary/90"
               >
                 {t(i18nKeys.school.classesUi.grades.create)}
               </button>
@@ -396,17 +333,7 @@ export default function SchoolClassesPage() {
           </div>
 
           {gradesError && (
-            <p
-              style={{
-                marginBottom: '8px',
-                padding: '8px 10px',
-                borderRadius: '8px',
-                border: '1px solid #fecaca',
-                backgroundColor: '#fef2f2',
-                color: '#b91c1c',
-                fontSize: '13px',
-              }}
-            >
+            <p className="mb-2 rounded-lg border border-destructive/50 bg-destructive/10 px-2.5 py-2 text-xs text-destructive">
               {gradesError}
             </p>
           )}
@@ -414,20 +341,11 @@ export default function SchoolClassesPage() {
           {gradeFormMode && (
             <form
               onSubmit={handleSubmitGrade}
-              style={{
-                marginBottom: '12px',
-                display: 'flex',
-                gap: '8px',
-                flexWrap: 'wrap',
-                alignItems: 'center',
-              }}
+              className="mb-3 flex flex-wrap items-center gap-2"
             >
               <label
                 htmlFor="grade-name-input"
-                style={{
-                  fontSize: '13px',
-                  color: '#374151',
-                }}
+                className="text-xs text-foreground"
               >
                 {t(i18nKeys.school.classesUi.form.gradeName)}
               </label>
@@ -436,28 +354,13 @@ export default function SchoolClassesPage() {
                 type="text"
                 value={gradeFormName}
                 onChange={(event) => setGradeFormName(event.target.value)}
-                style={{
-                  flex: '1 1 160px',
-                  minWidth: '160px',
-                  padding: '6px 8px',
-                  borderRadius: '8px',
-                  border: '1px solid #d1d5db',
-                  fontSize: '14px',
-                }}
+                className="w-40 min-w-[160px] flex-1 rounded-lg border bg-background px-2 py-1.5 text-sm"
               />
               <button
                 type="submit"
                 disabled={gradeSaving}
-                style={{
-                  padding: '6px 10px',
-                  borderRadius: '999px',
-                  border: 'none',
-                  backgroundColor: '#16a34a',
-                  color: '#ffffff',
-                  fontSize: '13px',
-                  cursor: gradeSaving ? 'not-allowed' : 'pointer',
-                  opacity: gradeSaving ? 0.7 : 1,
-                }}
+                className={`cursor-pointer rounded-full border-none bg-green-600 px-2.5 py-1.5 text-xs text-white hover:bg-green-700 ${gradeSaving ? 'cursor-not-allowed opacity-70' : ''
+                  }`}
               >
                 {gradeSaving ? t(i18nKeys.common.loading) : t(i18nKeys.school.classesUi.form.save)}
               </button>
@@ -465,80 +368,36 @@ export default function SchoolClassesPage() {
           )}
 
           {gradesLoading ? (
-            <p
-              style={{
-                fontSize: '14px',
-                color: '#64748b',
-              }}
-            >
+            <p className="text-sm text-muted-foreground">
               {t(i18nKeys.common.loading)}
             </p>
           ) : grades.length === 0 ? (
-            <p
-              style={{
-                fontSize: '14px',
-                color: '#64748b',
-              }}
-            >
+            <p className="text-sm text-muted-foreground">
               {t(i18nKeys.school.classesUi.grades.empty)}
             </p>
           ) : (
-            <ul
-              style={{
-                listStyle: 'none',
-                margin: 0,
-                padding: 0,
-                borderRadius: '10px',
-                border: '1px solid #e5e7eb',
-              }}
-            >
+            <ul className="m-0 list-none p-0">
               {grades.map((grade) => (
                 <li
                   key={grade.id}
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    padding: '8px 10px',
-                    borderBottom: '1px solid #f3f4f6',
-                  }}
+                  className="flex items-center justify-between border-b px-2.5 py-2 last:border-0"
                 >
-                  <span>{grade.name}</span>
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      fontSize: '12px',
-                    }}
-                  >
+                  <span className="text-sm text-foreground">{grade.name}</span>
+                  <div className="flex items-center gap-1.5 text-xs">
                     {gradeDeleteCandidateId === grade.id ? (
                       <>
-                        <span>{t(i18nKeys.school.classesUi.grades.deleteConfirmTitle)}</span>
+                        <span className="text-muted-foreground">{t(i18nKeys.school.classesUi.grades.deleteConfirmTitle)}</span>
                         <button
                           type="button"
                           onClick={() => setGradeDeleteCandidateId(null)}
-                          style={{
-                            padding: '4px 8px',
-                            borderRadius: '999px',
-                            border: '1px solid #e5e7eb',
-                            backgroundColor: '#ffffff',
-                            cursor: 'pointer',
-                          }}
+                          className="cursor-pointer rounded-full border bg-background px-2 py-1 hover:bg-muted"
                         >
                           {t(i18nKeys.school.classesUi.form.cancel)}
                         </button>
                         <button
                           type="button"
                           onClick={() => void handleDeleteGrade(grade.id)}
-                          style={{
-                            padding: '4px 8px',
-                            borderRadius: '999px',
-                            border: '1px solid #fecaca',
-                            backgroundColor: '#fef2f2',
-                            color: '#b91c1c',
-                            cursor: 'pointer',
-                          }}
+                          className="cursor-pointer rounded-full border border-destructive/50 bg-destructive/10 px-2 py-1 text-destructive hover:bg-destructive/20"
                         >
                           {t(i18nKeys.school.classesUi.grades.delete)}
                         </button>
@@ -548,27 +407,14 @@ export default function SchoolClassesPage() {
                         <button
                           type="button"
                           onClick={() => openEditGrade(grade)}
-                          style={{
-                            padding: '4px 8px',
-                            borderRadius: '999px',
-                            border: '1px solid #e5e7eb',
-                            backgroundColor: '#ffffff',
-                            cursor: 'pointer',
-                          }}
+                          className="cursor-pointer rounded-full border bg-background px-2 py-1 text-foreground hover:bg-muted"
                         >
                           {t(i18nKeys.school.classesUi.grades.edit)}
                         </button>
                         <button
                           type="button"
                           onClick={() => setGradeDeleteCandidateId(grade.id)}
-                          style={{
-                            padding: '4px 8px',
-                            borderRadius: '999px',
-                            border: '1px solid #fecaca',
-                            backgroundColor: '#fef2f2',
-                            color: '#b91c1c',
-                            cursor: 'pointer',
-                          }}
+                          className="cursor-pointer rounded-full border border-destructive/50 bg-destructive/10 px-2 py-1 text-destructive hover:bg-destructive/20"
                         >
                           {t(i18nKeys.school.classesUi.grades.delete)}
                         </button>
@@ -584,38 +430,14 @@ export default function SchoolClassesPage() {
 
       {activeTab === 'classes' && (
         <section>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: '12px',
-              gap: '12px',
-              flexWrap: 'wrap',
-            }}
-          >
-            <h2
-              style={{
-                margin: 0,
-                fontSize: '16px',
-              }}
-            >
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+            <h2 className="m-0 text-base font-semibold">
               {t(i18nKeys.school.classesUi.classes.title)}
             </h2>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                flexWrap: 'wrap',
-              }}
-            >
+            <div className="flex flex-wrap items-center gap-2">
               <label
                 htmlFor="classes-filter-grade"
-                style={{
-                  fontSize: '13px',
-                  color: '#64748b',
-                }}
+                className="text-xs text-muted-foreground"
               >
                 {t(i18nKeys.school.classesUi.classes.filterByGrade)}
               </label>
@@ -623,13 +445,7 @@ export default function SchoolClassesPage() {
                 id="classes-filter-grade"
                 value={selectedGradeId}
                 onChange={(event) => setSelectedGradeId(event.target.value)}
-                style={{
-                  padding: '6px 8px',
-                  borderRadius: '8px',
-                  border: '1px solid #d1d5db',
-                  fontSize: '13px',
-                  minWidth: '160px',
-                }}
+                className="min-w-[160px] rounded-lg border bg-background px-2 py-1.5 text-xs"
               >
                 <option value="">{t(i18nKeys.school.classesUi.classes.filterByGrade)}</option>
                 {grades.map((grade) => (
@@ -642,14 +458,7 @@ export default function SchoolClassesPage() {
                 <button
                   type="button"
                   onClick={resetClassForm}
-                  style={{
-                    padding: '6px 10px',
-                    borderRadius: '999px',
-                    border: '1px solid #e5e7eb',
-                    backgroundColor: '#ffffff',
-                    fontSize: '13px',
-                    cursor: 'pointer',
-                  }}
+                  className="cursor-pointer rounded-full border bg-background px-2.5 py-1.5 text-xs hover:bg-muted"
                 >
                   {t(i18nKeys.school.classesUi.form.cancel)}
                 </button>
@@ -657,15 +466,7 @@ export default function SchoolClassesPage() {
                 <button
                   type="button"
                   onClick={openCreateClass}
-                  style={{
-                    padding: '6px 12px',
-                    borderRadius: '999px',
-                    border: 'none',
-                    backgroundColor: '#2563eb',
-                    color: '#ffffff',
-                    fontSize: '13px',
-                    cursor: 'pointer',
-                  }}
+                  className="cursor-pointer rounded-full border-none bg-primary px-3 py-1.5 text-xs text-primary-foreground hover:bg-primary/90"
                 >
                   {t(i18nKeys.school.classesUi.classes.create)}
                 </button>
@@ -674,17 +475,7 @@ export default function SchoolClassesPage() {
           </div>
 
           {classesError && (
-            <p
-              style={{
-                marginBottom: '8px',
-                padding: '8px 10px',
-                borderRadius: '8px',
-                border: '1px solid #fecaca',
-                backgroundColor: '#fef2f2',
-                color: '#b91c1c',
-                fontSize: '13px',
-              }}
-            >
+            <p className="mb-2 rounded-lg border border-destructive/50 bg-destructive/10 px-2.5 py-2 text-xs text-destructive">
               {classesError}
             </p>
           )}
@@ -692,20 +483,11 @@ export default function SchoolClassesPage() {
           {classFormMode && (
             <form
               onSubmit={handleSubmitClass}
-              style={{
-                marginBottom: '12px',
-                display: 'flex',
-                gap: '8px',
-                flexWrap: 'wrap',
-                alignItems: 'center',
-              }}
+              className="mb-3 flex flex-wrap items-center gap-2"
             >
               <label
                 htmlFor="class-name-input"
-                style={{
-                  fontSize: '13px',
-                  color: '#374151',
-                }}
+                className="text-xs text-foreground"
               >
                 {t(i18nKeys.school.classesUi.form.className)}
               </label>
@@ -714,26 +496,12 @@ export default function SchoolClassesPage() {
                 type="text"
                 value={classFormName}
                 onChange={(event) => setClassFormName(event.target.value)}
-                style={{
-                  flex: '1 1 160px',
-                  minWidth: '140px',
-                  padding: '6px 8px',
-                  borderRadius: '8px',
-                  border: '1px solid #d1d5db',
-                  fontSize: '14px',
-                }}
+                className="w-40 min-w-[140px] flex-1 rounded-lg border bg-background px-2 py-1.5 text-sm"
               />
               <select
                 value={classFormGradeId}
                 onChange={(event) => setClassFormGradeId(event.target.value)}
-                style={{
-                  flex: '1 1 160px',
-                  minWidth: '140px',
-                  padding: '6px 8px',
-                  borderRadius: '8px',
-                  border: '1px solid #d1d5db',
-                  fontSize: '14px',
-                }}
+                className="w-40 min-w-[140px] flex-1 rounded-lg border bg-background px-2 py-1.5 text-sm"
               >
                 <option value="">{t(i18nKeys.school.classesUi.form.classGrade)}</option>
                 {grades.map((grade) => (
@@ -745,16 +513,8 @@ export default function SchoolClassesPage() {
               <button
                 type="submit"
                 disabled={classSaving}
-                style={{
-                  padding: '6px 10px',
-                  borderRadius: '999px',
-                  border: 'none',
-                  backgroundColor: '#16a34a',
-                  color: '#ffffff',
-                  fontSize: '13px',
-                  cursor: classSaving ? 'not-allowed' : 'pointer',
-                  opacity: classSaving ? 0.7 : 1,
-                }}
+                className={`cursor-pointer rounded-full border-none bg-green-600 px-2.5 py-1.5 text-xs text-white hover:bg-green-700 ${classSaving ? 'cursor-not-allowed opacity-70' : ''
+                  }`}
               >
                 {classSaving ? t(i18nKeys.common.loading) : t(i18nKeys.school.classesUi.form.save)}
               </button>
@@ -771,83 +531,37 @@ export default function SchoolClassesPage() {
               {t(i18nKeys.common.loading)}
             </p>
           ) : classes.length === 0 ? (
-            <p
-              style={{
-                fontSize: '14px',
-                color: '#64748b',
-              }}
-            >
+            <p className="text-sm text-muted-foreground">
               {t(i18nKeys.school.classesUi.classes.empty)}
             </p>
           ) : (
-            <ul
-              style={{
-                listStyle: 'none',
-                margin: 0,
-                padding: 0,
-                borderRadius: '10px',
-                border: '1px solid #e5e7eb',
-              }}
-            >
+            <ul className="m-0 list-none rounded-xl border bg-card p-0">
               {classes.map((item) => (
                 <li
                   key={item.id}
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    padding: '8px 10px',
-                    borderBottom: '1px solid #f3f4f6',
-                  }}
+                  className="flex items-center justify-between border-b px-2.5 py-2 last:border-0"
                 >
                   <div>
-                    <div>{item.name}</div>
-                    <div
-                      style={{
-                        fontSize: '12px',
-                        color: '#6b7280',
-                      }}
-                    >
-                      {gradeNameById(item.gradeId)}
-                    </div>
+                    <div className="text-sm text-foreground">{item.name}</div>
+                    <div className="text-xs text-muted-foreground">{gradeNameById(item.gradeId)}</div>
                   </div>
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '6px',
-                      fontSize: '12px',
-                    }}
-                  >
+                  <div className="flex items-center gap-1.5 text-xs">
                     {classDeleteCandidateId === item.id ? (
                       <>
-                        <span>{t(i18nKeys.school.classesUi.grades.deleteConfirmTitle)}</span>
+                        <span className="text-muted-foreground">{t(i18nKeys.school.classesUi.grades.deleteConfirmTitle)}</span>
                         <button
                           type="button"
                           onClick={() => setClassDeleteCandidateId(null)}
-                          style={{
-                            padding: '4px 8px',
-                            borderRadius: '999px',
-                            border: '1px solid #e5e7eb',
-                            backgroundColor: '#ffffff',
-                            cursor: 'pointer',
-                          }}
+                          className="cursor-pointer rounded-full border bg-background px-2 py-1 hover:bg-muted"
                         >
                           {t(i18nKeys.school.classesUi.form.cancel)}
                         </button>
                         <button
                           type="button"
                           onClick={() => void handleDeleteClass(item.id)}
-                          style={{
-                            padding: '4px 8px',
-                            borderRadius: '999px',
-                            border: '1px solid #fecaca',
-                            backgroundColor: '#fef2f2',
-                            color: '#b91c1c',
-                            cursor: 'pointer',
-                          }}
+                          className="cursor-pointer rounded-full border border-destructive/50 bg-destructive/10 px-2 py-1 text-destructive hover:bg-destructive/20"
                         >
-                          {t(i18nKeys.school.classesUi.classes.delete)}
+                          {t(i18nKeys.school.classesUi.grades.delete)}
                         </button>
                       </>
                     ) : (
@@ -855,29 +569,16 @@ export default function SchoolClassesPage() {
                         <button
                           type="button"
                           onClick={() => openEditClass(item)}
-                          style={{
-                            padding: '4px 8px',
-                            borderRadius: '999px',
-                            border: '1px solid #e5e7eb',
-                            backgroundColor: '#ffffff',
-                            cursor: 'pointer',
-                          }}
+                          className="cursor-pointer rounded-full border bg-background px-2 py-1 text-foreground hover:bg-muted"
                         >
-                          {t(i18nKeys.school.classesUi.classes.edit)}
+                          {t(i18nKeys.school.classesUi.grades.edit)}
                         </button>
                         <button
                           type="button"
                           onClick={() => setClassDeleteCandidateId(item.id)}
-                          style={{
-                            padding: '4px 8px',
-                            borderRadius: '999px',
-                            border: '1px solid #fecaca',
-                            backgroundColor: '#fef2f2',
-                            color: '#b91c1c',
-                            cursor: 'pointer',
-                          }}
+                          className="cursor-pointer rounded-full border border-destructive/50 bg-destructive/10 px-2 py-1 text-destructive hover:bg-destructive/20"
                         >
-                          {t(i18nKeys.school.classesUi.classes.delete)}
+                          {t(i18nKeys.school.classesUi.grades.delete)}
                         </button>
                       </>
                     )}

@@ -335,62 +335,25 @@ export default function SchoolInvoicesPage() {
   }
 
   return (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '3fr 2fr',
-        gap: '16px',
-        alignItems: 'flex-start',
-      }}
-    >
-      <section
-        style={{
-          borderRadius: '12px',
-          border: '1px solid #e2e8f0',
-          padding: '20px',
-          backgroundColor: '#ffffff',
-          boxShadow: '0 10px 25px rgba(15,23,42,0.04)',
-        }}
-      >
-        <h1
-          style={{
-            fontSize: '20px',
-            marginTop: 0,
-            marginBottom: '4px',
-          }}
-        >
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-5 items-start">
+      <div className="lg:col-span-3 rounded-xl border bg-card p-6 shadow-sm">
+        <h1 className="mb-1 mt-0 text-xl font-semibold">
           {t(i18nKeys.school.pages.invoices.title)}
         </h1>
-        <p
-          style={{
-            fontSize: '14px',
-            color: '#64748b',
-            marginBottom: '16px',
-          }}
-        >
+        <p className="mb-4 text-sm text-muted-foreground">
           {t(i18nKeys.school.pages.invoices.description)}
         </p>
 
         <form
           onSubmit={handleSearchSubmit}
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
-            gap: '8px',
-            marginBottom: '12px',
-            fontSize: '13px',
-          }}
+          className="mb-3 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4"
         >
-          <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <label className="flex flex-col gap-1 text-xs">
             <span>{t(i18nKeys.school.invoicesUi.filters.status)}</span>
             <select
               value={statusFilter}
               onChange={handleStatusChange}
-              style={{
-                padding: '6px 8px',
-                borderRadius: '8px',
-                border: '1px solid #cbd5f5',
-              }}
+              className="rounded-lg border bg-background px-2 py-1.5"
             >
               <option value="ALL">{t(i18nKeys.school.invoicesUi.filters.statusAll)}</option>
               <option value="PENDING">{t(i18nKeys.school.invoicesUi.status.pending)}</option>
@@ -401,98 +364,63 @@ export default function SchoolInvoicesPage() {
             </select>
           </label>
 
-          <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <label className="flex flex-col gap-1 text-xs">
             <span>{t(i18nKeys.school.invoicesUi.filters.from)}</span>
             <input
               type="date"
               value={fromDate}
               onChange={(event) => setFromDate(event.target.value)}
-              style={{
-                padding: '6px 8px',
-                borderRadius: '8px',
-                border: '1px solid #cbd5f5',
-              }}
+              className="rounded-lg border bg-background px-2 py-1.5"
             />
           </label>
 
-          <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <label className="flex flex-col gap-1 text-xs">
             <span>{t(i18nKeys.school.invoicesUi.filters.to)}</span>
             <input
               type="date"
               value={toDate}
               onChange={(event) => setToDate(event.target.value)}
-              style={{
-                padding: '6px 8px',
-                borderRadius: '8px',
-                border: '1px solid #cbd5f5',
-              }}
+              className="rounded-lg border bg-background px-2 py-1.5"
             />
           </label>
 
-          <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <label className="flex flex-col gap-1 text-xs">
             <span>{t(i18nKeys.school.invoicesUi.filters.search)}</span>
             <input
               type="text"
               value={searchQuery}
               onChange={(event) => setSearchQuery(event.target.value)}
               placeholder={t(i18nKeys.school.invoicesUi.filters.search)}
-              style={{
-                padding: '6px 8px',
-                borderRadius: '8px',
-                border: '1px solid #cbd5f5',
-              }}
+              className="rounded-lg border bg-background px-2 py-1.5"
             />
           </label>
 
-          <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <label className="flex flex-col gap-1 text-xs">
             <span>{t(i18nKeys.school.invoicesUi.filters.student)}</span>
             <input
               type="text"
               value={studentQuery}
               onChange={(event) => setStudentQuery(event.target.value)}
               placeholder={t(i18nKeys.school.invoicesUi.filters.student)}
-              style={{
-                padding: '6px 8px',
-                borderRadius: '8px',
-                border: '1px solid #cbd5f5',
-              }}
+              className="rounded-lg border bg-background px-2 py-1.5"
             />
           </label>
 
-          <label style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <label className="flex flex-col gap-1 text-xs">
             <span>{t(i18nKeys.school.invoicesUi.filters.guardian)}</span>
             <input
               type="text"
               value={guardianQuery}
               onChange={(event) => setGuardianQuery(event.target.value)}
               placeholder={t(i18nKeys.school.invoicesUi.filters.guardian)}
-              style={{
-                padding: '6px 8px',
-                borderRadius: '8px',
-                border: '1px solid #cbd5f5',
-              }}
+              className="rounded-lg border bg-background px-2 py-1.5"
             />
           </label>
 
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'flex-end',
-              justifyContent: 'flex-end',
-              gap: '8px',
-            }}
-          >
+          <div className="col-span-1 flex items-end justify-end gap-2 sm:col-span-2 lg:col-span-2">
             <button
               type="submit"
-              style={{
-                padding: '8px 12px',
-                borderRadius: '999px',
-                border: 'none',
-                backgroundColor: '#2563eb',
-                color: '#ffffff',
-                cursor: 'pointer',
-                fontSize: '14px',
-              }}
+              className="cursor-pointer rounded-full border-none bg-primary px-3 py-1.5 text-xs text-primary-foreground hover:bg-primary/90"
             >
               {t(i18nKeys.common.ok)}
             </button>
@@ -505,15 +433,7 @@ export default function SchoolInvoicesPage() {
                 setExportError(null);
                 setExportModalOpen(true);
               }}
-              style={{
-                padding: '8px 12px',
-                borderRadius: '999px',
-                border: '1px solid #0f172a',
-                backgroundColor: '#ffffff',
-                color: '#0f172a',
-                cursor: 'pointer',
-                fontSize: '14px',
-              }}
+              className="cursor-pointer rounded-full border bg-background px-3 py-1.5 text-xs hover:bg-muted"
             >
               {t(i18nKeys.school.invoicesUi.export.button)}
             </button>
@@ -521,242 +441,83 @@ export default function SchoolInvoicesPage() {
         </form>
 
         {error && (
-          <div
-            style={{
-              marginBottom: '12px',
-              padding: '10px',
-              borderRadius: '8px',
-              border: '1px solid #fecaca',
-              backgroundColor: '#fef2f2',
-              color: '#b91c1c',
-              fontSize: '14px',
-            }}
-          >
+          <div className="mb-3 rounded-lg border border-destructive/50 bg-destructive/10 px-2.5 py-2 text-sm text-destructive">
             {error}
           </div>
         )}
 
         {loading ? (
-          <p
-            style={{
-              fontSize: '14px',
-              color: '#64748b',
-            }}
-          >
-            {t(i18nKeys.common.loading)}
-          </p>
+          <p className="text-sm text-muted-foreground">{t(i18nKeys.common.loading)}</p>
         ) : invoices.length === 0 ? (
-          <p
-            style={{
-              fontSize: '14px',
-              color: '#64748b',
-            }}
-          >
-            {t(i18nKeys.school.invoicesUi.empty)}
-          </p>
+          <p className="text-sm text-muted-foreground">{t(i18nKeys.school.invoicesUi.empty)}</p>
         ) : (
           <>
-            <table
-              style={{
-                width: '100%',
-                borderCollapse: 'collapse',
-                fontSize: '14px',
-                marginBottom: '8px',
-              }}
-            >
-              <thead>
-                <tr>
-                  <th
-                    style={{
-                      textAlign: 'left',
-                      padding: '8px',
-                      borderBottom: '1px solid #e5e7eb',
-                    }}
-                  >
-                    {t(i18nKeys.school.invoicesUi.table.dueDate)}
-                  </th>
-                  <th
-                    style={{
-                      textAlign: 'left',
-                      padding: '8px',
-                      borderBottom: '1px solid #e5e7eb',
-                    }}
-                  >
-                    {t(i18nKeys.school.invoicesUi.table.student)}
-                  </th>
-                  <th
-                    style={{
-                      textAlign: 'left',
-                      padding: '8px',
-                      borderBottom: '1px solid #e5e7eb',
-                    }}
-                  >
-                    {t(i18nKeys.school.invoicesUi.table.guardian)}
-                  </th>
-                  <th
-                    style={{
-                      textAlign: 'right',
-                      padding: '8px',
-                      borderBottom: '1px solid #e5e7eb',
-                    }}
-                  >
-                    {t(i18nKeys.school.invoicesUi.table.amount)}
-                  </th>
-                  <th
-                    style={{
-                      textAlign: 'center',
-                      padding: '8px',
-                      borderBottom: '1px solid #e5e7eb',
-                    }}
-                  >
-                    {t(i18nKeys.school.invoicesUi.table.origin)}
-                  </th>
-                  <th
-                    style={{
-                      textAlign: 'center',
-                      padding: '8px',
-                      borderBottom: '1px solid #e5e7eb',
-                    }}
-                  >
-                    {t(i18nKeys.school.invoicesUi.table.status)}
-                  </th>
-                  <th
-                    style={{
-                      textAlign: 'right',
-                      padding: '8px',
-                      borderBottom: '1px solid #e5e7eb',
-                    }}
-                  >
-                    {t(i18nKeys.school.invoicesUi.table.actions)}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {invoices.map((invoice) => {
-                  const studentName = invoice.student?.name ?? '';
-                  const guardianName = invoice.guardian?.name ?? '';
-                  const originLabel = invoice.contractId
-                    ? t(i18nKeys.school.contractsUi.table.name)
-                    : 'One-off';
-                  const colors = statusBadgeColors(invoice.status);
+            <div className="mb-2 overflow-hidden rounded-xl border bg-card shadow-sm">
+              <table className="w-full text-left text-sm">
+                <thead className="bg-muted/50 text-xs uppercase text-muted-foreground">
+                  <tr>
+                    <th className="px-4 py-3 font-medium">{t(i18nKeys.school.invoicesUi.table.dueDate)}</th>
+                    <th className="px-4 py-3 font-medium">{t(i18nKeys.school.invoicesUi.table.student)}</th>
+                    <th className="px-4 py-3 font-medium">{t(i18nKeys.school.invoicesUi.table.guardian)}</th>
+                    <th className="px-4 py-3 font-medium text-right">{t(i18nKeys.school.invoicesUi.table.amount)}</th>
+                    <th className="px-4 py-3 font-medium text-center">{t(i18nKeys.school.invoicesUi.table.origin)}</th>
+                    <th className="px-4 py-3 font-medium text-center">{t(i18nKeys.school.invoicesUi.table.status)}</th>
+                    <th className="px-4 py-3 font-medium text-right">{t(i18nKeys.school.invoicesUi.table.actions)}</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y">
+                  {invoices.map((invoice) => {
+                    const studentName = invoice.student?.name ?? '';
+                    const guardianName = invoice.guardian?.name ?? '';
+                    const originLabel = invoice.contractId
+                      ? t(i18nKeys.school.contractsUi.table.name)
+                      : 'One-off';
 
-                  return (
-                    <tr key={invoice.id}>
-                      <td
-                        style={{
-                          padding: '8px',
-                          borderBottom: '1px solid #f3f4f6',
-                        }}
-                      >
-                        {formatDate(invoice.dueDate)}
-                      </td>
-                      <td
-                        style={{
-                          padding: '8px',
-                          borderBottom: '1px solid #f3f4f6',
-                        }}
-                      >
-                        {studentName || '-'}
-                      </td>
-                      <td
-                        style={{
-                          padding: '8px',
-                          borderBottom: '1px solid #f3f4f6',
-                        }}
-                      >
-                        {guardianName || '-'}
-                      </td>
-                      <td
-                        style={{
-                          padding: '8px',
-                          borderBottom: '1px solid #f3f4f6',
-                          textAlign: 'right',
-                        }}
-                      >
-                        {formatAmount(invoice.amountCents, invoice.currency)}
-                      </td>
-                      <td
-                        style={{
-                          padding: '8px',
-                          borderBottom: '1px solid #f3f4f6',
-                          textAlign: 'center',
-                        }}
-                      >
-                        {originLabel}
-                      </td>
-                      <td
-                        style={{
-                          padding: '8px',
-                          borderBottom: '1px solid #f3f4f6',
-                          textAlign: 'center',
-                        }}
-                      >
-                        <span
-                          style={{
-                            display: 'inline-block',
-                            padding: '2px 8px',
-                            borderRadius: '999px',
-                            fontSize: '12px',
-                            fontWeight: 500,
-                            backgroundColor: colors.background,
-                            color: colors.color,
-                          }}
-                        >
-                          {statusLabel(invoice.status)}
-                        </span>
-                      </td>
-                      <td
-                        style={{
-                          padding: '8px',
-                          borderBottom: '1px solid #f3f4f6',
-                          textAlign: 'right',
-                        }}
-                      >
-                        <button
-                          type="button"
-                          onClick={() => void loadInvoiceDetail(invoice.id)}
-                          style={{
-                            padding: '4px 8px',
-                            borderRadius: '999px',
-                            border: '1px solid #e5e7eb',
-                            backgroundColor: '#ffffff',
-                            cursor: 'pointer',
-                            fontSize: '12px',
-                          }}
-                        >
-                          {t(i18nKeys.school.invoicesUi.table.actions)}
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+                    const statusColorClass =
+                      invoice.status === 'PAID' ? 'bg-green-500/10 text-green-700' :
+                        invoice.status === 'OVERDUE' ? 'bg-red-500/10 text-red-700' :
+                          invoice.status === 'PENDING' ? 'bg-yellow-500/10 text-yellow-700' :
+                            (invoice.status === 'CANCELED' || invoice.status === 'REFUNDED') ? 'bg-gray-500/10 text-gray-700' :
+                              'bg-blue-500/10 text-blue-700';
 
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                fontSize: '13px',
-                marginTop: '4px',
-              }}
-            >
-              <span>
+                    return (
+                      <tr key={invoice.id} className="hover:bg-muted/50">
+                        <td className="px-4 py-3">{formatDate(invoice.dueDate)}</td>
+                        <td className="px-4 py-3">{studentName || '-'}</td>
+                        <td className="px-4 py-3">{guardianName || '-'}</td>
+                        <td className="px-4 py-3 text-right font-medium">{formatAmount(invoice.amountCents, invoice.currency)}</td>
+                        <td className="px-4 py-3 text-center text-xs">{originLabel}</td>
+                        <td className="px-4 py-3 text-center">
+                          <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${statusColorClass}`}>
+                            {statusLabel(invoice.status)}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-right">
+                          <button
+                            type="button"
+                            onClick={() => void loadInvoiceDetail(invoice.id)}
+                            className="cursor-pointer rounded-full border bg-background px-3 py-1 text-xs hover:bg-muted"
+                          >
+                            {t(i18nKeys.school.invoicesUi.table.actions)}
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            <div className="flex items-center justify-between border-t border-border pt-4">
+              <span className="text-sm text-muted-foreground">
                 {page} / {totalPages}
               </span>
-              <div style={{ display: 'flex', gap: '6px' }}>
+              <div className="flex gap-2">
                 <button
                   type="button"
                   onClick={handlePrevPage}
                   disabled={page <= 1}
-                  style={{
-                    padding: '4px 8px',
-                    borderRadius: '999px',
-                    border: '1px solid #e5e7eb',
-                    backgroundColor: '#ffffff',
-                    cursor: page <= 1 ? 'not-allowed' : 'pointer',
-                  }}
+                  className="cursor-pointer rounded-lg border bg-background px-4 py-2 text-sm disabled:opacity-50"
                 >
                   ‹
                 </button>
@@ -764,13 +525,7 @@ export default function SchoolInvoicesPage() {
                   type="button"
                   onClick={handleNextPage}
                   disabled={page >= totalPages}
-                  style={{
-                    padding: '4px 8px',
-                    borderRadius: '999px',
-                    border: '1px solid #e5e7eb',
-                    backgroundColor: '#ffffff',
-                    cursor: page >= totalPages ? 'not-allowed' : 'pointer',
-                  }}
+                  className="cursor-pointer rounded-lg border bg-background px-4 py-2 text-sm disabled:opacity-50"
                 >
                   ›
                 </button>
@@ -778,337 +533,127 @@ export default function SchoolInvoicesPage() {
             </div>
           </>
         )}
-      </section>
+      </div>
 
-      <section
-        style={{
-          borderRadius: '12px',
-          border: '1px solid #e2e8f0',
-          padding: '20px',
-          backgroundColor: '#ffffff',
-          boxShadow: '0 10px 25px rgba(15,23,42,0.04)',
-        }}
-      >
-        <h2
-          style={{
-            fontSize: '18px',
-            marginTop: 0,
-            marginBottom: '8px',
-          }}
-        >
+      <div className="lg:col-span-2 rounded-xl border bg-card p-6 shadow-sm">
+        <h2 className="mb-4 mt-0 text-lg font-semibold">
           {t(i18nKeys.school.invoicesUi.detail.title)}
         </h2>
 
-        {detailError && (
-          <div
-            style={{
-              marginBottom: '12px',
-              padding: '10px',
-              borderRadius: '8px',
-              border: '1px solid #fecaca',
-              backgroundColor: '#fef2f2',
-              color: '#b91c1c',
-              fontSize: '14px',
-            }}
-          >
-            {detailError}
-          </div>
-        )}
-
         {detailLoading ? (
-          <p
-            style={{
-              fontSize: '14px',
-              color: '#64748b',
-            }}
-          >
-            {t(i18nKeys.common.loading)}
+          <p className="text-sm text-muted-foreground">{t(i18nKeys.common.loading)}</p>
+        ) : detailError ? (
+          <p className="rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+            {detailError}
           </p>
         ) : !selectedInvoice ? (
-          <p
-            style={{
-              fontSize: '14px',
-              color: '#64748b',
-            }}
-          >
-            {t(i18nKeys.school.invoicesUi.empty)}
-          </p>
+          <p className="text-sm text-muted-foreground">{t(i18nKeys.school.invoicesUi.detail.emptySelection)}</p>
         ) : (
-          <>
-            <div
-              style={{
-                marginBottom: '12px',
-              }}
-            >
-              <h3
-                style={{
-                  fontSize: '16px',
-                  marginTop: 0,
-                  marginBottom: '6px',
-                }}
-              >
+          <div className="flex flex-col gap-6">
+            <div className="rounded-lg bg-muted/30 p-4">
+              <div className="mb-2 flex items-center justify-between">
+                <span className="text-sm font-medium text-muted-foreground">
+                  {t(i18nKeys.school.invoicesUi.table.amount)}
+                </span>
+                <span className="text-lg font-bold">
+                  {formatAmount(selectedInvoice.amountCents, selectedInvoice.currency)}
+                </span>
+              </div>
+              <div className="mb-1 flex items-center justify-between text-sm">
+                <span className="text-muted-foreground">{t(i18nKeys.school.invoicesUi.table.dueDate)}</span>
+                <span>{formatDate(selectedInvoice.dueDate)}</span>
+              </div>
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-muted-foreground">{t(i18nKeys.school.invoicesUi.table.status)}</span>
+                <span className="font-medium">{statusLabel(selectedInvoice.status)}</span>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <h3 className="m-0 text-sm font-medium text-muted-foreground">
                 {t(i18nKeys.school.invoicesUi.detail.infoTitle)}
               </h3>
-              <p
-                style={{
-                  margin: 0,
-                  fontSize: '14px',
-                  color: '#0f172a',
-                }}
-              >
+              <p className="m-0 text-sm font-medium text-foreground">
                 {formatAmount(selectedInvoice.amountCents, selectedInvoice.currency)} •{' '}
                 {formatDate(selectedInvoice.dueDate)} • {statusLabel(selectedInvoice.status)}
               </p>
-              <p
-                style={{
-                  margin: 0,
-                  marginTop: '4px',
-                  fontSize: '13px',
-                  color: '#64748b',
-                }}
-              >
+              <p className="m-0 text-xs text-muted-foreground">
                 {selectedInvoice.student?.name ?? '-'} •{' '}
                 {selectedInvoice.guardian?.name ?? selectedInvoice.guardian?.user?.email ?? '-'}
               </p>
-              <p
-                style={{
-                  margin: 0,
-                  marginTop: '4px',
-                  fontSize: '13px',
-                  color: '#9ca3af',
-                }}
-              >
+              <p className="m-0 text-xs text-muted-foreground/80">
                 {selectedOrigin === 'contract' ? 'Mensalidade (contrato)' : 'Cobrança avulsa'}
               </p>
             </div>
 
-            <div
-              style={{
-                marginBottom: '12px',
-              }}
-            >
-              <h3
-                style={{
-                  fontSize: '16px',
-                  marginTop: 0,
-                  marginBottom: '6px',
-                }}
-              >
-                {t(i18nKeys.school.invoicesUi.detail.paymentLinkLabel)}
-              </h3>
-              {selectedInvoice.status === 'PENDING' || selectedInvoice.status === 'OVERDUE' ? (
-                <div
-                  style={{
-                    display: 'flex',
-                    gap: '8px',
-                    flexWrap: 'wrap',
-                    alignItems: 'center',
-                  }}
-                >
-                  {paymentLink ? (
-                    <>
-                      <button
-                        type="button"
-                        onClick={() => void handleCopyPaymentLink()}
-                        disabled={paymentLoading}
-                        style={{
-                          padding: '6px 12px',
-                          borderRadius: '999px',
-                          border: '1px solid #e5e7eb',
-                          backgroundColor: '#ffffff',
-                          cursor: 'pointer',
-                          fontSize: '13px',
-                        }}
-                      >
-                        {t(i18nKeys.school.invoicesUi.detail.copyPaymentLink)}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => void handleOpenPaymentPage()}
-                        disabled={paymentLoading}
-                        style={{
-                          padding: '6px 12px',
-                          borderRadius: '999px',
-                          border: 'none',
-                          backgroundColor: '#4f46e5',
-                          color: '#ffffff',
-                          cursor: 'pointer',
-                          fontSize: '13px',
-                        }}
-                      >
-                        {t(i18nKeys.school.invoicesUi.detail.openPaymentPage)}
-                      </button>
-                    </>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => void generatePaymentLink()}
-                      disabled={paymentLoading}
-                      style={{
-                        padding: '6px 12px',
-                        borderRadius: '999px',
-                        border: 'none',
-                        backgroundColor: '#2563eb',
-                        color: '#ffffff',
-                        cursor: 'pointer',
-                        fontSize: '13px',
-                      }}
-                    >
-                      {paymentLoading
-                        ? t(i18nKeys.common.loading)
-                        : t(i18nKeys.school.invoicesUi.detail.generatePaymentLink)}
-                    </button>
-                  )}
+            {selectedInvoice.status === 'PENDING' && (
+              <div className="flex flex-col gap-3 rounded-lg border p-4">
+                <h3 className="m-0 text-sm font-semibold">
+                  {t(i18nKeys.school.invoicesUi.detail.paymentTitle)}
+                </h3>
+                {copySuccess && (
+                  <p className="rounded-lg bg-green-500/10 px-3 py-2 text-xs text-green-700">
+                    {copySuccess}
+                  </p>
+                )}
+                {paymentError && (
+                  <p className="rounded-lg bg-destructive/10 px-3 py-2 text-xs text-destructive">
+                    {paymentError}
+                  </p>
+                )}
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => void handleCopyPaymentLink()}
+                    disabled={paymentLoading}
+                    className="flex-1 cursor-pointer rounded-full border bg-background px-3 py-2 text-xs font-medium hover:bg-muted disabled:opacity-50"
+                  >
+                    {t(i18nKeys.school.invoicesUi.detail.copyLink)}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => void handleOpenPaymentPage()}
+                    disabled={paymentLoading}
+                    className="flex-1 cursor-pointer rounded-full border-none bg-primary px-3 py-2 text-xs font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
+                  >
+                    {t(i18nKeys.school.invoicesUi.detail.openLink)}
+                  </button>
                 </div>
-              ) : (
-                <p
-                  style={{
-                    margin: 0,
-                    fontSize: '13px',
-                    color: '#64748b',
-                  }}
-                >
-                  {statusLabel(selectedInvoice.status)}
-                </p>
-              )}
-              {copySuccess && (
-                <p
-                  style={{
-                    marginTop: '4px',
-                    fontSize: '12px',
-                    color: '#16a34a',
-                  }}
-                >
-                  {copySuccess}
-                </p>
-              )}
-              {paymentError && (
-                <p
-                  style={{
-                    marginTop: '4px',
-                    fontSize: '12px',
-                    color: '#b91c1c',
-                  }}
-                >
-                  {paymentError}
-                </p>
-              )}
-            </div>
-
-            <div
-              style={{
-                marginBottom: '12px',
-              }}
-            >
-              <h3
-                style={{
-                  fontSize: '16px',
-                  marginTop: 0,
-                  marginBottom: '6px',
-                }}
-              >
-                {t(i18nKeys.school.invoicesUi.detail.statusTimelineTitle)}
-              </h3>
-              <p
-                style={{
-                  fontSize: '13px',
-                  color: '#9ca3af',
-                  margin: 0,
-                }}
-              >
-                {/* Placeholder simples de timeline */}
-                {statusLabel(selectedInvoice.status)} •{' '}
-                {new Date(selectedInvoice.createdAt).toLocaleString()}
-              </p>
-            </div>
+              </div>
+            )}
 
             {selectedInvoice.items && selectedInvoice.items.length > 0 && (
               <div>
-                <h3
-                  style={{
-                    fontSize: '16px',
-                    marginTop: 0,
-                    marginBottom: '6px',
-                  }}
-                >
+                <h3 className="mb-2 mt-0 text-base font-semibold">
                   {t(i18nKeys.school.invoicesUi.detail.itemsTitle)}
                 </h3>
-                <ul
-                  style={{
-                    listStyle: 'none',
-                    padding: 0,
-                    margin: 0,
-                  }}
-                >
+                <ul className="m-0 list-none divide-y border-t">
                   {selectedInvoice.items.map((item) => (
-                    <li
-                      key={item.id}
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        padding: '4px 0',
-                        borderBottom: '1px solid #f3f4f6',
-                        fontSize: '13px',
-                      }}
-                    >
+                    <li key={item.id} className="flex justify-between py-2 text-sm">
                       <span>{item.description}</span>
-                      <span>{formatAmount(item.amountCents, selectedInvoice.currency)}</span>
+                      <span className="font-medium">
+                        {formatAmount(item.amountCents, selectedInvoice.currency)}
+                      </span>
                     </li>
                   ))}
                 </ul>
               </div>
             )}
-            <div
-              style={{
-                marginTop: '12px',
-              }}
-            >
-              <h3
-                style={{
-                  fontSize: '16px',
-                  marginTop: 0,
-                  marginBottom: '6px',
-                }}
-              >
+
+            <div>
+              <h3 className="mb-2 mt-0 text-base font-semibold">
                 {t(i18nKeys.school.invoicesUi.detail.communicationsTitle)}
               </h3>
               {!selectedInvoice.communications || selectedInvoice.communications.length === 0 ? (
-                <p
-                  style={{
-                    fontSize: '13px',
-                    color: '#9ca3af',
-                    margin: 0,
-                  }}
-                >
+                <p className="m-0 text-sm text-muted-foreground">
                   {t(i18nKeys.school.invoicesUi.detail.communicationsEmpty)}
                 </p>
               ) : (
-                <ul
-                  style={{
-                    listStyle: 'none',
-                    padding: 0,
-                    margin: 0,
-                    fontSize: '13px',
-                    color: '#4b5563',
-                  }}
-                >
+                <ul className="m-0 list-none divide-y border-t text-sm text-muted-foreground">
                   {selectedInvoice.communications.map((comm) => (
-                    <li
-                      key={comm.id}
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        padding: '4px 0',
-                        borderBottom: '1px solid #f3f4f6',
-                      }}
-                    >
+                    <li key={comm.id} className="flex justify-between py-2">
                       <span>{communicationLabel(comm.type)}</span>
-                      <span
-                        style={{
-                          fontSize: '12px',
-                          color: '#9ca3af',
-                        }}
-                      >
+                      <span className="text-xs text-muted-foreground/70">
                         {new Date(comm.sentAt).toLocaleString()}
                       </span>
                     </li>
@@ -1116,66 +661,26 @@ export default function SchoolInvoicesPage() {
                 </ul>
               )}
             </div>
-          </>
+          </div>
         )}
-      </section>
+      </div>
 
       {exportModalOpen && (
         <div
           role="dialog"
           aria-modal="true"
-          style={{
-            position: 'fixed',
-            inset: 0,
-            backgroundColor: 'rgba(15,23,42,0.4)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 40,
-          }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
         >
-          <div
-            style={{
-              width: '100%',
-              maxWidth: '460px',
-              borderRadius: '12px',
-              backgroundColor: '#ffffff',
-              padding: '20px',
-              boxShadow: '0 15px 40px rgba(15,23,42,0.18)',
-            }}
-          >
-            <h2
-              style={{
-                marginTop: 0,
-                marginBottom: '6px',
-                fontSize: '18px',
-              }}
-            >
+          <div className="w-full max-w-md rounded-xl bg-card p-6 shadow-xl">
+            <h2 className="mb-1 mt-0 text-lg font-semibold">
               {t(i18nKeys.school.invoicesUi.export.title)}
             </h2>
-            <p
-              style={{
-                marginTop: 0,
-                marginBottom: '16px',
-                fontSize: '14px',
-                color: '#6b7280',
-              }}
-            >
+            <p className="mb-4 mt-0 text-sm text-muted-foreground">
               {t(i18nKeys.school.invoicesUi.export.description)}
             </p>
 
             {exportError && (
-              <div
-                style={{
-                  marginBottom: '12px',
-                  padding: '8px 10px',
-                  borderRadius: '8px',
-                  border: '1px solid #fecaca',
-                  backgroundColor: '#fef2f2',
-                  color: '#b91c1c',
-                  fontSize: '13px',
-                }}
-              >
+              <div className="mb-3 rounded-lg border border-destructive/50 bg-destructive/10 px-2.5 py-2 text-sm text-destructive">
                 {exportError}
               </div>
             )}
@@ -1192,9 +697,7 @@ export default function SchoolInvoicesPage() {
                   if (exportToDate) params.set('to', exportToDate);
                   if (exportStatus !== 'ALL') params.set('status', exportStatus);
 
-                  const path = `/school/reports/invoices/export${
-                    params.toString() ? `?${params.toString()}` : ''
-                  }`;
+                  const path = `/school/reports/invoices/export${params.toString() ? `?${params.toString()}` : ''}`;
 
                   const res = await apiFetch(path, {
                     method: 'GET',
@@ -1223,80 +726,35 @@ export default function SchoolInvoicesPage() {
                   setExportLoading(false);
                 }
               }}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '12px',
-              }}
+              className="flex flex-col gap-3"
             >
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-                  gap: '12px',
-                }}
-              >
-                <label
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '4px',
-                    fontSize: '14px',
-                  }}
-                >
+              <div className="grid grid-cols-2 gap-3">
+                <label className="flex flex-col gap-1 text-sm">
                   <span>{t(i18nKeys.school.invoicesUi.export.periodFrom)}</span>
                   <input
                     type="date"
                     value={exportFromDate}
                     onChange={(event) => setExportFromDate(event.target.value)}
-                    style={{
-                      padding: '6px 8px',
-                      borderRadius: '8px',
-                      border: '1px solid #cbd5f5',
-                      fontSize: '14px',
-                    }}
+                    className="rounded-lg border bg-background px-2 py-1.5"
                   />
                 </label>
-                <label
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '4px',
-                    fontSize: '14px',
-                  }}
-                >
+                <label className="flex flex-col gap-1 text-sm">
                   <span>{t(i18nKeys.school.invoicesUi.export.periodTo)}</span>
                   <input
                     type="date"
                     value={exportToDate}
                     onChange={(event) => setExportToDate(event.target.value)}
-                    style={{
-                      padding: '6px 8px',
-                      borderRadius: '8px',
-                      border: '1px solid #cbd5f5',
-                      fontSize: '14px',
-                    }}
+                    className="rounded-lg border bg-background px-2 py-1.5"
                   />
                 </label>
               </div>
 
-              <label
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '4px',
-                  fontSize: '14px',
-                }}
-              >
+              <label className="flex flex-col gap-1 text-sm">
                 <span>{t(i18nKeys.school.invoicesUi.export.statusLabel)}</span>
                 <select
                   value={exportStatus}
                   onChange={(event) => setExportStatus(event.target.value as FilterStatus)}
-                  style={{
-                    padding: '6px 8px',
-                    borderRadius: '8px',
-                    border: '1px solid #cbd5f5',
-                  }}
+                  className="rounded-lg border bg-background px-2 py-1.5"
                 >
                   <option value="ALL">{t(i18nKeys.school.invoicesUi.filters.statusAll)}</option>
                   <option value="PENDING">{t(i18nKeys.school.invoicesUi.status.pending)}</option>
@@ -1307,14 +765,7 @@ export default function SchoolInvoicesPage() {
                 </select>
               </label>
 
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'flex-end',
-                  marginTop: '12px',
-                  gap: '8px',
-                }}
-              >
+              <div className="mt-2 flex justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => {
@@ -1322,30 +773,14 @@ export default function SchoolInvoicesPage() {
                       setExportModalOpen(false);
                     }
                   }}
-                  style={{
-                    padding: '8px 12px',
-                    borderRadius: '999px',
-                    border: '1px solid #e5e7eb',
-                    backgroundColor: '#ffffff',
-                    color: '#374151',
-                    fontSize: '14px',
-                    cursor: 'pointer',
-                  }}
+                  className="cursor-pointer rounded-full border bg-background px-3 py-2 text-sm hover:bg-muted"
                 >
                   {t(i18nKeys.school.invoicesUi.export.cancel)}
                 </button>
                 <button
                   type="submit"
                   disabled={exportLoading}
-                  style={{
-                    padding: '8px 12px',
-                    borderRadius: '999px',
-                    border: 'none',
-                    backgroundColor: exportLoading ? '#93c5fd' : '#2563eb',
-                    color: '#ffffff',
-                    fontSize: '14px',
-                    cursor: exportLoading ? 'default' : 'pointer',
-                  }}
+                  className="cursor-pointer rounded-full border-none bg-primary px-3 py-2 text-sm text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
                 >
                   {exportLoading
                     ? t(i18nKeys.common.loading)

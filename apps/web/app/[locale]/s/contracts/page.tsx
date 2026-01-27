@@ -386,219 +386,307 @@ export default function SchoolContractsPage() {
   }
 
   return (
-    <div>
-      <h1>{t(i18nKeys.school.pages.contracts.title)}</h1>
-      <p>{t(i18nKeys.school.pages.contracts.description)}</p>
+    <div className="flex flex-col gap-6">
+      <div className="rounded-xl border bg-card p-6 shadow-sm">
+        <h1 className="mb-1 mt-0 text-xl font-semibold">
+          {t(i18nKeys.school.pages.contracts.title)}
+        </h1>
+        <p className="m-0 text-sm text-muted-foreground">
+          {t(i18nKeys.school.pages.contracts.description)}
+        </p>
+      </div>
 
-      <form onSubmit={handleSearchSubmit}>
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={handleSearchChange}
-          placeholder={t(i18nKeys.school.contractsUi.filters.search)}
-        />
-        <select value={filterStatus} onChange={handleFilterStatusChange}>
-          <option value="ALL">{t(i18nKeys.school.contractsUi.filters.statusAll)}</option>
-          <option value="ACTIVE">{t(i18nKeys.school.contractsUi.status.active)}</option>
-          <option value="PAUSED">{t(i18nKeys.school.contractsUi.status.paused)}</option>
-          <option value="CANCELED">{t(i18nKeys.school.contractsUi.status.canceled)}</option>
-        </select>
-        <button type="submit">{t(i18nKeys.common.ok)}</button>
-      </form>
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <form onSubmit={handleSearchSubmit} className="flex flex-wrap items-center gap-2">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={handleSearchChange}
+            placeholder={t(i18nKeys.school.contractsUi.filters.search)}
+            className="w-60 rounded-lg border bg-background px-3 py-1.5 text-sm"
+          />
+          <select
+            value={filterStatus}
+            onChange={handleFilterStatusChange}
+            className="rounded-lg border bg-background px-3 py-1.5 text-sm"
+          >
+            <option value="ALL">{t(i18nKeys.school.contractsUi.filters.statusAll)}</option>
+            <option value="ACTIVE">{t(i18nKeys.school.contractsUi.status.active)}</option>
+            <option value="PAUSED">{t(i18nKeys.school.contractsUi.status.paused)}</option>
+            <option value="CANCELED">{t(i18nKeys.school.contractsUi.status.canceled)}</option>
+          </select>
+          <button
+            type="submit"
+            className="cursor-pointer rounded-full border bg-background px-4 py-1.5 text-sm font-medium hover:bg-muted"
+          >
+            {t(i18nKeys.common.ok)}
+          </button>
+        </form>
 
-      <button type="button" onClick={openCreateContract}>
-        {t(i18nKeys.school.contractsUi.actions.create)}
-      </button>
+        <button
+          type="button"
+          onClick={openCreateContract}
+          className="cursor-pointer rounded-full border-none bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+        >
+          {t(i18nKeys.school.contractsUi.actions.create)}
+        </button>
+      </div>
 
       {contractsError && <p>{contractsError}</p>}
 
       {contractsLoading ? (
-        <p>{t(i18nKeys.common.loading)}</p>
+        <p className="text-sm text-muted-foreground">{t(i18nKeys.common.loading)}</p>
       ) : contracts.length === 0 ? (
-        <p>{t(i18nKeys.school.contractsUi.empty)}</p>
+        <p className="text-sm text-muted-foreground">{t(i18nKeys.school.contractsUi.empty)}</p>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>{t(i18nKeys.school.contractsUi.table.name)}</th>
-              <th>{t(i18nKeys.school.contractsUi.table.amount)}</th>
-              <th>{t(i18nKeys.school.contractsUi.table.dueDay)}</th>
-              <th>{t(i18nKeys.school.contractsUi.table.status)}</th>
-              <th>{t(i18nKeys.school.contractsUi.table.actions)}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {contracts.map((contract) => (
-              <tr key={contract.id}>
-                <td>{contract.name}</td>
-                <td>{formatAmount(contract.amountCents, contract.currency)}</td>
-                <td>{contract.dueDay}</td>
-                <td>{statusLabel(contract.status)}</td>
-                <td>
-                  <button type="button" onClick={() => void loadContractDetail(contract.id)}>
-                    {t(i18nKeys.school.contractsUi.actions.viewDetails)}
-                  </button>
-                  <button type="button" onClick={() => openEditContract(contract)}>
-                    {t(i18nKeys.school.contractsUi.actions.edit)}
-                  </button>
-                </td>
+        <div className="overflow-hidden rounded-xl border bg-card shadow-sm">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-muted/50 text-xs uppercase text-muted-foreground">
+              <tr>
+                <th className="px-4 py-3 font-medium">{t(i18nKeys.school.contractsUi.table.name)}</th>
+                <th className="px-4 py-3 font-medium">{t(i18nKeys.school.contractsUi.table.amount)}</th>
+                <th className="px-4 py-3 font-medium">{t(i18nKeys.school.contractsUi.table.dueDay)}</th>
+                <th className="px-4 py-3 font-medium">{t(i18nKeys.school.contractsUi.table.status)}</th>
+                <th className="px-4 py-3 font-medium text-right">{t(i18nKeys.school.contractsUi.table.actions)}</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y">
+              {contracts.map((contract) => (
+                <tr key={contract.id} className="hover:bg-muted/50">
+                  <td className="px-4 py-3 font-medium">{contract.name}</td>
+                  <td className="px-4 py-3">{formatAmount(contract.amountCents, contract.currency)}</td>
+                  <td className="px-4 py-3">{contract.dueDay}</td>
+                  <td className="px-4 py-3">{statusLabel(contract.status)}</td>
+                  <td className="flex justify-end gap-2 px-4 py-3">
+                    <button
+                      type="button"
+                      onClick={() => void loadContractDetail(contract.id)}
+                      className="cursor-pointer rounded-full border bg-background px-3 py-1 text-xs hover:bg-muted"
+                    >
+                      {t(i18nKeys.school.contractsUi.actions.viewDetails)}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => openEditContract(contract)}
+                      className="cursor-pointer rounded-full border bg-background px-3 py-1 text-xs hover:bg-muted"
+                    >
+                      {t(i18nKeys.school.contractsUi.actions.edit)}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
 
       {formMode && (
-        <form onSubmit={handleSubmitContract}>
-          {formError && <p>{formError}</p>}
-          <div>
-            <label>
-              {t(i18nKeys.school.contractsUi.form.name)}
-              <input
-                type="text"
-                value={formName}
-                onChange={(event) => setFormName(event.target.value)}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              {t(i18nKeys.school.contractsUi.form.amount)}
-              <input
-                type="text"
-                value={formAmount}
-                onChange={(event) => setFormAmount(event.target.value)}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              {t(i18nKeys.school.contractsUi.form.dueDay)}
-              <input
-                type="number"
-                value={formDueDay}
-                onChange={(event) => setFormDueDay(event.target.value)}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              {t(i18nKeys.school.contractsUi.form.startDate)}
-              <input
-                type="date"
-                value={formStartDate}
-                onChange={(event) => setFormStartDate(event.target.value)}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              {t(i18nKeys.school.contractsUi.form.endDate)}
-              <input
-                type="date"
-                value={formEndDate}
-                onChange={(event) => setFormEndDate(event.target.value)}
-              />
-            </label>
-          </div>
-          <button type="button" onClick={resetForm}>
-            {t(i18nKeys.school.contractsUi.form.cancel)}
-          </button>
-          <button type="submit" disabled={saving}>
-            {saving ? t(i18nKeys.common.loading) : t(i18nKeys.school.contractsUi.form.save)}
-          </button>
-        </form>
-      )}
-
-      <hr />
-
-      <h2>{t(i18nKeys.school.contractsUi.detail.title)}</h2>
-
-      {detailError && <p>{detailError}</p>}
-
-      {detailLoading ? (
-        <p>{t(i18nKeys.common.loading)}</p>
-      ) : !selectedContract ? (
-        <p>{t(i18nKeys.school.contractsUi.empty)}</p>
-      ) : (
-        <>
-          <p>{selectedContract.name}</p>
-          <p>{statusLabel(selectedContract.status)}</p>
-          <button
-            type="button"
-            onClick={() => void handleStatusChange('PAUSED')}
-            disabled={statusUpdating || selectedContract.status !== 'ACTIVE'}
-          >
-            {t(i18nKeys.school.contractsUi.actions.pause)}
-          </button>
-          <button
-            type="button"
-            onClick={() => void handleStatusChange('ACTIVE')}
-            disabled={statusUpdating || selectedContract.status !== 'PAUSED'}
-          >
-            {t(i18nKeys.school.contractsUi.actions.resume)}
-          </button>
-          <button
-            type="button"
-            onClick={() => void handleStatusChange('CANCELED')}
-            disabled={statusUpdating || selectedContract.status === 'CANCELED'}
-          >
-            {t(i18nKeys.school.contractsUi.actions.cancel)}
-          </button>
-
-          <h3>{t(i18nKeys.school.contractsUi.detail.studentsTitle)}</h3>
-
-          {linkError && <p>{linkError}</p>}
-
-          {studentsLoading ? (
-            <p>{t(i18nKeys.common.loading)}</p>
-          ) : detailStudents.length === 0 ? (
-            <p>{t(i18nKeys.school.contractsUi.empty)}</p>
-          ) : (
-            <ul>
-              {detailStudents.map((student) => (
-                <li key={student.id}>
-                  {student.name}{' '}
-                  <button
-                    type="button"
-                    onClick={() => void handleRemoveStudent(student.id)}
-                    disabled={unlinkingStudentId === student.id}
-                  >
-                    {t(i18nKeys.school.contractsUi.detail.remove)}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-
-          {availableStudents.length > 0 && (
-            <form onSubmit={handleAddStudents}>
-              <label>
-                {t(i18nKeys.school.contractsUi.detail.addStudents)}
-                <select
-                  multiple
-                  value={studentIdsToAdd}
-                  onChange={(event) => {
-                    const options = Array.from(event.target.selectedOptions);
-                    setStudentIdsToAdd(options.map((option) => option.value));
-                  }}
-                >
-                  {availableStudents.map((student) => (
-                    <option key={student.id} value={student.id}>
-                      {student.name}
-                    </option>
-                  ))}
-                </select>
+        <div className="rounded-xl border bg-card p-6 shadow-sm">
+          <h2 className="mb-4 mt-0 text-lg font-semibold">
+            {formMode === 'create'
+              ? t(i18nKeys.school.contractsUi.actions.create)
+              : t(i18nKeys.school.contractsUi.actions.edit)}
+          </h2>
+          <form onSubmit={handleSubmitContract} className="flex flex-col gap-4">
+            {formError && (
+              <p className="rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+                {formError}
+              </p>
+            )}
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <label className="flex flex-col gap-1.5 text-sm text-foreground">
+                {t(i18nKeys.school.contractsUi.form.name)}
+                <input
+                  type="text"
+                  value={formName}
+                  onChange={(event) => setFormName(event.target.value)}
+                  className="rounded-lg border bg-background px-3 py-2 text-sm"
+                />
               </label>
-              <button type="submit" disabled={linking || studentIdsToAdd.length === 0}>
-                {linking
-                  ? t(i18nKeys.common.loading)
-                  : t(i18nKeys.school.contractsUi.detail.addStudents)}
+              <label className="flex flex-col gap-1.5 text-sm text-foreground">
+                {t(i18nKeys.school.contractsUi.form.amount)}
+                <input
+                  type="text"
+                  value={formAmount}
+                  onChange={(event) => setFormAmount(event.target.value)}
+                  className="rounded-lg border bg-background px-3 py-2 text-sm"
+                />
+              </label>
+              <label className="flex flex-col gap-1.5 text-sm text-foreground">
+                {t(i18nKeys.school.contractsUi.form.dueDay)}
+                <input
+                  type="number"
+                  value={formDueDay}
+                  onChange={(event) => setFormDueDay(event.target.value)}
+                  className="rounded-lg border bg-background px-3 py-2 text-sm"
+                />
+              </label>
+              <label className="flex flex-col gap-1.5 text-sm text-foreground">
+                {t(i18nKeys.school.contractsUi.form.startDate)}
+                <input
+                  type="date"
+                  value={formStartDate}
+                  onChange={(event) => setFormStartDate(event.target.value)}
+                  className="rounded-lg border bg-background px-3 py-2 text-sm"
+                />
+              </label>
+              <label className="flex flex-col gap-1.5 text-sm text-foreground">
+                {t(i18nKeys.school.contractsUi.form.endDate)}
+                <input
+                  type="date"
+                  value={formEndDate}
+                  onChange={(event) => setFormEndDate(event.target.value)}
+                  className="rounded-lg border bg-background px-3 py-2 text-sm"
+                />
+              </label>
+            </div>
+            <div className="flex justify-end gap-2">
+              <button
+                type="button"
+                onClick={resetForm}
+                className="cursor-pointer rounded-full border bg-background px-4 py-2 text-sm hover:bg-muted"
+              >
+                {t(i18nKeys.school.contractsUi.form.cancel)}
               </button>
-            </form>
-          )}
-        </>
+              <button
+                type="submit"
+                disabled={saving}
+                className={`cursor-pointer rounded-full border-none bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700 ${saving ? 'cursor-not-allowed opacity-70' : ''
+                  }`}
+              >
+                {saving ? t(i18nKeys.common.loading) : t(i18nKeys.school.contractsUi.form.save)}
+              </button>
+            </div>
+          </form>
+        </div>
       )}
+
+      <hr className="border-t" />
+
+      <div className="rounded-xl border bg-card p-6 shadow-sm">
+        <h2 className="mb-4 mt-0 text-lg font-semibold">
+          {t(i18nKeys.school.contractsUi.detail.title)}
+        </h2>
+
+        {detailError && (
+          <p className="mb-4 rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+            {detailError}
+          </p>
+        )}
+
+        {detailLoading ? (
+          <p className="text-sm text-muted-foreground">{t(i18nKeys.common.loading)}</p>
+        ) : !selectedContract ? (
+          <p className="text-sm text-muted-foreground">{t(i18nKeys.school.contractsUi.empty)}</p>
+        ) : (
+          <div className="flex flex-col gap-6">
+            <div className="flex flex-wrap items-center justify-between gap-4 rounded-lg bg-muted/30 p-4">
+              <div>
+                <p className="font-medium">{selectedContract.name}</p>
+                <p className="text-sm text-muted-foreground">
+                  {statusLabel(selectedContract.status)}
+                </p>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => void handleStatusChange('PAUSED')}
+                  disabled={statusUpdating || selectedContract.status !== 'ACTIVE'}
+                  className="cursor-pointer rounded-full border bg-background px-3 py-1.5 text-xs hover:bg-muted disabled:opacity-50"
+                >
+                  {t(i18nKeys.school.contractsUi.actions.pause)}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => void handleStatusChange('ACTIVE')}
+                  disabled={statusUpdating || selectedContract.status !== 'PAUSED'}
+                  className="cursor-pointer rounded-full border bg-background px-3 py-1.5 text-xs hover:bg-muted disabled:opacity-50"
+                >
+                  {t(i18nKeys.school.contractsUi.actions.resume)}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => void handleStatusChange('CANCELED')}
+                  disabled={statusUpdating || selectedContract.status === 'CANCELED'}
+                  className="cursor-pointer rounded-full border border-destructive/50 bg-destructive/10 px-3 py-1.5 text-xs text-destructive hover:bg-destructive/20 disabled:opacity-50"
+                >
+                  {t(i18nKeys.school.contractsUi.actions.cancel)}
+                </button>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <h3 className="m-0 text-base font-semibold">
+                {t(i18nKeys.school.contractsUi.detail.studentsTitle)}
+              </h3>
+
+              {linkError && (
+                <p className="rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+                  {linkError}
+                </p>
+              )}
+
+              {studentsLoading ? (
+                <p className="text-sm text-muted-foreground">{t(i18nKeys.common.loading)}</p>
+              ) : detailStudents.length === 0 ? (
+                <p className="text-sm text-muted-foreground">
+                  {t(i18nKeys.school.contractsUi.empty)}
+                </p>
+              ) : (
+                <ul className="m-0 list-none divide-y rounded-lg border">
+                  {detailStudents.map((student) => (
+                    <li key={student.id} className="flex items-center justify-between p-3">
+                      <span className="text-sm">{student.name}</span>
+                      <button
+                        type="button"
+                        onClick={() => void handleRemoveStudent(student.id)}
+                        disabled={unlinkingStudentId === student.id}
+                        className="cursor-pointer rounded-full border-none text-xs text-destructive hover:underline disabled:opacity-50"
+                      >
+                        {t(i18nKeys.school.contractsUi.detail.remove)}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {availableStudents.length > 0 && (
+                <form onSubmit={handleAddStudents} className="flex flex-col gap-3 rounded-lg border p-4">
+                  <label className="flex flex-col gap-1.5 text-sm">
+                    {t(i18nKeys.school.contractsUi.detail.addStudents)}
+                    <select
+                      multiple
+                      value={studentIdsToAdd}
+                      onChange={(event) => {
+                        const options = Array.from(event.target.selectedOptions);
+                        setStudentIdsToAdd(options.map((option) => option.value));
+                      }}
+                      className="min-h-[100px] rounded-lg border bg-background p-2 text-sm"
+                    >
+                      {availableStudents.map((student) => (
+                        <option key={student.id} value={student.id}>
+                          {student.name}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <div className="flex justify-end">
+                    <button
+                      type="submit"
+                      disabled={linking || studentIdsToAdd.length === 0}
+                      className="cursor-pointer rounded-full border-none bg-primary px-4 py-2 text-sm text-primary-foreground hover:bg-primary/90 disabled:opacity-50"
+                    >
+                      {linking
+                        ? t(i18nKeys.common.loading)
+                        : t(i18nKeys.school.contractsUi.detail.addStudents)}
+                    </button>
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -95,59 +95,20 @@ export default function SchoolDashboardPage() {
   }, [apiFetch, selectedMonth, t]);
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '16px',
-      }}
-    >
-      <div
-        style={{
-          borderRadius: '12px',
-          border: '1px solid #e2e8f0',
-          padding: '20px',
-          backgroundColor: '#ffffff',
-          boxShadow: '0 10px 25px rgba(15,23,42,0.04)',
-        }}
-      >
-        <h1
-          style={{
-            fontSize: '20px',
-            marginTop: 0,
-            marginBottom: '8px',
-          }}
-        >
+    <div className="flex flex-col gap-4">
+      <div className="rounded-xl border bg-card p-6 shadow-sm">
+        <h1 className="mb-2 mt-0 text-xl font-semibold">
           {t(i18nKeys.school.pages.dashboard.title)}
         </h1>
-        <p
-          style={{
-            fontSize: '14px',
-            color: '#64748b',
-            margin: 0,
-          }}
-        >
+        <p className="m-0 text-sm text-muted-foreground">
           {t(i18nKeys.school.pages.dashboard.description)}
         </p>
       </div>
 
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '12px',
-        }}
-      >
+      <div className="flex items-center justify-between gap-3">
         <label
           htmlFor="dashboard-period"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            fontSize: '14px',
-            color: '#0f172a',
-          }}
+          className="flex items-center gap-2 text-sm text-foreground"
         >
           <span>{t(i18nKeys.school.dashboardUi.periodLabel)}</span>
           <input
@@ -155,48 +116,23 @@ export default function SchoolDashboardPage() {
             type="month"
             value={selectedMonth}
             onChange={(event) => setSelectedMonth(event.target.value)}
-            style={{
-              padding: '6px 10px',
-              borderRadius: '8px',
-              border: '1px solid #cbd5f5',
-              fontSize: '14px',
-            }}
+            className="rounded-lg border border-input bg-background px-3 py-1.5 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           />
         </label>
         {loading && (
-          <span
-            style={{
-              fontSize: '13px',
-              color: '#64748b',
-            }}
-          >
+          <span className="text-xs text-muted-foreground">
             {t(i18nKeys.common.loading)}
           </span>
         )}
       </div>
 
       {error && (
-        <div
-          style={{
-            borderRadius: '8px',
-            border: '1px solid #fecaca',
-            backgroundColor: '#fef2f2',
-            padding: '10px 12px',
-            fontSize: '13px',
-            color: '#b91c1c',
-          }}
-        >
+        <div className="rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2.5 text-sm text-destructive">
           {error}
         </div>
       )}
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-          gap: '12px',
-        }}
-      >
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(180px,1fr))] gap-3">
         <DashboardCard
           label={t(i18nKeys.school.dashboardUi.cards.totalBilled)}
           value={summary ? formatAmountBRL(summary.totalBilledCents) : '—'}
@@ -225,33 +161,11 @@ type DashboardCardProps = {
 
 function DashboardCard({ label, value }: DashboardCardProps) {
   return (
-    <div
-      style={{
-        borderRadius: '12px',
-        border: '1px solid #e2e8f0',
-        padding: '16px',
-        backgroundColor: '#ffffff',
-        boxShadow: '0 6px 18px rgba(15,23,42,0.03)',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '6px',
-      }}
-    >
-      <div
-        style={{
-          fontSize: '13px',
-          color: '#64748b',
-        }}
-      >
+    <div className="flex flex-col gap-1.5 rounded-xl border bg-card p-4 shadow-sm">
+      <div className="text-xs text-muted-foreground">
         {label}
       </div>
-      <div
-        style={{
-          fontSize: '20px',
-          fontWeight: 600,
-          color: '#0f172a',
-        }}
-      >
+      <div className="text-xl font-semibold text-foreground">
         {value}
       </div>
     </div>

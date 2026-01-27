@@ -376,205 +376,302 @@ export default function SchoolStudentsPage() {
   }
 
   return (
-    <section>
-      <header>
-        <h1>{t(i18nKeys.school.pages.students.title)}</h1>
-        <p>{t(i18nKeys.school.pages.students.description)}</p>
-      </header>
+    <div className="flex flex-col gap-6">
+      <div className="rounded-xl border bg-card p-6 shadow-sm">
+        <h1 className="mb-1 mt-0 text-xl font-semibold">
+          {t(i18nKeys.school.pages.students.title)}
+        </h1>
+        <p className="m-0 text-sm text-muted-foreground">
+          {t(i18nKeys.school.pages.students.description)}
+        </p>
+      </div>
 
-      {(studentsError || importError || importSuccess) && (
-        <div>
-          {studentsError && <div>{studentsError}</div>}
-          {importError && <div>{importError}</div>}
-          {importSuccess && <div>{importSuccess}</div>}
-        </div>
-      )}
+      <div className="flex flex-col gap-4">
+        {(studentsError || importError || importSuccess) && (
+          <div className="flex flex-col gap-2">
+            {studentsError && (
+              <p className="rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+                {studentsError}
+              </p>
+            )}
+            {importError && (
+              <p className="rounded-lg border border-destructive/50 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+                {importError}
+              </p>
+            )}
+            {importSuccess && (
+              <p className="rounded-lg border border-green-500/50 bg-green-500/10 px-3 py-2 text-sm text-green-700">
+                {importSuccess}
+              </p>
+            )}
+          </div>
+        )}
 
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          setPage(1);
-          void loadStudents();
-        }}
-      >
-        <label>
-          {t(i18nKeys.school.studentsUi.filters.class)}
-          <select
-            value={filterClassId}
-            onChange={handleFilterClassChange}
-            disabled={classesLoading}
-          >
-            <option value="">{t(i18nKeys.school.studentsUi.filters.statusAll)}</option>
-            {classes.map((item) => (
-              <option key={item.id} value={item.id}>
-                {item.name}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <label>
-          {t(i18nKeys.school.studentsUi.filters.status)}
-          <select value={filterStatus} onChange={handleFilterStatusChange}>
-            <option value="ALL">{t(i18nKeys.school.studentsUi.filters.statusAll)}</option>
-            <option value="ACTIVE">{t(i18nKeys.school.studentsUi.status.active)}</option>
-            <option value="INACTIVE">{t(i18nKeys.school.studentsUi.status.inactive)}</option>
-          </select>
-        </label>
-
-        <label>
-          {t(i18nKeys.school.studentsUi.filters.search)}
-          <input type="text" value={searchQuery} onChange={handleSearchChange} />
-        </label>
-
-        <button type="submit">{t(i18nKeys.common.loading)}</button>
-
-        <button type="button" onClick={openCreateStudent}>
-          {t(i18nKeys.school.studentsUi.actions.create)}
-        </button>
-
-        <button
-          type="button"
-          onClick={handleClickImportButton}
-          disabled={importing || classes.length === 0}
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            setPage(1);
+            void loadStudents();
+          }}
+          className="flex flex-wrap items-center justify-between gap-4"
         >
-          {importing ? t(i18nKeys.common.loading) : t(i18nKeys.school.studentsUi.actions.importCsv)}
-        </button>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept=".csv,text/csv"
-          onChange={handleCsvInputChange}
-          style={{ display: 'none' }}
-        />
-      </form>
-
-      {formMode && (
-        <form onSubmit={handleSubmitStudent}>
-          <label>
-            {t(i18nKeys.school.studentsUi.table.name)}
-            <input
-              type="text"
-              value={formName}
-              onChange={(event) => setFormName(event.target.value)}
-            />
-          </label>
-
-          <label>
-            {t(i18nKeys.school.studentsUi.filters.class)}
-            <select value={formClassId} onChange={(event) => setFormClassId(event.target.value)}>
-              <option value="">{t(i18nKeys.school.studentsUi.filters.class)}</option>
+          <div className="flex flex-wrap items-center gap-2">
+            <select
+              value={filterClassId}
+              onChange={handleFilterClassChange}
+              disabled={classesLoading}
+              className="rounded-lg border bg-background px-3 py-1.5 text-sm"
+            >
+              <option value="">{t(i18nKeys.school.studentsUi.filters.statusAll)}</option>
               {classes.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.name}
                 </option>
               ))}
             </select>
-          </label>
 
-          <label>
-            {t(i18nKeys.school.studentsUi.table.status)}
             <select
-              value={formStatus}
-              onChange={(event) => setFormStatus(event.target.value as StudentStatus)}
+              value={filterStatus}
+              onChange={handleFilterStatusChange}
+              className="rounded-lg border bg-background px-3 py-1.5 text-sm"
             >
+              <option value="ALL">{t(i18nKeys.school.studentsUi.filters.statusAll)}</option>
               <option value="ACTIVE">{t(i18nKeys.school.studentsUi.status.active)}</option>
               <option value="INACTIVE">{t(i18nKeys.school.studentsUi.status.inactive)}</option>
             </select>
-          </label>
 
-          <button type="button" onClick={resetForm}>
-            {t(i18nKeys.common.cancel)}
-          </button>
-          <button type="submit" disabled={saving}>
-            {saving
-              ? t(i18nKeys.common.loading)
-              : formMode === 'create'
-                ? t(i18nKeys.school.studentsUi.actions.create)
-                : t(i18nKeys.school.studentsUi.actions.edit)}
-          </button>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              placeholder={t(i18nKeys.school.studentsUi.filters.search)}
+              className="min-w-[200px] rounded-lg border bg-background px-3 py-1.5 text-sm"
+            />
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="submit"
+              className="cursor-pointer rounded-full border bg-background px-4 py-1.5 text-sm font-medium hover:bg-muted"
+            >
+              {t(i18nKeys.common.loading)}
+            </button>
+
+            <button
+              type="button"
+              onClick={openCreateStudent}
+              className="cursor-pointer rounded-full border-none bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+            >
+              {t(i18nKeys.school.studentsUi.actions.create)}
+            </button>
+
+            <button
+              type="button"
+              onClick={handleClickImportButton}
+              disabled={importing || classes.length === 0}
+              className="cursor-pointer rounded-full border bg-background px-4 py-2 text-sm font-medium hover:bg-muted disabled:opacity-50"
+            >
+              {importing ? t(i18nKeys.common.loading) : t(i18nKeys.school.studentsUi.actions.importCsv)}
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".csv,text/csv"
+              onChange={handleCsvInputChange}
+              style={{ display: 'none' }}
+            />
+          </div>
         </form>
+      </div>
+
+      {formMode && (
+        <div className="rounded-xl border bg-card p-6 shadow-sm">
+          <h2 className="mb-4 mt-0 text-lg font-semibold">
+            {formMode === 'create'
+              ? t(i18nKeys.school.studentsUi.actions.create)
+              : t(i18nKeys.school.studentsUi.actions.edit)}
+          </h2>
+          <form onSubmit={handleSubmitStudent} className="flex flex-col gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <label className="flex flex-col gap-1.5 text-sm text-foreground">
+                {t(i18nKeys.school.studentsUi.table.name)}
+                <input
+                  type="text"
+                  value={formName}
+                  onChange={(event) => setFormName(event.target.value)}
+                  className="rounded-lg border bg-background px-3 py-2 text-sm"
+                />
+              </label>
+
+              <label className="flex flex-col gap-1.5 text-sm text-foreground">
+                {t(i18nKeys.school.studentsUi.filters.class)}
+                <select
+                  value={formClassId}
+                  onChange={(event) => setFormClassId(event.target.value)}
+                  className="rounded-lg border bg-background px-3 py-2 text-sm"
+                >
+                  <option value="">{t(i18nKeys.school.studentsUi.filters.class)}</option>
+                  {classes.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <label className="flex flex-col gap-1.5 text-sm text-foreground">
+                {t(i18nKeys.school.studentsUi.table.status)}
+                <select
+                  value={formStatus}
+                  onChange={(event) => setFormStatus(event.target.value as StudentStatus)}
+                  className="rounded-lg border bg-background px-3 py-2 text-sm"
+                >
+                  <option value="ACTIVE">{t(i18nKeys.school.studentsUi.status.active)}</option>
+                  <option value="INACTIVE">{t(i18nKeys.school.studentsUi.status.inactive)}</option>
+                </select>
+              </label>
+            </div>
+
+            <div className="flex justify-end gap-2">
+              <button
+                type="button"
+                onClick={resetForm}
+                className="cursor-pointer rounded-full border bg-background px-4 py-2 text-sm hover:bg-muted"
+              >
+                {t(i18nKeys.common.cancel)}
+              </button>
+              <button
+                type="submit"
+                disabled={saving}
+                className={`cursor-pointer rounded-full border-none bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700 ${saving ? 'cursor-not-allowed opacity-70' : ''
+                  }`}
+              >
+                {saving
+                  ? t(i18nKeys.common.loading)
+                  : formMode === 'create'
+                    ? t(i18nKeys.school.studentsUi.actions.create)
+                    : t(i18nKeys.school.studentsUi.actions.edit)}
+              </button>
+            </div>
+          </form>
+        </div>
       )}
 
       {studentsLoading ? (
-        <p>{t(i18nKeys.common.loading)}</p>
+        <p className="text-sm text-muted-foreground">{t(i18nKeys.common.loading)}</p>
       ) : students.length === 0 ? (
-        <p>{t(i18nKeys.school.studentsUi.empty)}</p>
+        <p className="text-sm text-muted-foreground">{t(i18nKeys.school.studentsUi.empty)}</p>
       ) : (
-        <>
-          <table>
-            <thead>
-              <tr>
-                <th>{t(i18nKeys.school.studentsUi.table.name)}</th>
-                <th>{t(i18nKeys.school.studentsUi.table.class)}</th>
-                <th>{t(i18nKeys.school.studentsUi.table.status)}</th>
-                <th>{t(i18nKeys.school.studentsUi.table.actions)}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {students.map((student) => (
-                <tr key={student.id}>
-                  <td>{student.name}</td>
-                  <td>{getClassNameById(student.classId)}</td>
-                  <td>
-                    {student.status === 'ACTIVE'
-                      ? t(i18nKeys.school.studentsUi.status.active)
-                      : t(i18nKeys.school.studentsUi.status.inactive)}
-                  </td>
-                  <td>
-                    <Link
-                      href={`/${locale || 'pt-BR'}/s/students/${student.id}`}
-                      style={{
-                        marginRight: '8px',
-                      }}
-                    >
-                      {t(i18nKeys.school.reportsUi.student.title)}
-                    </Link>
-                    <button type="button" onClick={() => openEditStudent(student)}>
-                      {t(i18nKeys.school.studentsUi.actions.edit)}
-                    </button>
-                    <button type="button" onClick={() => void handleToggleStatus(student)}>
-                      {student.status === 'ACTIVE'
-                        ? t(i18nKeys.school.studentsUi.actions.inactivate)
-                        : t(i18nKeys.school.studentsUi.actions.activate)}
-                    </button>
-                    {deleteCandidateId === student.id ? (
-                      <>
-                        <button type="button" onClick={() => setDeleteCandidateId(null)}>
-                          {t(i18nKeys.common.cancel)}
-                        </button>
+        <div className="flex flex-col gap-4">
+          <div className="overflow-hidden rounded-xl border bg-card shadow-sm">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-muted/50 text-xs uppercase text-muted-foreground">
+                <tr>
+                  <th className="px-4 py-3 font-medium">{t(i18nKeys.school.studentsUi.table.name)}</th>
+                  <th className="px-4 py-3 font-medium">{t(i18nKeys.school.studentsUi.table.class)}</th>
+                  <th className="px-4 py-3 font-medium">{t(i18nKeys.school.studentsUi.table.status)}</th>
+                  <th className="px-4 py-3 font-medium text-right">{t(i18nKeys.school.studentsUi.table.actions)}</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y">
+                {students.map((student) => (
+                  <tr key={student.id} className="hover:bg-muted/50">
+                    <td className="px-4 py-3 font-medium">{student.name}</td>
+                    <td className="px-4 py-3">{getClassNameById(student.classId)}</td>
+                    <td className="px-4 py-3">
+                      <span
+                        className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${student.status === 'ACTIVE'
+                            ? 'bg-green-500/10 text-green-700'
+                            : 'bg-yellow-500/10 text-yellow-700'
+                          }`}
+                      >
+                        {student.status === 'ACTIVE'
+                          ? t(i18nKeys.school.studentsUi.status.active)
+                          : t(i18nKeys.school.studentsUi.status.inactive)}
+                      </span>
+                    </td>
+                    <td className="flex justify-end gap-2 px-4 py-3">
+                      <Link
+                        href={`/${locale || 'pt-BR'}/s/students/${student.id}`}
+                        className="cursor-pointer rounded-full border bg-background px-3 py-1 text-xs text-foreground hover:bg-muted"
+                      >
+                        {t(i18nKeys.school.reportsUi.student.title)}
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => openEditStudent(student)}
+                        className="cursor-pointer rounded-full border bg-background px-3 py-1 text-xs hover:bg-muted"
+                      >
+                        {t(i18nKeys.school.studentsUi.actions.edit)}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => void handleToggleStatus(student)}
+                        className="cursor-pointer rounded-full border bg-background px-3 py-1 text-xs hover:bg-muted"
+                      >
+                        {student.status === 'ACTIVE'
+                          ? t(i18nKeys.school.studentsUi.actions.inactivate)
+                          : t(i18nKeys.school.studentsUi.actions.activate)}
+                      </button>
+                      {deleteCandidateId === student.id ? (
+                        <>
+                          <button
+                            type="button"
+                            onClick={() => setDeleteCandidateId(null)}
+                            className="cursor-pointer rounded-full border bg-background px-3 py-1 text-xs hover:bg-muted"
+                          >
+                            {t(i18nKeys.common.cancel)}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => void handleDeleteStudent(student.id)}
+                            disabled={deleteLoading}
+                            className="cursor-pointer rounded-full border border-destructive/50 bg-destructive/10 px-3 py-1 text-xs text-destructive hover:bg-destructive/20"
+                          >
+                            {t(i18nKeys.school.studentsUi.actions.delete)}
+                          </button>
+                        </>
+                      ) : (
                         <button
                           type="button"
-                          onClick={() => void handleDeleteStudent(student.id)}
-                          disabled={deleteLoading}
+                          onClick={() => setDeleteCandidateId(student.id)}
+                          className="cursor-pointer rounded-full border border-destructive/50 bg-destructive/10 px-3 py-1 text-xs text-destructive hover:bg-destructive/20"
                         >
                           {t(i18nKeys.school.studentsUi.actions.delete)}
                         </button>
-                      </>
-                    ) : (
-                      <button type="button" onClick={() => setDeleteCandidateId(student.id)}>
-                        {t(i18nKeys.school.studentsUi.actions.delete)}
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-          <div>
-            <span>
+          <div className="flex items-center justify-between border-t border-border pt-4">
+            <span className="text-sm text-muted-foreground">
               {t(i18nKeys.common.page)} {page} {t(i18nKeys.common.of)} {totalPages}
             </span>
-            <button type="button" onClick={handlePrevPage} disabled={page <= 1}>
-              ‹
-            </button>
-            <button type="button" onClick={handleNextPage} disabled={page >= totalPages}>
-              ›
-            </button>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={handlePrevPage}
+                disabled={page <= 1}
+                className="cursor-pointer rounded-lg border bg-background px-4 py-2 text-sm disabled:opacity-50"
+              >
+                ‹
+              </button>
+              <button
+                type="button"
+                onClick={handleNextPage}
+                disabled={page >= totalPages}
+                className="cursor-pointer rounded-lg border bg-background px-4 py-2 text-sm disabled:opacity-50"
+              >
+                ›
+              </button>
+            </div>
           </div>
-        </>
+        </div>
       )}
-    </section>
+    </div>
   );
 }
