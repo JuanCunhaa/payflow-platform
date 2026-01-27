@@ -6,7 +6,7 @@ test.describe('Public landing and navigation', () => {
   test('landing loads and shows main sections', async ({ page }) => {
     await page.goto(`/${LOCALE}`);
 
-    await expect(page.getByRole('heading', { name: /PayFlow/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Cobra Nex/i })).toBeVisible();
     await expect(
       page.getByRole('heading', {
         name: /Planilha, WhatsApp e comprovantes perdidos/i,

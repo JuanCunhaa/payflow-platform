@@ -30,9 +30,9 @@ export function AuthLayout({
                     <div className="flex items-center gap-2 mb-4">
                         {/* Logo Placeholder */}
                         <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center">
-                            <span className="text-primary-foreground font-bold text-xl">P</span>
+                            <span className="text-primary-foreground font-bold text-xl">N</span>
                         </div>
-                        <span className="text-2xl font-bold tracking-tight">PayFlow</span>
+                        <span className="text-2xl font-bold tracking-tight">Cobra Nex</span>
                     </div>
                     <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
                     {description && (
@@ -70,7 +70,7 @@ export function AuthLayout({
 
                 {/* Footer Copyright */}
                 <div className="text-center text-xs text-muted-foreground mt-8">
-                    &copy; {new Date().getFullYear()} PayFlow Platform. All rights reserved.
+                    &copy; {new Date().getFullYear()} Cobra Nex. All rights reserved.
                 </div>
             </div>
         </div>

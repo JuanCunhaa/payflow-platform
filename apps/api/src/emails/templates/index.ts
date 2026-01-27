@@ -25,23 +25,23 @@ const BASE_STYLES = {
 const TRANSLATIONS = {
   'pt-BR': {
     footer: {
-      copyright: 'PayFlow. Todos os direitos reservados.',
-      reason: 'Você recebeu este e-mail porque tem vínculo com a escola {{school}} no PayFlow.',
+      copyright: 'Cobra Nex. Todos os direitos reservados.',
+      reason: 'Você recebeu este e-mail porque tem vínculo com a escola {{school}} no Cobra Nex.',
       support: 'Precisa de ajuda? Acesse o suporte.',
     },
     templates: {
       'verify-email': {
-        subject: 'Confirme seu e-mail no PayFlow',
+        subject: 'Confirme seu e-mail no Cobra Nex',
         html: `
           <p style="margin-top: 0;">Olá {{name}},</p>
-          <p>Para confirmar seu e-mail no PayFlow da escola <strong style="${BASE_STYLES.highlight}">{{school}}</strong>, clique no botão abaixo:</p>
+          <p>Para confirmar seu e-mail no Cobra Nex da escola <strong style="${BASE_STYLES.highlight}">{{school}}</strong>, clique no botão abaixo:</p>
           <div style="text-align: center;">
             <a href="{{link}}" style="${BASE_STYLES.button}">Confirmar e-mail</a>
           </div>
           <p style="margin-bottom: 0;">Se você não fez este pedido, ignore esta mensagem.</p>
-          <p style="margin-top: 24px; margin-bottom: 0;">Abraços,<br />Equipe PayFlow</p>
+          <p style="margin-top: 24px; margin-bottom: 0;">Abraços,<br />Equipe Cobra Nex</p>
         `,
-        text: `Olá {{name}},\n\nPara confirmar seu e-mail no PayFlow da escola {{school}}, acesse: {{link}}\n\nSe você não fez este pedido, ignore esta mensagem.`,
+        text: `Olá {{name}},\n\nPara confirmar seu e-mail no Cobra Nex da escola {{school}}, acesse: {{link}}\n\nSe você não fez este pedido, ignore esta mensagem.`,
       },
       'auth.password_reset': {
         subject: 'Instruções para redefinir sua senha',
@@ -52,7 +52,7 @@ const TRANSLATIONS = {
           <div style="text-align: center;">
             <a href="{{resetUrl}}" style="${BASE_STYLES.button}">Redefinir senha</a>
           </div>
-          <p style="margin-top: 24px; margin-bottom: 0;">Abraços,<br />Equipe PayFlow</p>
+          <p style="margin-top: 24px; margin-bottom: 0;">Abraços,<br />Equipe Cobra Nex</p>
         `,
         text: `Olá,\n\nRecebemos um pedido para redefinir sua senha. Acesse: {{resetUrl}}\n\nSe você não fez este pedido, ignore esta mensagem.`,
       },
@@ -60,14 +60,14 @@ const TRANSLATIONS = {
         subject: 'Sua conta de responsável foi aprovada',
         html: `
           <p style="margin-top: 0;">Olá {{name}},</p>
-          <p>Sua conta de responsável no PayFlow da escola <strong style="${BASE_STYLES.highlight}">{{school}}</strong> foi <strong style="${BASE_STYLES.highlight}">aprovada</strong>!</p>
+          <p>Sua conta de responsável no Cobra Nex da escola <strong style="${BASE_STYLES.highlight}">{{school}}</strong> foi <strong style="${BASE_STYLES.highlight}">aprovada</strong>!</p>
           <p>Você já pode acessar o portal utilizando seu e-mail e senha cadastrados.</p>
           <div style="text-align: center;">
             <a href="{{link}}" style="${BASE_STYLES.button}">Acessar o portal</a>
           </div>
-          <p style="margin-top: 24px; margin-bottom: 0;">Abraços,<br />Equipe PayFlow</p>
+          <p style="margin-top: 24px; margin-bottom: 0;">Abraços,<br />Equipe Cobra Nex</p>
         `,
-        text: `Olá {{name}},\n\nSua conta de responsável no PayFlow da escola {{school}} foi aprovada.\n\nAcesse: {{link}}`,
+        text: `Olá {{name}},\n\nSua conta de responsável no Cobra Nex da escola {{school}} foi aprovada.\n\nAcesse: {{link}}`,
       },
       'guardian-rejected': {
         subject: 'Sua solicitação de acesso não foi aprovada',
@@ -75,7 +75,7 @@ const TRANSLATIONS = {
           <p style="margin-top: 0;">Olá {{name}},</p>
           <p>Sua solicitação de acesso ao portal do responsável da escola <strong style="${BASE_STYLES.highlight}">{{school}}</strong> <strong style="${BASE_STYLES.highlight}">não foi aprovada</strong> neste momento.</p>
           <p>Em caso de dúvidas, entre em contato diretamente com a escola.</p>
-          <p style="margin-top: 24px; margin-bottom: 0;">Abraços,<br />Equipe PayFlow</p>
+          <p style="margin-top: 24px; margin-bottom: 0;">Abraços,<br />Equipe Cobra Nex</p>
         `,
         text: `Olá {{name}},\n\nSua solicitação de acesso ao portal do responsável da escola {{school}} não foi aprovada neste momento.`,
       },
@@ -94,7 +94,7 @@ const TRANSLATIONS = {
           <div style="text-align: center;">
             <a href="{{link}}" style="${BASE_STYLES.button}">Visualizar cobrança</a>
           </div>
-          <p style="margin-top: 24px; margin-bottom: 0;">Abraços,<br />Equipe PayFlow</p>
+          <p style="margin-top: 24px; margin-bottom: 0;">Abraços,<br />Equipe Cobra Nex</p>
         `,
         text: `Olá {{name}},\n\nUma nova cobrança de {{amount}} com vencimento em {{dueDate}} foi gerada pela escola {{school}}.\n\nAcesse: {{link}}`,
       },
@@ -112,7 +112,7 @@ const TRANSLATIONS = {
             <a href="{{link}}" style="${BASE_STYLES.button} background-color: #ef4444;">Pagar cobrança em atraso</a>
           </div>
           <p style="font-size: 14px; color: #6b7280; margin-top: 24px;">Se o pagamento já foi realizado, por favor desconsidere este e-mail.</p>
-          <p style="margin-top: 24px; margin-bottom: 0;">Abraços,<br />Equipe PayFlow</p>
+          <p style="margin-top: 24px; margin-bottom: 0;">Abraços,<br />Equipe Cobra Nex</p>
         `,
         text: `Olá {{name}},\n\nA cobrança da escola {{school}} no valor de {{amount}} venceu em {{dueDate}} e está em atraso.\n\nRegularize em: {{link}}`,
       },
@@ -128,7 +128,7 @@ const TRANSLATIONS = {
             <p style="margin: 0; font-size: 16px; font-weight: 600; color: #065f46;">{{paidDate}}</p>
           </div>
           <p>Você pode acompanhar o histórico de cobranças pelo portal.</p>
-          <p style="margin-top: 24px; margin-bottom: 0;">Abraços,<br />Equipe PayFlow</p>
+          <p style="margin-top: 24px; margin-bottom: 0;">Abraços,<br />Equipe Cobra Nex</p>
         `,
         text: `Olá {{name}},\n\nRecebemos o pagamento de {{amount}} referente a escola {{school}} em {{paidDate}}.\n\nObrigado!`,
       },
@@ -136,23 +136,23 @@ const TRANSLATIONS = {
   },
   'en-US': {
     footer: {
-      copyright: 'PayFlow. All rights reserved.',
-      reason: 'You received this email because you are linked to {{school}} on PayFlow.',
+      copyright: 'Cobra Nex. All rights reserved.',
+      reason: 'You received this email because you are linked to {{school}} on Cobra Nex.',
       support: 'Need help? Contact support.',
     },
     templates: {
       'verify-email': {
-        subject: 'Confirm your email on PayFlow',
+        subject: 'Confirm your email on Cobra Nex',
         html: `
           <p style="margin-top: 0;">Hello {{name}},</p>
-          <p>To confirm your email on PayFlow for <strong style="${BASE_STYLES.highlight}">{{school}}</strong>, click the button below:</p>
+          <p>To confirm your email on Cobra Nex for <strong style="${BASE_STYLES.highlight}">{{school}}</strong>, click the button below:</p>
           <div style="text-align: center;">
             <a href="{{link}}" style="${BASE_STYLES.button}">Confirm email</a>
           </div>
           <p style="margin-bottom: 0;">If you did not request this, please ignore this message.</p>
-          <p style="margin-top: 24px; margin-bottom: 0;">Best regards,<br />PayFlow Team</p>
+          <p style="margin-top: 24px; margin-bottom: 0;">Best regards,<br />Cobra Nex Team</p>
         `,
-        text: `Hello {{name}},\n\nTo confirm your email on PayFlow for {{school}}, visit: {{link}}\n\nIf you did not request this, ignore this message.`,
+        text: `Hello {{name}},\n\nTo confirm your email on Cobra Nex for {{school}}, visit: {{link}}\n\nIf you did not request this, ignore this message.`,
       },
       'auth.password_reset': {
         subject: 'Reset your password',
@@ -163,7 +163,7 @@ const TRANSLATIONS = {
           <div style="text-align: center;">
             <a href="{{resetUrl}}" style="${BASE_STYLES.button}">Reset password</a>
           </div>
-          <p style="margin-top: 24px; margin-bottom: 0;">Best regards,<br />PayFlow Team</p>
+          <p style="margin-top: 24px; margin-bottom: 0;">Best regards,<br />Cobra Nex Team</p>
         `,
         text: `Hello,\n\nWe received a request to reset your password. Visit: {{resetUrl}}\n\nIf you did not request this, ignore this message.`,
       },
@@ -171,14 +171,14 @@ const TRANSLATIONS = {
         subject: 'Your guardian account was approved',
         html: `
           <p style="margin-top: 0;">Hello {{name}},</p>
-          <p>Your guardian account on PayFlow for <strong style="${BASE_STYLES.highlight}">{{school}}</strong> has been <strong style="${BASE_STYLES.highlight}">approved</strong>!</p>
+          <p>Your guardian account on Cobra Nex for <strong style="${BASE_STYLES.highlight}">{{school}}</strong> has been <strong style="${BASE_STYLES.highlight}">approved</strong>!</p>
           <p>You can now access the portal using your registered email and password.</p>
           <div style="text-align: center;">
             <a href="{{link}}" style="${BASE_STYLES.button}">Access Portal</a>
           </div>
-          <p style="margin-top: 24px; margin-bottom: 0;">Best regards,<br />PayFlow Team</p>
+          <p style="margin-top: 24px; margin-bottom: 0;">Best regards,<br />Cobra Nex Team</p>
         `,
-        text: `Hello {{name}},\n\nYour guardian account on PayFlow for {{school}} has been approved.\n\nAccess: {{link}}`,
+        text: `Hello {{name}},\n\nYour guardian account on Cobra Nex for {{school}} has been approved.\n\nAccess: {{link}}`,
       },
       'guardian-rejected': {
         subject: 'Your access request was not approved',
@@ -186,7 +186,7 @@ const TRANSLATIONS = {
           <p style="margin-top: 0;">Hello {{name}},</p>
           <p>Your request to access the guardian portal for <strong style="${BASE_STYLES.highlight}">{{school}}</strong> was <strong style="${BASE_STYLES.highlight}">not approved</strong> at this time.</p>
           <p>If you have questions, please contact the school directly.</p>
-          <p style="margin-top: 24px; margin-bottom: 0;">Best regards,<br />PayFlow Team</p>
+          <p style="margin-top: 24px; margin-bottom: 0;">Best regards,<br />Cobra Nex Team</p>
         `,
         text: `Hello {{name}},\n\nYour request to access the guardian portal for {{school}} was not approved at this time.`,
       },
@@ -205,7 +205,7 @@ const TRANSLATIONS = {
           <div style="text-align: center;">
             <a href="{{link}}" style="${BASE_STYLES.button}">View Invoice</a>
           </div>
-          <p style="margin-top: 24px; margin-bottom: 0;">Best regards,<br />PayFlow Team</p>
+          <p style="margin-top: 24px; margin-bottom: 0;">Best regards,<br />Cobra Nex Team</p>
         `,
         text: `Hello {{name}},\n\nA new invoice of {{amount}} due on {{dueDate}} was generated by {{school}}.\n\nVisit: {{link}}`,
       },
@@ -223,7 +223,7 @@ const TRANSLATIONS = {
             <a href="{{link}}" style="${BASE_STYLES.button} background-color: #ef4444;">Pay Overdue Invoice</a>
           </div>
           <p style="font-size: 14px; color: #6b7280; margin-top: 24px;">If payment has already been made, please disregard this email.</p>
-          <p style="margin-top: 24px; margin-bottom: 0;">Best regards,<br />PayFlow Team</p>
+          <p style="margin-top: 24px; margin-bottom: 0;">Best regards,<br />Cobra Nex Team</p>
         `,
         text: `Hello {{name}},\n\nThe invoice for {{school}} ({{amount}}) was due on {{dueDate}} and is overdue.\n\nPay at: {{link}}`,
       },
@@ -239,7 +239,7 @@ const TRANSLATIONS = {
             <p style="margin: 0; font-size: 16px; font-weight: 600; color: #065f46;">{{paidDate}}</p>
           </div>
           <p>You can track payment history in the portal.</p>
-          <p style="margin-top: 24px; margin-bottom: 0;">Best regards,<br />PayFlow Team</p>
+          <p style="margin-top: 24px; margin-bottom: 0;">Best regards,<br />Cobra Nex Team</p>
         `,
         text: `Hello {{name}},\n\nWe received payment of {{amount}} for {{school}} on {{paidDate}}.\n\nThank you!`,
       },
@@ -247,7 +247,7 @@ const TRANSLATIONS = {
   }
 };
 
-function getLayout(content: string, schoolName: string = 'PayFlow', locale: string = 'pt-BR'): string {
+function getLayout(content: string, schoolName: string = 'Cobra Nex', locale: string = 'pt-BR'): string {
   const t = TRANSLATIONS[locale as keyof typeof TRANSLATIONS] || TRANSLATIONS['pt-BR'];
   const footerReason = interpolate(t.footer.reason, { school: schoolName });
 
@@ -261,7 +261,7 @@ function getLayout(content: string, schoolName: string = 'PayFlow', locale: stri
   <body style="${BASE_STYLES.body}">
     <div style="${BASE_STYLES.container}">
       <div style="${BASE_STYLES.header}">
-        <h1 style="${BASE_STYLES.headerTitle}">PayFlow &middot; ${schoolName}</h1>
+        <h1 style="${BASE_STYLES.headerTitle}">Cobra Nex &middot; ${schoolName}</h1>
       </div>
       <div style="${BASE_STYLES.content}">
         ${content}
@@ -299,7 +299,7 @@ export function renderEmailTemplate(
     throw new Error(`Unknown email template: ${id} for locale ${locale}`);
   }
 
-  const schoolName = (variables.school as string) || 'PayFlow';
+  const schoolName = (variables.school as string) || 'Cobra Nex';
 
   return {
     html: getLayout(interpolate(templateDef.html, variables), schoolName, locale),

@@ -6,7 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata = {
-  title: "PayFlow",
+  title: "Cobra Nex",
   description: "Plataforma de gestão financeira de empresas",
 };
 

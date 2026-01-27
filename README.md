@@ -1,16 +1,16 @@
-# 🚀 PayFlow Platform
+# 🚀 Cobra Nex Platform
 
-**A solução definitiva para gestão financeira recorrente de empresas.**
+**Uma plataforma Full Stack de Gestão Financeira Escolar/Empresarial (SaaS Multi-tenant)**
 
-O **PayFlow** é uma plataforma SaaS multi-tenant robusta, projetada para modernizar e simplificar o fluxo de trabalho de empresas de serviço recorrente. Conectamos administradores e clientes em um ecossistema fluido, seguro e eficiente.
+O **Cobra Nex** é uma plataforma SaaS multi-tenant robusta, projetada para modernizar e simplificar o fluxo de trabalho de empresas de serviço recorrente. Conectamos administradores e clientes em um ecossistema fluido, seguro e eficiente.
 
 ---
 
-## 💡 O que é o PayFlow?
+## 💡 O que é o Cobra Nex?
 
-O PayFlow resolve a complexidade da gestão financeira centralizando cobranças e comunicação em um só lugar. Nossa missão é automatizar a burocracia para que as empresas possam focar no que realmente importa: **crescer**.
+O Cobra Nex resolve a complexidade da gestão financeira centralizando cobranças e comunicação em um só lugar. Nossa missão é automatizar a burocracia para que as empresas possam focar no que realmente importa: **crescer**.
 
-Com uma arquitetura escalável e focada na experiência do usuário, o PayFlow transforma processos manuais e lentos em fluxos digitais ágeis.
+Com uma arquitetura escalável e focada na experiência do usuário, o Cobra Nex transforma processos manuais e lentos em fluxos digitais ágeis.
 
 ---
 

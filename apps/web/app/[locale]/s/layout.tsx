@@ -166,13 +166,13 @@ export default function SchoolLayout({ children }: { children: React.ReactNode }
   return (
     <div className="flex min-h-screen">
       <div className="hidden md:block w-64 shrink-0">
-        <Sidebar title="PayFlow" items={sidebarItems} className="fixed w-64 h-full" />
+        <Sidebar title="Cobra Nex" items={sidebarItems} className="fixed w-64 h-full" />
       </div>
 
       <div className="flex-1 flex flex-col min-w-0 bg-slate-50/50 dark:bg-slate-950">
         <header className="sticky top-0 z-40 bg-white dark:bg-slate-900 border-b px-6 py-3 flex items-center justify-between shadow-sm">
           <div className="flex items-center gap-4">
-            <MobileSidebar title="PayFlow" items={sidebarItems} />
+            <MobileSidebar title="Cobra Nex" items={sidebarItems} />
             <div>
               <nav className="flex items-center text-sm text-muted-foreground mb-0.5">
                 {breadcrumbs.map((crumb, index) => (

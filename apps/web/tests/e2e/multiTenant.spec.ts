@@ -5,7 +5,7 @@ const LOCALE = 'pt-BR';
 test.describe('Multi-tenant routing', () => {
   test('tenant host loads landing without error', async ({ page }) => {
     await page.goto(`http://vidal.localtest.me:3000/${LOCALE}`);
-    await expect(page.getByRole('heading', { name: /PayFlow/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Cobra Nex/i })).toBeVisible();
   });
 
   test('invalid tenant redirects to tenant-not-found', async ({ page }) => {
