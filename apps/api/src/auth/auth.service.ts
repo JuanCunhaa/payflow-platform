@@ -402,7 +402,7 @@ export class AuthService {
       // Store hashed token using raw SQL to keep schema dependency minimal.
       await this.prisma.$executeRaw`
         INSERT INTO "password_reset_tokens" ("id", "user_id", "token_hash", "expires_at", "created_at")
-        VALUES (${id}, ${user.id}, ${tokenHash}, ${expiresAt}, ${createdAt})
+        VALUES (${id}::uuid, ${user.id}::uuid, ${tokenHash}, ${expiresAt}, ${createdAt})
       `;
 
       // Simulated email integration
