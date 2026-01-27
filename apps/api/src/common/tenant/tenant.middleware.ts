@@ -24,11 +24,17 @@ function extractFirstSubdomain(host?: string): string | undefined {
 export class TenantResolverMiddleware implements NestMiddleware {
   private readonly logger = new Logger(TenantResolverMiddleware.name);
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async use(req: Request, _res: Response, next: NextFunction) {
     try {
-      const host = req.headers['host'] as string | undefined;
+      let host = req.headers['x-tenant-host'] as string | undefined;
+      if (!host) {
+        host = req.headers['x-forwarded-host'] as string | undefined;
+      }
+      if (!host) {
+        host = req.headers['host'] as string | undefined;
+      }
       const subdomain = extractFirstSubdomain(host);
       if (subdomain) {
         const tenant = await this.prisma.tenant.findUnique({

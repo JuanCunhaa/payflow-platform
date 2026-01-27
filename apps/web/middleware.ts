@@ -106,7 +106,10 @@ async function maybeValidateTenant(request: NextRequest) {
       apiHost += ':3333';
     }
     const res = await fetch(apiUrl, {
-      headers: { Host: apiHost },
+      headers: {
+        Host: apiHost,
+        'X-Tenant-Host': apiHost,
+      },
       // short timeout via next fetch cache is not available; rely on fast local
     });
     if (res.status === 404) {
