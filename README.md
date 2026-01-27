@@ -1,87 +1,54 @@
-# PayFlow – Dev Setup
+# 🚀 PayFlow Platform
 
-Monorepo com `npm workspaces`:
+**A solução definitiva para gestão financeira e administrativa de instituições de ensino.**
 
-- `apps/web` – Next.js (App Router)
-- `apps/api` – NestJS + Prisma
-- `packages/shared` – Tipos, validações e chaves de i18n
+O **PayFlow** é uma plataforma SaaS multi-tenant robusta, projetada para modernizar e simplificar o fluxo de trabalho de escolas, cursos e instituições educacionais. Conectamos administradores, responsáveis e alunos em um ecossistema fluido, seguro e eficiente.
 
-## Como rodar em desenvolvimento
+---
 
-1. Instale as dependências:
+## 💡 O que é o PayFlow?
 
-```bash
-npm install
-```
+O PayFlow resolve a complexidade da gestão escolar centralizando financeiro, acadêmico e comunicação em um só lugar. Nossa missão é automatizar a burocracia para que as escolas possam focar no que realmente importa: **educar**.
 
-2. Configure o banco (PostgreSQL) e a variável `DATABASE_URL` em `.env.local` (ou use o valor de exemplo em `.env.example`).
-3. Rode as migrations e o seed:
+Com uma arquitetura escalável e focada na experiência do usuário, o PayFlow transforma processos manuais e lentos em fluxos digitais ágeis (da matrícula à mensalidade).
 
-```bash
-npm run db:migrate
-npm run db:seed
-```
+---
 
-4. Suba web + api em paralelo:
+## ✨ Principais Funcionalidades
 
-```bash
-npm run dev
-```
+*   **🏢 Multi-tenancy Nativo:** Uma única plataforma servindo múltiplas escolas com isolamento total de dados e customização por unidade (Whitelabel ready).
+*   **💰 Gestão Financeira Completa:** Geração automática de faturas, gestão de contratos, links de pagamentos integrados e controle de inadimplência.
+*   **👥 Portal do Responsável:** Acesso fácil para pais e responsáveis acompanharem faturas, notas e abrirem chamados de suporte.
+*   **🎓 Gestão Acadêmica:** Controle de turmas, grades curriculares, alunos e matrículas.
+*   **🎫 Sistema de Suporte (Helpdesk):** Módulo de tickets integrado para centralizar a comunicação entre escola e família.
+*   **🔐 Segurança e Controle:** Controle de acesso baseado em cargos (RBAC) granular (Admin, Financeiro, Secretaria, etc.).
 
-## Credenciais de desenvolvimento (seed)
+---
 
-O seed da API (`apps/api/prisma/seed.ts`) é idempotente e cria:
+## 🛠️ Stack Tecnológica
 
-- Tenant
-  - `vidal` (`school_code: VIDAL-0001`)
-  - `alpha` (`school_code: ALPHA-0001`)
-- Usuários
-  - Platform admin
-    - Email: `platform.admin@payflow.com`
-    - Tipo: `PLATFORM`
-    - Papel: `PLATFORM_ADMIN` em todos os tenants
-  - School admins
-    - Vidal admin
-      - Email: `admin@vidal.com`
-      - Tipo: `STAFF`
-      - Papel: `SCHOOL_ADMIN` no tenant `vidal`
-    - Alpha admin
-      - Email: `admin@alpha.com`
-      - Tipo: `STAFF`
-      - Papel: `SCHOOL_ADMIN` no tenant `alpha`
+Construído com o que há de mais moderno no ecossistema JavaScript/TypeScript, garantindo performance, tipagem segura e manutenibilidade:
 
-Senha padrão de todos os usuários criados pelo seed:
+*   **Monorepo:** Gerenciado com **Turborepo** para máxima eficiência de build.
+*   **Frontend:** **Next.js** (App Router) + **Tailwind CSS** + **Shadcn/ui** para interfaces rápidas e elegantes.
+*   **Backend:** **NestJS** para uma API robusta, modular e escalável.
+*   **Banco de Dados:** **PostgreSQL** com **Prisma ORM** para integridade e agilidade.
+*   **DevOps:** Containerização com **Docker** e pipelines de CI/CD configurados.
 
-- `Admin@12345`
+---
 
-Você pode sobrescrever a senha padrão definindo a variável de ambiente antes de rodar o seed:
+## 🚀 Deploy (Produção)
 
-```bash
-SEED_DEFAULT_PASSWORD="MinhaSenha@Forte" npm run db:seed
-```
+Este projeto está configurado para rodar em **Vercel** (Frontend) e **Render** (Backend) sob o domínio **cobranex.xyz**.
 
-## 🐳 Docker
+### Variáveis de Ambiente Necessárias
 
-Para rodar o projeto utilizando Docker:
+#### Frontend (Vercel)
+*   `NEXT_PUBLIC_API_URL`: URL da API (Backend). Ex: `https://payflow-platform.onrender.com`
 
-1. Certifique-se de ter o Docker e Docker Compose instalados.
-2. Na raiz do projeto, execute:
+#### Backend (Render)
+*   `DATABASE_URL`: String de conexão do PostgreSQL.
+*   `JWT_SECRET`: Segredo para assinar tokens.
+*   `FRONTEND_URL`: URL do Frontend para CORS. Ex: `https://cobranex.xyz`
+*   `APP_PUBLIC_URL`: URL pública para links de e-mail. Ex: `https://cobranex.xyz`
 
-```bash
-docker-compose up --build
-```
-
-Isso iniciará:
-- **Banco de dados (PostgreSQL)** na porta `5432`
-- **API (Back-end)** em `http://localhost:3333`
-- **Web (Front-end)** em `http://localhost:3000`
-
-> **Nota:** As variáveis de ambiente no `docker-compose.yml` estão configuradas para desenvolvimento local. Para produção, lembre-se de usar um arquivo .env seguro.
-
-## Scripts úteis
-
-- `npm run lint` – Lint em web e api.
-- `npm run format` – `prettier -w .` em todo o repo.
-- `npm run db:migrate` – `prisma migrate dev` na API.
-- `npm run db:seed` – Executa o seed Prisma na API.
-- `npm run db:studio` – Abre o Prisma Studio.

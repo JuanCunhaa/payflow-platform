@@ -18,6 +18,8 @@ async function bootstrap() {
     'http://localtest.me:3000',
     /\.localtest\.me(:\d+)?$/,
     'https://payflow-platform-web.vercel.app',
+    'https://cobranex.xyz',
+    /\.cobranex\.xyz(:\d+)?$/,
   ];
 
   if (process.env.FRONTEND_URL) {

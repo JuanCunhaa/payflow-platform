@@ -14,7 +14,7 @@ export class EmailService {
     params: { name?: string; school?: string; portalLink?: string },
     locale: string = 'pt-BR'
   ): Promise<void> {
-    const baseUrl = process.env.APP_PUBLIC_URL || 'http://localhost:3000';
+    const baseUrl = process.env.APP_PUBLIC_URL || 'https://cobranex.xyz';
     const variables = {
       name: params.name ?? '',
       school: params.school ?? '',
@@ -40,7 +40,7 @@ export class EmailService {
     params: { name?: string; school?: string; contactLink?: string },
     locale: string = 'pt-BR'
   ): Promise<void> {
-    const baseUrl = process.env.APP_PUBLIC_URL || 'http://localhost:3000';
+    const baseUrl = process.env.APP_PUBLIC_URL || 'https://cobranex.xyz';
     const variables = {
       name: params.name ?? '',
       school: params.school ?? '',
@@ -62,7 +62,7 @@ export class EmailService {
   }
 
   async sendPasswordResetEmail(recipient: string, token: string, locale: string = 'pt-BR'): Promise<void> {
-    const baseUrl = process.env.APP_PUBLIC_URL || 'http://localhost:3000';
+    const baseUrl = process.env.APP_PUBLIC_URL || 'https://cobranex.xyz';
     const resetUrl = `${baseUrl}/reset-password?token=${encodeURIComponent(token)}`;
     const variables = {
       resetUrl,

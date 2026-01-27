@@ -81,9 +81,14 @@ async function maybeValidateTenant(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Only validate tenant in dev for localtest.me/lvh.me
+  // Only validate tenant in dev for localtest.me/lvh.me or prod on vercel.app
   if (!sub || !domain) return NextResponse.next();
-  if (!domain.endsWith('localtest.me') && !domain.endsWith('lvh.me')) {
+  const isLocal = domain.endsWith('localtest.me') || domain.endsWith('lvh.me');
+  const isVercel = domain.endsWith('vercel.app');
+  const isProduction = domain.endsWith('cobranex.xyz');
+
+  // Se não for local, nem vercel, nem prod custom, ignora
+  if (!isLocal && !isVercel && !isProduction) {
     return NextResponse.next();
   }
 

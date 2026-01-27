@@ -219,7 +219,35 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
           // Assumes 2-part top-level domains like localtest.me, payflow.com
           // For localhost, parts.length is 1, so baseDomain=localhost, sub=''
-          if (parts.length >= 3) {
+
+          if (hostname.endsWith('cobranex.xyz')) {
+            if (parts.length >= 3) {
+              currentSub = parts[0];
+              baseDomain = parts.slice(1).join('.');
+            } else {
+              currentSub = '';
+              baseDomain = hostname;
+            }
+          } else if (hostname.endsWith('.vercel.app')) {
+            // In Vercel free tier, we cannot easily use wildcards.
+            // So we assume the current hostname IS the base domain for logic purposes, 
+            // unless we want to redirect to another vercel app (which is unlikely to be automatic).
+            // HOWEVER, the user wants 'admin.payflow-platform-web.vercel.app' which is NOT standard Vercel behavior without custom domain.
+            // Assuming user has set up wildcard or custom domains:
+
+            // If the user REALLY has admin.payflow-platform-web.vercel.app
+            // Then parts would be ['admin', 'payflow-platform-web', 'vercel', 'app']
+            // length = 4.
+
+            if (parts.length >= 4) {
+              currentSub = parts[0];
+              baseDomain = parts.slice(1).join('.');
+            } else {
+              // length 3: payflow-platform-web.vercel.app -> sub='', base='payflow...vercel.app'
+              currentSub = '';
+              baseDomain = hostname;
+            }
+          } else if (parts.length >= 3) {
             currentSub = parts[0];
             baseDomain = parts.slice(1).join('.');
           }
