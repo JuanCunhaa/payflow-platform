@@ -396,24 +396,23 @@ export class AuthService {
     const expiresAt = new Date(Date.now() + PASSWORD_RESET_TOKEN_TTL_MS);
     const createdAt = new Date();
 
-    // Store hashed token using raw SQL to keep schema dependency minimal.
-    await this.prisma.$executeRaw`
-      INSERT INTO "password_reset_tokens" ("id", "user_id", "token_hash", "expires_at", "created_at")
-      VALUES (${id}, ${user.id}, ${tokenHash}, ${expiresAt}, ${createdAt})
-    `;
-
     const fullToken = `${id}.${secret}`;
 
-    // Simulated email integration
     try {
+      // Store hashed token using raw SQL to keep schema dependency minimal.
+      await this.prisma.$executeRaw`
+        INSERT INTO "password_reset_tokens" ("id", "user_id", "token_hash", "expires_at", "created_at")
+        VALUES (${id}, ${user.id}, ${tokenHash}, ${expiresAt}, ${createdAt})
+      `;
+
+      // Simulated email integration
       await this.emailService.sendPasswordResetEmail(user.email, fullToken);
       this.logger.log(`Password reset token created for user ${user.email}`);
     } catch (error: any) {
-      this.logger.error(`Failed to send password reset email: ${error.message}`);
-      // Re-throw as Bad Request to show message to client (dev mode helpful)
+      this.logger.error(`Failed to process password reset: ${error.message}`);
       throw new BadRequestException({
-        code: 'email_send_failed',
-        message: `Failed to send email: ${error.message || 'Unknown error'}`,
+        code: 'reset_failed',
+        message: `Failed to reset password: ${error.message || 'Unknown error'}`,
       });
     }
   }
