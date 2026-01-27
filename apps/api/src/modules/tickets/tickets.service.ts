@@ -1,8 +1,7 @@
-import { Injectable, BadRequestException, ForbiddenException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
-import { CreateTicketDto, CreateGuestTicketDto } from './dto/create-ticket.dto';
-import { CreateMessageDto } from './dto/create-message.dto';
-import { TicketStatus, TicketType, Role } from '@prisma/client';
+import { CreateGuestTicketDto, CreateTicketDto } from './dto/create-ticket.dto';
+import { Role, TicketStatus } from '@prisma/client';
 
 @Injectable()
 export class TicketsService {
@@ -164,7 +163,7 @@ export class TicketsService {
         return newMessage;
     }
 
-    async escalate(id: string, userId: string, tenantId: string) {
+    async escalate(id: string, _userId: string, tenantId: string) {
         // Only school staff can escalate? or Guardian too? Usually School Admin escalates to Platform.
         // Let's allow School Admin to escalate.
         const ticket = await this.prisma.ticket.findUnique({ where: { id } });
@@ -181,7 +180,7 @@ export class TicketsService {
         });
     }
 
-    async close(id: string, userId: string) {
+    async close(id: string, _userId: string) {
         // Optional: verify access
         return this.prisma.ticket.update({
             where: { id },

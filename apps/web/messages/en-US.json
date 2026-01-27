@@ -541,6 +541,10 @@
       },
       "detail": {
         "title": "Invoice details",
+        "emptySelection": "Select an invoice to see details.",
+        "paymentTitle": "Payment",
+        "payNow": "Pay now",
+        "paidLabel": "This invoice is already paid.",
         "infoTitle": "Invoice information",
         "itemsTitle": "Invoice items",
         "statusTimelineTitle": "Status timeline",
@@ -548,7 +552,14 @@
         "copyPaymentLink": "Copy payment link",
         "copyPaymentLinkSuccess": "Payment link copied to clipboard.",
         "generatePaymentLink": "Generate payment link",
-        "openPaymentPage": "Open payment page"
+        "openPaymentPage": "Open payment page",
+        "copyLink": "Copy Link",
+        "openLink": "Open Link",
+        "communicationsTitle": "Communications",
+        "communicationsEmpty": "No communications recorded.",
+        "communicationTypeCreated": "Invoice created",
+        "communicationTypeOverdue": "Overdue notice",
+        "communicationTypePaid": "Payment confirmed"
       },
       "feedback": {
         "loadError": "Could not load invoices."

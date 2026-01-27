@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
 
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -76,7 +77,7 @@ function formatAmount(amountCents: number): string {
 @Controller('school/reports')
 @UseGuards(JwtAuthGuard, RequireTenantGuard, RolesGuard)
 export class SchoolReportsController {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   @Get('summary')
   @Roles('SCHOOL_ADMIN', 'FINANCE', 'SECRETARY', 'READONLY')
@@ -97,7 +98,7 @@ export class SchoolReportsController {
       dueDateFilter.lte = to;
     }
 
-    const baseWhere: Record<string, unknown> = {
+    const baseWhere: Prisma.InvoiceWhereInput = {
       tenantId,
     };
 
@@ -110,34 +111,34 @@ export class SchoolReportsController {
         where: {
           ...baseWhere,
           status: 'PAID',
-        } as any,
+        },
         _sum: { amountCents: true },
       }),
       this.prisma.invoice.aggregate({
         where: {
           ...baseWhere,
           status: { in: ['PENDING', 'OVERDUE'] },
-        } as any,
+        },
         _sum: { amountCents: true },
       }),
       this.prisma.invoice.aggregate({
         where: {
           ...baseWhere,
           status: 'OVERDUE',
-        } as any,
+        },
         _sum: { amountCents: true },
       }),
       this.prisma.invoice.count({
         where: {
           ...baseWhere,
           status: { in: ['PENDING', 'OVERDUE'] },
-        } as any,
+        },
       }),
       this.prisma.invoice.count({
         where: {
           ...baseWhere,
           status: 'OVERDUE',
-        } as any,
+        },
       }),
     ]);
 
@@ -159,7 +160,7 @@ export class SchoolReportsController {
       where: {
         tenantId,
         status: 'OVERDUE',
-      } as any,
+      },
       orderBy: {
         dueDate: 'asc',
       },
@@ -181,7 +182,7 @@ export class SchoolReportsController {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    return (invoices as any[]).map((invoice) => {
+    return invoices.map((invoice) => {
       const dueDate =
         invoice.dueDate instanceof Date ? (invoice.dueDate as Date) : new Date(invoice.dueDate);
       const due = new Date(dueDate);
@@ -220,7 +221,7 @@ export class SchoolReportsController {
     const to = parseDate(toParam);
     const status = parseInvoiceStatus(statusParam);
 
-    const where: Record<string, unknown> = {
+    const where: Prisma.InvoiceWhereInput = {
       tenantId,
     };
 
@@ -240,7 +241,7 @@ export class SchoolReportsController {
     }
 
     const invoices = await this.prisma.invoice.findMany({
-      where: where as any,
+      where,
       orderBy: { dueDate: 'asc' },
       include: {
         student: {
@@ -262,7 +263,7 @@ export class SchoolReportsController {
 
     res.write('aluno,responsavel,valor,vencimento,status,pago_em,metodo_pagamento\n');
 
-    for (const invoice of invoices as any[]) {
+    for (const invoice of invoices) {
       const aluno = escapeCsvValue(invoice.student?.name ?? '');
       const responsavel = escapeCsvValue(
         invoice.guardian?.name ?? invoice.guardian?.user?.email ?? ''
@@ -300,7 +301,7 @@ export class SchoolReportsController {
       where: {
         id,
         tenantId,
-      } as any,
+      },
       select: {
         id: true,
         name: true,
@@ -318,7 +319,7 @@ export class SchoolReportsController {
       where: {
         tenantId,
         studentId: id,
-      } as any,
+      },
       orderBy: {
         dueDate: 'asc',
       },
@@ -340,7 +341,7 @@ export class SchoolReportsController {
     let totalPaidCents = 0;
     let totalOpenCents = 0;
 
-    for (const invoice of invoices as any[]) {
+    for (const invoice of invoices) {
       if (invoice.status === 'PAID') {
         totalPaidCents += invoice.amountCents as number;
       } else if (invoice.status === 'PENDING' || invoice.status === 'OVERDUE') {
@@ -348,10 +349,10 @@ export class SchoolReportsController {
       }
     }
 
-    const mappedInvoices = (invoices as any[]).map((invoice) => ({
+    const mappedInvoices = invoices.map((invoice) => ({
       id: invoice.id as string,
       amountCents: invoice.amountCents as number,
-      currency: invoice.currency as string,
+      currency: 'BRL',
       status: invoice.status as InvoiceStatus,
       dueDate:
         invoice.dueDate instanceof Date
@@ -392,7 +393,7 @@ export class SchoolReportsController {
       where: {
         id,
         tenantId,
-      } as any,
+      },
       select: {
         id: true,
         name: true,
@@ -413,7 +414,7 @@ export class SchoolReportsController {
       where: {
         tenantId,
         guardianId: id,
-      } as any,
+      },
       orderBy: {
         dueDate: 'asc',
       },
@@ -430,7 +431,7 @@ export class SchoolReportsController {
     let totalPaidCents = 0;
     let totalOpenCents = 0;
 
-    for (const invoice of invoices as any[]) {
+    for (const invoice of invoices) {
       if (invoice.status === 'PAID') {
         totalPaidCents += invoice.amountCents as number;
       } else if (invoice.status === 'PENDING' || invoice.status === 'OVERDUE') {
@@ -438,10 +439,10 @@ export class SchoolReportsController {
       }
     }
 
-    const mappedInvoices = (invoices as any[]).map((invoice) => ({
+    const mappedInvoices = invoices.map((invoice) => ({
       id: invoice.id as string,
       amountCents: invoice.amountCents as number,
-      currency: invoice.currency as string,
+      currency: 'BRL',
       status: invoice.status as InvoiceStatus,
       dueDate:
         invoice.dueDate instanceof Date

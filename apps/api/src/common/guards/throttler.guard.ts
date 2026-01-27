@@ -11,6 +11,7 @@ export class CustomThrottlerGuard extends ThrottlerGuard {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest<Request>();
 
+    // eslint-disable-next-line no-constant-condition
     if (
       process.env.BYPASS_RATE_LIMIT_FOR_TESTS === '1' ||
       req.headers['x-payflow-bypass-ratelimit'] === '1' ||

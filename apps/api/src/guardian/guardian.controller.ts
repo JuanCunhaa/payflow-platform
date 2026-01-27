@@ -12,6 +12,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import type { Request } from 'express';
 
 import { PrismaService } from '../prisma/prisma.service';
@@ -75,7 +76,7 @@ export class GuardianController {
   constructor(
     private readonly prisma: PrismaService,
     private readonly paymentService: PaymentService
-  ) {}
+  ) { }
 
   private async resolveGuardianContext(
     req: TenantRequest,
@@ -278,7 +279,7 @@ export class GuardianController {
     const to = parseDate(toParam);
     const { page, pageSize } = parsePageParams(pageParam, limitParam);
 
-    const where: any = {
+    const where: Prisma.InvoiceWhereInput = {
       tenantId,
     };
 
@@ -430,8 +431,8 @@ export class GuardianController {
         status: true,
         paymentLink: true,
         provider: true,
-      } as any,
-    })) as any;
+      },
+    }));
 
     if (!invoice) {
       throw new NotFoundException({

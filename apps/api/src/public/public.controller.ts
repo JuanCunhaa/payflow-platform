@@ -349,7 +349,7 @@ export class PublicController {
           },
         },
       },
-    })) as any;
+    }));
 
     if (!invoice) {
       throw new NotFoundException({
@@ -406,7 +406,7 @@ export class PublicController {
         status: 'PAID',
         paidAt,
         paidMethod: 'SANDBOX',
-      } as any,
+      },
     });
 
     const forwardedFor = req.headers['x-forwarded-for'];

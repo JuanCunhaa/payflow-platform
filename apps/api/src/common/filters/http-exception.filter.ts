@@ -55,10 +55,11 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
       // Validation errors normalization (from ValidationPipe)
       if (exception instanceof BadRequestException) {
-        const r = resp as any;
-        const messages = Array.isArray(r?.message)
-          ? r.message
-          : [r?.message].filter(Boolean);
+        const r = typeof resp === 'object' && resp !== null ? (resp as Record<string, unknown>) : {};
+        const messageVal = r.message;
+        const messages = Array.isArray(messageVal)
+          ? messageVal
+          : [messageVal].filter(Boolean);
         return res.status(status).json({
           code: 'validation_error',
           message: 'Validation failed',

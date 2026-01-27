@@ -10,7 +10,7 @@ import { useI18n } from '../../i18n-context';
 import { MobileSidebar, Sidebar } from '@/components/sidebar';
 import { ModeToggle } from '@/components/mode-toggle';
 import { Button } from '@/components/ui/button';
-import { BookOpen, LayoutDashboard, LogOut, Receipt, UserCircle, LifeBuoy } from 'lucide-react';
+import { BookOpen, LayoutDashboard, LifeBuoy, LogOut, Receipt, UserCircle } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Footer } from '@/components/footer';
 

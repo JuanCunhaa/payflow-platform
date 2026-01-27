@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 
 export type AuditActorType = 'SYSTEM' | 'USER' | 'PUBLIC';
@@ -17,7 +18,7 @@ export interface AuditLogInput {
 
 @Injectable()
 export class AuditService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   private get auditLogRepo() {
     return this.prisma.auditLog;
@@ -70,7 +71,7 @@ export class AuditService {
         targetType,
         targetId,
         // Prisma Json field accepts plain JSON or null.
-        metadata: safeMetadata as unknown as any,
+        metadata: safeMetadata as Prisma.InputJsonValue,
         ip,
         userAgent,
       },

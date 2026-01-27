@@ -9,7 +9,7 @@ import { MobileSidebar, Sidebar } from '@/components/sidebar';
 import { ModeToggle } from '@/components/mode-toggle';
 import { LanguageToggle } from '@/components/language-toggle';
 import { Button } from '@/components/ui/button';
-import { Activity, Building, LayoutDashboard, LogOut, Megaphone, LifeBuoy } from 'lucide-react';
+import { Activity, Building, LayoutDashboard, LifeBuoy, LogOut, Megaphone } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Footer } from '@/components/footer';
 

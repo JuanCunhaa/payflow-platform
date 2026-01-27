@@ -1,10 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, UseGuards, Request, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Request, UseGuards } from '@nestjs/common';
 import { TicketsService } from './tickets.service';
-import { CreateTicketDto, CreateGuestTicketDto } from './dto/create-ticket.dto';
+import { CreateGuestTicketDto, CreateTicketDto } from './dto/create-ticket.dto';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { Public } from '../../auth/decorators/public.decorator';
-import { RolesGuard } from '../../auth/guards/roles.guard';
+
 import { Role } from '@prisma/client';
 import { CurrentUser, CurrentUserPayload } from '../../auth/decorators/current-user.decorator';
 

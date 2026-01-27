@@ -15,12 +15,12 @@ import {
   CheckSquare,
   FileText,
   GraduationCap,
+  LifeBuoy,
   LogOut,
   Receipt,
   Settings,
   UserCheck,
   Users,
-  LifeBuoy,
 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Footer } from '@/components/footer';

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { Injectable, Logger, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 
 import { PrismaService } from '../prisma/prisma.service';

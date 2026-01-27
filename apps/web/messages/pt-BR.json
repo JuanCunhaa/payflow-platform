@@ -638,7 +638,23 @@
         "refunded": "Estornado"
       },
       "detail": {
-        "title": "Detalhes da cobrança"
+        "title": "Detalhes da cobrança",
+        "emptySelection": "Selecione uma cobrança para ver os detalhes.",
+        "paymentTitle": "Pagamento",
+        "paymentLinkLabel": "Link de pagamento",
+        "copyPaymentLink": "Copiar link de pagamento",
+        "copyPaymentLinkSuccess": "Link de pagamento copiado.",
+        "copyLink": "Copiar Link",
+        "openLink": "Abrir Link",
+        "generatePaymentLink": "Gerar link de pagamento",
+        "openPaymentPage": "Abrir página de pagamento",
+        "payNow": "Pagar agora",
+        "paidLabel": "Esta cobrança já foi paga.",
+        "communicationsTitle": "Comunicações",
+        "communicationsEmpty": "Nenhuma comunicação registrada.",
+        "communicationTypeCreated": "Cobrança criada",
+        "communicationTypeOverdue": "Cobrança vencida",
+        "communicationTypePaid": "Pagamento confirmado"
       },
       "feedback": {
         "loadError": "Não foi possível carregar as cobranças.",

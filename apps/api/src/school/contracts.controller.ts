@@ -13,6 +13,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import type { Request } from 'express';
+import { Contract } from '@prisma/client';
 
 import { PrismaService } from '../prisma/prisma.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -358,8 +359,9 @@ export class ContractsController {
     ];
     for (const field of fields) {
       if (field in data) {
-        const beforeValue = (existing as any)[field];
-        const afterValue = (updated as any)[field];
+        const key = field as keyof Contract;
+        const beforeValue = existing[key];
+        const afterValue = updated[key];
         if (beforeValue instanceof Date && afterValue instanceof Date) {
           if (beforeValue.getTime() !== afterValue.getTime()) {
             changes[field] = {

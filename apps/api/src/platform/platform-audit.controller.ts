@@ -1,12 +1,12 @@
 import { BadRequestException, Controller, Get, Query, UseGuards } from '@nestjs/common';
-import { Prisma, PrismaClient } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 
 import { PrismaService } from '../prisma/prisma.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Roles } from '../auth/roles.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
 
-type PrismaAuditClient = Pick<PrismaClient, 'auditLog' | 'tenant' | 'user'>;
+
 
 function parseDate(value?: string): Date | undefined {
   if (!value) return undefined;
@@ -36,7 +36,7 @@ export class PlatformAuditController {
     @Query('page') pageParam?: string,
     @Query('limit') limitParam?: string
   ) {
-    const prisma = this.prisma as unknown as PrismaAuditClient;
+    const prisma = this.prisma;
 
     const from = parseDate(fromParam);
     const to = parseDate(toParam);
@@ -87,7 +87,7 @@ export class PlatformAuditController {
       }
     }
 
-    const tx = prisma as any;
+    const tx = prisma;
     const [total, logs] = await tx.$transaction([
       tx.auditLog.count({ where }),
       tx.auditLog.findMany({
@@ -99,11 +99,11 @@ export class PlatformAuditController {
     ]);
 
     const tenantIds = Array.from(
-      new Set(logs.map((log: any) => log.tenantId).filter((id: any): id is string => !!id))
+      new Set(logs.map((log) => log.tenantId).filter((id): id is string => !!id))
     ) as string[];
 
     const actorIds = Array.from(
-      new Set(logs.map((log: any) => log.actorUserId).filter((id: any): id is string => !!id))
+      new Set(logs.map((log) => log.actorUserId).filter((id): id is string => !!id))
     ) as string[];
 
     const [tenants, actors] = await Promise.all([
@@ -121,11 +121,11 @@ export class PlatformAuditController {
         : Promise.resolve([]),
     ]);
 
-    const tenantMap = new Map((tenants as any[]).map((t) => [t.id, t]));
-    const actorMap = new Map((actors as any[]).map((u) => [u.id, u]));
+    const tenantMap = new Map(tenants.map((t) => [t.id, t] as [string, typeof t]));
+    const actorMap = new Map(actors.map((u) => [u.id, u] as [string, typeof u]));
 
     return {
-      items: logs.map((log: any) => ({
+      items: logs.map((log) => ({
         id: log.id,
         timestamp: log.createdAt.toISOString(),
         tenant: log.tenantId ? (tenantMap.get(log.tenantId) ?? null) : null,

@@ -408,11 +408,12 @@ export class AuthService {
       // Simulated email integration
       await this.emailService.sendPasswordResetEmail(user.email, fullToken);
       this.logger.log(`Password reset token created for user ${user.email}`);
-    } catch (error: any) {
-      this.logger.error(`Failed to process password reset: ${error.message}`);
+    } catch (error: unknown) {
+      const msg = error instanceof Error ? error.message : 'Unknown error';
+      this.logger.error(`Failed to process password reset: ${msg}`);
       throw new BadRequestException({
         code: 'reset_failed',
-        message: `Failed to reset password: ${error.message || 'Unknown error'}`,
+        message: `Failed to reset password: ${msg}`,
       });
     }
   }

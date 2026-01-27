@@ -11,6 +11,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import type { Request } from 'express';
+import { Prisma } from '@prisma/client';
 
 import { PrismaService } from '../prisma/prisma.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -111,7 +112,7 @@ export class SchoolInvoicesController {
     private readonly auditService: AuditService,
     private readonly paymentService: PaymentService,
     private readonly emailService: EmailService
-  ) {}
+  ) { }
 
   @Get()
   @Roles('SCHOOL_ADMIN', 'FINANCE', 'SECRETARY', 'READONLY')
@@ -132,7 +133,7 @@ export class SchoolInvoicesController {
     const from = parseDate(fromParam);
     const to = parseDate(toParam);
 
-    const where: any = {
+    const where: Prisma.InvoiceWhereInput = {
       tenantId,
     };
 
@@ -450,7 +451,7 @@ export class SchoolInvoicesController {
           },
         },
       },
-    })) as any;
+    }));
 
     if (!invoice) {
       throw new NotFoundException({
@@ -488,7 +489,7 @@ export class SchoolInvoicesController {
         paidMethod: 'MANUAL',
         paidNote,
         receiptUrl,
-      } as any,
+      },
     });
 
     await this.auditService.log({
@@ -541,8 +542,8 @@ export class SchoolInvoicesController {
         status: true,
         paymentLink: true,
         provider: true,
-      } as any,
-    })) as any;
+      },
+    }));
 
     if (!invoice) {
       throw new NotFoundException({

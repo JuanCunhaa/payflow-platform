@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { useAuth } from '@/app/auth-context';
 import { useI18n } from '@/app/i18n-context';
 import { Button } from '@/components/ui/button';
@@ -17,14 +17,14 @@ export function TicketChat({ ticketId }: { ticketId: string }) {
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const tTickets = dict.tickets as any || {};
 
-    const loadTicket = () => {
+    const loadTicket = useCallback(() => {
         apiFetch(`/tickets/${ticketId}`).then(res => {
             if (res.ok) return res.json();
             throw new Error('Failed');
         }).then(data => setTicket(data))
             .catch(console.error)
             .finally(() => setLoading(false));
-    };
+    }, [apiFetch, ticketId]);
 
     useEffect(() => {
         loadTicket();
