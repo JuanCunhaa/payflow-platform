@@ -30,7 +30,7 @@ export class PublicController {
     private readonly passwordService: PasswordService,
     private readonly auditService: AuditService,
     private readonly emailService: EmailService
-  ) {}
+  ) { }
 
   /**
    * GET /public/info
@@ -97,9 +97,9 @@ export class PublicController {
     const name = dto.name.trim();
     const email = dto.email.trim().toLowerCase();
     const phone = dto.phone.trim();
-    const schoolCode = dto.schoolCode.trim().toUpperCase();
+    const schoolCodeInput = dto.schoolCode.trim();
 
-    if (!name || !email || !phone || !dto.password || !dto.confirmPassword || !schoolCode) {
+    if (!name || !email || !phone || !dto.password || !dto.confirmPassword || !schoolCodeInput) {
       throw new BadRequestException({
         code: 'validation_error',
         message: 'All fields are required',
@@ -115,8 +115,14 @@ export class PublicController {
 
     this.passwordService.validateStrength(dto.password);
 
-    const tenant = await this.prisma.tenant.findUnique({
-      where: { schoolCode },
+    // Try finding by schoolCode (UPPERCASE) or slug (lowercase)
+    const tenant = await this.prisma.tenant.findFirst({
+      where: {
+        OR: [
+          { schoolCode: schoolCodeInput.toUpperCase() },
+          { slug: schoolCodeInput.toLowerCase() },
+        ],
+      },
       select: { id: true, status: true },
     });
 
@@ -186,7 +192,7 @@ export class PublicController {
       targetId: result.userId,
       metadata: {
         email,
-        schoolCode,
+        schoolCode: schoolCodeInput,
       },
       ip,
       userAgent,
