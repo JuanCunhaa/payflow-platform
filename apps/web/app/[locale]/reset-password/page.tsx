@@ -9,8 +9,9 @@ import { getApiBase } from '../../api-base';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { AlertCircle, CheckCircle2 } from 'lucide-react';
+import { AuthLayout } from '@/components/auth-layout';
 
 export default function ResetPasswordPage() {
   const { t, locale } = useI18n();
@@ -123,15 +124,12 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold">{t(i18nKeys.passwordReset.reset.title)}</CardTitle>
-          <CardDescription>
-            {t(i18nKeys.passwordReset.reset.description)}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
+    <AuthLayout
+      title={t(i18nKeys.passwordReset.reset.title)}
+      description={t(i18nKeys.passwordReset.reset.description)}
+    >
+      <Card>
+        <CardContent className="pt-6">
           {success ? (
             <div className="flex flex-col items-center gap-4 py-4 text-center">
               <div className="rounded-full bg-green-100 p-3 text-green-600">
@@ -175,13 +173,13 @@ export default function ResetPasswordPage() {
                 />
               </div>
 
-              <Button type="submit" className="w-full" disabled={submitting || !token}>
+              <Button type="submit" className="w-full" disabled={submitting}>
                 {submitting ? t(i18nKeys.common.loading) : t(i18nKeys.passwordReset.reset.submit)}
               </Button>
             </form>
           )}
         </CardContent>
       </Card>
-    </div>
+    </AuthLayout>
   );
 }
