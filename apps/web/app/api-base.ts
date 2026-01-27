@@ -17,7 +17,7 @@ export function getApiBase(): string {
   }
 
   if (hostname.endsWith('cobranex.xyz')) {
-    return 'https://api.cobranex.xyz';
+    return 'https://payflow-platform.onrender.com';
   }
 
   return FALLBACK_API_BASE;

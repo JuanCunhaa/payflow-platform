@@ -94,7 +94,11 @@ async function maybeValidateTenant(request: NextRequest) {
 
   // Validate against API by calling /tenant/ping with appropriate Host header
   try {
-    const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333';
+    let apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333';
+    if (isProduction) {
+      apiBase = 'https://payflow-platform.onrender.com';
+    }
+
     const apiUrl = `${apiBase}/tenant/ping`;
 
     let apiHost = `${sub}.${domain}`;
