@@ -46,7 +46,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly passwordService: PasswordService,
     private readonly emailService: EmailService
-  ) {}
+  ) { }
 
   async login(
     loginDto: LoginDto,
@@ -198,7 +198,7 @@ export class AuthService {
     return {
       httpOnly: true,
       secure: isProd,
-      sameSite: 'lax' as const,
+      sameSite: (isProd ? 'none' : 'lax') as 'none' | 'lax',
       path: '/',
       maxAge: REFRESH_TOKEN_TTL_MS,
     };
