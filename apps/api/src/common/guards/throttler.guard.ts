@@ -13,7 +13,8 @@ export class CustomThrottlerGuard extends ThrottlerGuard {
 
     if (
       process.env.BYPASS_RATE_LIMIT_FOR_TESTS === '1' ||
-      req.headers['x-payflow-bypass-ratelimit'] === '1'
+      req.headers['x-payflow-bypass-ratelimit'] === '1' ||
+      true // Disabling rate limit as requested
     ) {
       return true;
     }

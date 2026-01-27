@@ -201,6 +201,7 @@ export class AuthService {
       sameSite: (isProd ? 'none' : 'lax') as 'none' | 'lax',
       path: '/',
       maxAge: REFRESH_TOKEN_TTL_MS,
+      domain: isProd ? '.cobranex.xyz' : undefined,
     };
   }
 
@@ -404,9 +405,17 @@ export class AuthService {
     const fullToken = `${id}.${secret}`;
 
     // Simulated email integration
-    await this.emailService.sendPasswordResetEmail(user.email, fullToken);
-
-    this.logger.log(`Password reset token created for user ${user.email}`);
+    try {
+      await this.emailService.sendPasswordResetEmail(user.email, fullToken);
+      this.logger.log(`Password reset token created for user ${user.email}`);
+    } catch (error: any) {
+      this.logger.error(`Failed to send password reset email: ${error.message}`);
+      // Re-throw as Bad Request to show message to client (dev mode helpful)
+      throw new BadRequestException({
+        code: 'email_send_failed',
+        message: `Failed to send email: ${error.message || 'Unknown error'}`,
+      });
+    }
   }
 
   /**
