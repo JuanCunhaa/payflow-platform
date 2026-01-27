@@ -28,6 +28,21 @@ export class TenantResolverMiddleware implements NestMiddleware {
 
   async use(req: Request, _res: Response, next: NextFunction) {
     try {
+      let tenantSlug = req.headers['x-tenant-slug'] as string | undefined;
+
+      // If explicit header is provided (from frontend context), use it directly
+      if (tenantSlug) {
+        const tenant = await this.prisma.tenant.findUnique({
+          where: { slug: tenantSlug },
+          select: { id: true, slug: true, status: true },
+        });
+        if (tenant) {
+          req.tenant = tenant;
+          return; // Context resolved, skip subdomain check
+        }
+      }
+
+      // Fallback to host-based resolution
       let host = req.headers['x-tenant-host'] as string | undefined;
       if (!host) {
         host = req.headers['x-forwarded-host'] as string | undefined;
@@ -39,7 +54,7 @@ export class TenantResolverMiddleware implements NestMiddleware {
       if (subdomain) {
         const tenant = await this.prisma.tenant.findUnique({
           where: { slug: subdomain },
-          select: { id: true, slug: true },
+          select: { id: true, slug: true, status: true }, // Select status too for consistency
         });
         if (tenant) {
           req.tenant = tenant;

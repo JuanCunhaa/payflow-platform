@@ -79,8 +79,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const refreshSession = useCallback(async (): Promise<{ ok: boolean; accessToken?: string }> => {
     try {
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+      };
+
+      if (typeof window !== 'undefined') {
+        const hostname = window.location.hostname;
+        const parts = hostname.split('.');
+        // Check for tenant subdomain (e.g., tenant.cobranex.xyz or tenant.localtest.me)
+        if (hostname.endsWith('cobranex.xyz') && parts.length >= 3) {
+          headers['X-Tenant-Slug'] = parts[0];
+        } else if (hostname.includes('localtest.me') && parts.length >= 3) {
+          headers['X-Tenant-Slug'] = parts[0];
+        } else if (parts.length >= 3 && !hostname.endsWith('vercel.app')) {
+          // Generic fallback for other 2-part TLDs if configured
+          headers['X-Tenant-Slug'] = parts[0];
+        }
+      }
+
       const res = await fetch(`${getApiBase()}/auth/refresh`, {
         method: 'POST',
+        headers,
         credentials: 'include',
       });
 
