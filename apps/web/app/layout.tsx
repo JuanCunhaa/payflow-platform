@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata = {
   title: "PayFlow",
-  description: "Plataforma de gestão escolar",
+  description: "Plataforma de gestão financeira de empresas",
 };
 
 export default function RootLayout({

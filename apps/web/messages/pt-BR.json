@@ -12,9 +12,9 @@
   },
   "landing": {
     "title": "PayFlow",
-    "subtitle": "Gestão financeira para escolas e responsáveis",
+    "subtitle": "Gestão financeira para empresas e clientes",
     "cta": "Começar agora",
-    "description": "Centralize mensalidades, eventos e cobranças em um só lugar, com comunicação clara entre escola e famílias.",
+    "description": "Centralize mensalidades, eventos e cobranças em um só lugar, com comunicação clara entre empresa e clientes.",
     "problem": {
       "title": "Planilha, WhatsApp e comprovantes perdidos não escalam",
       "spreadsheets": "Planilhas manuais, diferentes versões e risco de erro a cada atualização.",
@@ -22,25 +22,25 @@
       "receipts": "Comprovantes espalhados entre e-mail, fotos e anexos dificultam conciliação e controle."
     },
     "solution": {
-      "title": "Uma plataforma pensada para a rotina da escola",
+      "title": "Uma plataforma pensada para a rotina financeira mensal",
       "events": "Eventos: inscrições, pagamentos e presença em um só fluxo.",
       "tuitions": "Mensalidades: geração automática, boletos e controle de inadimplência.",
       "oneOff": "Cobranças avulsas: materiais, passeios e extras sem fricção.",
-      "communication": "Comunicação: lembretes claros para responsáveis, sem ruído.",
+      "communication": "Comunicação: lembretes claros para clientes, sem ruído.",
       "finance": "Financeiro e relatórios: visão consolidada por turma, série e período."
     },
     "proof": {
-      "title": "Feito para escolas que querem profissionalizar a gestão",
+      "title": "Feito para empresas que querem profissionalizar a gestão",
       "subtitle": "Depoimentos, cases e integrações virão aqui — por enquanto, foque em validar o fluxo."
     },
     "finalCta": {
-      "title": "Pronto para organizar os pagamentos da sua escola?",
-      "subtitle": "Comece testando com poucos responsáveis e evolua com segurança."
+      "title": "Pronto para organizar os pagamentos da sua empresa?",
+      "subtitle": "Comece testando com poucos clientes e evolua com segurança."
     },
     "buttons": {
       "login": "Entrar",
-      "guardian": "Sou responsável",
-      "demo": "Quero na minha escola"
+      "guardian": "Sou cliente",
+      "demo": "Quero na minha empresa"
     }
   },
   "login": {
@@ -107,8 +107,8 @@
   },
   "tenant": {
     "notFound": {
-      "title": "Escola não encontrada",
-      "description": "Verificamos o subdomínio informado e não encontramos uma escola correspondente.",
+      "title": "Empresa não encontrada",
+      "description": "Verificamos o subdomínio informado e não encontramos uma empresa correspondente.",
       "extra": "Verifique o endereço ou entre em contato com o suporte."
     }
   },
@@ -117,22 +117,22 @@
     "welcome": "Bem-vindo, {name}!",
     "userTypeLabel": "Você está logado como",
     "emailLabel": "Email",
-    "tenantLabel": "Escola",
+    "tenantLabel": "Empresa",
     "platformTenantFallback": "Plataforma",
     "backToHome": "Voltar para a home"
   },
   "auth": {
     "pendingApproval": {
       "title": "Cadastro em aprovação",
-      "description": "Seu cadastro de responsável está em análise. Você receberá um e-mail quando for aprovado."
+      "description": "Seu cadastro de cliente está em análise. Você receberá um e-mail quando for aprovado."
     }
   },
   "requestDemo": {
-    "title": "Quero o PayFlow na minha escola",
+    "title": "Quero o PayFlow na minha empresa",
     "description": "Preencha os dados abaixo para que nossa equipe entre em contato e agende uma demonstração.",
     "form": {
       "responsibleName": "Nome do responsável",
-      "schoolName": "Nome da escola",
+      "schoolName": "Nome da empresa",
       "email": "Email",
       "phone": "Telefone",
       "submit": "Solicitar demonstração"
@@ -148,25 +148,25 @@
     }
   },
   "guardianRegister": {
-    "title": "Sou responsável",
-    "description": "Preencha seus dados e o código da escola para criar sua conta. Após o envio, a escola precisará aprovar seu cadastro antes do primeiro acesso.",
+    "title": "Sou cliente",
+    "description": "Preencha seus dados e o código da empresa para criar sua conta. Após o envio, a empresa precisará aprovar seu cadastro antes do primeiro acesso.",
     "form": {
       "name": "Nome completo",
       "email": "Email",
       "phone": "Telefone",
       "password": "Senha",
       "confirmPassword": "Confirmar senha",
-      "schoolCode": "School Code da escola",
+      "schoolCode": "School Code da empresa",
       "submit": "Criar minha conta"
     },
     "success": {
       "title": "Cadastro enviado para aprovação",
-      "description": "Recebemos seus dados. Assim que a escola aprovar seu cadastro, você poderá acessar o portal do responsável com seu email e senha."
+      "description": "Recebemos seus dados. Assim que a empresa aprovar seu cadastro, você poderá acessar o portal do cliente com seu email e senha."
     },
     "error": {
       "validation": "Verifique se todos os campos foram preenchidos corretamente e se as senhas conferem.",
       "weakPassword": "Sua senha é muito fraca. Use pelo menos 8 caracteres, incluindo letras e números, e evite senhas comuns.",
-      "schoolCode": "School Code inválido ou escola não encontrada. Confirme o código com a escola.",
+      "schoolCode": "School Code inválido ou empresa não encontrada. Confirme o código com a empresa.",
       "emailInUse": "Já existe uma conta cadastrada com este email.",
       "generic": "Não foi possível concluir seu cadastro agora. Tente novamente em alguns minutos.",
       "connection": "Erro de conexão. Verifique sua internet e tente novamente."
@@ -176,7 +176,7 @@
     "nav": {
       "dashboard": "Resumo",
       "profile": "Meu perfil",
-      "students": "Alunos",
+      "students": "Beneficiários",
       "invoices": "Cobranças",
       "tickets": "Chamados"
     },
@@ -186,14 +186,14 @@
         "statusAll": "Todos os status",
         "from": "Data inicial",
         "to": "Data final",
-        "student": "Aluno",
-        "guardian": "Responsável",
-        "search": "Buscar por aluno ou responsável"
+        "student": "Beneficiário",
+        "guardian": "Cliente",
+        "search": "Buscar por beneficiário ou cliente"
       },
       "table": {
         "dueDate": "Vencimento",
-        "student": "Aluno",
-        "guardian": "Responsável",
+        "student": "Beneficiário",
+        "guardian": "Cliente",
         "amount": "Valor",
         "origin": "Origem",
         "status": "Status",
@@ -235,10 +235,10 @@
       },
       "newForm": {
         "title": "Nova cobrança avulsa",
-        "description": "Selecione o aluno, responsável e preencha os dados da cobrança.",
-        "studentLabel": "Aluno",
-        "guardianLabel": "Responsável",
-        "guardianPlaceholder": "Selecione um responsável vinculado ao aluno",
+        "description": "Selecione o beneficiário, cliente e preencha os dados da cobrança.",
+        "studentLabel": "Beneficiário",
+        "guardianLabel": "Cliente",
+        "guardianPlaceholder": "Selecione um cliente vinculado ao beneficiário",
         "amountLabel": "Valor (R$)",
         "dueDateLabel": "Data de vencimento",
         "descriptionLabel": "Descrição",
@@ -272,32 +272,32 @@
     "pages": {
       "dashboard": {
         "title": "Portal do responsável",
-        "description": "Acompanhe seus filhos, cobranças e comunicados da escola em um só lugar (em breve)."
+        "description": "Acompanhe seus beneficiários, cobranças e comunicados da empresa em um só lugar (em breve)."
       },
       "students": {
-        "title": "Meus alunos",
-        "description": "Veja os alunos vinculados à sua conta e seus dados básicos (em breve)."
+        "title": "Meus beneficiários",
+        "description": "Veja os beneficiários vinculados à sua conta e seus dados básicos (em breve)."
       },
       "invoices": {
         "title": "Minhas cobranças",
-        "description": "Visualize e acompanhe os pagamentos e cobranças da escola (em breve)."
+        "description": "Visualize e acompanhe os pagamentos e cobranças da empresa (em breve)."
       }
     }
   },
   "platform": {
     "nav": {
       "dashboard": "Plataforma",
-      "tenants": "Escolas",
+      "tenants": "Empresas",
       "leads": "Leads",
       "tickets": "Chamados",
       "audit": "Auditoria"
     },
     "tenants": {
-      "title": "Escolas (tenants)",
+      "title": "Empresas (tenants)",
       "table": {
         "name": "Nome",
         "slug": "Slug (subdomínio)",
-        "schoolCode": "School Code",
+        "schoolCode": "Código da Empresa",
         "status": "Status",
         "createdAt": "Criado em",
         "actions": "Ações"
@@ -308,26 +308,26 @@
         "suspended": "Suspenso"
       },
       "form": {
-        "name": "Nome da escola",
+        "name": "Nome da empresa",
         "slug": "Slug (subdomínio)",
-        "schoolCode": "School Code",
+        "schoolCode": "Código da Empresa",
         "adminEmail": "Email do admin",
         "adminName": "Nome do admin",
         "adminPassword": "Senha inicial (opcional)",
-        "createTitle": "Criar nova escola",
-        "editTitle": "Editar escola",
-        "submitCreate": "Nova escola",
+        "createTitle": "Criar nova empresa",
+        "editTitle": "Editar empresa",
+        "submitCreate": "Nova empresa",
         "submitEdit": "Salvar alterações",
         "initialPasswordGenerated": "Senha inicial gerada:"
       },
-      "empty": "Nenhuma escola encontrada para o filtro atual.",
-      "errorGeneric": "Não foi possível carregar ou atualizar as escolas.",
-      "errorConnection": "Erro de conexão ao carregar ou atualizar as escolas."
+      "empty": "Nenhuma empresa encontrada para o filtro atual.",
+      "errorGeneric": "Não foi possível carregar ou atualizar as empresas.",
+      "errorConnection": "Erro de conexão ao carregar ou atualizar as empresas."
     },
     "leads": {
-      "title": "Leads de escolas",
+      "title": "Leads de empresas",
       "table": {
-        "schoolName": "Escola",
+        "schoolName": "Empresa",
         "responsibleName": "Responsável",
         "email": "Email",
         "phone": "Telefone",
@@ -343,7 +343,7 @@
       "actions": {
         "markContacted": "Marcar como contactado",
         "markConverted": "Marcar como convertido",
-        "convertToTenant": "Criar escola (DRAFT)"
+        "convertToTenant": "Criar empresa (DRAFT)"
       },
       "empty": "Nenhum lead encontrado para o filtro atual.",
       "errorGeneric": "Não foi possível carregar ou atualizar os leads.",
@@ -352,7 +352,7 @@
     "audit": {
       "title": "Audit log",
       "filters": {
-        "tenant": "Escola (tenant)",
+        "tenant": "Empresa (tenant)",
         "action": "Ação",
         "actorEmail": "Email do ator",
         "from": "De",
@@ -364,7 +364,7 @@
       "system": "Sistema",
       "table": {
         "timestamp": "Data/hora",
-        "tenant": "Escola",
+        "tenant": "Empresa",
         "actor": "Ator",
         "action": "Ação",
         "target": "Alvo",
@@ -383,30 +383,30 @@
   },
   "school": {
     "nav": {
-      "dashboard": "Painel da escola",
+      "dashboard": "Painel da empresa",
       "settings": "Configurações",
-      "classes": "Turmas",
+      "classes": "Grupos",
       "contracts": "Contratos",
       "invoices": "Cobranças",
-      "students": "Alunos",
-      "guardians": "Responsáveis",
-      "approvalsGuardians": "Aprovação de responsáveis"
+      "students": "Beneficiários",
+      "guardians": "Clientes",
+      "approvalsGuardians": "Aprovação de clientes"
     },
     "breadcrumbs": {
-      "root": "Escola",
+      "root": "Empresa",
       "dashboard": "Dashboard",
       "settings": "Configurações",
-      "classes": "Turmas",
+      "classes": "Grupos",
       "contracts": "Contratos",
       "invoices": "Cobranças",
-      "students": "Alunos",
-      "guardians": "Responsáveis",
+      "students": "Beneficiários",
+      "guardians": "Clientes",
       "approvals": "Aprovações",
-      "approvalsGuardians": "Aprovação de responsáveis"
+      "approvalsGuardians": "Aprovação de clientes"
     },
     "layout": {
-      "unauthorizedTitle": "Você não tem acesso ao painel da escola",
-      "unauthorizedDescription": "Esta área é reservada para a equipe da escola. Se você acredita que isso é um engano, entre em contato com o administrador."
+      "unauthorizedTitle": "Você não tem acesso ao painel da empresa",
+      "unauthorizedDescription": "Esta área é reservada para a equipe da empresa. Se você acredita que isso é um engano, entre em contato com o administrador."
     },
     "settings": {
       "feedback": {
@@ -417,27 +417,27 @@
     },
     "classesUi": {
       "tabs": {
-        "grades": "Séries",
-        "classes": "Turmas"
+        "grades": "Categorias",
+        "classes": "Grupos"
       },
       "grades": {
-        "title": "Séries da escola",
+        "title": "Categorias da empresa",
         "table": {
-          "name": "Nome da série",
+          "name": "Nome da categoria",
           "actions": "Ações"
         },
-        "empty": "Nenhuma série cadastrada para esta escola.",
-        "create": "Nova série",
-        "edit": "Editar série",
-        "delete": "Remover série",
-        "deleteConfirmTitle": "Remover série",
-        "deleteConfirmDescription": "Esta série será removida. Você não poderá removê-la enquanto houver turmas vinculadas."
+        "empty": "Nenhuma categoria cadastrada para esta empresa.",
+        "create": "Nova categoria",
+        "edit": "Editar categoria",
+        "delete": "Remover categoria",
+        "deleteConfirmTitle": "Remover categoria",
+        "deleteConfirmDescription": "Esta categoria será removida. Você não poderá removê-la enquanto houver grupos vinculados."
       },
       "classes": {
-        "title": "Turmas",
+        "title": "Grupos",
         "table": {
-          "name": "Nome da turma",
-          "grade": "Série",
+          "name": "Nome do grupo",
+          "grade": "Categoria",
           "actions": "Ações"
         },
         "empty": "Nenhuma turma cadastrada para o filtro atual.",
@@ -447,9 +447,9 @@
         "filterByGrade": "Filtrar por série"
       },
       "form": {
-        "gradeName": "Nome da série",
-        "className": "Nome da turma",
-        "classGrade": "Série da turma",
+        "gradeName": "Nome da categoria",
+        "className": "Nome do grupo",
+        "classGrade": "Categoria do grupo",
         "cancel": "Cancelar",
         "save": "Salvar"
       },
@@ -498,8 +498,8 @@
       },
       "detail": {
         "title": "Detalhes do contrato",
-        "studentsTitle": "Alunos vinculados",
-        "addStudents": "Adicionar alunos ao contrato",
+        "studentsTitle": "Beneficiários vinculados",
+        "addStudents": "Adicionar beneficiários ao contrato",
         "remove": "Remover",
         "confirmCancelTitle": "Cancelar contrato",
         "confirmCancelDescription": "Tem certeza que deseja cancelar este contrato? Novas cobranças não serão geradas."
@@ -515,14 +515,14 @@
     },
     "studentsUi": {
       "filters": {
-        "class": "Turma",
+        "class": "Grupo",
         "status": "Status",
         "search": "Buscar por nome",
         "statusAll": "Todos os status"
       },
       "table": {
         "name": "Nome",
-        "class": "Turma",
+        "class": "Grupo",
         "status": "Status",
         "actions": "Ações"
       },
@@ -591,8 +591,8 @@
     },
     "pages": {
       "dashboard": {
-        "title": "Visão geral da escola",
-        "description": "Resumo de turmas, alunos e fluxos financeiros desta escola (em breve)."
+        "title": "Visão geral da empresa",
+        "description": "Resumo de grupos, beneficiários e fluxos financeiros desta empresa (em breve)."
       },
       "dashboardUi": {
         "periodLabel": "Período",
@@ -607,43 +607,43 @@
         }
       },
       "settings": {
-        "title": "Configurações da escola",
-        "description": "Configure informações básicas, regras de cobrança e integrações da escola (em breve)."
+        "title": "Configurações da empresa",
+        "description": "Configure informações básicas, regras de cobrança e integrações da empresa (em breve)."
       },
       "classes": {
-        "title": "Séries e turmas",
-        "description": "Organize alunos por série e turma desta escola."
+        "title": "Categorias e grupos",
+        "description": "Organize beneficiários por categoria e grupo desta empresa."
       },
       "students": {
-        "title": "Alunos",
-        "description": "Liste e gerencie os alunos vinculados a esta escola."
+        "title": "Beneficiários",
+        "description": "Liste e gerencie os beneficiários vinculados a esta empresa."
       },
       "invoices": {
         "title": "Cobranças",
-        "description": "Acompanhe as cobranças da escola, seus status e detalhes."
+        "description": "Acompanhe as cobranças da empresa, seus status e detalhes."
       },
       "contracts": {
         "title": "Contratos",
-        "description": "Gerencie contratos de mensalidade e alunos vinculados."
+        "description": "Gerencie contratos de mensalidade e beneficiários vinculados."
       },
       "guardians": {
-        "title": "Responsáveis",
-        "description": "Gerencie perfis de responsáveis e seus vínculos com os alunos."
+        "title": "Clientes",
+        "description": "Gerencie perfis de clientes e seus vínculos com os beneficiários."
       },
       "approvalsGuardians": {
-        "title": "Aprovação de responsáveis",
-        "description": "Revise e aprove novas contas de responsáveis que aguardam validação (em breve)."
+        "title": "Aprovação de clientes",
+        "description": "Revise e aprove novas contas de clientes que aguardam validação (em breve)."
       }
     }
   },
   "legal": {
     "terms": {
       "title": "Termos de Uso",
-      "content": "TERMOS DE USO – PAYFLOW\n\nBem-vindo ao PayFlow. Estes Termos de Uso (\"Termos\") regem o acesso e uso da nossa plataforma de gestão financeira escolar (\"Plataforma\"). Ao acessar ou usar a Plataforma, você (\"Usuário\") concorda com estes Termos. Se não concordar, não utilize nossos serviços.\n\n1. O SERVIÇO\nO PayFlow é uma plataforma SAAS (Software as a Service) que facilita a gestão de cobranças, mensalidades e eventos entre Escolas e Responsáveis Financeiros. O PayFlow atua como um intermediador tecnológico e não é uma instituição bancária.\n\n2. CADASTRO E ACESSO\n2.1. O acesso à Plataforma exige cadastro. Você garante que todas as informações fornecidas são verdadeiras, precisas e atuais.\n2.2. A Escola é responsável por aprovar o cadastro dos Responsáveis vinculados à sua instituição.\n2.3. Você é responsável por manter a confidencialidade de sua senha. Qualquer atividade realizada através de sua conta é de sua responsabilidade.\n\n3. PAGAMENTOS E COBRANÇAS\n3.1. A Plataforma permite que a Escola gere cobranças (boletos, PIX, cartão) para os Responsáveis.\n3.2. O PayFlow não define preços ou taxas escolares; estes são de exclusiva responsabilidade da Escola.\n3.3. O processamento dos pagamentos é realizado por parceiros financeiros (gateways de pagamento). O PayFlow não armazena dados completos de cartão de crédito. \n3.4. Em caso de atrasos, multas e juros configurados pela Escola serão aplicados automaticamente.\n\n4. RESPONSABILIDADES\n4.1. Da Escola: Garantir a legalidade das cobranças emitidas e manter os dados dos alunos atualizados.\n4.2. Do Responsável: Realizar os pagamentos dentro dos prazos estipulados e manter seus contatos atualizados.\n4.3. Do PayFlow: Garantir a disponibilidade da Plataforma, segurança dos dados e o correto processamento das instruções de pagamento junto aos gateways.\n\n5. LIMITAÇÃO DE RESPONSABILIDADE\nO PayFlow não se responsabiliza por falhas de terceiros (bancos, operadoras de cartão), interrupções programadas para manutenção ou casos fortuitos/força maior. Em nenhuma hipótese o PayFlow será responsável por danos indiretos ou lucros cessantes decorrentes do uso da plataforma.\n\n6. PROPRIEDADE INTELECTUAL\nTodo o design, código, logotipos e conteúdo da Plataforma são propriedade exclusiva do PayFlow ou de seus licenciadores. O uso não autorizado é proibido.\n\n7. ALTERAÇÕES\nPodemos alterar estes Termos a qualquer momento. O uso contínuo da Plataforma após as alterações constitui aceitação dos novos termos.\n\n8. CONTATO\nPara dúvidas sobre estes termos, entre em contato através da nossa Central de Suporte."
+      "content": "TERMOS DE USO – PAYFLOW\n\nBem-vindo ao PayFlow. Estes Termos de Uso (\"Termos\") regem o acesso e uso da nossa plataforma de gestão financeira (\"Plataforma\"). Ao acessar ou usar a Plataforma, você (\"Usuário\") concorda com estes Termos. Se não concordar, não utilize nossos serviços.\n\n1. O SERVIÇO\nO PayFlow é uma plataforma SAAS (Software as a Service) que facilita a gestão de cobranças, mensalidades e eventos entre Empresas e Clientes. O PayFlow atua como um intermediador tecnológico e não é uma instituição bancária.\n\n2. CADASTRO E ACESSO\n2.1. O acesso à Plataforma exige cadastro. Você garante que todas as informações fornecidas são verdadeiras, precisas e atuais.\n2.2. A Empresa é responsável por aprovar o cadastro dos Clientes vinculados à sua instituição.\n2.3. Você é responsável por manter a confidencialidade de sua senha. Qualquer atividade realizada através de sua conta é de sua responsabilidade.\n\n3. PAGAMENTOS E COBRANÇAS\n3.1. A Plataforma permite que a Empresa gere cobranças (boletos, PIX, cartão) para os Clientes.\n3.2. O PayFlow não define preços ou taxas; estes são de exclusiva responsabilidade da Empresa.\n3.3. O processamento dos pagamentos é realizado por parceiros financeiros (gateways de pagamento). O PayFlow não armazena dados completos de cartão de crédito. \n3.4. Em caso de atrasos, multas e juros configurados pela Empesa serão aplicados automaticamente.\n\n4. RESPONSABILIDADES\n4.1. Da Empresa: Garantir a legalidade das cobranças emitidas e manter os dados dos beneficiários atualizados.\n4.2. Do Cliente: Realizar os pagamentos dentro dos prazos estipulados e manter seus contatos atualizados.\n4.3. Do PayFlow: Garantir a disponibilidade da Plataforma, segurança dos dados e o correto processamento das instruções de pagamento junto aos gateways.\n\n5. LIMITAÇÃO DE RESPONSABILIDADE\nO PayFlow não se responsabiliza por falhas de terceiros (bancos, operadoras de cartão), interrupções programadas para manutenção ou casos fortuitos/força maior. Em nenhuma hipótese o PayFlow será responsável por danos indiretos ou lucros cessantes decorrentes do uso da plataforma.\n\n6. PROPRIEDADE INTELECTUAL\nTodo o design, código, logotipos e conteúdo da Plataforma são propriedade exclusiva do PayFlow ou de seus licenciadores. O uso não autorizado é proibido.\n\n7. ALTERAÇÕES\nPodemos alterar estes Termos a qualquer momento. O uso contínuo da Plataforma após as alterações constitui aceitação dos novos termos.\n\n8. CONTATO\nPara dúvidas sobre estes termos, entre em contato através da nossa Central de Suporte."
     },
     "privacy": {
       "title": "Política de Privacidade",
-      "content": "POLÍTICA DE PRIVACIDADE – PAYFLOW\n\nNós do PayFlow levamos sua privacidade a sério. Esta Política descreve como coletamos, usamos e protegemos seus dados pessoais, em conformidade com a Lei Geral de Proteção de Dados (LGPD).\n\n1. DADOS COLETADOS\n1.1. Dados Cadastrais: Nome completo, CPF, email, telefone e endereço.\n1.2. Dados de Alunos: Nome, turma e vínculo com o responsável.\n1.3. Dados Financeiros: Histórico de pagamentos, cobranças e, quando aplicável, dados parciais de cartão (últimos 4 dígitos) para identificação.\n1.4. Dados de Navegação: Endereço IP, tipo de dispositivo e logs de acesso para fins de auditoria e segurança.\n\n2. FINALIDADE DO USO\nUsamos seus dados para:\n- Processar pagamentos e emitir cobranças.\n- Identificar você e garantir a segurança da conta.\n- Enviar notificações sobre vencimentos, recibos e comunicados da escola.\n- Prestar suporte técnico e melhorar nossos serviços.\n- Cumprir obrigações legais e regulatórias.\n\n3. COMPARTILHAMENTO DE DADOS\nNão vendemos seus dados. Compartilhamos informações apenas com:\n- A Escola vinculada à sua conta (para gestão acadêmica e financeira).\n- Processadores de Pagamento e Bancos (estritamente para processar as transações).\n- Autoridades judiciais ou governamentais, quando exigido por lei.\n\n4. SEGURANÇA\nAdotamos medidas técnicas e administrativas robustas para proteger seus dados, incluindo criptografia em trânsito (SSL/TLS), controle de acesso rigoroso e monitoramento de segurança.\n\n5. SEUS DIREITOS\nVocê tem direito a confirmar a existência de tratamento, acessar seus dados, corrigir dados incompletos ou desatualizados e solicitar a portabilidade ou exclusão (ressalvados os dados que precisamos manter por lei).\n\n6. ALTERAÇÕES\nEsta política pode ser atualizada. Notificaremos sobre mudanças significativas através da Plataforma ou email.\n\n7. CONTATO\nPara exercer seus direitos ou tirar dúvidas sobre privacidade, acesse nossa Central de Suporte."
+      "content": "POLÍTICA DE PRIVACIDADE – PAYFLOW\n\nNós do PayFlow levamos sua privacidade a sério. Esta Política descreve como coletamos, usamos e protegemos seus dados pessoais, em conformidade com a Lei Geral de Proteção de Dados (LGPD).\n\n1. DADOS COLETADOS\n1.1. Dados Cadastrais: Nome completo, CPF, email, telefone e endereço.\n1.2. Dados de Beneficiários: Nome, grupo e vínculo com o cliente.\n1.3. Dados Financeiros: Histórico de pagamentos, cobranças e, quando aplicável, dados parciais de cartão (últimos 4 dígitos) para identificação.\n1.4. Dados de Navegação: Endereço IP, tipo de dispositivo e logs de acesso para fins de auditoria e segurança.\n\n2. FINALIDADE DO USO\nUsamos seus dados para:\n- Processar pagamentos e emitir cobranças.\n- Identificar você e garantir a segurança da conta.\n- Enviar notificações sobre vencimentos, recibos e comunicados da empresa.\n- Prestar suporte técnico e melhorar nossos serviços.\n- Cumprir obrigações legais e regulatórias.\n\n3. COMPARTILHAMENTO DE DADOS\nNão vendemos seus dados. Compartilhamos informações apenas com:\n- A Empresa vinculada à sua conta (para gestão administrativa e financeira).\n- Processadores de Pagamento e Bancos (estritamente para processar as transações).\n- Autoridades judiciais ou governamentais, quando exigido por lei.\n\n4. SEGURANÇA\nAdotamos medidas técnicas e administrativas robustas para proteger seus dados, incluindo criptografia em trânsito (SSL/TLS), controle de acesso rigoroso e monitoramento de segurança.\n\n5. SEUS DIREITOS\nVocê tem direito a confirmar a existência de tratamento, acessar seus dados, corrigir dados incompletos ou desatualizados e solicitar a portabilidade ou exclusão (ressalvados os dados que precisamos manter por lei).\n\n6. ALTERAÇÕES\nEsta política pode ser atualizada. Notificaremos sobre mudanças significativas através da Plataforma ou email.\n\n7. CONTATO\nPara exercer seus direitos ou tirar dúvidas sobre privacidade, acesse nossa Central de Suporte."
     }
   },
   "support": {

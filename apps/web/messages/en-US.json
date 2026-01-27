@@ -12,9 +12,9 @@
   },
   "landing": {
     "title": "PayFlow",
-    "subtitle": "Financial flows made simple for schools and families",
+    "subtitle": "Financial flows made simple for companies and clients",
     "cta": "Get started now",
-    "description": "Centralize tuition, events and one-off charges in one place, with clear communication between school and guardians.",
+    "description": "Centralize tuition, events and one-off charges in one place, with clear communication between company and clients.",
     "problem": {
       "title": "Spreadsheets, WhatsApp and scattered receipts don't scale",
       "spreadsheets": "Manual spreadsheets, different versions and a risk of errors on every update.",
@@ -22,25 +22,25 @@
       "receipts": "Receipts spread across email, photos and attachments make reconciliation hard."
     },
     "solution": {
-      "title": "A platform designed for school operations",
+      "title": "A platform designed for recurring financial operations",
       "events": "Events: registrations, payments and attendance in a single flow.",
       "tuitions": "Tuitions: automatic billing, invoices and delinquency tracking.",
       "oneOff": "One-off charges: materials, trips and extras with less friction.",
-      "communication": "Communication: clear reminders for guardians, without the noise.",
+      "communication": "Communication: clear reminders for clients, without the noise.",
       "finance": "Finance and reports: consolidated view by class, grade and period."
     },
     "proof": {
-      "title": "Built for schools that want professional financial workflows",
+      "title": "Built for companies that want professional financial workflows",
       "subtitle": "Testimonials, case studies and integrations will live here — for now, focus on validating the flow."
     },
     "finalCta": {
-      "title": "Ready to organize your school payments?",
-      "subtitle": "Start with a small group of guardians and evolve safely."
+      "title": "Ready to organize your company payments?",
+      "subtitle": "Start with a small group of clients and evolve safely."
     },
     "buttons": {
       "login": "Sign in",
-      "guardian": "I'm a guardian",
-      "demo": "Bring PayFlow to my school"
+      "guardian": "I'm a client",
+      "demo": "Bring PayFlow to my company"
     }
   },
   "login": {
@@ -108,7 +108,7 @@
   "tenant": {
     "notFound": {
       "title": "Tenant not found",
-      "description": "We checked the provided subdomain and could not find a matching school.",
+      "description": "We checked the provided subdomain and could not find a matching company.",
       "extra": "Check the address or contact support."
     }
   },
@@ -117,22 +117,22 @@
     "welcome": "Welcome, {name}!",
     "userTypeLabel": "You are logged in as",
     "emailLabel": "Email",
-    "tenantLabel": "Tenant",
+    "tenantLabel": "Company",
     "platformTenantFallback": "Platform",
     "backToHome": "Back to home"
   },
   "auth": {
     "pendingApproval": {
       "title": "Account pending approval",
-      "description": "Your guardian account is under review. You will receive an email when it is approved."
+      "description": "Your client account is under review. You will receive an email when it is approved."
     }
   },
   "requestDemo": {
-    "title": "Bring PayFlow to my school",
+    "title": "Bring PayFlow to my company",
     "description": "Fill in the details below and our team will contact you to schedule a demo.",
     "form": {
       "responsibleName": "Contact name",
-      "schoolName": "School name",
+      "schoolName": "Company name",
       "email": "Email",
       "phone": "Phone",
       "submit": "Request a demo"
@@ -148,25 +148,25 @@
     }
   },
   "guardianRegister": {
-    "title": "I'm a guardian",
-    "description": "Fill in your details and the school code to create your account. After submitting, the school must approve your registration before you can log in.",
+    "title": "I'm a client",
+    "description": "Fill in your details and the company code to create your account. After submitting, the company must approve your registration before you can log in.",
     "form": {
       "name": "Full name",
       "email": "Email",
       "phone": "Phone",
       "password": "Password",
       "confirmPassword": "Confirm password",
-      "schoolCode": "School code",
+      "schoolCode": "Company code",
       "submit": "Create my account"
     },
     "success": {
       "title": "Registration sent for approval",
-      "description": "We received your details. As soon as the school approves your registration, you will be able to access the guardian portal with your email and password."
+      "description": "We received your details. As soon as the company approves your registration, you will be able to access the client portal with your email and password."
     },
     "error": {
       "validation": "Please check that all fields are filled in correctly and that the passwords match.",
       "weakPassword": "Your password is too weak. Use at least 8 characters including letters and numbers, and avoid very common passwords.",
-      "schoolCode": "Invalid school code or school not found. Confirm the code with the school.",
+      "schoolCode": "Invalid company code or company not found. Confirm the code with the company.",
       "emailInUse": "An account with this email already exists.",
       "generic": "We couldn't complete your registration right now. Please try again in a few minutes.",
       "connection": "Connection error. Check your internet and try again."
@@ -176,7 +176,7 @@
     "nav": {
       "dashboard": "Overview",
       "profile": "My profile",
-      "students": "Students",
+      "students": "Beneficiaries",
       "invoices": "Invoices",
       "tickets": "Tickets"
     },
@@ -186,12 +186,13 @@
         "statusAll": "All statuses",
         "from": "From date",
         "to": "To date",
-        "student": "Student",
-        "search": "Search by student"
+        "student": "Beneficiary",
+        "search": "Search by beneficiary"
       },
       "table": {
         "dueDate": "Due date",
-        "student": "Student",
+        "student": "Beneficiary",
+        "guardian": "Client",
         "amount": "Amount",
         "status": "Status",
         "actions": "Actions"
@@ -237,8 +238,8 @@
         "title": "Overdue invoices",
         "description": "Quickly see who is late and copy the payment link to follow up in an organized way.",
         "table": {
-          "student": "Student",
-          "guardian": "Guardian",
+          "student": "Beneficiary",
+          "guardian": "Client",
           "daysOverdue": "Days overdue",
           "amount": "Amount",
           "actions": "Actions"
@@ -257,16 +258,16 @@
     },
     "pages": {
       "dashboard": {
-        "title": "Guardian portal",
-        "description": "Follow your children, invoices and school communication in one place (coming soon)."
+        "title": "Client portal",
+        "description": "Follow your beneficiaries, invoices and company communication in one place (coming soon)."
       },
       "students": {
-        "title": "My students",
-        "description": "See the students linked to your account and their basic information (coming soon)."
+        "title": "My beneficiaries",
+        "description": "See the beneficiaries linked to your account and their basic information (coming soon)."
       },
       "invoices": {
         "title": "My invoices",
-        "description": "View and track school payments and charges (coming soon)."
+        "description": "View and track company payments and charges (coming soon)."
       }
     }
   },
@@ -279,7 +280,7 @@
       "audit": "Audit"
     },
     "tenants": {
-      "title": "School tenants",
+      "title": "Company tenants",
       "table": {
         "name": "Name",
         "slug": "Slug (subdomain)",
@@ -311,9 +312,9 @@
       "errorConnection": "Connection error while loading or updating tenants."
     },
     "leads": {
-      "title": "School leads",
+      "title": "Company leads",
       "table": {
-        "schoolName": "School",
+        "schoolName": "Company",
         "responsibleName": "Contact",
         "email": "Email",
         "phone": "Phone",
@@ -338,7 +339,7 @@
     "audit": {
       "title": "Audit log",
       "filters": {
-        "tenant": "School (tenant)",
+        "tenant": "Company (tenant)",
         "action": "Action",
         "actorEmail": "Actor email",
         "from": "From",
@@ -369,7 +370,7 @@
   },
   "school": {
     "nav": {
-      "dashboard": "School panel",
+      "dashboard": "Company panel",
       "settings": "Settings",
       "classes": "Classes",
       "contracts": "Contracts",
@@ -403,44 +404,44 @@
     },
     "classesUi": {
       "tabs": {
-        "grades": "Grades",
-        "classes": "Classes"
+        "grades": "Categories",
+        "classes": "Groups"
       },
       "grades": {
-        "title": "School grades",
+        "title": "Company categories",
         "table": {
-          "name": "Grade name",
+          "name": "Category name",
           "actions": "Actions"
         },
-        "empty": "No grades found for this school.",
-        "create": "New grade",
-        "edit": "Edit grade",
-        "delete": "Remove grade",
-        "deleteConfirmTitle": "Remove grade",
-        "deleteConfirmDescription": "This grade will be removed. You cannot remove it while there are classes linked to it."
+        "empty": "No categories found for this company.",
+        "create": "New category",
+        "edit": "Edit category",
+        "delete": "Remove category",
+        "deleteConfirmTitle": "Remove category",
+        "deleteConfirmDescription": "This category will be removed. You cannot remove it while there are groups linked to it."
       },
       "classes": {
-        "title": "Classes",
+        "title": "Groups",
         "table": {
-          "name": "Class name",
-          "grade": "Grade",
+          "name": "Group name",
+          "grade": "Category",
           "actions": "Actions"
         },
-        "empty": "No classes found for the current filter.",
-        "create": "New class",
-        "edit": "Edit class",
-        "delete": "Remove class",
-        "filterByGrade": "Filter by grade"
+        "empty": "No groups found for the current filter.",
+        "create": "New group",
+        "edit": "Edit group",
+        "delete": "Remove group",
+        "filterByGrade": "Filter by category"
       },
       "form": {
-        "gradeName": "Grade name",
-        "className": "Class name",
-        "classGrade": "Class grade",
+        "gradeName": "Category name",
+        "className": "Group name",
+        "classGrade": "Group category",
         "cancel": "Cancel",
         "save": "Save"
       },
       "feedback": {
-        "loadError": "Could not load grades and classes.",
+        "loadError": "Could not load categories and groups.",
         "saveError": "Could not save data. Please check the fields and try again.",
         "deleteError": "Could not remove the record. Please try again."
       }
@@ -456,7 +457,7 @@
         "amount": "Amount",
         "dueDay": "Due day",
         "status": "Status",
-        "students": "Linked students",
+        "students": "Linked beneficiaries",
         "actions": "Actions"
       },
       "status": {
@@ -484,8 +485,8 @@
       },
       "detail": {
         "title": "Contract details",
-        "studentsTitle": "Linked students",
-        "addStudents": "Add students to contract",
+        "studentsTitle": "Linked beneficiaries",
+        "addStudents": "Add beneficiaries to contract",
         "remove": "Remove",
         "confirmCancelTitle": "Cancel contract",
         "confirmCancelDescription": "Are you sure you want to cancel this contract? New invoices will not be generated."
@@ -493,8 +494,8 @@
       "feedback": {
         "loadError": "Could not load contracts.",
         "saveError": "Could not save contract. Please check the fields and try again.",
-        "linkError": "Could not link students to the contract.",
-        "unlinkError": "Could not unlink the student from this contract.",
+        "linkError": "Could not link beneficiaries to the contract.",
+        "unlinkError": "Could not unlink the beneficiary from this contract.",
         "statusError": "Could not change contract status."
       },
       "empty": "No contracts found for the current filter."
@@ -505,14 +506,14 @@
         "statusAll": "All statuses",
         "from": "From date",
         "to": "To date",
-        "student": "Student",
-        "guardian": "Guardian",
-        "search": "Search by student or guardian"
+        "student": "Beneficiary",
+        "guardian": "Client",
+        "search": "Search by beneficiary or client"
       },
       "table": {
         "dueDate": "Due date",
-        "student": "Student",
-        "guardian": "Guardian",
+        "student": "Beneficiary",
+        "guardian": "Client",
         "amount": "Amount",
         "origin": "Origin",
         "status": "Status",
@@ -543,10 +544,10 @@
       "empty": "No invoices found for the current filter.",
       "newForm": {
         "title": "New one-off invoice",
-        "description": "Select the student, guardian and fill in the invoice details.",
-        "studentLabel": "Student",
-        "guardianLabel": "Guardian",
-        "guardianPlaceholder": "Select a guardian linked to the student",
+        "description": "Select the beneficiary, client and fill in the invoice details.",
+        "studentLabel": "Beneficiary",
+        "guardianLabel": "Client",
+        "guardianPlaceholder": "Select a client linked to the beneficiary",
         "amountLabel": "Amount (R$)",
         "dueDateLabel": "Due date",
         "descriptionLabel": "Description",
@@ -556,14 +557,14 @@
     },
     "studentsUi": {
       "filters": {
-        "class": "Class",
+        "class": "Group",
         "status": "Status",
         "search": "Search by name",
         "statusAll": "All statuses"
       },
       "table": {
         "name": "Name",
-        "class": "Class",
+        "class": "Group",
         "status": "Status",
         "actions": "Actions"
       },
@@ -572,7 +573,7 @@
         "inactive": "Inactive"
       },
       "actions": {
-        "create": "New student",
+        "create": "New beneficiary",
         "edit": "Edit",
         "delete": "Delete",
         "inactivate": "Inactivate",
@@ -580,13 +581,13 @@
         "importCsv": "Import CSV"
       },
       "feedback": {
-        "loadError": "Could not load students.",
-        "saveError": "Could not save student. Please check the fields and try again.",
-        "deleteError": "Could not delete student. Please try again.",
+        "loadError": "Could not load beneficiaries.",
+        "saveError": "Could not save beneficiary. Please check the fields and try again.",
+        "deleteError": "Could not delete beneficiary. Please try again.",
         "importError": "Could not import CSV file. Please check the format and try again.",
         "importSuccess": "Import completed successfully."
       },
-      "empty": "No students found for the current filter."
+      "empty": "No beneficiaries found for the current filter."
     },
     "guardiansUi": {
       "filters": {
@@ -617,9 +618,9 @@
       },
       "detail": {
         "title": "Guardian details",
-        "infoTitle": "Guardian information",
-        "studentsTitle": "Linked students",
-        "studentsEmpty": "No students linked to this guardian."
+        "infoTitle": "Client information",
+        "studentsTitle": "Linked beneficiaries",
+        "studentsEmpty": "No beneficiaries linked to this client."
       },
       "feedback": {
         "loadError": "Could not load guardians.",
@@ -632,8 +633,8 @@
     },
     "pages": {
       "dashboard": {
-        "title": "School overview",
-        "description": "Summary of classes, students and financial flows for this school (coming soon)."
+        "title": "Company overview",
+        "description": "Summary of groups, beneficiaries and financial flows for this company (coming soon)."
       },
       "dashboardUi": {
         "periodLabel": "Period",
@@ -648,43 +649,43 @@
         }
       },
       "settings": {
-        "title": "School settings",
-        "description": "Configure basic information, billing rules and integrations for this school (coming soon)."
+        "title": "Company settings",
+        "description": "Configure basic information, billing rules and integrations for this company (coming soon)."
       },
       "classes": {
-        "title": "Grades and classes",
-        "description": "Organize students by grade and class for this school."
+        "title": "Categories and groups",
+        "description": "Organize beneficiaries by category and group for this company."
       },
       "students": {
-        "title": "Students",
-        "description": "List and manage students linked to this school."
+        "title": "Beneficiaries",
+        "description": "List and manage beneficiaries linked to this company."
       },
       "invoices": {
         "title": "Invoices",
-        "description": "Track the school's invoices, their status and details."
+        "description": "Track the company's invoices, their status and details."
       },
       "contracts": {
         "title": "Contracts",
-        "description": "Manage tuition contracts and linked students."
+        "description": "Manage contracts and linked beneficiaries."
       },
       "guardians": {
-        "title": "Guardians",
-        "description": "Manage guardian profiles and their links to students."
+        "title": "Clients",
+        "description": "Manage client profiles and their links to beneficiaries."
       },
       "approvalsGuardians": {
-        "title": "Guardian approvals",
-        "description": "Review and approve new guardian accounts waiting for validation (coming soon)."
+        "title": "Client approvals",
+        "description": "Review and approve new client accounts waiting for validation (coming soon)."
       }
     }
   },
   "legal": {
     "terms": {
       "title": "Terms of Service",
-      "content": "TERMS OF SERVICE – PAYFLOW\n\nWelcome to PayFlow. These Terms of Service (\"Terms\") govern your access to and use of our school financial management platform (\"Platform\"). By accessing or using the Platform, you (\"User\") agree to these Terms. If you do not agree, strictly do not use our services.\n\n1. THE SERVICE\nPayFlow is a SaaS (Software as a Service) platform that facilitates the management of tuition, fees, and events between Schools and Financial Guardians. PayFlow acts as a technological intermediary and is not a bank.\n\n2. REGISTRATION AND ACCESS\n2.1. Access to the Platform requires an account. You warrant that all information provided is true, accurate, and current.\n2.2. The School is responsible for approving the registration of Guardians linked to its institution.\n2.3. You are responsible for maintaining the confidentiality of your password. Any activity conducted through your account is your responsibility.\n\n3. PAYMENTS AND BILLING\n3.1. The Platform allows the School to generate charges (invoices, bank transfers, cards) for Guardians.\n3.2. PayFlow does not set school prices or fees; these are the sole responsibility of the School.\n3.3. Payment processing is performed by third-party financial partners (payment gateways). PayFlow does not store full credit card data.\n3.4. In case of late payments, fines and interest configured by the School will be applied automatically.\n\n4. RESPONSIBILITIES\n4.1. The School: Ensures the legality of issued charges and maintains student data updated.\n4.2. The Guardian: Makes payments within stipulated deadlines and keeps contact info updated.\n4.3. PayFlow: Ensures Platform availability, data security, and correct processing of payment instructions with gateways.\n\n5. LIMITATION OF LIABILITY\nPayFlow is not liable for third-party failures (banks, card operators), scheduled maintenance interruptions, or force majeure events. In no event shall PayFlow be liable for indirect damages or lost profits arising from the use of the platform.\n\n6. INTELLECTUAL PROPERTY\nAll design, code, logos, and content of the Platform are the exclusive property of PayFlow or its licensors. Unauthorized use is prohibited.\n\n7. CHANGES\nWe may modify these Terms at any time. Continued use of the Platform after changes constitutes acceptance of the new terms.\n\n8. CONTACT\nFor questions regarding these terms, please contact our Support Center."
+      "content": "TERMS OF SERVICE – PAYFLOW\n\nWelcome to PayFlow. These Terms of Service (\"Terms\") govern your access to and use of our financial management platform (\"Platform\"). By accessing or using the Platform, you (\"User\") agree to these Terms. If you do not agree, strictly do not use our services.\n\n1. THE SERVICE\nPayFlow is a SaaS (Software as a Service) platform that facilitates the management of fees, subscriptions, and events between Companies and Clients. PayFlow acts as a technological intermediary and is not a bank.\n\n2. REGISTRATION AND ACCESS\n2.1. Access to the Platform requires an account. You warrant that all information provided is true, accurate, and current.\n2.2. The Company is responsible for approving the registration of Clients linked to its institution.\n2.3. You are responsible for maintaining the confidentiality of your password. Any activity conducted through your account is your responsibility.\n\n3. PAYMENTS AND BILLING\n3.1. The Platform allows the Company to generate charges (invoices, bank transfers, cards) for Clients.\n3.2. PayFlow does not set prices or fees; these are the sole responsibility of the Company.\n3.3. Payment processing is performed by third-party financial partners (payment gateways). PayFlow does not store full credit card data.\n3.4. In case of late payments, fines and interest configured by the Company will be applied automatically.\n\n4. RESPONSIBILITIES\n4.1. The Company: Ensures the legality of issued charges and maintains beneficiary data updated.\n4.2. The Client: Makes payments within stipulated deadlines and keeps contact info updated.\n4.3. PayFlow: Ensures Platform availability, data security, and correct processing of payment instructions with gateways.\n\n5. LIMITATION OF LIABILITY\nPayFlow is not liable for third-party failures (banks, card operators), scheduled maintenance interruptions, or force majeure events. In no event shall PayFlow be liable for indirect damages or lost profits arising from the use of the platform.\n\n6. INTELLECTUAL PROPERTY\nAll design, code, logos, and content of the Platform are the exclusive property of PayFlow or its licensors. Unauthorized use is prohibited.\n\n7. CHANGES\nWe may modify these Terms at any time. Continued use of the Platform after changes constitutes acceptance of the new terms.\n\n8. CONTACT\nFor questions regarding these terms, please contact our Support Center."
     },
     "privacy": {
       "title": "Privacy Policy",
-      "content": "PRIVACY POLICY – PAYFLOW\n\nAt PayFlow, we take your privacy seriously. This Policy describes how we collect, use, and protect your personal data, in compliance with applicable data protection laws.\n\n1. DATA COLLECTED\n1.1. Registration Data: Full name, ID number, email, phone, and address.\n1.2. Student Data: Name, class, and relationship to the guardian.\n1.3. Financial Data: Payment history, invoices, and, where applicable, partial card data (last 4 digits) for identification.\n1.4. Navigation Data: IP address, device type, and access logs for audit and security purposes.\n\n2. PURPOSE OF USE\nWe use your data to:\n- Process payments and issue invoices.\n- Identify you and ensure account security.\n- Send notifications about due dates, receipts, and school communications.\n- Provide technical support and improve our services.\n- Comply with legal and regulatory obligations.\n\n3. DATA SHARING\nWe do not sell your data. We share information only with:\n- The School linked to your account (for academic and financial management).\n- Payment Processors and Banks (strictly to process transactions).\n- Judicial or government authorities, when required by law.\n\n4. SECURITY\nWe adopt robust technical and administrative measures to protect your data, including encryption in transit (SSL/TLS), strict access control, and security monitoring.\n\n5. YOUR RIGHTS\nYou have the right to access your data, correct incomplete or outdated data, and request portability or deletion (except for data we are required by law to retain).\n\n6. CHANGES\nThis policy may be updated. We will notify you of significant changes via the Platform or email.\n\n7. CONTACT\nTo exercise your rights or ask questions about privacy, visit our Support Center."
+      "content": "PRIVACY POLICY – PAYFLOW\n\nAt PayFlow, we take your privacy seriously. This Policy describes how we collect, use, and protect your personal data, in compliance with applicable data protection laws.\n\n1. DATA COLLECTED\n1.1. Registration Data: Full name, ID number, email, phone, and address.\n1.2. Beneficiary Data: Name, group, and relationship to the client.\n1.3. Financial Data: Payment history, invoices, and, where applicable, partial card data (last 4 digits) for identification.\n1.4. Navigation Data: IP address, device type, and access logs for audit and security purposes.\n\n2. PURPOSE OF USE\nWe use your data to:\n- Process payments and issue invoices.\n- Identify you and ensure account security.\n- Send notifications about due dates, receipts, and company communications.\n- Provide technical support and improve our services.\n- Comply with legal and regulatory obligations.\n\n3. DATA SHARING\nWe do not sell your data. We share information only with:\n- The Company linked to your account (for administrative and financial management).\n- Payment Processors and Banks (strictly to process transactions).\n- Judicial or government authorities, when required by law.\n\n4. SECURITY\nWe adopt robust technical and administrative measures to protect your data, including encryption in transit (SSL/TLS), strict access control, and security monitoring.\n\n5. YOUR RIGHTS\nYou have the right to access your data, correct incomplete or outdated data, and request portability or deletion (except for data we are required by law to retain).\n\n6. CHANGES\nThis policy may be updated. We will notify you of significant changes via the Platform or email.\n\n7. CONTACT\nTo exercise your rights or ask questions about privacy, visit our Support Center."
     }
   },
   "support": {

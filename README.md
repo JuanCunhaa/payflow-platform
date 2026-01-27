@@ -1,27 +1,27 @@
 # 🚀 PayFlow Platform
 
-**A solução definitiva para gestão financeira e administrativa de instituições de ensino.**
+**A solução definitiva para gestão financeira recorrente de empresas.**
 
-O **PayFlow** é uma plataforma SaaS multi-tenant robusta, projetada para modernizar e simplificar o fluxo de trabalho de escolas, cursos e instituições educacionais. Conectamos administradores, responsáveis e alunos em um ecossistema fluido, seguro e eficiente.
+O **PayFlow** é uma plataforma SaaS multi-tenant robusta, projetada para modernizar e simplificar o fluxo de trabalho de empresas de serviço recorrente. Conectamos administradores e clientes em um ecossistema fluido, seguro e eficiente.
 
 ---
 
 ## 💡 O que é o PayFlow?
 
-O PayFlow resolve a complexidade da gestão escolar centralizando financeiro, acadêmico e comunicação em um só lugar. Nossa missão é automatizar a burocracia para que as escolas possam focar no que realmente importa: **educar**.
+O PayFlow resolve a complexidade da gestão financeira centralizando cobranças e comunicação em um só lugar. Nossa missão é automatizar a burocracia para que as empresas possam focar no que realmente importa: **crescer**.
 
-Com uma arquitetura escalável e focada na experiência do usuário, o PayFlow transforma processos manuais e lentos em fluxos digitais ágeis (da matrícula à mensalidade).
+Com uma arquitetura escalável e focada na experiência do usuário, o PayFlow transforma processos manuais e lentos em fluxos digitais ágeis.
 
 ---
 
 ## ✨ Principais Funcionalidades
 
-*   **🏢 Multi-tenancy Nativo:** Uma única plataforma servindo múltiplas escolas com isolamento total de dados e customização por unidade (Whitelabel ready).
+*   **🏢 Multi-tenancy Nativo:** Uma única plataforma servindo múltiplas empresas com isolamento total de dados e customização por unidade (Whitelabel ready).
 *   **💰 Gestão Financeira Completa:** Geração automática de faturas, gestão de contratos, links de pagamentos integrados e controle de inadimplência.
-*   **👥 Portal do Responsável:** Acesso fácil para pais e responsáveis acompanharem faturas, notas e abrirem chamados de suporte.
-*   **🎓 Gestão Acadêmica:** Controle de turmas, grades curriculares, alunos e matrículas.
-*   **🎫 Sistema de Suporte (Helpdesk):** Módulo de tickets integrado para centralizar a comunicação entre escola e família.
-*   **🔐 Segurança e Controle:** Controle de acesso baseado em cargos (RBAC) granular (Admin, Financeiro, Secretaria, etc.).
+*   **👥 Portal do Cliente:** Acesso fácil para clientes acompanharem faturas, notas e abrirem chamados de suporte.
+*   **📈 Gestão de Clientes:** Controle de assinaturas, planos e cadastro de clientes.
+*   **🎫 Sistema de Suporte (Helpdesk):** Módulo de tickets integrado para centralizar a comunicação entre empresa e cliente.
+*   **🔐 Segurança e Controle:** Controle de acesso baseado em cargos (RBAC) granular (Admin, Financeiro, Operacional, etc.).
 
 ---
 
