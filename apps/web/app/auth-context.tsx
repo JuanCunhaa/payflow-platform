@@ -307,7 +307,30 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     const base = locale || 'pt-BR';
-    router.push(`/${base}`);
+
+    if (typeof window !== 'undefined') {
+      const hostname = window.location.hostname;
+      // Check for local development environments
+      if (hostname.includes('localhost') || hostname.includes('localtest.me')) {
+        const parts = hostname.split('.');
+        const protocol = window.location.protocol;
+        const port = window.location.port ? `:${window.location.port}` : '';
+
+        // If subdomain exists (e.g. tenant.localtest.me), strip it
+        let targetDomain = hostname;
+        if (hostname.includes('localtest.me') && parts.length >= 3) {
+          targetDomain = parts.slice(1).join('.');
+        }
+
+        window.location.href = `${protocol}//${targetDomain}${port}/${base}`;
+      } else {
+        // Production: Force redirect to main domain
+        window.location.href = `https://cobranex.xyz/${base}`;
+      }
+    } else {
+      router.push(`/${base}`);
+    }
+
     setIsLoggingOut(false);
   }, [locale, router]);
 

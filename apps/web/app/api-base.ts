@@ -16,5 +16,9 @@ export function getApiBase(): string {
     return `${protocol}//${hostname}:${apiPort}`;
   }
 
+  if (hostname.endsWith('cobranex.xyz')) {
+    return 'https://api.cobranex.xyz';
+  }
+
   return FALLBACK_API_BASE;
 }
