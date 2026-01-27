@@ -96,7 +96,11 @@ async function maybeValidateTenant(request: NextRequest) {
   try {
     const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333';
     const apiUrl = `${apiBase}/tenant/ping`;
-    const apiHost = `${sub}.${domain}:3333`;
+
+    let apiHost = `${sub}.${domain}`;
+    if (isLocal) {
+      apiHost += ':3333';
+    }
     const res = await fetch(apiUrl, {
       headers: { Host: apiHost },
       // short timeout via next fetch cache is not available; rely on fast local

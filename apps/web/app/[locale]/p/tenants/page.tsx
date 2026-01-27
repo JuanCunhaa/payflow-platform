@@ -174,7 +174,17 @@ export default function PlatformTenantsPage() {
       const data = await response.json().catch(() => null);
 
       if (!response.ok) {
-        setError(t(i18nKeys.platform.tenants.errorGeneric));
+        if (data?.code === 'weak_password') {
+          setError("A senha é muito fraca. Use pelo menos 8 caracteres, 1 letra e 1 número.");
+        } else if (data?.code === 'invalid_slug') {
+          setError("Slug inválido. Use apenas letras minúsculas, números e hífens.");
+        } else if (data?.code === 'admin_email_in_use') {
+          setError("Este e-mail de administrador já está em uso.");
+        } else if (data?.message) {
+          setError(String(data.message));
+        } else {
+          setError(t(i18nKeys.platform.tenants.errorGeneric));
+        }
         return;
       }
 

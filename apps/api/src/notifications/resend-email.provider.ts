@@ -14,7 +14,7 @@ export class ResendEmailProvider implements EmailProvider {
       this.logger.warn('RESEND_API_KEY is not defined');
     }
     this.resend = new Resend(apiKey);
-    this.fromEmail = process.env.EMAIL_FROM || 'onboarding@resend.dev';
+    this.fromEmail = process.env.RESEND_FROM_EMAIL || process.env.EMAIL_FROM || 'onboarding@resend.dev';
   }
 
   async send(message: EmailMessage): Promise<void> {
