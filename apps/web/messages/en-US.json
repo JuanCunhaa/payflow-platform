@@ -622,6 +622,12 @@
         "name": "Name",
         "email": "Email",
         "phone": "Phone",
+        "cpf": "National ID (CPF)",
+        "rg": "ID (RG)",
+        "address": "Full Address",
+        "studentName": "Student Name",
+        "studentBirthDate": "Date of Birth",
+        "addStudent": "Add Student",
         "status": "Status",
         "emailVerified": "Email verified",
         "actions": "Actions"
