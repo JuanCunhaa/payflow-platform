@@ -1,4 +1,4 @@
-# 🚀 Cobra Nex Platform 
+# 🚀 Cobra Nex Platform
 
 **Uma plataforma Full Stack de Gestão Financeira Escolar/Empresarial (SaaS Multi-tenant)**
 
