@@ -13,8 +13,9 @@
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
 
-    --primary: 0 0% 9%; /* Green #22c55e (approx HSL) */
-    --primary-foreground: 0 0% 98%;
+    --primary: 142.1 76.2% 36.3%;
+    /* Green 600 */
+    --primary-foreground: 355.7 100% 97.3%;
 
     --secondary: 0 0% 96.1%;
     --secondary-foreground: 0 0% 9%;
@@ -30,7 +31,7 @@
 
     --border: 0 0% 89.8%;
     --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
+    --ring: 142.1 76.2% 36.3%;
 
     --radius: 0.5rem;
 
@@ -55,8 +56,9 @@
     --popover: 0 0% 3.9%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
+    --primary: 142.1 70.6% 45.3%;
+    /* Green 500 */
+    --primary-foreground: 144.9 80.4% 10%;
 
     --secondary: 0 0% 14.9%;
     --secondary-foreground: 0 0% 98%;
@@ -85,6 +87,7 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
