@@ -6,8 +6,6 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Roles } from '../auth/roles.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
 
-
-
 function parseDate(value?: string): Date | undefined {
   if (!value) return undefined;
   const date = new Date(value);
@@ -24,7 +22,7 @@ function parseDate(value?: string): Date | undefined {
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles('PLATFORM_ADMIN', 'PLATFORM_SUPPORT')
 export class PlatformAuditController {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   @Get()
   async listAuditLogs(
@@ -109,15 +107,15 @@ export class PlatformAuditController {
     const [tenants, actors] = await Promise.all([
       tenantIds.length
         ? tx.tenant.findMany({
-          where: { id: { in: tenantIds } },
-          select: { id: true, name: true, slug: true },
-        })
+            where: { id: { in: tenantIds } },
+            select: { id: true, name: true, slug: true },
+          })
         : Promise.resolve([]),
       actorIds.length
         ? tx.user.findMany({
-          where: { id: { in: actorIds } },
-          select: { id: true, email: true, name: true },
-        })
+            where: { id: { in: actorIds } },
+            select: { id: true, email: true, name: true },
+          })
         : Promise.resolve([]),
     ]);
 

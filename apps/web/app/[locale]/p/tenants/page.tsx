@@ -175,11 +175,11 @@ export default function PlatformTenantsPage() {
 
       if (!response.ok) {
         if (data?.code === 'weak_password') {
-          setError("A senha é muito fraca. Use pelo menos 8 caracteres, 1 letra e 1 número.");
+          setError('A senha é muito fraca. Use pelo menos 8 caracteres, 1 letra e 1 número.');
         } else if (data?.code === 'invalid_slug') {
-          setError("Slug inválido. Use apenas letras minúsculas, números e hífens.");
+          setError('Slug inválido. Use apenas letras minúsculas, números e hífens.');
         } else if (data?.code === 'admin_email_in_use') {
-          setError("Este e-mail de administrador já está em uso.");
+          setError('Este e-mail de administrador já está em uso.');
         } else if (data?.message) {
           setError(String(data.message));
         } else {
@@ -272,7 +272,10 @@ export default function PlatformTenantsPage() {
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="tenant-name" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <label
+              htmlFor="tenant-name"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
               {t(i18nKeys.platform.tenants.form.name)}
             </label>
             <input
@@ -285,7 +288,10 @@ export default function PlatformTenantsPage() {
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="tenant-slug" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <label
+              htmlFor="tenant-slug"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
               {t(i18nKeys.platform.tenants.form.slug)}
             </label>
             <input
@@ -300,7 +306,10 @@ export default function PlatformTenantsPage() {
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="tenant-schoolCode" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+            <label
+              htmlFor="tenant-schoolCode"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
               {t(i18nKeys.platform.tenants.form.schoolCode)}
             </label>
             <input
@@ -315,7 +324,10 @@ export default function PlatformTenantsPage() {
           {formMode === 'create' && (
             <>
               <div className="space-y-2">
-                <label htmlFor="tenant-adminEmail" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                <label
+                  htmlFor="tenant-adminEmail"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
                   {t(i18nKeys.platform.tenants.form.adminEmail)}
                 </label>
                 <input
@@ -328,7 +340,10 @@ export default function PlatformTenantsPage() {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="tenant-adminName" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                <label
+                  htmlFor="tenant-adminName"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
                   {t(i18nKeys.platform.tenants.form.adminName)}
                 </label>
                 <input
@@ -341,7 +356,10 @@ export default function PlatformTenantsPage() {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="tenant-adminPassword" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                <label
+                  htmlFor="tenant-adminPassword"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
                   {t(i18nKeys.platform.tenants.form.adminPassword)}
                 </label>
                 <input
@@ -379,7 +397,8 @@ export default function PlatformTenantsPage() {
 
           {generatedPassword && (
             <div className="col-span-full mt-2 text-sm text-green-600 dark:text-green-400 font-medium p-3 bg-green-50 dark:bg-green-900/10 rounded-md border border-green-200 dark:border-green-900">
-              <strong>{t(i18nKeys.platform.tenants.form.initialPasswordGenerated)}</strong> {generatedPassword}
+              <strong>{t(i18nKeys.platform.tenants.form.initialPasswordGenerated)}</strong>{' '}
+              {generatedPassword}
             </div>
           )}
         </form>
@@ -393,9 +412,13 @@ export default function PlatformTenantsPage() {
 
       <div className="flex-1 overflow-hidden rounded-md border bg-card text-card-foreground shadow-sm flex flex-col">
         {loading ? (
-          <div className="flex-1 flex items-center justify-center text-muted-foreground">{t(i18nKeys.common.loading)}</div>
+          <div className="flex-1 flex items-center justify-center text-muted-foreground">
+            {t(i18nKeys.common.loading)}
+          </div>
         ) : tenants.length === 0 ? (
-          <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm p-4">{t(i18nKeys.platform.tenants.empty)}</div>
+          <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm p-4">
+            {t(i18nKeys.platform.tenants.empty)}
+          </div>
         ) : (
           <div className="flex-1 overflow-y-auto">
             <table className="w-full caption-bottom text-sm">
@@ -423,21 +446,29 @@ export default function PlatformTenantsPage() {
               </thead>
               <tbody className="[&_tr:last-child]:border-0">
                 {tenants.map((tenant) => (
-                  <tr key={tenant.id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                  <tr
+                    key={tenant.id}
+                    className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+                  >
                     <td className="p-3 align-middle font-medium">{tenant.name}</td>
                     <td className="p-3 align-middle">{tenant.slug}</td>
                     <td className="p-3 align-middle font-mono text-xs">{tenant.schoolCode}</td>
                     <td className="p-3 align-middle">
-                      <span className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ring-inset ${tenant.status === 'ACTIVE'
-                        ? 'bg-green-50 text-green-700 ring-green-600/20 dark:bg-green-900/30 dark:text-green-400 dark:ring-green-900/50'
-                        : tenant.status === 'SUSPENDED'
-                          ? 'bg-red-50 text-red-700 ring-red-600/20 dark:bg-red-900/30 dark:text-red-400 dark:ring-red-900/50'
-                          : 'bg-gray-50 text-gray-600 ring-gray-500/10 dark:bg-gray-800 dark:text-gray-300 dark:ring-gray-700'
-                        }`}>
+                      <span
+                        className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ring-inset ${
+                          tenant.status === 'ACTIVE'
+                            ? 'bg-green-50 text-green-700 ring-green-600/20 dark:bg-green-900/30 dark:text-green-400 dark:ring-green-900/50'
+                            : tenant.status === 'SUSPENDED'
+                              ? 'bg-red-50 text-red-700 ring-red-600/20 dark:bg-red-900/30 dark:text-red-400 dark:ring-red-900/50'
+                              : 'bg-gray-50 text-gray-600 ring-gray-500/10 dark:bg-gray-800 dark:text-gray-300 dark:ring-gray-700'
+                        }`}
+                      >
                         {statusLabel(tenant.status)}
                       </span>
                     </td>
-                    <td className="p-3 align-middle text-muted-foreground text-xs">{formatDate(tenant.createdAt)}</td>
+                    <td className="p-3 align-middle text-muted-foreground text-xs">
+                      {formatDate(tenant.createdAt)}
+                    </td>
                     <td className="p-3 align-middle">
                       <div className="flex gap-2 flex-wrap">
                         <button

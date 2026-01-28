@@ -129,7 +129,11 @@ export default function SchoolLayout({ children }: { children: React.ReactNode }
     { href: `${basePath}/invoices`, label: t(i18nKeys.school.nav.invoices), icon: Receipt },
     { href: `${basePath}/tickets`, label: t(i18nKeys.school.nav.tickets), icon: LifeBuoy },
     { href: `${basePath}/guardians`, label: t(i18nKeys.school.nav.guardians), icon: UserCheck },
-    { href: `${basePath}/approvals/guardians`, label: t(i18nKeys.school.nav.approvalsGuardians), icon: CheckSquare },
+    {
+      href: `${basePath}/approvals/guardians`,
+      label: t(i18nKeys.school.nav.approvalsGuardians),
+      icon: CheckSquare,
+    },
     { href: `${basePath}/settings`, label: t(i18nKeys.school.nav.settings), icon: Settings },
   ];
 
@@ -197,19 +201,24 @@ export default function SchoolLayout({ children }: { children: React.ReactNode }
           <div className="flex items-center gap-4">
             <ModeToggle />
             <div className="text-right hidden sm:block">
-              <div className="text-sm font-medium text-slate-900 dark:text-slate-100">{userLabel}</div>
+              <div className="text-sm font-medium text-slate-900 dark:text-slate-100">
+                {userLabel}
+              </div>
               <div className="text-xs text-muted-foreground">{user.email}</div>
             </div>
-            <Button size="sm" variant="ghost" className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/10" onClick={logout}>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/10"
+              onClick={logout}
+            >
               <LogOut className="h-4 w-4 mr-2" />
               {t(i18nKeys.nav.logout)}
             </Button>
           </div>
         </header>
 
-        <main className="flex-1 p-6 md:p-8 max-w-7xl mx-auto w-full">
-          {children}
-        </main>
+        <main className="flex-1 p-6 md:p-8 max-w-7xl mx-auto w-full">{children}</main>
         <Footer />
       </div>
     </div>

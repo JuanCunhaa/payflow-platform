@@ -80,10 +80,10 @@ export default function GuardianLayout({ children }: { children: React.ReactNode
   }
 
   const basePath = `/${locale}/g`;
-  const sidebarItems = NAV_ITEMS.map(item => ({
+  const sidebarItems = NAV_ITEMS.map((item) => ({
     href: `${basePath}${item.href}`,
     label: t(item.labelKey),
-    icon: item.icon
+    icon: item.icon,
   }));
 
   return (
@@ -109,16 +109,19 @@ export default function GuardianLayout({ children }: { children: React.ReactNode
               <div className="text-sm font-medium text-foreground">{user.name || user.email}</div>
               <div className="text-xs text-muted-foreground">{user.email}</div>
             </div>
-            <Button size="sm" variant="ghost" className="text-destructive hover:text-destructive hover:bg-destructive/10" onClick={logout}>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="text-destructive hover:text-destructive hover:bg-destructive/10"
+              onClick={logout}
+            >
               <LogOut className="h-4 w-4 mr-2" />
               {t(i18nKeys.nav.logout)}
             </Button>
           </div>
         </header>
 
-        <main className="flex-1 p-6 md:p-8 max-w-7xl mx-auto w-full">
-          {children}
-        </main>
+        <main className="flex-1 p-6 md:p-8 max-w-7xl mx-auto w-full">{children}</main>
         <Footer />
       </div>
     </div>

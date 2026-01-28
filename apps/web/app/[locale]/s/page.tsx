@@ -120,9 +120,7 @@ export default function SchoolDashboardPage() {
           />
         </label>
         {loading && (
-          <span className="text-xs text-muted-foreground">
-            {t(i18nKeys.common.loading)}
-          </span>
+          <span className="text-xs text-muted-foreground">{t(i18nKeys.common.loading)}</span>
         )}
       </div>
 
@@ -162,12 +160,8 @@ type DashboardCardProps = {
 function DashboardCard({ label, value }: DashboardCardProps) {
   return (
     <div className="flex flex-col gap-1.5 rounded-xl border bg-card p-4 shadow-sm">
-      <div className="text-xs text-muted-foreground">
-        {label}
-      </div>
-      <div className="text-xl font-semibold text-foreground">
-        {value}
-      </div>
+      <div className="text-xs text-muted-foreground">{label}</div>
+      <div className="text-xl font-semibold text-foreground">{value}</div>
     </div>
   );
 }

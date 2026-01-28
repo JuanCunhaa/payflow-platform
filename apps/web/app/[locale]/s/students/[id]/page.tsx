@@ -6,13 +6,7 @@ import { useParams } from 'next/navigation';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 
 import { i18nKeys } from '@payflow/shared';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Table,
   TableBody,
@@ -194,9 +188,7 @@ export default function StudentFinancialReportPage() {
               <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
             </div>
           ) : error ? (
-            <div className="rounded-md bg-destructive/10 p-4 text-sm text-destructive">
-              {error}
-            </div>
+            <div className="rounded-md bg-destructive/10 p-4 text-sm text-destructive">{error}</div>
           ) : (
             <div className="flex flex-col gap-6">
               <div className="grid gap-4 sm:grid-cols-2">

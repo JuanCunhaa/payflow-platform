@@ -76,7 +76,7 @@ export class GuardianController {
   constructor(
     private readonly prisma: PrismaService,
     private readonly paymentService: PaymentService
-  ) { }
+  ) {}
 
   private async resolveGuardianContext(
     req: TenantRequest,
@@ -251,10 +251,12 @@ export class GuardianController {
       id: link.student.id,
       name: link.student.name,
       status: link.student.status,
-      class: link.student.class ? {
-        id: link.student.class.id,
-        name: link.student.class.name,
-      } : undefined,
+      class: link.student.class
+        ? {
+            id: link.student.class.id,
+            name: link.student.class.name,
+          }
+        : undefined,
     }));
 
     return { items };
@@ -422,7 +424,7 @@ export class GuardianController {
   ) {
     const { guardian, tenantId, studentIds } = await this.resolveGuardianContext(req, user);
 
-    const invoice = (await this.prisma.invoice.findFirst({
+    const invoice = await this.prisma.invoice.findFirst({
       where: { id, tenantId },
       select: {
         id: true,
@@ -432,7 +434,7 @@ export class GuardianController {
         paymentLink: true,
         provider: true,
       },
-    }));
+    });
 
     if (!invoice) {
       throw new NotFoundException({

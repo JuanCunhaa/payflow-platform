@@ -10,52 +10,65 @@ import { CurrentUser, CurrentUserPayload } from '../../auth/decorators/current-u
 
 @Controller('tickets')
 export class TicketsController {
-    constructor(private readonly ticketsService: TicketsService) { }
+  constructor(private readonly ticketsService: TicketsService) {}
 
-    @Public()
-    @Post('guest')
-    createGuest(@Body() createGuestTicketDto: CreateGuestTicketDto) {
-        return this.ticketsService.createGuestTicket(createGuestTicketDto);
-    }
+  @Public()
+  @Post('guest')
+  createGuest(@Body() createGuestTicketDto: CreateGuestTicketDto) {
+    return this.ticketsService.createGuestTicket(createGuestTicketDto);
+  }
 
-    @UseGuards(JwtAuthGuard)
-    @Post()
-    create(@CurrentUser() user: CurrentUserPayload, @Request() req, @Body() createTicketDto: CreateTicketDto) {
-        const tenantId = req.headers['x-tenant-id'] as string;
-        // Assuming user role logic is handled here or by service validation
-        return this.ticketsService.createTicket(user.id, tenantId, user.role as Role || Role.GUARDIAN, createTicketDto);
-    }
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  create(
+    @CurrentUser() user: CurrentUserPayload,
+    @Request() req,
+    @Body() createTicketDto: CreateTicketDto
+  ) {
+    const tenantId = req.headers['x-tenant-id'] as string;
+    // Assuming user role logic is handled here or by service validation
+    return this.ticketsService.createTicket(
+      user.id,
+      tenantId,
+      (user.role as Role) || Role.GUARDIAN,
+      createTicketDto
+    );
+  }
 
-    @UseGuards(JwtAuthGuard)
-    @Get()
-    findAll(@CurrentUser() user: CurrentUserPayload, @Request() req) {
-        const tenantId = req.headers['x-tenant-id'] as string;
-        return this.ticketsService.findAll(user.id, user.role as Role || Role.GUARDIAN, tenantId);
-    }
+  @UseGuards(JwtAuthGuard)
+  @Get()
+  findAll(@CurrentUser() user: CurrentUserPayload, @Request() req) {
+    const tenantId = req.headers['x-tenant-id'] as string;
+    return this.ticketsService.findAll(user.id, (user.role as Role) || Role.GUARDIAN, tenantId);
+  }
 
-    @UseGuards(JwtAuthGuard)
-    @Get(':id')
-    findOne(@Param('id') id: string, @CurrentUser() user: CurrentUserPayload, @Request() req) {
-        const tenantId = req.headers['x-tenant-id'] as string;
-        return this.ticketsService.findOne(id, user.id, user.role as Role || Role.GUARDIAN, tenantId);
-    }
+  @UseGuards(JwtAuthGuard)
+  @Get(':id')
+  findOne(@Param('id') id: string, @CurrentUser() user: CurrentUserPayload, @Request() req) {
+    const tenantId = req.headers['x-tenant-id'] as string;
+    return this.ticketsService.findOne(id, user.id, (user.role as Role) || Role.GUARDIAN, tenantId);
+  }
 
-    @UseGuards(JwtAuthGuard)
-    @Post(':id/messages')
-    addMessage(@Param('id') id: string, @Body() createMessageDto: CreateMessageDto, @CurrentUser() user: CurrentUserPayload) {
-        return this.ticketsService.addMessage(id, user.id, createMessageDto.message);
-    }
+  @UseGuards(JwtAuthGuard)
+  @Post(':id/messages')
+  addMessage(
+    @Param('id') id: string,
+    @Body() createMessageDto: CreateMessageDto,
+    @CurrentUser() user: CurrentUserPayload
+  ) {
+    return this.ticketsService.addMessage(id, user.id, createMessageDto.message);
+  }
 
-    @UseGuards(JwtAuthGuard)
-    @Patch(':id/escalate')
-    escalate(@Param('id') id: string, @CurrentUser() user: CurrentUserPayload, @Request() req) {
-        const tenantId = req.headers['x-tenant-id'] as string;
-        return this.ticketsService.escalate(id, user.id, tenantId);
-    }
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id/escalate')
+  escalate(@Param('id') id: string, @CurrentUser() user: CurrentUserPayload, @Request() req) {
+    const tenantId = req.headers['x-tenant-id'] as string;
+    return this.ticketsService.escalate(id, user.id, tenantId);
+  }
 
-    @UseGuards(JwtAuthGuard)
-    @Patch(':id/close')
-    close(@Param('id') id: string, @CurrentUser() user: CurrentUserPayload) {
-        return this.ticketsService.close(id, user.id);
-    }
+  @UseGuards(JwtAuthGuard)
+  @Patch(':id/close')
+  close(@Param('id') id: string, @CurrentUser() user: CurrentUserPayload) {
+    return this.ticketsService.close(id, user.id);
+  }
 }

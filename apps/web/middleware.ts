@@ -121,7 +121,7 @@ async function maybeValidateTenant(request: NextRequest) {
       try {
         const data = await res.json();
         code = data?.code || '';
-      } catch { }
+      } catch {}
       if (code === 'tenant_not_found') {
         const url = request.nextUrl.clone();
         // Preserve current locale if present; otherwise use default

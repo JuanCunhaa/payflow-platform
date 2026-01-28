@@ -443,18 +443,30 @@ export default function SchoolContractsPage() {
           <table className="w-full text-left text-sm">
             <thead className="bg-muted/50 text-xs uppercase text-muted-foreground">
               <tr>
-                <th className="px-4 py-3 font-medium">{t(i18nKeys.school.contractsUi.table.name)}</th>
-                <th className="px-4 py-3 font-medium">{t(i18nKeys.school.contractsUi.table.amount)}</th>
-                <th className="px-4 py-3 font-medium">{t(i18nKeys.school.contractsUi.table.dueDay)}</th>
-                <th className="px-4 py-3 font-medium">{t(i18nKeys.school.contractsUi.table.status)}</th>
-                <th className="px-4 py-3 font-medium text-right">{t(i18nKeys.school.contractsUi.table.actions)}</th>
+                <th className="px-4 py-3 font-medium">
+                  {t(i18nKeys.school.contractsUi.table.name)}
+                </th>
+                <th className="px-4 py-3 font-medium">
+                  {t(i18nKeys.school.contractsUi.table.amount)}
+                </th>
+                <th className="px-4 py-3 font-medium">
+                  {t(i18nKeys.school.contractsUi.table.dueDay)}
+                </th>
+                <th className="px-4 py-3 font-medium">
+                  {t(i18nKeys.school.contractsUi.table.status)}
+                </th>
+                <th className="px-4 py-3 font-medium text-right">
+                  {t(i18nKeys.school.contractsUi.table.actions)}
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y">
               {contracts.map((contract) => (
                 <tr key={contract.id} className="hover:bg-muted/50">
                   <td className="px-4 py-3 font-medium">{contract.name}</td>
-                  <td className="px-4 py-3">{formatAmount(contract.amountCents, contract.currency)}</td>
+                  <td className="px-4 py-3">
+                    {formatAmount(contract.amountCents, contract.currency)}
+                  </td>
                   <td className="px-4 py-3">{contract.dueDay}</td>
                   <td className="px-4 py-3">{statusLabel(contract.status)}</td>
                   <td className="flex justify-end gap-2 px-4 py-3">
@@ -551,8 +563,9 @@ export default function SchoolContractsPage() {
               <button
                 type="submit"
                 disabled={saving}
-                className={`cursor-pointer rounded-full border-none bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700 ${saving ? 'cursor-not-allowed opacity-70' : ''
-                  }`}
+                className={`cursor-pointer rounded-full border-none bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700 ${
+                  saving ? 'cursor-not-allowed opacity-70' : ''
+                }`}
               >
                 {saving ? t(i18nKeys.common.loading) : t(i18nKeys.school.contractsUi.form.save)}
               </button>
@@ -651,7 +664,10 @@ export default function SchoolContractsPage() {
               )}
 
               {availableStudents.length > 0 && (
-                <form onSubmit={handleAddStudents} className="flex flex-col gap-3 rounded-lg border p-4">
+                <form
+                  onSubmit={handleAddStudents}
+                  className="flex flex-col gap-3 rounded-lg border p-4"
+                >
                   <label className="flex flex-col gap-1.5 text-sm">
                     {t(i18nKeys.school.contractsUi.detail.addStudents)}
                     <select

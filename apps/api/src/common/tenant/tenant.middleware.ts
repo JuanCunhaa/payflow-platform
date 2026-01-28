@@ -24,7 +24,7 @@ function extractFirstSubdomain(host?: string): string | undefined {
 export class TenantResolverMiddleware implements NestMiddleware {
   private readonly logger = new Logger(TenantResolverMiddleware.name);
 
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   async use(req: Request, _res: Response, next: NextFunction) {
     try {

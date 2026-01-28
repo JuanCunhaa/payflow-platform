@@ -132,7 +132,9 @@ export default function RequestDemoPage() {
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="responsibleName">{t(i18nKeys.requestDemo.form.responsibleName)}</Label>
+                <Label htmlFor="responsibleName">
+                  {t(i18nKeys.requestDemo.form.responsibleName)}
+                </Label>
                 <Input
                   id="responsibleName"
                   value={responsibleName}

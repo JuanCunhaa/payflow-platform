@@ -471,7 +471,9 @@ export default function SchoolStudentsPage() {
               disabled={importing || classes.length === 0}
               className="cursor-pointer rounded-full border bg-background px-4 py-2 text-sm font-medium hover:bg-muted disabled:opacity-50"
             >
-              {importing ? t(i18nKeys.common.loading) : t(i18nKeys.school.studentsUi.actions.importCsv)}
+              {importing
+                ? t(i18nKeys.common.loading)
+                : t(i18nKeys.school.studentsUi.actions.importCsv)}
             </button>
             <input
               ref={fileInputRef}
@@ -543,8 +545,9 @@ export default function SchoolStudentsPage() {
               <button
                 type="submit"
                 disabled={saving}
-                className={`cursor-pointer rounded-full border-none bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700 ${saving ? 'cursor-not-allowed opacity-70' : ''
-                  }`}
+                className={`cursor-pointer rounded-full border-none bg-green-600 px-4 py-2 text-sm text-white hover:bg-green-700 ${
+                  saving ? 'cursor-not-allowed opacity-70' : ''
+                }`}
               >
                 {saving
                   ? t(i18nKeys.common.loading)
@@ -567,10 +570,18 @@ export default function SchoolStudentsPage() {
             <table className="w-full text-left text-sm">
               <thead className="bg-muted/50 text-xs uppercase text-muted-foreground">
                 <tr>
-                  <th className="px-4 py-3 font-medium">{t(i18nKeys.school.studentsUi.table.name)}</th>
-                  <th className="px-4 py-3 font-medium">{t(i18nKeys.school.studentsUi.table.class)}</th>
-                  <th className="px-4 py-3 font-medium">{t(i18nKeys.school.studentsUi.table.status)}</th>
-                  <th className="px-4 py-3 font-medium text-right">{t(i18nKeys.school.studentsUi.table.actions)}</th>
+                  <th className="px-4 py-3 font-medium">
+                    {t(i18nKeys.school.studentsUi.table.name)}
+                  </th>
+                  <th className="px-4 py-3 font-medium">
+                    {t(i18nKeys.school.studentsUi.table.class)}
+                  </th>
+                  <th className="px-4 py-3 font-medium">
+                    {t(i18nKeys.school.studentsUi.table.status)}
+                  </th>
+                  <th className="px-4 py-3 font-medium text-right">
+                    {t(i18nKeys.school.studentsUi.table.actions)}
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y">
@@ -580,10 +591,11 @@ export default function SchoolStudentsPage() {
                     <td className="px-4 py-3">{getClassNameById(student.classId)}</td>
                     <td className="px-4 py-3">
                       <span
-                        className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${student.status === 'ACTIVE'
-                          ? 'bg-green-500/10 text-green-700'
-                          : 'bg-yellow-500/10 text-yellow-700'
-                          }`}
+                        className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
+                          student.status === 'ACTIVE'
+                            ? 'bg-green-500/10 text-green-700'
+                            : 'bg-yellow-500/10 text-yellow-700'
+                        }`}
                       >
                         {student.status === 'ACTIVE'
                           ? t(i18nKeys.school.studentsUi.status.active)

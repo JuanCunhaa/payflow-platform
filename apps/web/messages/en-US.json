@@ -243,6 +243,10 @@
         "submit": "Export CSV",
         "cancel": "Cancel",
         "button": "Export CSV"
+      },
+      "origin": {
+        "contract": "Contract",
+        "oneOff": "One-off"
       }
     },
     "reportsUi": {

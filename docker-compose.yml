@@ -8,7 +8,7 @@ services:
       POSTGRES_PASSWORD: password123
       POSTGRES_DB: payflow
     ports:
-      - "5432:5432"
+      - '5432:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -23,11 +23,11 @@ services:
     depends_on:
       - db
     ports:
-      - "3333:3333"
+      - '3333:3333'
     environment:
-      DATABASE_URL: "postgresql://admin:password123@db:5432/payflow?schema=public"
+      DATABASE_URL: 'postgresql://admin:password123@db:5432/payflow?schema=public'
       PORT: 3333
-      JWT_SECRET: "changemeplease_jwt_secret_dev_key" 
+      JWT_SECRET: 'changemeplease_jwt_secret_dev_key'
       # Add other necessary env vars here or use env_file
     networks:
       - payflow-network
@@ -41,9 +41,9 @@ services:
     depends_on:
       - api
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
-      NEXT_PUBLIC_API_URL: "http://localhost:3333" # Browser connects to 3333
+      NEXT_PUBLIC_API_URL: 'http://localhost:3333' # Browser connects to 3333
       # Note: Server-side calls from Next to API might need internal name http://api:3333
       # But usually client-side data fetching prevails in dashboard apps or handled via proxy.
     networks:

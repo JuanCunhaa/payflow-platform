@@ -61,7 +61,7 @@ export class GuardiansController {
     private readonly prisma: PrismaService,
     private readonly auditService: AuditService,
     private readonly emailService: EmailService
-  ) { }
+  ) {}
 
   @Get()
   @Roles('SCHOOL_ADMIN', 'SECRETARY', 'READONLY')

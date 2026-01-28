@@ -200,7 +200,9 @@ export default function RegisterGuardianPage() {
 
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2">
-                  <Label htmlFor="guardian-password">{t(i18nKeys.guardianRegister.form.password)}</Label>
+                  <Label htmlFor="guardian-password">
+                    {t(i18nKeys.guardianRegister.form.password)}
+                  </Label>
                   <PasswordInput
                     id="guardian-password"
                     value={password}
@@ -209,7 +211,9 @@ export default function RegisterGuardianPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="guardian-confirm">{t(i18nKeys.guardianRegister.form.confirmPassword)}</Label>
+                  <Label htmlFor="guardian-confirm">
+                    {t(i18nKeys.guardianRegister.form.confirmPassword)}
+                  </Label>
                   <PasswordInput
                     id="guardian-confirm"
                     value={confirmPassword}
@@ -219,7 +223,9 @@ export default function RegisterGuardianPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="guardian-school-code">{t(i18nKeys.guardianRegister.form.schoolCode)}</Label>
+                <Label htmlFor="guardian-school-code">
+                  {t(i18nKeys.guardianRegister.form.schoolCode)}
+                </Label>
                 <Input
                   id="guardian-school-code"
                   value={schoolCode}

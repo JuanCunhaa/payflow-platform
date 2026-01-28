@@ -46,7 +46,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     private readonly passwordService: PasswordService,
     private readonly emailService: EmailService
-  ) { }
+  ) {}
 
   async login(
     loginDto: LoginDto,

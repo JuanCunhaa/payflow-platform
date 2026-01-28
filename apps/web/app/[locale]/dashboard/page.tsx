@@ -38,9 +38,7 @@ export default function DashboardPage() {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">{t(i18nKeys.dashboard.title)}</h1>
           {(user.tenant || contextTenant) && (
-            <p className="text-muted-foreground mt-1">
-              {user.tenant?.name || contextTenant?.name}
-            </p>
+            <p className="text-muted-foreground mt-1">{user.tenant?.name || contextTenant?.name}</p>
           )}
         </div>
         <Button variant="destructive" onClick={logout} className="gap-2">
@@ -57,7 +55,8 @@ export default function DashboardPage() {
         </CardHeader>
         <CardContent>
           <p className="text-muted-foreground">
-            {t(i18nKeys.dashboard.userTypeLabel)} <strong className="text-foreground">{user.userType}</strong>
+            {t(i18nKeys.dashboard.userTypeLabel)}{' '}
+            <strong className="text-foreground">{user.userType}</strong>
           </p>
         </CardContent>
       </Card>
@@ -71,7 +70,9 @@ export default function DashboardPage() {
             <Mail className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-sm font-medium truncate" title={user.email ?? ''}>{user.email}</div>
+            <div className="text-sm font-medium truncate" title={user.email ?? ''}>
+              {user.email}
+            </div>
           </CardContent>
         </Card>
 
@@ -133,5 +134,5 @@ function ArrowLeftIcon(props: any) {
       <path d="m12 19-7-7 7-7" />
       <path d="M19 12H5" />
     </svg>
-  )
+  );
 }

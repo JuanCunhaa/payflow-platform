@@ -59,7 +59,7 @@ export class ContractsController {
   constructor(
     private readonly prisma: PrismaService,
     private readonly auditService: AuditService
-  ) { }
+  ) {}
 
   @Get()
   @Roles('SCHOOL_ADMIN', 'FINANCE', 'SECRETARY', 'READONLY')

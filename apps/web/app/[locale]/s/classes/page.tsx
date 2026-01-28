@@ -277,9 +277,7 @@ export default function SchoolClassesPage() {
 
   return (
     <div className="rounded-xl border bg-card p-6 shadow-sm">
-      <h1 className="mb-1 mt-0 text-xl font-semibold">
-        {t(i18nKeys.school.pages.classes.title)}
-      </h1>
+      <h1 className="mb-1 mt-0 text-xl font-semibold">{t(i18nKeys.school.pages.classes.title)}</h1>
       <p className="mb-4 text-sm text-muted-foreground">
         {t(i18nKeys.school.pages.classes.description)}
       </p>
@@ -288,20 +286,22 @@ export default function SchoolClassesPage() {
         <button
           type="button"
           onClick={() => setActiveTab('grades')}
-          className={`cursor-pointer border-none px-3.5 py-1.5 text-sm ${activeTab === 'grades'
-            ? 'bg-primary text-primary-foreground'
-            : 'bg-transparent text-muted-foreground hover:bg-muted'
-            }`}
+          className={`cursor-pointer border-none px-3.5 py-1.5 text-sm ${
+            activeTab === 'grades'
+              ? 'bg-primary text-primary-foreground'
+              : 'bg-transparent text-muted-foreground hover:bg-muted'
+          }`}
         >
           {t(i18nKeys.school.classesUi.tabs.grades)}
         </button>
         <button
           type="button"
           onClick={() => setActiveTab('classes')}
-          className={`cursor-pointer border-none px-3.5 py-1.5 text-sm ${activeTab === 'classes'
-            ? 'bg-primary text-primary-foreground'
-            : 'bg-transparent text-muted-foreground hover:bg-muted'
-            }`}
+          className={`cursor-pointer border-none px-3.5 py-1.5 text-sm ${
+            activeTab === 'classes'
+              ? 'bg-primary text-primary-foreground'
+              : 'bg-transparent text-muted-foreground hover:bg-muted'
+          }`}
         >
           {t(i18nKeys.school.classesUi.tabs.classes)}
         </button>
@@ -339,14 +339,8 @@ export default function SchoolClassesPage() {
           )}
 
           {gradeFormMode && (
-            <form
-              onSubmit={handleSubmitGrade}
-              className="mb-3 flex flex-wrap items-center gap-2"
-            >
-              <label
-                htmlFor="grade-name-input"
-                className="text-xs text-foreground"
-              >
+            <form onSubmit={handleSubmitGrade} className="mb-3 flex flex-wrap items-center gap-2">
+              <label htmlFor="grade-name-input" className="text-xs text-foreground">
                 {t(i18nKeys.school.classesUi.form.gradeName)}
               </label>
               <input
@@ -359,8 +353,9 @@ export default function SchoolClassesPage() {
               <button
                 type="submit"
                 disabled={gradeSaving}
-                className={`cursor-pointer rounded-full border-none bg-green-600 px-2.5 py-1.5 text-xs text-white hover:bg-green-700 ${gradeSaving ? 'cursor-not-allowed opacity-70' : ''
-                  }`}
+                className={`cursor-pointer rounded-full border-none bg-green-600 px-2.5 py-1.5 text-xs text-white hover:bg-green-700 ${
+                  gradeSaving ? 'cursor-not-allowed opacity-70' : ''
+                }`}
               >
                 {gradeSaving ? t(i18nKeys.common.loading) : t(i18nKeys.school.classesUi.form.save)}
               </button>
@@ -368,9 +363,7 @@ export default function SchoolClassesPage() {
           )}
 
           {gradesLoading ? (
-            <p className="text-sm text-muted-foreground">
-              {t(i18nKeys.common.loading)}
-            </p>
+            <p className="text-sm text-muted-foreground">{t(i18nKeys.common.loading)}</p>
           ) : grades.length === 0 ? (
             <p className="text-sm text-muted-foreground">
               {t(i18nKeys.school.classesUi.grades.empty)}
@@ -386,7 +379,9 @@ export default function SchoolClassesPage() {
                   <div className="flex items-center gap-1.5 text-xs">
                     {gradeDeleteCandidateId === grade.id ? (
                       <>
-                        <span className="text-muted-foreground">{t(i18nKeys.school.classesUi.grades.deleteConfirmTitle)}</span>
+                        <span className="text-muted-foreground">
+                          {t(i18nKeys.school.classesUi.grades.deleteConfirmTitle)}
+                        </span>
                         <button
                           type="button"
                           onClick={() => setGradeDeleteCandidateId(null)}
@@ -435,10 +430,7 @@ export default function SchoolClassesPage() {
               {t(i18nKeys.school.classesUi.classes.title)}
             </h2>
             <div className="flex flex-wrap items-center gap-2">
-              <label
-                htmlFor="classes-filter-grade"
-                className="text-xs text-muted-foreground"
-              >
+              <label htmlFor="classes-filter-grade" className="text-xs text-muted-foreground">
                 {t(i18nKeys.school.classesUi.classes.filterByGrade)}
               </label>
               <select
@@ -481,14 +473,8 @@ export default function SchoolClassesPage() {
           )}
 
           {classFormMode && (
-            <form
-              onSubmit={handleSubmitClass}
-              className="mb-3 flex flex-wrap items-center gap-2"
-            >
-              <label
-                htmlFor="class-name-input"
-                className="text-xs text-foreground"
-              >
+            <form onSubmit={handleSubmitClass} className="mb-3 flex flex-wrap items-center gap-2">
+              <label htmlFor="class-name-input" className="text-xs text-foreground">
                 {t(i18nKeys.school.classesUi.form.className)}
               </label>
               <input
@@ -513,8 +499,9 @@ export default function SchoolClassesPage() {
               <button
                 type="submit"
                 disabled={classSaving}
-                className={`cursor-pointer rounded-full border-none bg-green-600 px-2.5 py-1.5 text-xs text-white hover:bg-green-700 ${classSaving ? 'cursor-not-allowed opacity-70' : ''
-                  }`}
+                className={`cursor-pointer rounded-full border-none bg-green-600 px-2.5 py-1.5 text-xs text-white hover:bg-green-700 ${
+                  classSaving ? 'cursor-not-allowed opacity-70' : ''
+                }`}
               >
                 {classSaving ? t(i18nKeys.common.loading) : t(i18nKeys.school.classesUi.form.save)}
               </button>
@@ -543,12 +530,16 @@ export default function SchoolClassesPage() {
                 >
                   <div>
                     <div className="text-sm text-foreground">{item.name}</div>
-                    <div className="text-xs text-muted-foreground">{gradeNameById(item.gradeId)}</div>
+                    <div className="text-xs text-muted-foreground">
+                      {gradeNameById(item.gradeId)}
+                    </div>
                   </div>
                   <div className="flex items-center gap-1.5 text-xs">
                     {classDeleteCandidateId === item.id ? (
                       <>
-                        <span className="text-muted-foreground">{t(i18nKeys.school.classesUi.grades.deleteConfirmTitle)}</span>
+                        <span className="text-muted-foreground">
+                          {t(i18nKeys.school.classesUi.grades.deleteConfirmTitle)}
+                        </span>
                         <button
                           type="button"
                           onClick={() => setClassDeleteCandidateId(null)}

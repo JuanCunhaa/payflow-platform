@@ -62,16 +62,19 @@ export default function PlatformLayout({ children }: { children: React.ReactNode
           <div className="flex items-center gap-4">
             <LanguageToggle />
             <ModeToggle />
-            <Button size="sm" variant="ghost" className="text-destructive hover:text-destructive hover:bg-destructive/10" onClick={logout}>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="text-destructive hover:text-destructive hover:bg-destructive/10"
+              onClick={logout}
+            >
               <LogOut className="h-4 w-4 mr-2" />
               {t(i18nKeys.nav.logout)}
             </Button>
           </div>
         </header>
 
-        <main className="flex-1 p-6 md:p-8 max-w-7xl mx-auto w-full">
-          {children}
-        </main>
+        <main className="flex-1 p-6 md:p-8 max-w-7xl mx-auto w-full">{children}</main>
         <Footer />
       </div>
     </div>

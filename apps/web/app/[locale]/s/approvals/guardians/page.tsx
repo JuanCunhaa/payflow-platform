@@ -7,7 +7,17 @@ import { useI18n } from '../../../../i18n-context';
 import { useAuth } from '../../../../auth-context';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Check, X, AlertTriangle, ChevronLeft, ChevronRight, Mail, Phone, User, ShieldAlert } from 'lucide-react';
+import {
+  Check,
+  X,
+  AlertTriangle,
+  ChevronLeft,
+  ChevronRight,
+  Mail,
+  Phone,
+  User,
+  ShieldAlert,
+} from 'lucide-react';
 
 type GuardianStatus = 'PENDING_APPROVAL' | 'ACTIVE' | 'REJECTED' | 'SUSPENDED';
 
@@ -137,7 +147,9 @@ export default function SchoolGuardiansApprovalsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">{t(i18nKeys.school.pages.approvalsGuardians.title)}</h1>
+        <h1 className="text-3xl font-bold tracking-tight">
+          {t(i18nKeys.school.pages.approvalsGuardians.title)}
+        </h1>
         <p className="text-muted-foreground">
           {t(i18nKeys.school.pages.approvalsGuardians.description)}
         </p>
@@ -153,7 +165,9 @@ export default function SchoolGuardiansApprovalsPage() {
       <Card>
         <CardHeader>
           <CardTitle>{t(i18nKeys.school.pages.approvalsGuardians.title)}</CardTitle>
-          <CardDescription>{t(i18nKeys.school.pages.approvalsGuardians.description)}</CardDescription>
+          <CardDescription>
+            {t(i18nKeys.school.pages.approvalsGuardians.description)}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           {loading ? (
@@ -190,7 +204,10 @@ export default function SchoolGuardiansApprovalsPage() {
                   </thead>
                   <tbody className="[&_tr:last-child]:border-0">
                     {guardians.map((guardian) => (
-                      <tr key={guardian.id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                      <tr
+                        key={guardian.id}
+                        className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+                      >
                         <td className="p-4 align-middle">
                           <div className="flex items-center gap-2">
                             <User className="h-4 w-4 text-muted-foreground" />
@@ -227,11 +244,19 @@ export default function SchoolGuardiansApprovalsPage() {
                               size="sm"
                               className="h-8 w-8 p-0 text-green-600 hover:text-green-700 hover:bg-green-50 border-green-200"
                               onClick={(e) => void handleApprove(guardian.id, e)}
-                              disabled={actionGuardianId === guardian.id || !guardian.user.emailVerified}
-                              title={!guardian.user.emailVerified ? "Email deve ser verificado antes da aprovação" : "Aprovar"}
+                              disabled={
+                                actionGuardianId === guardian.id || !guardian.user.emailVerified
+                              }
+                              title={
+                                !guardian.user.emailVerified
+                                  ? 'Email deve ser verificado antes da aprovação'
+                                  : 'Aprovar'
+                              }
                             >
                               <Check className="h-4 w-4" />
-                              <span className="sr-only">{t(i18nKeys.school.guardiansUi.actions.activate)}</span>
+                              <span className="sr-only">
+                                {t(i18nKeys.school.guardiansUi.actions.activate)}
+                              </span>
                             </Button>
                             <Button
                               variant="outline"
@@ -241,7 +266,9 @@ export default function SchoolGuardiansApprovalsPage() {
                               disabled={actionGuardianId === guardian.id}
                             >
                               <X className="h-4 w-4" />
-                              <span className="sr-only">{t(i18nKeys.school.guardiansUi.actions.inactivate)}</span>
+                              <span className="sr-only">
+                                {t(i18nKeys.school.guardiansUi.actions.inactivate)}
+                              </span>
                             </Button>
                           </div>
                         </td>

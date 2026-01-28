@@ -158,9 +158,13 @@ export default function PlatformLeadsPage() {
 
       <div className="flex-1 overflow-hidden rounded-md border bg-card text-card-foreground shadow-sm flex flex-col">
         {loading ? (
-          <div className="flex-1 flex items-center justify-center text-muted-foreground">{t(i18nKeys.common.loading)}</div>
+          <div className="flex-1 flex items-center justify-center text-muted-foreground">
+            {t(i18nKeys.common.loading)}
+          </div>
         ) : leads.length === 0 ? (
-          <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm p-4">{t(i18nKeys.platform.leads.empty)}</div>
+          <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm p-4">
+            {t(i18nKeys.platform.leads.empty)}
+          </div>
         ) : (
           <div className="flex-1 overflow-y-auto">
             <table className="w-full caption-bottom text-sm">
@@ -184,23 +188,31 @@ export default function PlatformLeadsPage() {
                   <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">
                     {t(i18nKeys.platform.leads.table.createdAt)}
                   </th>
-                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">{t(i18nKeys.common.actions)}</th>
+                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">
+                    {t(i18nKeys.common.actions)}
+                  </th>
                 </tr>
               </thead>
               <tbody className="[&_tr:last-child]:border-0">
                 {leads.map((lead) => (
-                  <tr key={lead.id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                  <tr
+                    key={lead.id}
+                    className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+                  >
                     <td className="p-3 align-middle">{lead.schoolName}</td>
                     <td className="p-3 align-middle">{lead.name}</td>
                     <td className="p-3 align-middle">{lead.email}</td>
                     <td className="p-3 align-middle">{lead.phone}</td>
                     <td className="p-3 align-middle">
-                      <span className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ring-inset ${lead.status === 'NEW'
-                        ? 'bg-blue-50 text-blue-700 ring-blue-600/20 dark:bg-blue-900/30 dark:text-blue-400 dark:ring-blue-900/50'
-                        : lead.status === 'CONTACTED'
-                          ? 'bg-yellow-50 text-yellow-700 ring-yellow-600/20 dark:bg-yellow-900/30 dark:text-yellow-400 dark:ring-yellow-900/50'
-                          : 'bg-green-50 text-green-700 ring-green-600/20 dark:bg-green-900/30 dark:text-green-400 dark:ring-green-900/50'
-                        }`}>
+                      <span
+                        className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ring-inset ${
+                          lead.status === 'NEW'
+                            ? 'bg-blue-50 text-blue-700 ring-blue-600/20 dark:bg-blue-900/30 dark:text-blue-400 dark:ring-blue-900/50'
+                            : lead.status === 'CONTACTED'
+                              ? 'bg-yellow-50 text-yellow-700 ring-yellow-600/20 dark:bg-yellow-900/30 dark:text-yellow-400 dark:ring-yellow-900/50'
+                              : 'bg-green-50 text-green-700 ring-green-600/20 dark:bg-green-900/30 dark:text-green-400 dark:ring-green-900/50'
+                        }`}
+                      >
                         {statusLabel(lead.status)}
                       </span>
                     </td>

@@ -538,6 +538,10 @@ export const i18nKeys = {
         cancel: 'school.invoicesUi.export.cancel',
         button: 'school.invoicesUi.export.button',
       },
+      origin: {
+        contract: 'school.invoicesUi.origin.contract',
+        oneOff: 'school.invoicesUi.origin.oneOff',
+      },
       newForm: {
         title: 'school.invoicesUi.newForm.title',
         description: 'school.invoicesUi.newForm.description',

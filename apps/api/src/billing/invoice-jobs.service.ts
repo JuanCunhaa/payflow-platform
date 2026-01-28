@@ -61,7 +61,7 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
     private readonly prisma: PrismaService,
     private readonly auditService: AuditService,
     private readonly emailService: EmailService
-  ) { }
+  ) {}
 
   onModuleInit() {
     if (process.env.DISABLE_INVOICE_SCHEDULER === '1') {

@@ -456,13 +456,27 @@ export default function SchoolInvoicesPage() {
               <table className="w-full text-left text-sm">
                 <thead className="bg-muted/50 text-xs uppercase text-muted-foreground">
                   <tr>
-                    <th className="px-4 py-3 font-medium">{t(i18nKeys.school.invoicesUi.table.dueDate)}</th>
-                    <th className="px-4 py-3 font-medium">{t(i18nKeys.school.invoicesUi.table.student)}</th>
-                    <th className="px-4 py-3 font-medium">{t(i18nKeys.school.invoicesUi.table.guardian)}</th>
-                    <th className="px-4 py-3 font-medium text-right">{t(i18nKeys.school.invoicesUi.table.amount)}</th>
-                    <th className="px-4 py-3 font-medium text-center">{t(i18nKeys.school.invoicesUi.table.origin)}</th>
-                    <th className="px-4 py-3 font-medium text-center">{t(i18nKeys.school.invoicesUi.table.status)}</th>
-                    <th className="px-4 py-3 font-medium text-right">{t(i18nKeys.school.invoicesUi.table.actions)}</th>
+                    <th className="px-4 py-3 font-medium">
+                      {t(i18nKeys.school.invoicesUi.table.dueDate)}
+                    </th>
+                    <th className="px-4 py-3 font-medium">
+                      {t(i18nKeys.school.invoicesUi.table.student)}
+                    </th>
+                    <th className="px-4 py-3 font-medium">
+                      {t(i18nKeys.school.invoicesUi.table.guardian)}
+                    </th>
+                    <th className="px-4 py-3 font-medium text-right">
+                      {t(i18nKeys.school.invoicesUi.table.amount)}
+                    </th>
+                    <th className="px-4 py-3 font-medium text-center">
+                      {t(i18nKeys.school.invoicesUi.table.origin)}
+                    </th>
+                    <th className="px-4 py-3 font-medium text-center">
+                      {t(i18nKeys.school.invoicesUi.table.status)}
+                    </th>
+                    <th className="px-4 py-3 font-medium text-right">
+                      {t(i18nKeys.school.invoicesUi.table.actions)}
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y">
@@ -470,25 +484,33 @@ export default function SchoolInvoicesPage() {
                     const studentName = invoice.student?.name ?? '';
                     const guardianName = invoice.guardian?.name ?? '';
                     const originLabel = invoice.contractId
-                      ? t(i18nKeys.school.contractsUi.table.name)
-                      : 'One-off';
+                      ? t(i18nKeys.school.invoicesUi.origin.contract)
+                      : t(i18nKeys.school.invoicesUi.origin.oneOff);
 
                     const statusColorClass =
-                      invoice.status === 'PAID' ? 'bg-green-500/10 text-green-700' :
-                        invoice.status === 'OVERDUE' ? 'bg-red-500/10 text-red-700' :
-                          invoice.status === 'PENDING' ? 'bg-yellow-500/10 text-yellow-700' :
-                            (invoice.status === 'CANCELED' || invoice.status === 'REFUNDED') ? 'bg-gray-500/10 text-gray-700' :
-                              'bg-blue-500/10 text-blue-700';
+                      invoice.status === 'PAID'
+                        ? 'bg-green-500/10 text-green-700'
+                        : invoice.status === 'OVERDUE'
+                          ? 'bg-red-500/10 text-red-700'
+                          : invoice.status === 'PENDING'
+                            ? 'bg-yellow-500/10 text-yellow-700'
+                            : invoice.status === 'CANCELED' || invoice.status === 'REFUNDED'
+                              ? 'bg-gray-500/10 text-gray-700'
+                              : 'bg-blue-500/10 text-blue-700';
 
                     return (
                       <tr key={invoice.id} className="hover:bg-muted/50">
                         <td className="px-4 py-3">{formatDate(invoice.dueDate)}</td>
                         <td className="px-4 py-3">{studentName || '-'}</td>
                         <td className="px-4 py-3">{guardianName || '-'}</td>
-                        <td className="px-4 py-3 text-right font-medium">{formatAmount(invoice.amountCents, invoice.currency)}</td>
+                        <td className="px-4 py-3 text-right font-medium">
+                          {formatAmount(invoice.amountCents, invoice.currency)}
+                        </td>
                         <td className="px-4 py-3 text-center text-xs">{originLabel}</td>
                         <td className="px-4 py-3 text-center">
-                          <span className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${statusColorClass}`}>
+                          <span
+                            className={`inline-flex rounded-full px-2 py-0.5 text-xs font-medium ${statusColorClass}`}
+                          >
                             {statusLabel(invoice.status)}
                           </span>
                         </td>
@@ -547,7 +569,9 @@ export default function SchoolInvoicesPage() {
             {detailError}
           </p>
         ) : !selectedInvoice ? (
-          <p className="text-sm text-muted-foreground">{t(i18nKeys.school.invoicesUi.detail.emptySelection)}</p>
+          <p className="text-sm text-muted-foreground">
+            {t(i18nKeys.school.invoicesUi.detail.emptySelection)}
+          </p>
         ) : (
           <div className="flex flex-col gap-6">
             <div className="rounded-lg bg-muted/30 p-4">
@@ -560,11 +584,15 @@ export default function SchoolInvoicesPage() {
                 </span>
               </div>
               <div className="mb-1 flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">{t(i18nKeys.school.invoicesUi.table.dueDate)}</span>
+                <span className="text-muted-foreground">
+                  {t(i18nKeys.school.invoicesUi.table.dueDate)}
+                </span>
                 <span>{formatDate(selectedInvoice.dueDate)}</span>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">{t(i18nKeys.school.invoicesUi.table.status)}</span>
+                <span className="text-muted-foreground">
+                  {t(i18nKeys.school.invoicesUi.table.status)}
+                </span>
                 <span className="font-medium">{statusLabel(selectedInvoice.status)}</span>
               </div>
             </div>
@@ -582,7 +610,9 @@ export default function SchoolInvoicesPage() {
                 {selectedInvoice.guardian?.name ?? selectedInvoice.guardian?.user?.email ?? '-'}
               </p>
               <p className="m-0 text-xs text-muted-foreground/80">
-                {selectedOrigin === 'contract' ? 'Mensalidade (contrato)' : 'Cobrança avulsa'}
+                {selectedOrigin === 'contract'
+                  ? t(i18nKeys.school.invoicesUi.origin.contract)
+                  : t(i18nKeys.school.invoicesUi.origin.oneOff)}
               </p>
             </div>
 

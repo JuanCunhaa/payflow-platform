@@ -94,9 +94,7 @@ export default function ForgotPasswordPage() {
               <div className="rounded-full bg-green-100 p-3 text-green-600">
                 <CheckCircle2 className="h-6 w-6" />
               </div>
-              <p className="text-sm text-green-800">
-                {t(i18nKeys.passwordReset.forgot.success)}
-              </p>
+              <p className="text-sm text-green-800">{t(i18nKeys.passwordReset.forgot.success)}</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">

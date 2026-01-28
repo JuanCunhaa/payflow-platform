@@ -7,16 +7,17 @@ export type EmailTemplateId =
   | 'invoice-paid'
   | 'auth.password_reset';
 
-
-
 const BASE_STYLES = {
   body: 'font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: #f3f4f6; margin: 0; padding: 0; width: 100%;',
-  container: 'max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);',
+  container:
+    'max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);',
   header: 'background-color: #22c55e; padding: 24px; color: #ffffff;',
   headerTitle: 'margin: 0; font-size: 20px; font-weight: 600;',
   content: 'padding: 32px 32px 48px; color: #374151; font-size: 16px; line-height: 1.6;',
-  footer: 'padding: 24px; text-align: center; color: #6b7280; font-size: 12px; background-color: #f9fafb; border-top: 1px solid #e5e7eb;',
-  button: 'display: inline-block; background-color: #22c55e; color: #ffffff; padding: 12px 24px; border-radius: 9999px; text-decoration: none; font-weight: 500; font-size: 16px; margin-top: 24px;',
+  footer:
+    'padding: 24px; text-align: center; color: #6b7280; font-size: 12px; background-color: #f9fafb; border-top: 1px solid #e5e7eb;',
+  button:
+    'display: inline-block; background-color: #22c55e; color: #ffffff; padding: 12px 24px; border-radius: 9999px; text-decoration: none; font-weight: 500; font-size: 16px; margin-top: 24px;',
   link: 'color: #22c55e; text-decoration: none;',
   highlight: 'font-weight: 700; color: #111827;',
 };
@@ -132,7 +133,7 @@ const TRANSLATIONS = {
         `,
         text: `Olá {{name}},\n\nRecebemos o pagamento de {{amount}} referente a escola {{school}} em {{paidDate}}.\n\nObrigado!`,
       },
-    }
+    },
   },
   'en-US': {
     footer: {
@@ -243,11 +244,15 @@ const TRANSLATIONS = {
         `,
         text: `Hello {{name}},\n\nWe received payment of {{amount}} for {{school}} on {{paidDate}}.\n\nThank you!`,
       },
-    }
-  }
+    },
+  },
 };
 
-function getLayout(content: string, schoolName: string = 'Cobra Nex', locale: string = 'pt-BR'): string {
+function getLayout(
+  content: string,
+  schoolName: string = 'Cobra Nex',
+  locale: string = 'pt-BR'
+): string {
   const t = TRANSLATIONS[locale as keyof typeof TRANSLATIONS] || TRANSLATIONS['pt-BR'];
   const footerReason = interpolate(t.footer.reason, { school: schoolName });
 
@@ -304,7 +309,6 @@ export function renderEmailTemplate(
   return {
     html: getLayout(interpolate(templateDef.html, variables), schoolName, locale),
     text: interpolate(templateDef.text, variables),
-    subject: templateDef.subject
+    subject: templateDef.subject,
   };
 }
-

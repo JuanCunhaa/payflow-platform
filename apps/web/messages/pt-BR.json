@@ -780,6 +780,10 @@
         "description": "Selecione o período.",
         "submit": "Exportar",
         "cancel": "Cancelar"
+      },
+      "origin": {
+        "contract": "Mensalidade (contrato)",
+        "oneOff": "Cobrança avulsa"
       }
     },
     "pages": {

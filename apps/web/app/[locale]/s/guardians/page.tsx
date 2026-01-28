@@ -40,7 +40,7 @@ import {
   ShieldAlert,
   ChevronLeft,
   ChevronRight,
-  Loader2
+  Loader2,
 } from 'lucide-react';
 
 type GuardianStatus = 'ACTIVE' | 'INACTIVE';
@@ -112,10 +112,11 @@ export default function SchoolGuardiansPage() {
   const [newStudentBirthDate, setNewStudentBirthDate] = useState('');
 
   // Computed for Edit Mode
-  const editingGuardian = guardians.find(g => g.id === editingGuardianId);
-  const linkedStudents = editingGuardian?.studentIds
-    ?.map((id) => students.find((s) => s.id === id))
-    .filter((s): s is Student => Boolean(s)) ?? [];
+  const editingGuardian = guardians.find((g) => g.id === editingGuardianId);
+  const linkedStudents =
+    editingGuardian?.studentIds
+      ?.map((id) => students.find((s) => s.id === id))
+      .filter((s): s is Student => Boolean(s)) ?? [];
 
   const availableStudents = students.filter(
     (student) => !editingGuardian?.studentIds?.includes(student.id)
@@ -341,15 +342,14 @@ export default function SchoolGuardiansPage() {
     }
   }
 
-
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">{t(i18nKeys.school.pages.guardians.title)}</h1>
-          <p className="text-muted-foreground">
-            {t(i18nKeys.school.pages.guardians.description)}
-          </p>
+          <h1 className="text-3xl font-bold tracking-tight">
+            {t(i18nKeys.school.pages.guardians.title)}
+          </h1>
+          <p className="text-muted-foreground">{t(i18nKeys.school.pages.guardians.description)}</p>
         </div>
         <Button onClick={openCreateGuardian}>
           <Plus className="mr-2 h-4 w-4" />
@@ -363,14 +363,20 @@ export default function SchoolGuardiansPage() {
           <Input
             placeholder={t(i18nKeys.school.guardiansUi.filters.search)}
             value={searchQuery}
-            onChange={(e) => { setSearchQuery(e.target.value); setPage(1); }}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setPage(1);
+            }}
             className="pl-9"
           />
         </div>
         <select
           className="h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           value={filterStatus}
-          onChange={(e) => { setFilterStatus(e.target.value as FilterStatus); setPage(1); }}
+          onChange={(e) => {
+            setFilterStatus(e.target.value as FilterStatus);
+            setPage(1);
+          }}
         >
           <option value="ALL">{t(i18nKeys.school.guardiansUi.filters.statusAll)}</option>
           <option value="ACTIVE">{t(i18nKeys.school.guardiansUi.status.active)}</option>
@@ -422,7 +428,10 @@ export default function SchoolGuardiansPage() {
                 </thead>
                 <tbody className="[&_tr:last-child]:border-0">
                   {guardians.map((guardian) => (
-                    <tr key={guardian.id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                    <tr
+                      key={guardian.id}
+                      className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+                    >
                       <td className="p-4 align-middle font-medium">
                         <div className="flex items-center gap-2">
                           <User className="h-4 w-4 text-muted-foreground" />
@@ -503,7 +512,7 @@ export default function SchoolGuardiansPage() {
               <Button
                 variant="outline"
                 size="icon"
-                onClick={() => setPage(p => Math.max(1, p - 1))}
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
                 disabled={page <= 1}
               >
                 <ChevronLeft className="h-4 w-4" />
@@ -511,7 +520,7 @@ export default function SchoolGuardiansPage() {
               <Button
                 variant="outline"
                 size="icon"
-                onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                 disabled={page >= totalPages}
               >
                 <ChevronRight className="h-4 w-4" />
@@ -555,7 +564,11 @@ export default function SchoolGuardiansPage() {
                   onChange={(e) => setFormEmail(e.target.value)}
                   disabled={formMode === 'edit'} // Usually email is tied to user, so maybe not editable easily here without more backend logic
                 />
-                {formMode === 'edit' && <p className="text-[0.8rem] text-muted-foreground">O e-mail não pode ser alterado diretamente.</p>}
+                {formMode === 'edit' && (
+                  <p className="text-[0.8rem] text-muted-foreground">
+                    O e-mail não pode ser alterado diretamente.
+                  </p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label>{t(i18nKeys.school.guardiansUi.table.phone)}</Label>
@@ -623,7 +636,10 @@ export default function SchoolGuardiansPage() {
                     className="w-full"
                     onClick={() => {
                       if (newStudentName.trim()) {
-                        setFormNewStudents([...formNewStudents, { name: newStudentName, birthDate: newStudentBirthDate }]);
+                        setFormNewStudents([
+                          ...formNewStudents,
+                          { name: newStudentName, birthDate: newStudentBirthDate },
+                        ]);
                         setNewStudentName('');
                         setNewStudentBirthDate('');
                       }
@@ -637,14 +653,24 @@ export default function SchoolGuardiansPage() {
                   {formNewStudents.length > 0 && (
                     <div className="space-y-2 mt-2">
                       {formNewStudents.map((s, idx) => (
-                        <div key={idx} className="flex items-center justify-between rounded-md bg-background border p-2 text-sm">
+                        <div
+                          key={idx}
+                          className="flex items-center justify-between rounded-md bg-background border p-2 text-sm"
+                        >
                           <div>
                             <p className="font-medium">{s.name}</p>
-                            {s.birthDate && <p className="text-muted-foreground text-xs">{s.birthDate}</p>}
+                            {s.birthDate && (
+                              <p className="text-muted-foreground text-xs">{s.birthDate}</p>
+                            )}
                           </div>
                           <Button
-                            type="button" variant="ghost" size="icon" className="h-6 w-6 text-destructive"
-                            onClick={() => setFormNewStudents(formNewStudents.filter((_, i) => i !== idx))}
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="h-6 w-6 text-destructive"
+                            onClick={() =>
+                              setFormNewStudents(formNewStudents.filter((_, i) => i !== idx))
+                            }
                           >
                             <Trash2 className="h-3 w-3" />
                           </Button>
@@ -686,19 +712,26 @@ export default function SchoolGuardiansPage() {
                   <span className="w-full border-t" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-background px-2 text-muted-foreground">Alunos Vinculados</span>
+                  <span className="bg-background px-2 text-muted-foreground">
+                    Alunos Vinculados
+                  </span>
                 </div>
               </div>
 
               <div className="space-y-4">
                 {studentsLoading ? (
-                  <div className="py-4 text-center text-sm text-muted-foreground">Carregando alunos...</div>
+                  <div className="py-4 text-center text-sm text-muted-foreground">
+                    Carregando alunos...
+                  </div>
                 ) : (
                   <div className="space-y-2">
                     {linkedStudents.length > 0 ? (
                       <div className="rounded-md border">
                         {linkedStudents.map((student) => (
-                          <div key={student.id} className="flex items-center justify-between p-3 border-b last:border-0 hover:bg-muted/50">
+                          <div
+                            key={student.id}
+                            className="flex items-center justify-between p-3 border-b last:border-0 hover:bg-muted/50"
+                          >
                             <div className="flex items-center gap-2">
                               <User className="h-4 w-4 text-muted-foreground" />
                               <span className="text-sm font-medium">{student.name}</span>
@@ -720,7 +753,9 @@ export default function SchoolGuardiansPage() {
                         ))}
                       </div>
                     ) : (
-                      <p className="text-sm text-muted-foreground italic text-center py-2">Nenhum aluno vinculado.</p>
+                      <p className="text-sm text-muted-foreground italic text-center py-2">
+                        Nenhum aluno vinculado.
+                      </p>
                     )}
                   </div>
                 )}
@@ -732,12 +767,18 @@ export default function SchoolGuardiansPage() {
                     onChange={(e) => setLinkStudentId(e.target.value)}
                   >
                     <option value="">Selecione para vincular...</option>
-                    {availableStudents.map(s => (
-                      <option key={s.id} value={s.id}>{s.name}</option>
+                    {availableStudents.map((s) => (
+                      <option key={s.id} value={s.id}>
+                        {s.name}
+                      </option>
                     ))}
                   </select>
                   <Button type="submit" disabled={!linkStudentId || linking}>
-                    {linking ? <Loader2 className="h-4 w-4 animate-spin" /> : <LinkIcon className="h-4 w-4" />}
+                    {linking ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <LinkIcon className="h-4 w-4" />
+                    )}
                   </Button>
                 </form>
               </div>
@@ -745,6 +786,6 @@ export default function SchoolGuardiansPage() {
           )}
         </SheetContent>
       </Sheet>
-    </div >
+    </div>
   );
 }

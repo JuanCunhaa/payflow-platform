@@ -37,13 +37,12 @@ export default function LoginPage() {
     }
   };
 
-  const pageTitle = tenant ? `${t(i18nKeys.login.title)} - ${tenant.name}` : t(i18nKeys.login.title);
+  const pageTitle = tenant
+    ? `${t(i18nKeys.login.title)} - ${tenant.name}`
+    : t(i18nKeys.login.title);
 
   return (
-    <AuthLayout
-      title={pageTitle}
-      description="Entre com suas credenciais para acessar o portal"
-    >
+    <AuthLayout title={pageTitle} description="Entre com suas credenciais para acessar o portal">
       <Card>
         <CardContent className="pt-6">
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -92,7 +91,10 @@ export default function LoginPage() {
         <CardFooter className="flex justify-center border-t p-6">
           <p className="text-sm text-muted-foreground">
             {t(i18nKeys.login.noAccount)}{' '}
-            <Link href={`/${locale}/register/guardian`} className="font-medium text-primary hover:underline">
+            <Link
+              href={`/${locale}/register/guardian`}
+              className="font-medium text-primary hover:underline"
+            >
               {t(i18nKeys.login.signup)}
             </Link>
           </p>

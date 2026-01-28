@@ -77,7 +77,7 @@ function formatAmount(amountCents: number): string {
 @Controller('school/reports')
 @UseGuards(JwtAuthGuard, RequireTenantGuard, RolesGuard)
 export class SchoolReportsController {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   @Get('summary')
   @Roles('SCHOOL_ADMIN', 'FINANCE', 'SECRETARY', 'READONLY')

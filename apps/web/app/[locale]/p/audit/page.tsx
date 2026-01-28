@@ -275,9 +275,13 @@ export default function PlatformAuditPage() {
 
       <div className="flex-1 overflow-hidden rounded-md border bg-card text-card-foreground shadow-sm flex flex-col">
         {loading ? (
-          <div className="flex-1 flex items-center justify-center text-muted-foreground">{t(i18nKeys.common.loading)}</div>
+          <div className="flex-1 flex items-center justify-center text-muted-foreground">
+            {t(i18nKeys.common.loading)}
+          </div>
         ) : items.length === 0 ? (
-          <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm p-4">{t(i18nKeys.platform.audit.empty)}</div>
+          <div className="flex-1 flex items-center justify-center text-muted-foreground text-sm p-4">
+            {t(i18nKeys.platform.audit.empty)}
+          </div>
         ) : (
           <div className="flex-1 overflow-y-auto">
             <table className="w-full caption-bottom text-sm">
@@ -298,8 +302,7 @@ export default function PlatformAuditPage() {
                   <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground">
                     {t(i18nKeys.platform.audit.table.target)}
                   </th>
-                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground w-20">
-                  </th>
+                  <th className="h-10 px-4 text-left align-middle font-medium text-muted-foreground w-20"></th>
                 </tr>
               </thead>
               <tbody className="[&_tr:last-child]:border-0">
@@ -329,15 +332,26 @@ export default function PlatformAuditPage() {
                           {(item.actor?.name?.[0] || item.actor?.email?.[0] || '?').toUpperCase()}
                         </div>
                         <div className="flex flex-col max-w-[150px]">
-                          {item.actor?.name && <span className="text-xs font-medium truncate">{item.actor.name}</span>}
-                          <span className="text-[10px] text-muted-foreground truncate" title={item.actor?.email}>{item.actor?.email || item.actorType}</span>
+                          {item.actor?.name && (
+                            <span className="text-xs font-medium truncate">{item.actor.name}</span>
+                          )}
+                          <span
+                            className="text-[10px] text-muted-foreground truncate"
+                            title={item.actor?.email}
+                          >
+                            {item.actor?.email || item.actorType}
+                          </span>
                         </div>
                       </div>
                     </td>
                     <td className="p-3 align-middle text-xs">
                       {item.targetType ? (
-                        <span className="font-mono bg-muted px-1.5 py-0.5 rounded text-[10px]">{item.targetType}</span>
-                      ) : '-'}
+                        <span className="font-mono bg-muted px-1.5 py-0.5 rounded text-[10px]">
+                          {item.targetType}
+                        </span>
+                      ) : (
+                        '-'
+                      )}
                     </td>
                     <td className="p-3 align-middle text-right">
                       <button
@@ -358,7 +372,8 @@ export default function PlatformAuditPage() {
         {totalPages > 0 && (
           <div className="border-t bg-muted/40 p-2 flex items-center justify-between text-xs">
             <span className="text-muted-foreground pl-2">
-              {t(i18nKeys.common.page)} <strong>{page}</strong> {t(i18nKeys.common.of)} <strong>{totalPages}</strong>
+              {t(i18nKeys.common.page)} <strong>{page}</strong> {t(i18nKeys.common.of)}{' '}
+              <strong>{totalPages}</strong>
             </span>
             <div className="flex gap-1">
               <button
@@ -409,16 +424,28 @@ export default function PlatformAuditPage() {
             <div className="p-0">
               <div className="grid grid-cols-2 gap-4 p-6 bg-muted/20 border-b text-sm">
                 <div>
-                  <span className="text-xs text-muted-foreground block mb-1">{t(i18nKeys.platform.audit.table.actor)}</span>
-                  <div className="font-medium">{selectedItem.actor?.name || selectedItem.actor?.email || t(i18nKeys.platform.audit.system)}</div>
+                  <span className="text-xs text-muted-foreground block mb-1">
+                    {t(i18nKeys.platform.audit.table.actor)}
+                  </span>
+                  <div className="font-medium">
+                    {selectedItem.actor?.name ||
+                      selectedItem.actor?.email ||
+                      t(i18nKeys.platform.audit.system)}
+                  </div>
                   <div className="text-xs text-muted-foreground">{selectedItem.actor?.email}</div>
-                  <div className="text-xs text-muted-foreground mt-1">IP: {selectedItem.ip || '-'}</div>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    IP: {selectedItem.ip || '-'}
+                  </div>
                 </div>
                 <div>
-                  <span className="text-xs text-muted-foreground block mb-1">{t(i18nKeys.platform.audit.table.target)}</span>
+                  <span className="text-xs text-muted-foreground block mb-1">
+                    {t(i18nKeys.platform.audit.table.target)}
+                  </span>
                   <div className="font-medium">{selectedItem.targetType || '-'}</div>
                   <div className="text-xs text-muted-foreground">{selectedItem.targetId}</div>
-                  <div className="text-xs text-muted-foreground mt-1">{t(i18nKeys.platform.audit.table.tenant)}: {selectedItem.tenant?.name}</div>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    {t(i18nKeys.platform.audit.table.tenant)}: {selectedItem.tenant?.name}
+                  </div>
                 </div>
               </div>
               <div className="p-4 bg-slate-950 text-slate-50 overflow-auto max-h-[300px] text-xs font-mono">

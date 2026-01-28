@@ -14,10 +14,10 @@ import { Request, Response } from 'express';
 
 type HttpExceptionResponse =
   | {
-    message?: string | string[];
-    code?: string;
-    [key: string]: unknown;
-  }
+      message?: string | string[];
+      code?: string;
+      [key: string]: unknown;
+    }
   | string;
 
 @Catch()
@@ -55,11 +55,10 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
       // Validation errors normalization (from ValidationPipe)
       if (exception instanceof BadRequestException) {
-        const r = typeof resp === 'object' && resp !== null ? (resp as Record<string, unknown>) : {};
+        const r =
+          typeof resp === 'object' && resp !== null ? (resp as Record<string, unknown>) : {};
         const messageVal = r.message;
-        const messages = Array.isArray(messageVal)
-          ? messageVal
-          : [messageVal].filter(Boolean);
+        const messages = Array.isArray(messageVal) ? messageVal : [messageVal].filter(Boolean);
         return res.status(status).json({
           code: 'validation_error',
           message: 'Validation failed',

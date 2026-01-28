@@ -26,12 +26,8 @@ export default function Home() {
             <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl text-foreground">
               {t(i18nKeys.landing.title)}
             </h1>
-            <p className="text-xl text-muted-foreground">
-              {t(i18nKeys.landing.subtitle)}
-            </p>
-            <p className="text-lg text-muted-foreground">
-              {t(i18nKeys.landing.description)}
-            </p>
+            <p className="text-xl text-muted-foreground">{t(i18nKeys.landing.subtitle)}</p>
+            <p className="text-lg text-muted-foreground">{t(i18nKeys.landing.description)}</p>
             <div className="flex flex-wrap gap-4">
               <Link href={loginHref}>
                 <Button size="lg" className="gap-2">
@@ -78,7 +74,10 @@ export default function Home() {
                 { icon: Wallet, text: t(i18nKeys.landing.problem.receipts) },
                 { icon: ShieldCheck, text: t(i18nKeys.landing.problem.whatsapp) },
               ].map((item, i) => (
-                <div key={i} className="flex flex-col items-center p-6 bg-card rounded-xl shadow-sm border text-center">
+                <div
+                  key={i}
+                  className="flex flex-col items-center p-6 bg-card rounded-xl shadow-sm border text-center"
+                >
                   <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-full mb-4">
                     <item.icon className="h-8 w-8 text-red-500" />
                   </div>
@@ -104,7 +103,10 @@ export default function Home() {
               t(i18nKeys.landing.solution.communication),
               t(i18nKeys.landing.solution.finance),
             ].map((text, i) => (
-              <div key={i} className="group p-6 rounded-xl border bg-card hover:border-primary/50 transition-colors hover:shadow-md">
+              <div
+                key={i}
+                className="group p-6 rounded-xl border bg-card hover:border-primary/50 transition-colors hover:shadow-md"
+              >
                 <div className="flex items-start gap-4">
                   <CheckCircle2 className="h-6 w-6 text-primary flex-shrink-0 mt-0.5" />
                   <p className="text-muted-foreground font-medium">{text}</p>
@@ -118,7 +120,9 @@ export default function Home() {
         <section className="bg-slate-900 text-white py-24">
           <div className="container text-center">
             <h2 className="text-3xl font-bold mb-6">{t(i18nKeys.landing.proof.title)}</h2>
-            <p className="text-slate-400 text-lg max-w-2xl mx-auto">{t(i18nKeys.landing.proof.subtitle)}</p>
+            <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+              {t(i18nKeys.landing.proof.subtitle)}
+            </p>
           </div>
         </section>
 

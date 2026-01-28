@@ -258,11 +258,11 @@ async function run() {
     sendGuardianApprovalEmail: async (
       _recipient: string,
       _params: { name?: string; school?: string; portalLink?: string }
-    ) => { },
+    ) => {},
     sendGuardianRejectionEmail: async (
       _recipient: string,
       _params: { name?: string; school?: string; contactLink?: string }
-    ) => { },
+    ) => {},
   };
 
   const controller = new GuardiansController(prismaMock, auditMock as any, emailMock as any);

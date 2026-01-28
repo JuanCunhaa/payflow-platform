@@ -18,7 +18,7 @@ export interface AuditLogInput {
 
 @Injectable()
 export class AuditService {
-  constructor(private readonly prisma: PrismaService) { }
+  constructor(private readonly prisma: PrismaService) {}
 
   private get auditLogRepo() {
     return this.prisma.auditLog;

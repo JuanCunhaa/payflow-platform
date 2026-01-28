@@ -7,7 +7,7 @@ export class EmailService {
   constructor(
     @Inject(EMAIL_PROVIDER_TOKEN)
     private readonly provider: EmailProvider
-  ) { }
+  ) {}
 
   async sendGuardianApprovalEmail(
     recipient: string,
@@ -61,7 +61,11 @@ export class EmailService {
     });
   }
 
-  async sendPasswordResetEmail(recipient: string, token: string, locale: string = 'pt-BR'): Promise<void> {
+  async sendPasswordResetEmail(
+    recipient: string,
+    token: string,
+    locale: string = 'pt-BR'
+  ): Promise<void> {
     const baseUrl = process.env.APP_PUBLIC_URL || 'https://cobranex.xyz';
     const resetUrl = `${baseUrl}/reset-password?token=${encodeURIComponent(token)}`;
     const variables = {
@@ -106,14 +110,17 @@ export class EmailService {
     });
   }
 
-  async sendInvoiceCreated(params: {
-    recipient: string;
-    studentName: string;
-    schoolName: string;
-    amountCents: number;
-    dueDate: Date;
-    paymentLink?: string | null;
-  }, locale: string = 'pt-BR'): Promise<void> {
+  async sendInvoiceCreated(
+    params: {
+      recipient: string;
+      studentName: string;
+      schoolName: string;
+      amountCents: number;
+      dueDate: Date;
+      paymentLink?: string | null;
+    },
+    locale: string = 'pt-BR'
+  ): Promise<void> {
     const amount = formatCurrencyBRL(params.amountCents);
     const dueDateStr = formatDateBR(params.dueDate);
 
@@ -137,14 +144,17 @@ export class EmailService {
     });
   }
 
-  async sendInvoiceOverdue(params: {
-    recipient: string;
-    studentName: string;
-    schoolName: string;
-    amountCents: number;
-    dueDate: Date;
-    paymentLink?: string | null;
-  }, locale: string = 'pt-BR'): Promise<void> {
+  async sendInvoiceOverdue(
+    params: {
+      recipient: string;
+      studentName: string;
+      schoolName: string;
+      amountCents: number;
+      dueDate: Date;
+      paymentLink?: string | null;
+    },
+    locale: string = 'pt-BR'
+  ): Promise<void> {
     const amount = formatCurrencyBRL(params.amountCents);
     const dueDateStr = formatDateBR(params.dueDate);
 
@@ -168,14 +178,17 @@ export class EmailService {
     });
   }
 
-  async sendInvoicePaid(params: {
-    recipient: string;
-    studentName: string;
-    schoolName: string;
-    amountCents: number;
-    dueDate: Date;
-    paidAt: Date;
-  }, locale: string = 'pt-BR'): Promise<void> {
+  async sendInvoicePaid(
+    params: {
+      recipient: string;
+      studentName: string;
+      schoolName: string;
+      amountCents: number;
+      dueDate: Date;
+      paidAt: Date;
+    },
+    locale: string = 'pt-BR'
+  ): Promise<void> {
     const amount = formatCurrencyBRL(params.amountCents);
     const dueDateStr = formatDateBR(params.dueDate);
     const paidDateStr = formatDateBR(params.paidAt);

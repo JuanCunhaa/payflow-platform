@@ -66,7 +66,7 @@ async function run() {
     },
     invoiceCommunication: {
       findFirst: async (_args: unknown) => null,
-      create: async (_args: unknown) => { },
+      create: async (_args: unknown) => {},
     },
   };
 
@@ -83,8 +83,8 @@ async function run() {
   } as unknown as PaymentService;
 
   const emailServiceMock = {
-    sendInvoiceCreated: async (_params: unknown) => { },
-    sendInvoicePaid: async (_params: unknown) => { },
+    sendInvoiceCreated: async (_params: unknown) => {},
+    sendInvoicePaid: async (_params: unknown) => {},
   } as unknown as EmailService;
 
   const controller = new SchoolInvoicesController(

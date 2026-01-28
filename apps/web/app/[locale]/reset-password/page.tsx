@@ -137,9 +137,7 @@ export default function ResetPasswordPage() {
               <div className="rounded-full bg-green-100 p-3 text-green-600">
                 <CheckCircle2 className="h-6 w-6" />
               </div>
-              <p className="text-sm text-green-800">
-                {t(i18nKeys.passwordReset.reset.success)}
-              </p>
+              <p className="text-sm text-green-800">{t(i18nKeys.passwordReset.reset.success)}</p>
               <Button onClick={handleGoToLogin} className="w-full">
                 {t(i18nKeys.login.title)}
               </Button>
@@ -154,7 +152,9 @@ export default function ResetPasswordPage() {
               )}
 
               <div className="space-y-2">
-                <Label htmlFor="reset-password">{t(i18nKeys.passwordReset.reset.newPasswordLabel)}</Label>
+                <Label htmlFor="reset-password">
+                  {t(i18nKeys.passwordReset.reset.newPasswordLabel)}
+                </Label>
                 <div className="relative">
                   <Input
                     id="reset-password"
@@ -174,7 +174,9 @@ export default function ResetPasswordPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="reset-password-confirm">{t(i18nKeys.passwordReset.reset.confirmPasswordLabel)}</Label>
+                <Label htmlFor="reset-password-confirm">
+                  {t(i18nKeys.passwordReset.reset.confirmPasswordLabel)}
+                </Label>
                 <div className="relative">
                   <Input
                     id="reset-password-confirm"
@@ -188,7 +190,11 @@ export default function ResetPasswordPage() {
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                   >
-                    {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    {showConfirmPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
                   </button>
                 </div>
               </div>

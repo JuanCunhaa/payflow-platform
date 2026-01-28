@@ -30,9 +30,8 @@ async function run() {
   const paymentProvider = new SandboxPaymentProvider();
   const paymentService = new PaymentService(prisma, auditService, paymentProvider);
   const emailServiceMock = {
-     
     sendInvoiceCreated: async (_params: unknown) => {},
-     
+
     sendInvoicePaid: async (_params: unknown) => {},
   } as unknown as EmailService;
 
@@ -187,14 +186,12 @@ async function run() {
     throw new Error('Expected paidAt and paidMethod=SANDBOX after sandbox payment');
   }
 
-   
   console.log('Billing E2E flow (one-off -> payment link -> sandbox pay) passed');
 
   await prisma.$disconnect();
 }
 
 run().catch(async (error) => {
-   
   console.error(error);
   const prisma = new PrismaService();
   try {

@@ -30,7 +30,7 @@ export class PublicController {
     private readonly passwordService: PasswordService,
     private readonly auditService: AuditService,
     private readonly emailService: EmailService
-  ) { }
+  ) {}
 
   /**
    * GET /public/info
@@ -210,7 +210,7 @@ export class PublicController {
     });
 
     const appBaseUrl = process.env.APP_PUBLIC_URL || 'http://localhost:3000';
-    const verifyLink = `${appBaseUrl}/public/verify-email?token=${encodeURIComponent(verifyToken)}`;
+    const verifyLink = `${appBaseUrl}/pt-BR/public/verify-email?token=${encodeURIComponent(verifyToken)}`;
 
     await this.emailService.sendEmailVerification(email, {
       name,
@@ -383,7 +383,7 @@ export class PublicController {
       });
     }
 
-    const invoice = (await this.prisma.invoice.findUnique({
+    const invoice = await this.prisma.invoice.findUnique({
       where: { id: invoiceId },
       include: {
         tenant: {
@@ -400,7 +400,7 @@ export class PublicController {
           },
         },
       },
-    }));
+    });
 
     if (!invoice) {
       throw new NotFoundException({

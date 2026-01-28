@@ -249,7 +249,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             }
           } else if (hostname.endsWith('.vercel.app')) {
             // In Vercel free tier, we cannot easily use wildcards.
-            // So we assume the current hostname IS the base domain for logic purposes, 
+            // So we assume the current hostname IS the base domain for logic purposes,
             // unless we want to redirect to another vercel app (which is unlikely to be automatic).
             // HOWEVER, the user wants 'admin.payflow-platform-web.vercel.app' which is NOT standard Vercel behavior without custom domain.
             // Assuming user has set up wildcard or custom domains:

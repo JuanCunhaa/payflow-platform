@@ -112,7 +112,7 @@ export class SchoolInvoicesController {
     private readonly auditService: AuditService,
     private readonly paymentService: PaymentService,
     private readonly emailService: EmailService
-  ) { }
+  ) {}
 
   @Get()
   @Roles('SCHOOL_ADMIN', 'FINANCE', 'SECRETARY', 'READONLY')
@@ -434,7 +434,7 @@ export class SchoolInvoicesController {
   ) {
     const tenantId = req.tenant!.id;
 
-    const invoice = (await this.prisma.invoice.findFirst({
+    const invoice = await this.prisma.invoice.findFirst({
       where: { id, tenantId },
       include: {
         tenant: {
@@ -451,7 +451,7 @@ export class SchoolInvoicesController {
           },
         },
       },
-    }));
+    });
 
     if (!invoice) {
       throw new NotFoundException({
@@ -535,7 +535,7 @@ export class SchoolInvoicesController {
   ) {
     const tenantId = req.tenant!.id;
 
-    const invoice = (await this.prisma.invoice.findFirst({
+    const invoice = await this.prisma.invoice.findFirst({
       where: { id, tenantId },
       select: {
         id: true,
@@ -543,7 +543,7 @@ export class SchoolInvoicesController {
         paymentLink: true,
         provider: true,
       },
-    }));
+    });
 
     if (!invoice) {
       throw new NotFoundException({
