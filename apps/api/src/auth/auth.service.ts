@@ -458,7 +458,7 @@ export class AuthService {
         expires_at AS "expiresAt",
         used_at    AS "usedAt"
       FROM "password_reset_tokens"
-      WHERE id = ${id}
+      WHERE id = ${id}::uuid
     `;
 
     const record = rows[0];
@@ -504,7 +504,7 @@ export class AuthService {
     await this.prisma.$executeRaw`
       UPDATE "password_reset_tokens"
       SET "used_at" = ${now}
-      WHERE "id" = ${record.id}
+      WHERE "id" = ${record.id}::uuid
     `;
 
     await this.refreshTokenRepo.updateMany({
