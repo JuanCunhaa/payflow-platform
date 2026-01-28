@@ -364,6 +364,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           headers.set('Authorization', `Bearer ${token}`);
         }
 
+        if (typeof window !== 'undefined') {
+          const hostname = window.location.hostname;
+          const parts = hostname.split('.');
+          // Check for tenant subdomain (e.g., tenant.cobranex.xyz or tenant.localtest.me)
+          let tenantSlug: string | undefined;
+
+          if (hostname.endsWith('cobranex.xyz') && parts.length >= 3) {
+            tenantSlug = parts[0];
+          } else if (hostname.includes('localtest.me') && parts.length >= 3) {
+            tenantSlug = parts[0];
+          } else if (parts.length >= 3 && !hostname.endsWith('vercel.app')) {
+            // Generic fallback for other 2-part TLDs if configured
+            tenantSlug = parts[0];
+          }
+
+          if (tenantSlug) {
+            headers.set('X-Tenant-Slug', tenantSlug);
+          }
+        }
+
         return fetch(`${getApiBase()}${path}`, {
           ...init,
           headers,
