@@ -5,6 +5,9 @@ import { useCallback, useEffect, useState } from 'react';
 import { i18nKeys } from '@payflow/shared';
 import { useI18n } from '../../../../i18n-context';
 import { useAuth } from '../../../../auth-context';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Check, X, AlertTriangle, ChevronLeft, ChevronRight, Mail, Phone, User, ShieldAlert } from 'lucide-react';
 
 type GuardianStatus = 'PENDING_APPROVAL' | 'ACTIVE' | 'REJECTED' | 'SUSPENDED';
 
@@ -82,7 +85,12 @@ export default function SchoolGuardiansApprovalsPage() {
         method: 'POST',
       });
       if (!res.ok) {
-        setError(t(i18nKeys.school.guardiansUi.feedback.saveError));
+        const data = await res.json().catch(() => ({}));
+        if (data.code === 'email_not_verified') {
+          setError('O e-mail do responsável ainda não foi verificado.');
+        } else {
+          setError(t(i18nKeys.school.guardiansUi.feedback.saveError));
+        }
         return;
       }
       await loadPendingGuardians();
@@ -127,278 +135,149 @@ export default function SchoolGuardiansApprovalsPage() {
   }
 
   return (
-    <div
-      style={{
-        borderRadius: '12px',
-        border: '1px solid #e2e8f0',
-        padding: '20px',
-        backgroundColor: '#ffffff',
-        boxShadow: '0 10px 25px rgba(15,23,42,0.04)',
-      }}
-    >
-      <h1
-        style={{
-          fontSize: '20px',
-          marginTop: 0,
-          marginBottom: '4px',
-        }}
-      >
-        {t(i18nKeys.school.pages.approvalsGuardians.title)}
-      </h1>
-      <p
-        style={{
-          fontSize: '14px',
-          color: '#64748b',
-          marginTop: 0,
-          marginBottom: '16px',
-        }}
-      >
-        {t(i18nKeys.school.pages.approvalsGuardians.description)}
-      </p>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight">{t(i18nKeys.school.pages.approvalsGuardians.title)}</h1>
+        <p className="text-muted-foreground">
+          {t(i18nKeys.school.pages.approvalsGuardians.description)}
+        </p>
+      </div>
 
       {error && (
-        <div
-          style={{
-            marginBottom: '16px',
-            padding: '10px 12px',
-            borderRadius: '8px',
-            border: '1px solid #fee2e2',
-            backgroundColor: '#fef2f2',
-            color: '#b91c1c',
-            fontSize: '13px',
-          }}
-        >
-          {error}
+        <div className="flex items-center gap-2 rounded-md bg-destructive/15 p-3 text-sm text-destructive">
+          <AlertTriangle className="h-4 w-4" />
+          <p>{error}</p>
         </div>
       )}
 
-      {loading ? (
-        <p
-          style={{
-            fontSize: '14px',
-            color: '#64748b',
-            margin: 0,
-          }}
-        >
-          {t(i18nKeys.common.loading)}
-        </p>
-      ) : guardians.length === 0 ? (
-        <p
-          style={{
-            fontSize: '14px',
-            color: '#64748b',
-            margin: 0,
-          }}
-        >
-          {t(i18nKeys.school.guardiansUi.empty)}
-        </p>
-      ) : (
-        <div
-          style={{
-            borderRadius: '10px',
-            border: '1px solid #e5e7eb',
-            overflow: 'hidden',
-          }}
-        >
-          <table
-            style={{
-              width: '100%',
-              borderCollapse: 'collapse',
-              fontSize: '13px',
-            }}
-          >
-            <thead
-              style={{
-                backgroundColor: '#f9fafb',
-              }}
-            >
-              <tr>
-                <th
-                  style={{
-                    textAlign: 'left',
-                    padding: '8px 10px',
-                    borderBottom: '1px solid #e5e7eb',
-                  }}
-                >
-                  {t(i18nKeys.school.guardiansUi.table.name)}
-                </th>
-                <th
-                  style={{
-                    textAlign: 'left',
-                    padding: '8px 10px',
-                    borderBottom: '1px solid #e5e7eb',
-                  }}
-                >
-                  {t(i18nKeys.school.guardiansUi.table.email)}
-                </th>
-                <th
-                  style={{
-                    textAlign: 'left',
-                    padding: '8px 10px',
-                    borderBottom: '1px solid #e5e7eb',
-                  }}
-                >
-                  {t(i18nKeys.school.guardiansUi.table.phone)}
-                </th>
-                <th
-                  style={{
-                    textAlign: 'left',
-                    padding: '8px 10px',
-                    borderBottom: '1px solid #e5e7eb',
-                  }}
-                >
-                  {t(i18nKeys.school.guardiansUi.table.emailVerified)}
-                </th>
-                <th
-                  style={{
-                    textAlign: 'right',
-                    padding: '8px 10px',
-                    borderBottom: '1px solid #e5e7eb',
-                  }}
-                >
-                  {t(i18nKeys.school.guardiansUi.table.actions)}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {guardians.map((guardian) => (
-                <tr key={guardian.id}>
-                  <td
-                    style={{
-                      padding: '8px 10px',
-                      borderBottom: '1px solid #f3f4f6',
-                    }}
-                  >
-                    {guardian.name}
-                  </td>
-                  <td
-                    style={{
-                      padding: '8px 10px',
-                      borderBottom: '1px solid #f3f4f6',
-                    }}
-                  >
-                    {guardian.user.email}
-                  </td>
-                  <td
-                    style={{
-                      padding: '8px 10px',
-                      borderBottom: '1px solid #f3f4f6',
-                    }}
-                  >
-                    {guardian.phone}
-                  </td>
-                  <td
-                    style={{
-                      padding: '8px 10px',
-                      borderBottom: '1px solid #f3f4f6',
-                    }}
-                  >
-                    {guardian.user.emailVerified
-                      ? t(i18nKeys.school.guardiansUi.status.active)
-                      : t(i18nKeys.school.guardiansUi.status.inactive)}
-                  </td>
-                  <td
-                    style={{
-                      padding: '8px 10px',
-                      borderBottom: '1px solid #f3f4f6',
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'flex-end',
-                        gap: '6px',
-                      }}
-                    >
-                      <button
-                        type="button"
-                        onClick={(event) => void handleApprove(guardian.id, event)}
-                        disabled={actionGuardianId === guardian.id}
-                        style={{
-                          padding: '4px 8px',
-                          borderRadius: '999px',
-                          border: '1px solid #22c55e',
-                          backgroundColor: actionGuardianId === guardian.id ? '#bbf7d0' : '#22c55e',
-                          color: '#ffffff',
-                          cursor: actionGuardianId === guardian.id ? 'not-allowed' : 'pointer',
-                        }}
-                      >
-                        {t(i18nKeys.school.guardiansUi.actions.activate)}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={(event) => void handleReject(guardian.id, event)}
-                        disabled={actionGuardianId === guardian.id}
-                        style={{
-                          padding: '4px 8px',
-                          borderRadius: '999px',
-                          border: '1px solid #fecaca',
-                          backgroundColor: actionGuardianId === guardian.id ? '#fecaca' : '#fef2f2',
-                          color: '#b91c1c',
-                          cursor: actionGuardianId === guardian.id ? 'not-allowed' : 'pointer',
-                        }}
-                      >
-                        {t(i18nKeys.school.guardiansUi.actions.inactivate)}
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              padding: '8px 10px',
-              borderTop: '1px solid #e5e7eb',
-              fontSize: '12px',
-              color: '#6b7280',
-            }}
-          >
-            <span>
-              {page} / {totalPages}
-            </span>
-            <div
-              style={{
-                display: 'flex',
-                gap: '6px',
-              }}
-            >
-              <button
-                type="button"
-                onClick={handlePrevPage}
-                disabled={page <= 1}
-                style={{
-                  padding: '4px 8px',
-                  borderRadius: '999px',
-                  border: '1px solid #e5e7eb',
-                  backgroundColor: page <= 1 ? '#f9fafb' : '#ffffff',
-                  cursor: page <= 1 ? 'not-allowed' : 'pointer',
-                }}
-              >
-                ‹
-              </button>
-              <button
-                type="button"
-                onClick={handleNextPage}
-                disabled={page >= totalPages}
-                style={{
-                  padding: '4px 8px',
-                  borderRadius: '999px',
-                  border: '1px solid #e5e7eb',
-                  backgroundColor: page >= totalPages ? '#f9fafb' : '#ffffff',
-                  cursor: page >= totalPages ? 'not-allowed' : 'pointer',
-                }}
-              >
-                ›
-              </button>
+      <Card>
+        <CardHeader>
+          <CardTitle>{t(i18nKeys.school.pages.approvalsGuardians.title)}</CardTitle>
+          <CardDescription>{t(i18nKeys.school.pages.approvalsGuardians.description)}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {loading ? (
+            <div className="flex justify-center py-8 text-muted-foreground">
+              {t(i18nKeys.common.loading)}
             </div>
-          </div>
-        </div>
-      )}
+          ) : guardians.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-12 text-center text-muted-foreground">
+              <ShieldAlert className="h-12 w-12 text-muted-foreground/50 mb-4" />
+              <p>{t(i18nKeys.school.guardiansUi.empty)}</p>
+            </div>
+          ) : (
+            <div className="rounded-md border">
+              <div className="relative w-full overflow-auto">
+                <table className="w-full caption-bottom text-sm">
+                  <thead className="[&_tr]:border-b">
+                    <tr className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                      <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+                        {t(i18nKeys.school.guardiansUi.table.name)}
+                      </th>
+                      <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+                        {t(i18nKeys.school.guardiansUi.table.email)}
+                      </th>
+                      <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+                        {t(i18nKeys.school.guardiansUi.table.phone)}
+                      </th>
+                      <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground">
+                        Status
+                      </th>
+                      <th className="h-12 px-4 text-right align-middle font-medium text-muted-foreground">
+                        {t(i18nKeys.school.guardiansUi.table.actions)}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="[&_tr:last-child]:border-0">
+                    {guardians.map((guardian) => (
+                      <tr key={guardian.id} className="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                        <td className="p-4 align-middle">
+                          <div className="flex items-center gap-2">
+                            <User className="h-4 w-4 text-muted-foreground" />
+                            <span className="font-medium">{guardian.name}</span>
+                          </div>
+                        </td>
+                        <td className="p-4 align-middle">
+                          <div className="flex items-center gap-2">
+                            <Mail className="h-4 w-4 text-muted-foreground" />
+                            <span>{guardian.user.email}</span>
+                          </div>
+                        </td>
+                        <td className="p-4 align-middle">
+                          <div className="flex items-center gap-2">
+                            <Phone className="h-4 w-4 text-muted-foreground" />
+                            <span>{guardian.phone}</span>
+                          </div>
+                        </td>
+                        <td className="p-4 align-middle">
+                          {guardian.user.emailVerified ? (
+                            <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-800 dark:bg-green-800 dark:text-green-100">
+                              Verificado
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-semibold text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100">
+                              Pendente
+                            </span>
+                          )}
+                        </td>
+                        <td className="p-4 align-middle text-right">
+                          <div className="flex justify-end gap-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="h-8 w-8 p-0 text-green-600 hover:text-green-700 hover:bg-green-50 border-green-200"
+                              onClick={(e) => void handleApprove(guardian.id, e)}
+                              disabled={actionGuardianId === guardian.id || !guardian.user.emailVerified}
+                              title={!guardian.user.emailVerified ? "Email deve ser verificado antes da aprovação" : "Aprovar"}
+                            >
+                              <Check className="h-4 w-4" />
+                              <span className="sr-only">{t(i18nKeys.school.guardiansUi.actions.activate)}</span>
+                            </Button>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              className="h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50 border-red-200"
+                              onClick={(e) => void handleReject(guardian.id, e)}
+                              disabled={actionGuardianId === guardian.id}
+                            >
+                              <X className="h-4 w-4" />
+                              <span className="sr-only">{t(i18nKeys.school.guardiansUi.actions.inactivate)}</span>
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="flex items-center justify-between border-t px-4 py-4">
+                <div className="text-sm text-muted-foreground">
+                  {page} de {totalPages}
+                </div>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={handlePrevPage}
+                    disabled={page <= 1}
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={handleNextPage}
+                    disabled={page >= totalPages}
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }
