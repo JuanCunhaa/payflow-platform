@@ -661,6 +661,71 @@
       },
       "empty": "Nenhum responsável encontrado para o filtro atual."
     },
+    "reportsUi": {
+      "overdue": {
+        "title": "Cobranças em Atraso",
+        "description": "Relatório de cobranças vencidas e não pagas.",
+        "table": {
+          "student": "Aluno",
+          "guardian": "Responsável",
+          "daysOverdue": "Dias de Atraso",
+          "amount": "Valor",
+          "actions": "Ações"
+        },
+        "actions": {
+          "copyPaymentLink": "Copiar Link",
+          "copyPaymentLinkSuccess": "Link copiado!",
+          "generatePaymentLink": "Gerar Link"
+        },
+        "feedback": {
+          "loadError": "Erro ao carregar relatório.",
+          "paymentError": "Erro ao gerar pagamento."
+        },
+        "empty": "Nenhuma cobrança em atraso."
+      },
+      "student": {
+        "title": "Relatório do Aluno",
+        "description": "Histórico financeiro detalhado do aluno.",
+        "cards": {
+          "totalPaid": "Total Pago",
+          "totalOpen": "Total em Aberto"
+        },
+        "table": {
+          "dueDate": "Vencimento",
+          "amount": "Valor",
+          "status": "Status",
+          "guardian": "Responsável",
+          "contract": "Contrato",
+          "paidAt": "Pago em"
+        },
+        "feedback": {
+          "loadError": "Erro ao carregar dados."
+        },
+        "empty": "Nenhum registro encontrado.",
+        "backToList": "Voltar para lista"
+      },
+      "guardian": {
+        "title": "Relatório do Responsável",
+        "description": "Histórico financeiro do responsável.",
+        "cards": {
+          "totalPaid": "Total Pago",
+          "totalOpen": "Total em Aberto"
+        },
+        "table": {
+          "dueDate": "Vencimento",
+          "amount": "Valor",
+          "status": "Status",
+          "student": "Aluno",
+          "contract": "Contrato",
+          "paidAt": "Pago em"
+        },
+        "feedback": {
+          "loadError": "Erro ao carregar dados."
+        },
+        "empty": "Nenhum registro encontrado.",
+        "backToList": "Voltar para lista"
+      }
+    },
     "invoicesUi": {
       "filters": {
         "status": "Status",

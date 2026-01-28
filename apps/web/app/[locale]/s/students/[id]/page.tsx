@@ -3,7 +3,26 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { ArrowLeft, Loader2 } from 'lucide-react';
+
 import { i18nKeys } from '@payflow/shared';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { useI18n } from '../../../../i18n-context';
 import { useAuth } from '../../../../auth-context';
 
@@ -125,6 +144,21 @@ export default function StudentFinancialReportPage() {
     }
   }
 
+  function getStatusBadgeVariant(status: InvoiceStatus) {
+    switch (status) {
+      case 'PAID':
+        return 'success';
+      case 'OVERDUE':
+        return 'destructive';
+      case 'PENDING':
+        return 'warning';
+      case 'CANCELED':
+        return 'secondary';
+      default:
+        return 'outline';
+    }
+  }
+
   const baseLocale = locale || 'pt-BR';
   const studentsListHref = `/${baseLocale}/s/students`;
 
@@ -132,234 +166,100 @@ export default function StudentFinancialReportPage() {
   const totalOpen = report?.totals.totalOpenCents ?? 0;
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '16px',
-      }}
-    >
-      <div
-        style={{
-          borderRadius: '12px',
-          border: '1px solid #e2e8f0',
-          padding: '20px',
-          backgroundColor: '#ffffff',
-          boxShadow: '0 10px 25px rgba(15,23,42,0.04)',
-        }}
-      >
-        <h1
-          style={{
-            fontSize: '20px',
-            marginTop: 0,
-            marginBottom: '4px',
-          }}
-        >
-          {t(i18nKeys.school.reportsUi.student.title)}
-        </h1>
-        <p
-          style={{
-            fontSize: '14px',
-            color: '#64748b',
-            marginTop: 0,
-            marginBottom: '12px',
-          }}
-        >
-          {t(i18nKeys.school.reportsUi.student.description)}
-        </p>
-        {report?.student && (
-          <p
-            style={{
-              fontSize: '14px',
-              color: '#0f172a',
-              margin: 0,
-            }}
-          >
-            <strong>{report.student.name ?? '—'}</strong>
-          </p>
-        )}
-        <div
-          style={{
-            marginTop: '12px',
-          }}
-        >
-          <Link
-            href={studentsListHref}
-            style={{
-              fontSize: '13px',
-              color: '#4f46e5',
-              textDecoration: 'underline',
-            }}
-          >
-            {t(i18nKeys.school.reportsUi.student.backToList)}
+    <div className="flex flex-col gap-6">
+      <div className="flex items-center gap-4">
+        <Button variant="outline" size="icon" asChild>
+          <Link href={studentsListHref}>
+            <ArrowLeft className="h-4 w-4" />
           </Link>
+        </Button>
+        <div className="flex flex-col">
+          <h1 className="text-xl font-semibold tracking-tight">
+            {t(i18nKeys.school.reportsUi.student.title)}
+          </h1>
+          <p className="text-sm text-muted-foreground">
+            {t(i18nKeys.school.reportsUi.student.description)}
+          </p>
         </div>
       </div>
 
-      {error && (
-        <div
-          style={{
-            padding: '10px',
-            borderRadius: '8px',
-            border: '1px solid #fecaca',
-            backgroundColor: '#fef2f2',
-            color: '#b91c1c',
-            fontSize: '14px',
-          }}
-        >
-          {error}
-        </div>
-      )}
-
-      {loading ? (
-        <p
-          style={{
-            fontSize: '14px',
-            color: '#64748b',
-          }}
-        >
-          {t(i18nKeys.common.loading)}
-        </p>
-      ) : (
-        <>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-              gap: '12px',
-            }}
-          >
-            <div
-              style={{
-                borderRadius: '12px',
-                border: '1px solid #e2e8f0',
-                padding: '12px 16px',
-                backgroundColor: '#f0fdf4',
-              }}
-            >
-              <div
-                style={{
-                  fontSize: '13px',
-                  color: '#6b7280',
-                  marginBottom: '4px',
-                }}
-              >
-                {t(i18nKeys.school.reportsUi.student.cards.totalPaid)}
-              </div>
-              <div
-                style={{
-                  fontSize: '18px',
-                  fontWeight: 600,
-                  color: '#166534',
-                }}
-              >
-                {formatAmountBRL(totalPaid)}
-              </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>{report?.student.name ?? '...'}</CardTitle>
+          <CardDescription>{t(i18nKeys.school.reportsUi.student.description)}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {loading ? (
+            <div className="flex items-center justify-center py-6">
+              <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
             </div>
-            <div
-              style={{
-                borderRadius: '12px',
-                border: '1px solid #e2e8f0',
-                padding: '12px 16px',
-                backgroundColor: '#fefce8',
-              }}
-            >
-              <div
-                style={{
-                  fontSize: '13px',
-                  color: '#6b7280',
-                  marginBottom: '4px',
-                }}
-              >
-                {t(i18nKeys.school.reportsUi.student.cards.totalOpen)}
-              </div>
-              <div
-                style={{
-                  fontSize: '18px',
-                  fontWeight: 600,
-                  color: '#92400e',
-                }}
-              >
-                {formatAmountBRL(totalOpen)}
-              </div>
+          ) : error ? (
+            <div className="rounded-md bg-destructive/10 p-4 text-sm text-destructive">
+              {error}
             </div>
-          </div>
-
-          {report && report.invoices.length === 0 ? (
-            <p
-              style={{
-                fontSize: '14px',
-                color: '#64748b',
-                marginTop: '16px',
-              }}
-            >
-              {t(i18nKeys.school.reportsUi.student.empty)}
-            </p>
           ) : (
-            report && (
-              <div
-                style={{
-                  marginTop: '16px',
-                  overflowX: 'auto',
-                }}
-              >
-                <table
-                  style={{
-                    width: '100%',
-                    borderCollapse: 'collapse',
-                    fontSize: '14px',
-                  }}
-                >
-                  <thead>
-                    <tr
-                      style={{
-                        textAlign: 'left',
-                        borderBottom: '1px solid #e5e7eb',
-                      }}
-                    >
-                      <th style={{ padding: '8px' }}>
-                        {t(i18nKeys.school.reportsUi.student.table.dueDate)}
-                      </th>
-                      <th style={{ padding: '8px' }}>
-                        {t(i18nKeys.school.reportsUi.student.table.amount)}
-                      </th>
-                      <th style={{ padding: '8px' }}>
-                        {t(i18nKeys.school.reportsUi.student.table.status)}
-                      </th>
-                      <th style={{ padding: '8px' }}>
-                        {t(i18nKeys.school.reportsUi.student.table.guardian)}
-                      </th>
-                      <th style={{ padding: '8px' }}>
-                        {t(i18nKeys.school.reportsUi.student.table.contract)}
-                      </th>
-                      <th style={{ padding: '8px' }}>
-                        {t(i18nKeys.school.reportsUi.student.table.paidAt)}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {report.invoices.map((invoice) => (
-                      <tr
-                        key={invoice.id}
-                        style={{
-                          borderBottom: '1px solid #f3f4f6',
-                        }}
-                      >
-                        <td style={{ padding: '8px' }}>{formatDate(invoice.dueDate)}</td>
-                        <td style={{ padding: '8px' }}>{formatAmountBRL(invoice.amountCents)}</td>
-                        <td style={{ padding: '8px' }}>{statusLabel(invoice.status)}</td>
-                        <td style={{ padding: '8px' }}>{invoice.guardianName ?? '—'}</td>
-                        <td style={{ padding: '8px' }}>{invoice.contractName ?? '—'}</td>
-                        <td style={{ padding: '8px' }}>{formatDate(invoice.paidAt)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+            <div className="flex flex-col gap-6">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="rounded-lg border bg-card p-4 text-card-foreground shadow-sm">
+                  <div className="text-sm font-medium text-muted-foreground">
+                    {t(i18nKeys.school.reportsUi.student.cards.totalPaid)}
+                  </div>
+                  <div className="text-2xl font-bold text-green-600">
+                    {formatAmountBRL(totalPaid)}
+                  </div>
+                </div>
+                <div className="rounded-lg border bg-card p-4 text-card-foreground shadow-sm">
+                  <div className="text-sm font-medium text-muted-foreground">
+                    {t(i18nKeys.school.reportsUi.student.cards.totalOpen)}
+                  </div>
+                  <div className="text-2xl font-bold text-orange-600">
+                    {formatAmountBRL(totalOpen)}
+                  </div>
+                </div>
               </div>
-            )
+
+              <div className="rounded-md border">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>{t(i18nKeys.school.reportsUi.student.table.dueDate)}</TableHead>
+                      <TableHead>{t(i18nKeys.school.reportsUi.student.table.amount)}</TableHead>
+                      <TableHead>{t(i18nKeys.school.reportsUi.student.table.status)}</TableHead>
+                      <TableHead>{t(i18nKeys.school.reportsUi.student.table.guardian)}</TableHead>
+                      <TableHead>{t(i18nKeys.school.reportsUi.student.table.contract)}</TableHead>
+                      <TableHead>{t(i18nKeys.school.reportsUi.student.table.paidAt)}</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {!report?.invoices.length ? (
+                      <TableRow>
+                        <TableCell colSpan={6} className="text-center text-muted-foreground">
+                          {t(i18nKeys.school.reportsUi.student.empty)}
+                        </TableCell>
+                      </TableRow>
+                    ) : (
+                      report.invoices.map((invoice) => (
+                        <TableRow key={invoice.id}>
+                          <TableCell>{formatDate(invoice.dueDate)}</TableCell>
+                          <TableCell>{formatAmountBRL(invoice.amountCents)}</TableCell>
+                          <TableCell>
+                            <Badge variant={getStatusBadgeVariant(invoice.status)}>
+                              {statusLabel(invoice.status)}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>{invoice.guardianName ?? '—'}</TableCell>
+                          <TableCell>{invoice.contractName ?? '—'}</TableCell>
+                          <TableCell>{formatDate(invoice.paidAt)}</TableCell>
+                        </TableRow>
+                      ))
+                    )}
+                  </TableBody>
+                </Table>
+              </div>
+            </div>
           )}
-        </>
-      )}
+        </CardContent>
+      </Card>
     </div>
   );
 }

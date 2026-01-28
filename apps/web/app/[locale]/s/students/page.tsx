@@ -581,8 +581,8 @@ export default function SchoolStudentsPage() {
                     <td className="px-4 py-3">
                       <span
                         className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${student.status === 'ACTIVE'
-                            ? 'bg-green-500/10 text-green-700'
-                            : 'bg-yellow-500/10 text-yellow-700'
+                          ? 'bg-green-500/10 text-green-700'
+                          : 'bg-yellow-500/10 text-yellow-700'
                           }`}
                       >
                         {student.status === 'ACTIVE'

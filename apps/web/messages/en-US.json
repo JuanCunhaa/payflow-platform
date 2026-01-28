@@ -660,6 +660,71 @@
       },
       "empty": "No guardians found for the current filter."
     },
+    "reportsUi": {
+      "overdue": {
+        "title": "Overdue Invoices",
+        "description": "Report of overdue and unpaid invoices.",
+        "table": {
+          "student": "Student",
+          "guardian": "Guardian",
+          "daysOverdue": "Days Overdue",
+          "amount": "Amount",
+          "actions": "Actions"
+        },
+        "actions": {
+          "copyPaymentLink": "Copy Link",
+          "copyPaymentLinkSuccess": "Link copied!",
+          "generatePaymentLink": "Generate Link"
+        },
+        "feedback": {
+          "loadError": "Error loading report.",
+          "paymentError": "Error generating payment."
+        },
+        "empty": "No overdue invoices."
+      },
+      "student": {
+        "title": "Student Report",
+        "description": "Detailed financial history of the student.",
+        "cards": {
+          "totalPaid": "Total Paid",
+          "totalOpen": "Total Open"
+        },
+        "table": {
+          "dueDate": "Due Date",
+          "amount": "Amount",
+          "status": "Status",
+          "guardian": "Guardian",
+          "contract": "Contract",
+          "paidAt": "Paid At"
+        },
+        "feedback": {
+          "loadError": "Error loading data."
+        },
+        "empty": "No records found.",
+        "backToList": "Back to list"
+      },
+      "guardian": {
+        "title": "Guardian Report",
+        "description": "Financial history of the guardian.",
+        "cards": {
+          "totalPaid": "Total Paid",
+          "totalOpen": "Total Open"
+        },
+        "table": {
+          "dueDate": "Due Date",
+          "amount": "Amount",
+          "status": "Status",
+          "student": "Student",
+          "contract": "Contract",
+          "paidAt": "Paid At"
+        },
+        "feedback": {
+          "loadError": "Error loading data."
+        },
+        "empty": "No records found.",
+        "backToList": "Back to list"
+      }
+    },
     "pages": {
       "dashboard": {
         "title": "Company overview",
