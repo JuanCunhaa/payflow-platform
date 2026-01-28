@@ -46,7 +46,10 @@ export function middleware(request: NextRequest) {
   }
 
   // If pathname doesn't have locale, redirect to preferred locale
-  return NextResponse.redirect(new URL(`/${preferredLocale}${pathname}`, request.url));
+  // If pathname doesn't have locale, redirect to preferred locale
+  const url = new URL(`/${preferredLocale}${pathname}`, request.url);
+  url.search = request.nextUrl.search;
+  return NextResponse.redirect(url);
 }
 
 async function maybeValidateTenant(request: NextRequest) {
