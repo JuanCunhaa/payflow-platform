@@ -258,6 +258,27 @@
       }
     },
     "reportsUi": {
+      "student": {
+        "title": "Relatório Financeiro",
+        "description": "Visualize o histórico financeiro detalhado deste aluno.",
+        "backToList": "Voltar para lista",
+        "cards": {
+          "totalPaid": "Total Pago",
+          "totalOpen": "Em Aberto"
+        },
+        "table": {
+          "dueDate": "Vencimento",
+          "amount": "Valor",
+          "status": "Status",
+          "guardian": "Responsável",
+          "contract": "Contrato",
+          "paidAt": "Pago em"
+        },
+        "feedback": {
+          "loadError": "Não foi possível carregar o relatório."
+        },
+        "empty": "Nenhuma fatura encontrada."
+      },
       "overdue": {
         "title": "Inadimplência",
         "description": "Veja rapidamente quem está em atraso e copie o link de pagamento para cobrar de forma organizada.",
@@ -278,6 +299,27 @@
           "paymentError": "Não foi possível gerar ou copiar o link de pagamento."
         },
         "empty": "Nenhuma cobrança em atraso encontrada para o filtro atual."
+      },
+      "guardian": {
+        "title": "Relatório Financeiro",
+        "description": "Visualize o histórico financeiro detalhado deste cliente.",
+        "backToList": "Voltar para lista",
+        "cards": {
+          "totalPaid": "Total Pago",
+          "totalOpen": "Em Aberto"
+        },
+        "table": {
+          "dueDate": "Vencimento",
+          "amount": "Valor",
+          "status": "Status",
+          "student": "Aluno",
+          "contract": "Contrato",
+          "paidAt": "Pago em"
+        },
+        "feedback": {
+          "loadError": "Não foi possível carregar o relatório."
+        },
+        "empty": "Nenhuma fatura encontrada."
       }
     },
     "pages": {
@@ -581,6 +623,12 @@
         "name": "Nome",
         "email": "Email",
         "phone": "Telefone",
+        "cpf": "CPF",
+        "rg": "RG",
+        "address": "Endereço Completo",
+        "studentName": "Nome do Aluno",
+        "studentBirthDate": "Data de Nascimento",
+        "addStudent": "Adicionar Aluno",
         "status": "Status",
         "emailVerified": "Email verificado",
         "actions": "Ações"

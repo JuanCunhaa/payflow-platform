@@ -61,7 +61,7 @@ export class GuardiansController {
     private readonly prisma: PrismaService,
     private readonly auditService: AuditService,
     private readonly emailService: EmailService
-  ) {}
+  ) { }
 
   @Get()
   @Roles('SCHOOL_ADMIN', 'SECRETARY', 'READONLY')
@@ -239,17 +239,43 @@ export class GuardiansController {
     const status: GuardianStatus = (dto.status as GuardianStatus | undefined) ?? 'ACTIVE';
 
     try {
-      const guardian = await this.prisma.guardian.create({
-        data: {
-          tenantId,
-          userId,
-          name,
-          phone,
-          status,
-        },
+      const result = await this.prisma.$transaction(async (tx) => {
+        const guardian = await tx.guardian.create({
+          data: {
+            tenantId,
+            userId,
+            name,
+            phone,
+            cpf: dto.cpf,
+            rg: dto.rg,
+            address: dto.address,
+            status,
+          },
+        });
+
+        if (dto.students && dto.students.length > 0) {
+          for (const s of dto.students) {
+            const newStudent = await tx.student.create({
+              data: {
+                tenantId,
+                name: s.name,
+                birthDate: s.birthDate ? new Date(s.birthDate) : undefined,
+                // classId is now optional
+              },
+            });
+
+            await tx.guardianStudent.create({
+              data: {
+                guardianId: guardian.id,
+                studentId: newStudent.id,
+              },
+            });
+          }
+        }
+        return guardian;
       });
 
-      return { guardian };
+      return { guardian: result };
     } catch (error) {
       if ((error as { code?: string } | null | undefined)?.code === 'P2002') {
         throw new ConflictException({

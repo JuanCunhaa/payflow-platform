@@ -93,6 +93,10 @@ export default function SchoolGuardiansPage() {
   const [formName, setFormName] = useState('');
   const [formEmail, setFormEmail] = useState('');
   const [formPhone, setFormPhone] = useState('');
+  const [formCpf, setFormCpf] = useState('');
+  const [formRg, setFormRg] = useState('');
+  const [formAddress, setFormAddress] = useState('');
+  const [formNewStudents, setFormNewStudents] = useState<{ name: string; birthDate: string }[]>([]);
   const [formStatus, setFormStatus] = useState<GuardianStatus>('ACTIVE');
   const [saving, setSaving] = useState(false);
 
@@ -102,6 +106,10 @@ export default function SchoolGuardiansPage() {
   const [linkStudentId, setLinkStudentId] = useState('');
   const [linking, setLinking] = useState(false);
   const [unlinkingId, setUnlinkingId] = useState<string | null>(null);
+
+  // Local state for adding a student in the form
+  const [newStudentName, setNewStudentName] = useState('');
+  const [newStudentBirthDate, setNewStudentBirthDate] = useState('');
 
   // Computed for Edit Mode
   const editingGuardian = guardians.find(g => g.id === editingGuardianId);
@@ -185,6 +193,12 @@ export default function SchoolGuardiansPage() {
     setFormName('');
     setFormEmail('');
     setFormPhone('');
+    setFormCpf('');
+    setFormRg('');
+    setFormAddress('');
+    setFormNewStudents([]);
+    setNewStudentName('');
+    setNewStudentBirthDate('');
     setFormStatus('ACTIVE');
     setGuardiansError(null);
     setIsSheetOpen(true);
@@ -234,6 +248,10 @@ export default function SchoolGuardiansPage() {
             phone,
             userEmail: email,
             status: formStatus,
+            cpf: formCpf,
+            rg: formRg,
+            address: formAddress ? { line: formAddress } : undefined,
+            students: formNewStudents,
           }),
         });
         if (!res.ok) {
@@ -547,6 +565,96 @@ export default function SchoolGuardiansPage() {
                   onChange={(e) => setFormPhone(e.target.value)}
                 />
               </div>
+              <div className="flex gap-4">
+                <div className="flex-1 space-y-2">
+                  <Label>{t(i18nKeys.school.guardiansUi.table.cpf)}</Label>
+                  <Input
+                    placeholder="000.000.000-00"
+                    value={formCpf}
+                    onChange={(e) => setFormCpf(e.target.value)}
+                  />
+                </div>
+                <div className="flex-1 space-y-2">
+                  <Label>{t(i18nKeys.school.guardiansUi.table.rg)}</Label>
+                  <Input
+                    placeholder="00.000.000-0"
+                    value={formRg}
+                    onChange={(e) => setFormRg(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label>{t(i18nKeys.school.guardiansUi.table.address)}</Label>
+                <Input
+                  placeholder="Rua, número, bairro..."
+                  value={formAddress}
+                  onChange={(e) => setFormAddress(e.target.value)}
+                />
+              </div>
+
+              {formMode === 'create' && (
+                <div className="space-y-4 rounded-md border p-4 bg-muted/20">
+                  <div className="flex items-center justify-between">
+                    <Label className="text-base font-medium">Alunos (Novos)</Label>
+                  </div>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="space-y-2">
+                      <Label>{t(i18nKeys.school.guardiansUi.table.studentName)}</Label>
+                      <Input
+                        placeholder="Nome do aluno"
+                        value={newStudentName}
+                        onChange={(e) => setNewStudentName(e.target.value)}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>{t(i18nKeys.school.guardiansUi.table.studentBirthDate)}</Label>
+                      <Input
+                        type="date"
+                        value={newStudentBirthDate}
+                        onChange={(e) => setNewStudentBirthDate(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    size="sm"
+                    className="w-full"
+                    onClick={() => {
+                      if (newStudentName.trim()) {
+                        setFormNewStudents([...formNewStudents, { name: newStudentName, birthDate: newStudentBirthDate }]);
+                        setNewStudentName('');
+                        setNewStudentBirthDate('');
+                      }
+                    }}
+                    disabled={!newStudentName.trim()}
+                  >
+                    <Plus className="mr-2 h-4 w-4" />
+                    {t(i18nKeys.school.guardiansUi.table.addStudent)}
+                  </Button>
+
+                  {formNewStudents.length > 0 && (
+                    <div className="space-y-2 mt-2">
+                      {formNewStudents.map((s, idx) => (
+                        <div key={idx} className="flex items-center justify-between rounded-md bg-background border p-2 text-sm">
+                          <div>
+                            <p className="font-medium">{s.name}</p>
+                            {s.birthDate && <p className="text-muted-foreground text-xs">{s.birthDate}</p>}
+                          </div>
+                          <Button
+                            type="button" variant="ghost" size="icon" className="h-6 w-6 text-destructive"
+                            onClick={() => setFormNewStudents(formNewStudents.filter((_, i) => i !== idx))}
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
               <div className="space-y-2">
                 <Label>{t(i18nKeys.school.guardiansUi.table.status)}</Label>
                 <select
@@ -637,6 +745,6 @@ export default function SchoolGuardiansPage() {
           )}
         </SheetContent>
       </Sheet>
-    </div>
+    </div >
   );
 }

@@ -231,7 +231,7 @@ async function run() {
     throw new Error('getStudents should return one student');
   }
   const first = studentsResult.items[0];
-  if (first.name !== 'Aluno 1' || first.class.name !== '1A') {
+  if (first.name !== 'Aluno 1' || first.class?.name !== '1A') {
     throw new Error('getStudents should map student and class correctly');
   }
 

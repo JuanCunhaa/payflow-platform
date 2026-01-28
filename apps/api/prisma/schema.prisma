@@ -141,16 +141,17 @@ model Class {
 }
 
 model Student {
-  id               String            @id @default(uuid()) @db.Uuid
-  tenantId         String            @map("tenant_id") @db.Uuid
-  classId          String            @map("class_id") @db.Uuid
-  name             String
-  status           StudentStatus     @default(ACTIVE)
-  createdAt        DateTime          @default(now()) @map("created_at")
+  id        String            @id @default(uuid()) @db.Uuid
+  tenantId  String            @map("tenant_id") @db.Uuid
+  classId   String?           @map("class_id") @db.Uuid
+  name      String
+  status    StudentStatus     @default(ACTIVE)
+  birthDate DateTime?         @map("birth_date")
+  createdAt DateTime          @default(now()) @map("created_at")
   contractStudents ContractStudent[]
   guardians        GuardianStudent[]
   invoices         Invoice[]
-  class            Class             @relation(fields: [classId], references: [id], onDelete: Cascade)
+  class            Class?            @relation(fields: [classId], references: [id], onDelete: Cascade)
   tenant           Tenant            @relation(fields: [tenantId], references: [id], onDelete: Cascade)
 
   @@unique([tenantId, classId, name])
@@ -165,6 +166,9 @@ model Guardian {
   userId    String            @map("user_id") @db.Uuid
   name      String
   phone     String
+  cpf       String?
+  rg        String?
+  address   Json?
   status    GuardianStatus    @default(ACTIVE)
   createdAt DateTime          @default(now()) @map("created_at")
   students  GuardianStudent[]

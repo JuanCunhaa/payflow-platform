@@ -251,10 +251,10 @@ export class GuardianController {
       id: link.student.id,
       name: link.student.name,
       status: link.student.status,
-      class: {
+      class: link.student.class ? {
         id: link.student.class.id,
         name: link.student.class.name,
-      },
+      } : undefined,
     }));
 
     return { items };
