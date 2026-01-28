@@ -225,6 +225,57 @@ export class PublicController {
   }
 
   /**
+   * POST /public/verify-email
+   * Verifies email using the token sent via email.
+   * Rate limited: 5 attempts per 10 minutes per IP
+   */
+  @Post('verify-email')
+  @Throttle({ medium: { ttl: 10 * 60 * 1000, limit: 10 } })
+  async verifyEmail(@Body() body: { token: string }) {
+    const token = body.token?.trim();
+
+    if (!token) {
+      throw new BadRequestException({
+        code: 'invalid_token',
+        message: 'Token is required',
+      });
+    }
+
+    const verifyToken = await this.prisma.emailVerifyToken.findUnique({
+      where: { token },
+      include: { user: true },
+    });
+
+    if (!verifyToken) {
+      throw new BadRequestException({
+        code: 'invalid_token',
+        message: 'Invalid or expired verification token',
+      });
+    }
+
+    if (verifyToken.expiresAt < new Date()) {
+      await this.prisma.emailVerifyToken.delete({ where: { id: verifyToken.id } });
+      throw new BadRequestException({
+        code: 'token_expired',
+        message: 'Verification token has expired',
+      });
+    }
+
+    await this.prisma.$transaction(async (tx) => {
+      await tx.user.update({
+        where: { id: verifyToken.userId },
+        data: { emailVerified: true },
+      });
+
+      await tx.emailVerifyToken.delete({
+        where: { id: verifyToken.id },
+      });
+    });
+
+    return { success: true };
+  }
+
+  /**
    * GET /public/pay/sandbox/:invoiceId
    * Returns minimal public data for a sandbox invoice payment.
    */
