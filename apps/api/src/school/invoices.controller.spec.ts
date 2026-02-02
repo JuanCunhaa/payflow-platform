@@ -21,7 +21,9 @@ async function run() {
   const studentId = 'student-1';
   const guardianId = 'guardian-1';
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const createdInvoices: any[] = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let lastAudit: any | null = null;
 
   const prismaMock = {
@@ -57,6 +59,7 @@ async function run() {
       },
     },
     invoice: {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       create: async (args: { data: any }) => {
         const id = `inv-${createdInvoices.length + 1}`;
         const record = { id, ...args.data };
@@ -71,6 +74,7 @@ async function run() {
   };
 
   const auditMock = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     log: async (input: any) => {
       lastAudit = input;
     },

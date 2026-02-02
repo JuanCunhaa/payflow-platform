@@ -28,6 +28,7 @@ function createTenantRequest(tenantId: string): TenantRequest {
   };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function filterInvoices(invoices: InvoiceEntity[], where: any): InvoiceEntity[] {
   return invoices.filter((invoice) => {
     if (where.tenantId && invoice.tenantId !== where.tenantId) {
@@ -137,6 +138,7 @@ async function run() {
       },
     },
     invoice: {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       aggregate: async (args: { where: any; _sum: { amountCents?: true } }) => {
         const filtered = filterInvoices(invoices, args.where ?? {});
         const sum = args._sum.amountCents
@@ -148,10 +150,12 @@ async function run() {
           },
         };
       },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       count: async (args: { where: any }) => {
         const filtered = filterInvoices(invoices, args.where ?? {});
         return filtered.length;
       },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       findMany: async (args: { where?: any }) => {
         const filtered = filterInvoices(invoices, args.where ?? {});
         return filtered.map((invoice) => ({
@@ -269,6 +273,7 @@ async function run() {
       chunks.push(String(chunk));
     },
     end: () => {},
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any;
 
   await controller.exportInvoicesCsv(reqTenant, '2026-01-01', '2026-01-31', 'PAID', resMock);

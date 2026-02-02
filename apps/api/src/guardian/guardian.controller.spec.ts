@@ -66,7 +66,7 @@ async function run() {
     guardian: {
       findFirst: async (args: {
         where: { tenantId?: string; userId?: string; id?: string };
-        include?: any;
+        include?: Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
       }) => {
         const { tenantId, userId, id } = args.where;
         const guardian = guardians.find((g) => {
@@ -80,6 +80,7 @@ async function run() {
 
         const include = args.include ?? {};
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const result: any = { ...guardian };
 
         if (include.user) {

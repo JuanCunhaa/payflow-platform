@@ -27,20 +27,20 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
-  MoreHorizontal,
-  Plus,
-  Search,
-  User,
-  Mail,
-  Phone,
-  FileText,
-  Shield,
-  Trash2,
-  Link as LinkIcon,
-  ShieldAlert,
   ChevronLeft,
   ChevronRight,
+  FileText,
+  Link as LinkIcon,
   Loader2,
+  Mail,
+  MoreHorizontal,
+  Phone,
+  Plus,
+  Search,
+  Shield,
+  ShieldAlert,
+  Trash2,
+  User,
 } from 'lucide-react';
 
 type GuardianStatus = 'ACTIVE' | 'INACTIVE';
@@ -456,7 +456,7 @@ export default function SchoolGuardiansPage() {
                             {t(i18nKeys.school.guardiansUi.status.active)}
                           </span>
                         ) : (
-                          <span className="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-semibold text-slate-800 dark:bg-slate-800 dark:text-slate-100">
+                          <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-semibold text-gray-800 dark:bg-gray-800 dark:text-gray-100">
                             {t(i18nKeys.school.guardiansUi.status.inactive)}
                           </span>
                         )}

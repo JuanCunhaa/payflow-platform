@@ -63,7 +63,7 @@ export default function GuardianLayout({ children }: { children: React.ReactNode
 
   if (user.status !== 'ACTIVE') {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
+      <div className="flex min-h-screen items-center justify-center bg-muted/30 p-4">
         <Card className="w-full max-w-md">
           <CardHeader>
             <CardTitle>{t(i18nKeys.auth.pendingApproval.title)}</CardTitle>

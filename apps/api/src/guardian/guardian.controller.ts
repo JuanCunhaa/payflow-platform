@@ -81,6 +81,7 @@ export class GuardianController {
   private async resolveGuardianContext(
     req: TenantRequest,
     user: CurrentUserPayload
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<{ guardian: any; tenantId: string; studentIds: string[] }> {
     const tenantId = req.tenant?.id ?? user.tenantId;
 
@@ -303,7 +304,7 @@ export class GuardianController {
       where.studentId = studentId;
     }
 
-    const orConditions: any[] = [{ guardianId: guardian.id }];
+    const orConditions: Prisma.InvoiceWhereInput[] = [{ guardianId: guardian.id }];
     if (studentIds.length > 0) {
       orConditions.push({ studentId: { in: studentIds } });
     }

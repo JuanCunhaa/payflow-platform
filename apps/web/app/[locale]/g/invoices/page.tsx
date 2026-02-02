@@ -3,8 +3,29 @@
 import type { ChangeEvent } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { i18nKeys } from '@payflow/shared';
+import { Copy, ExternalLink, Loader2, Receipt } from 'lucide-react';
 import { useI18n } from '../../../i18n-context';
 import { useAuth } from '../../../auth-context';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet';
 
 type InvoiceStatus = 'DRAFT' | 'PENDING' | 'PAID' | 'OVERDUE' | 'CANCELED' | 'REFUNDED';
 
@@ -75,6 +96,8 @@ export default function GuardianInvoicesPage() {
   const [toDate, setToDate] = useState('');
   const [studentIdFilter, setStudentIdFilter] = useState('');
 
+  // Sheet State
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState<GuardianInvoiceDetail | null>(null);
   const [detailLoading, setDetailLoading] = useState(false);
   const [detailError, setDetailError] = useState<string | null>(null);
@@ -82,7 +105,6 @@ export default function GuardianInvoicesPage() {
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [copySuccess, setCopySuccess] = useState<string | null>(null);
 
-  // Carrega alunos vinculados para filtro
   useEffect(() => {
     let cancelled = false;
 
@@ -185,20 +207,21 @@ export default function GuardianInvoicesPage() {
     }
   }
 
-  function statusBadgeColors(status: InvoiceStatus): { background: string; color: string } {
+  function getStatusBadgeVariant(
+    status: InvoiceStatus
+  ): 'default' | 'secondary' | 'destructive' | 'outline' | 'success' {
     switch (status) {
       case 'PAID':
-        return { background: '#dcfce7', color: '#15803d' };
+        return 'success';
       case 'OVERDUE':
-        return { background: '#fee2e2', color: '#b91c1c' };
+        return 'destructive';
       case 'PENDING':
-        return { background: '#fef9c3', color: '#a16207' };
+        return 'outline';
       case 'CANCELED':
       case 'REFUNDED':
-        return { background: '#e5e7eb', color: '#4b5563' };
-      case 'DRAFT':
+        return 'secondary';
       default:
-        return { background: '#e0f2fe', color: '#0369a1' };
+        return 'default';
     }
   }
 
@@ -208,6 +231,7 @@ export default function GuardianInvoicesPage() {
     setSelectedInvoice(null);
     setPaymentLink(null);
     setCopySuccess(null);
+    setIsSheetOpen(true);
 
     try {
       const res = await apiFetch(`/guardian/invoices/${id}`);
@@ -282,152 +306,57 @@ export default function GuardianInvoicesPage() {
   }
 
   return (
-    <section
-      style={{
-        maxWidth: '960px',
-        margin: '0 auto',
-        padding: '16px',
-        backgroundColor: '#ffffff',
-        borderRadius: '8px',
-        border: '1px solid #e2e8f0',
-      }}
-    >
-      <h1
-        style={{
-          marginTop: 0,
-          marginBottom: '8px',
-          fontSize: '20px',
-          fontWeight: 600,
-          color: '#0f172a',
-        }}
-      >
-        {t(i18nKeys.guardian.pages.invoices.title)}
-      </h1>
-      <p
-        style={{
-          margin: 0,
-          marginBottom: '16px',
-          fontSize: '14px',
-          color: '#64748b',
-        }}
-      >
-        {t(i18nKeys.guardian.pages.invoices.description)}
-      </p>
+    <div className="max-w-6xl mx-auto space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight">
+          {t(i18nKeys.guardian.pages.invoices.title)}
+        </h1>
+        <p className="text-muted-foreground">{t(i18nKeys.guardian.pages.invoices.description)}</p>
+      </div>
 
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '12px',
-          marginBottom: '16px',
-          fontSize: '13px',
-        }}
-      >
-        <label
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '4px',
-          }}
-        >
-          <span
-            style={{
-              color: '#4b5563',
-            }}
-          >
+      <div className="flex flex-col gap-4 p-4 rounded-lg border bg-card sm:flex-row sm:items-end">
+        <div className="space-y-2">
+          <Label className="text-xs text-muted-foreground">
             {t(i18nKeys.guardian.invoicesUi.filters.status)}
-          </span>
+          </Label>
           <select
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             value={statusFilter}
             onChange={handleStatusChange}
-            style={{
-              padding: '6px 8px',
-              borderRadius: '4px',
-              border: '1px solid #e5e7eb',
-            }}
           >
             <option value="ALL">{t(i18nKeys.guardian.invoicesUi.filters.statusAll)}</option>
             <option value="PENDING">{t(i18nKeys.guardian.invoicesUi.status.pending)}</option>
             <option value="OVERDUE">{t(i18nKeys.guardian.invoicesUi.status.overdue)}</option>
             <option value="PAID">{t(i18nKeys.guardian.invoicesUi.status.paid)}</option>
           </select>
-        </label>
+        </div>
 
-        <label
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '4px',
-          }}
-        >
-          <span
-            style={{
-              color: '#4b5563',
-            }}
-          >
+        <div className="space-y-2">
+          <Label className="text-xs text-muted-foreground">
             {t(i18nKeys.guardian.invoicesUi.filters.from)}
-          </span>
-          <input
+          </Label>
+          <Input
             type="date"
             value={fromDate}
             onChange={(event) => setFromDate(event.target.value)}
-            style={{
-              padding: '6px 8px',
-              borderRadius: '4px',
-              border: '1px solid #e5e7eb',
-            }}
           />
-        </label>
+        </div>
 
-        <label
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '4px',
-          }}
-        >
-          <span
-            style={{
-              color: '#4b5563',
-            }}
-          >
+        <div className="space-y-2">
+          <Label className="text-xs text-muted-foreground">
             {t(i18nKeys.guardian.invoicesUi.filters.to)}
-          </span>
-          <input
-            type="date"
-            value={toDate}
-            onChange={(event) => setToDate(event.target.value)}
-            style={{
-              padding: '6px 8px',
-              borderRadius: '4px',
-              border: '1px solid #e5e7eb',
-            }}
-          />
-        </label>
+          </Label>
+          <Input type="date" value={toDate} onChange={(event) => setToDate(event.target.value)} />
+        </div>
 
-        <label
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '4px',
-            minWidth: '180px',
-          }}
-        >
-          <span
-            style={{
-              color: '#4b5563',
-            }}
-          >
+        <div className="space-y-2 min-w-[200px]">
+          <Label className="text-xs text-muted-foreground">
             {t(i18nKeys.guardian.invoicesUi.filters.student)}
-          </span>
+          </Label>
           <select
+            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             value={studentIdFilter}
             onChange={handleStudentChange}
-            style={{
-              padding: '6px 8px',
-              borderRadius: '4px',
-              border: '1px solid #e5e7eb',
-            }}
           >
             <option value="">{t(i18nKeys.guardian.invoicesUi.filters.statusAll)}</option>
             {students.map((student) => (
@@ -436,400 +365,158 @@ export default function GuardianInvoicesPage() {
               </option>
             ))}
           </select>
-        </label>
+        </div>
       </div>
 
-      {studentsError && (
-        <p
-          style={{
-            marginTop: 0,
-            marginBottom: '12px',
-            fontSize: '13px',
-            color: '#b91c1c',
-          }}
-        >
-          {studentsError}
-        </p>
-      )}
+      {studentsError && <div className="text-sm text-destructive">{studentsError}</div>}
 
-      {loading ? (
-        <p
-          style={{
-            margin: 0,
-            fontSize: '14px',
-            color: '#64748b',
-          }}
-        >
-          {t(i18nKeys.common.loading)}
-        </p>
-      ) : error ? (
-        <p
-          style={{
-            margin: 0,
-            fontSize: '14px',
-            color: '#b91c1c',
-          }}
-        >
-          {error}
-        </p>
-      ) : invoices.length === 0 ? (
-        <p
-          style={{
-            margin: 0,
-            fontSize: '14px',
-            color: '#64748b',
-          }}
-        >
-          {t(i18nKeys.guardian.invoicesUi.empty)}
-        </p>
-      ) : (
-        <table
-          style={{
-            width: '100%',
-            borderCollapse: 'collapse',
-            fontSize: '14px',
-          }}
-        >
-          <thead>
-            <tr>
-              <th
-                style={{
-                  textAlign: 'left',
-                  padding: '8px',
-                  borderBottom: '1px solid #e2e8f0',
-                  fontWeight: 500,
-                  color: '#475569',
-                }}
-              >
-                {t(i18nKeys.guardian.invoicesUi.table.dueDate)}
-              </th>
-              <th
-                style={{
-                  textAlign: 'left',
-                  padding: '8px',
-                  borderBottom: '1px solid #e2e8f0',
-                  fontWeight: 500,
-                  color: '#475569',
-                }}
-              >
-                {t(i18nKeys.guardian.invoicesUi.table.student)}
-              </th>
-              <th
-                style={{
-                  textAlign: 'left',
-                  padding: '8px',
-                  borderBottom: '1px solid #e2e8f0',
-                  fontWeight: 500,
-                  color: '#475569',
-                }}
-              >
-                {t(i18nKeys.guardian.invoicesUi.table.amount)}
-              </th>
-              <th
-                style={{
-                  textAlign: 'left',
-                  padding: '8px',
-                  borderBottom: '1px solid #e2e8f0',
-                  fontWeight: 500,
-                  color: '#475569',
-                }}
-              >
-                {t(i18nKeys.guardian.invoicesUi.table.status)}
-              </th>
-              <th
-                style={{
-                  textAlign: 'left',
-                  padding: '8px',
-                  borderBottom: '1px solid #e2e8f0',
-                  fontWeight: 500,
-                  color: '#475569',
-                }}
-              >
-                {t(i18nKeys.guardian.invoicesUi.table.actions)}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {invoices.map((invoice) => {
-              const badgeColors = statusBadgeColors(invoice.status);
-              return (
-                <tr key={invoice.id}>
-                  <td
-                    style={{
-                      padding: '8px',
-                      borderBottom: '1px solid #f1f5f9',
-                    }}
-                  >
-                    {formatDate(invoice.dueDate)}
-                  </td>
-                  <td
-                    style={{
-                      padding: '8px',
-                      borderBottom: '1px solid #f1f5f9',
-                    }}
-                  >
-                    {invoice.student?.name ?? '-'}
-                  </td>
-                  <td
-                    style={{
-                      padding: '8px',
-                      borderBottom: '1px solid #f1f5f9',
-                    }}
-                  >
-                    {formatAmountBRL(invoice.amountCents)}
-                  </td>
-                  <td
-                    style={{
-                      padding: '8px',
-                      borderBottom: '1px solid #f1f5f9',
-                    }}
-                  >
-                    <span
-                      style={{
-                        display: 'inline-block',
-                        padding: '2px 8px',
-                        borderRadius: '999px',
-                        fontSize: '12px',
-                        backgroundColor: badgeColors.background,
-                        color: badgeColors.color,
-                      }}
-                    >
-                      {statusLabel(invoice.status)}
-                    </span>
-                  </td>
-                  <td
-                    style={{
-                      padding: '8px',
-                      borderBottom: '1px solid #f1f5f9',
-                    }}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => void openInvoiceDetail(invoice.id)}
-                      style={{
-                        padding: '4px 10px',
-                        borderRadius: '999px',
-                        border: '1px solid #e5e7eb',
-                        backgroundColor: '#ffffff',
-                        cursor: 'pointer',
-                        fontSize: '13px',
-                      }}
-                    >
-                      {t(i18nKeys.school.guardiansUi.actions.viewDetails)}
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      )}
-
-      {(detailLoading || selectedInvoice || detailError) && (
-        <div
-          style={{
-            marginTop: '24px',
-            paddingTop: '16px',
-            borderTop: '1px solid #e5e7eb',
-          }}
-        >
-          <h2
-            style={{
-              fontSize: '18px',
-              marginTop: 0,
-              marginBottom: '8px',
-            }}
-          >
-            {t(i18nKeys.guardian.invoicesUi.detail.title)}
-          </h2>
-
-          {detailLoading && (
-            <p
-              style={{
-                margin: 0,
-                fontSize: '14px',
-                color: '#64748b',
-              }}
-            >
-              {t(i18nKeys.common.loading)}
-            </p>
-          )}
-
-          {detailError && !detailLoading && (
-            <p
-              style={{
-                margin: 0,
-                fontSize: '14px',
-                color: '#b91c1c',
-              }}
-            >
-              {detailError}
-            </p>
-          )}
-
-          {selectedInvoice && !detailLoading && !detailError && (
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '8px',
-                fontSize: '14px',
-              }}
-            >
-              <div>
-                <strong>{t(i18nKeys.guardian.invoicesUi.detail.infoTitle)}</strong>
-                <p
-                  style={{
-                    margin: '4px 0',
-                    color: '#0f172a',
-                  }}
-                >
-                  {formatAmountBRL(selectedInvoice.amountCents)} •{' '}
-                  {formatDate(selectedInvoice.dueDate)} • {statusLabel(selectedInvoice.status)}
-                </p>
-                <p
-                  style={{
-                    margin: '4px 0',
-                    color: '#64748b',
-                  }}
-                >
-                  {selectedInvoice.student?.name ?? '-'}
-                </p>
-                {selectedInvoice.description && (
-                  <p
-                    style={{
-                      margin: '4px 0',
-                      color: '#64748b',
-                    }}
-                  >
-                    {selectedInvoice.description}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <strong>{t(i18nKeys.guardian.invoicesUi.detail.statusTimelineTitle)}</strong>
-                <p
-                  style={{
-                    margin: '4px 0',
-                    color: '#9ca3af',
-                    fontSize: '13px',
-                  }}
-                >
-                  {statusLabel(selectedInvoice.status)} • {formatDate(selectedInvoice.dueDate)}
-                </p>
-              </div>
-
-              <div
-                style={{
-                  marginTop: '8px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: '12px',
-                  flexWrap: 'wrap',
-                }}
-              >
-                <p
-                  style={{
-                    margin: 0,
-                    fontSize: '13px',
-                    color: '#64748b',
-                  }}
-                >
-                  {t(i18nKeys.guardian.invoicesUi.detail.paymentLinkLabel)}
-                </p>
-
-                {selectedInvoice.status === 'PENDING' || selectedInvoice.status === 'OVERDUE' ? (
-                  <div
-                    style={{
-                      display: 'flex',
-                      gap: '8px',
-                      flexWrap: 'wrap',
-                    }}
-                  >
-                    {paymentLink ? (
-                      <>
-                        <button
-                          type="button"
-                          onClick={() => void handleCopyPaymentLink()}
-                          disabled={paymentLoading}
-                          style={{
-                            padding: '6px 12px',
-                            borderRadius: '999px',
-                            border: '1px solid #e5e7eb',
-                            backgroundColor: '#ffffff',
-                            cursor: 'pointer',
-                            fontSize: '13px',
-                          }}
-                        >
-                          {t(i18nKeys.guardian.invoicesUi.detail.copyPaymentLink)}
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => void handleOpenPaymentPage()}
-                          disabled={paymentLoading}
-                          style={{
-                            padding: '6px 14px',
-                            borderRadius: '999px',
-                            border: 'none',
-                            backgroundColor: '#22c55e',
-                            color: '#ffffff',
-                            cursor: 'pointer',
-                            fontSize: '13px',
-                          }}
-                        >
-                          {t(i18nKeys.guardian.invoicesUi.detail.openPaymentPage)}
-                        </button>
-                      </>
-                    ) : (
-                      <button
-                        type="button"
-                        onClick={() => void generatePaymentLink()}
-                        disabled={paymentLoading}
-                        style={{
-                          padding: '6px 14px',
-                          borderRadius: '999px',
-                          border: 'none',
-                          backgroundColor: '#22c55e',
-                          color: '#ffffff',
-                          cursor: 'pointer',
-                          fontSize: '13px',
-                        }}
-                      >
-                        {paymentLoading
-                          ? t(i18nKeys.common.loading)
-                          : t(i18nKeys.guardian.invoicesUi.detail.generatePaymentLink)}
-                      </button>
-                    )}
-                  </div>
-                ) : (
-                  <span
-                    style={{
-                      fontSize: '13px',
-                      color: '#16a34a',
-                    }}
-                  >
-                    {t(i18nKeys.guardian.invoicesUi.detail.paidLabel)}
-                  </span>
-                )}
-              </div>
-
-              {copySuccess && (
-                <p
-                  style={{
-                    marginTop: '4px',
-                    fontSize: '12px',
-                    color: '#16a34a',
-                  }}
-                >
-                  {copySuccess}
-                </p>
-              )}
+      <Card>
+        <CardContent className="p-0">
+          {loading ? (
+            <div className="flex justify-center p-8 text-muted-foreground">
+              <Loader2 className="h-8 w-8 animate-spin" />
             </div>
+          ) : error ? (
+            <div className="flex justify-center p-8 text-destructive">{error}</div>
+          ) : invoices.length === 0 ? (
+            <div className="flex flex-col items-center justify-center p-12 text-center text-muted-foreground">
+              <Receipt className="mb-4 h-12 w-12 text-muted-foreground/30" />
+              <p>{t(i18nKeys.guardian.invoicesUi.empty)}</p>
+            </div>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>{t(i18nKeys.guardian.invoicesUi.table.dueDate)}</TableHead>
+                  <TableHead>{t(i18nKeys.guardian.invoicesUi.table.student)}</TableHead>
+                  <TableHead>{t(i18nKeys.guardian.invoicesUi.table.amount)}</TableHead>
+                  <TableHead>{t(i18nKeys.guardian.invoicesUi.table.status)}</TableHead>
+                  <TableHead className="text-right">
+                    {t(i18nKeys.guardian.invoicesUi.table.actions)}
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {invoices.map((invoice) => (
+                  <TableRow key={invoice.id}>
+                    <TableCell>{formatDate(invoice.dueDate)}</TableCell>
+                    <TableCell>{invoice.student?.name ?? '-'}</TableCell>
+                    <TableCell>{formatAmountBRL(invoice.amountCents)}</TableCell>
+                    <TableCell>
+                      <Badge variant={getStatusBadgeVariant(invoice.status)}>
+                        {statusLabel(invoice.status)}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => void openInvoiceDetail(invoice.id)}
+                      >
+                        {t(i18nKeys.school.guardiansUi.actions.viewDetails)}
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           )}
-        </div>
-      )}
-    </section>
+        </CardContent>
+      </Card>
+
+      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+        <SheetContent>
+          <SheetHeader>
+            <SheetTitle>{t(i18nKeys.guardian.invoicesUi.detail.title)}</SheetTitle>
+            <SheetDescription>{t(i18nKeys.guardian.invoicesUi.detail.infoTitle)}</SheetDescription>
+          </SheetHeader>
+
+          <div className="mt-8 space-y-6">
+            {detailLoading ? (
+              <div className="flex justify-center text-muted-foreground">
+                <Loader2 className="h-6 w-6 animate-spin" />
+              </div>
+            ) : detailError ? (
+              <div className="text-destructive text-sm">{detailError}</div>
+            ) : selectedInvoice ? (
+              <>
+                <div className="space-y-4">
+                  <div className="flex flex-col gap-1">
+                    <span className="text-sm text-muted-foreground">Valor e Vencimento</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl font-bold">
+                        {formatAmountBRL(selectedInvoice.amountCents)}
+                      </span>
+                    </div>
+                    <span className="text-sm text-muted-foreground">
+                      Vence em {formatDate(selectedInvoice.dueDate)}
+                    </span>
+                  </div>
+
+                  <div className="rounded-lg border p-3 bg-muted/30">
+                    <span className="text-xs font-medium text-muted-foreground uppercase">
+                      Status
+                    </span>
+                    <div className="mt-1">
+                      <Badge variant={getStatusBadgeVariant(selectedInvoice.status)}>
+                        {statusLabel(selectedInvoice.status)}
+                      </Badge>
+                    </div>
+                  </div>
+
+                  <div>
+                    <span className="text-sm font-medium text-muted-foreground">Aluno</span>
+                    <p className="text-base">{selectedInvoice.student?.name ?? '-'}</p>
+                  </div>
+
+                  {selectedInvoice.description && (
+                    <div>
+                      <span className="text-sm font-medium text-muted-foreground">Descrição</span>
+                      <p className="text-sm">{selectedInvoice.description}</p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="space-y-3 pt-4 border-t">
+                  <h4 className="text-sm font-medium leading-none">Pagamento</h4>
+
+                  {selectedInvoice.status === 'PENDING' || selectedInvoice.status === 'OVERDUE' ? (
+                    <div className="flex flex-col gap-2">
+                      <Button
+                        onClick={() => void handleOpenPaymentPage()}
+                        disabled={paymentLoading}
+                        className="w-full"
+                      >
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        {t(i18nKeys.guardian.invoicesUi.detail.openPaymentPage)}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        onClick={() => void handleCopyPaymentLink()}
+                        disabled={paymentLoading}
+                        className="w-full"
+                      >
+                        {copySuccess ? (
+                          <span className="text-green-600">{copySuccess}</span>
+                        ) : (
+                          <>
+                            <Copy className="mr-2 h-4 w-4" />
+                            {t(i18nKeys.guardian.invoicesUi.detail.copyPaymentLink)}
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="text-sm text-muted-foreground">
+                      Esta fatura não está pendente de pagamento.
+                    </div>
+                  )}
+                </div>
+              </>
+            ) : null}
+          </div>
+        </SheetContent>
+      </Sheet>
+    </div>
   );
 }

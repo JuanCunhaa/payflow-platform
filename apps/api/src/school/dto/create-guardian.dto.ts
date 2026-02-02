@@ -1,4 +1,5 @@
 import {
+  IsArray,
   IsEmail,
   IsIn,
   IsNotEmpty,
@@ -6,7 +7,6 @@ import {
   IsString,
   IsUUID,
   MaxLength,
-  IsArray,
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
@@ -47,7 +47,7 @@ export class CreateGuardianDto {
   rg?: string;
 
   @IsOptional()
-  address?: any;
+  address?: object;
 
   @IsOptional()
   @IsArray()

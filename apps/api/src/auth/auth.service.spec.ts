@@ -2,6 +2,7 @@ import { AuthService } from './auth.service';
 import { PasswordService } from './password.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
+import { EmailService } from '../notifications/email.service';
 
 type MockUser = {
   id: string;
@@ -190,7 +191,7 @@ async function run() {
     prismaMock as unknown as PrismaService,
     jwtMock,
     passwordService,
-    emailServiceMock as unknown as any
+    emailServiceMock as unknown as EmailService
   );
 
   function createResponseMock(): MockResponse {

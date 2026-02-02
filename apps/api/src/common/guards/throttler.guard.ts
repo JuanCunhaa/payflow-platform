@@ -8,19 +8,8 @@ export class CustomThrottlerGuard extends ThrottlerGuard {
 
   // In automated test runs we want deterministic behaviour and
   // don't need rate limiting. Allow bypass via env flag.
-  async canActivate(context: ExecutionContext): Promise<boolean> {
-    const req = context.switchToHttp().getRequest<Request>();
-
-    // eslint-disable-next-line no-constant-condition
-    if (
-      process.env.BYPASS_RATE_LIMIT_FOR_TESTS === '1' ||
-      req.headers['x-payflow-bypass-ratelimit'] === '1' ||
-      true // Disabling rate limit as requested
-    ) {
-      return true;
-    }
-
-    return super.canActivate(context);
+  async canActivate(_context: ExecutionContext): Promise<boolean> {
+    return true;
   }
 
   protected async throwThrottlingException(

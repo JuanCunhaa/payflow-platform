@@ -21,6 +21,7 @@ export class PaymentService {
   ): Promise<{ paymentLink: string; provider: string }> {
     const invoice = (await this.prisma.invoice.findFirst({
       where: { id: invoiceId },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     })) as any;
 
     if (!invoice) {
@@ -59,6 +60,7 @@ export class PaymentService {
         provider: 'SANDBOX',
         providerReference: result.providerReference,
         paymentLink: result.url,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } as any,
     });
 

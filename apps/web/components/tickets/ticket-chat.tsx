@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/app/auth-context';
 import { useI18n } from '@/app/i18n-context';
 import { Button } from '@/components/ui/button';
@@ -32,7 +32,7 @@ export function TicketChat({ ticketId }: { ticketId: string }) {
     loadTicket();
     const interval = setInterval(loadTicket, 10000);
     return () => clearInterval(interval);
-  }, [ticketId]);
+  }, [ticketId, loadTicket]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });

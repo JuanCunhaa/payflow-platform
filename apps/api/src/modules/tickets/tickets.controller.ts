@@ -25,7 +25,7 @@ export class TicketsController {
     @Request() req,
     @Body() createTicketDto: CreateTicketDto
   ) {
-    const tenantId = req.headers['x-tenant-id'] as string;
+    const tenantId = req.tenant?.id;
     // Assuming user role logic is handled here or by service validation
     return this.ticketsService.createTicket(
       user.id,
@@ -38,14 +38,14 @@ export class TicketsController {
   @UseGuards(JwtAuthGuard)
   @Get()
   findAll(@CurrentUser() user: CurrentUserPayload, @Request() req) {
-    const tenantId = req.headers['x-tenant-id'] as string;
+    const tenantId = req.tenant?.id;
     return this.ticketsService.findAll(user.id, (user.role as Role) || Role.GUARDIAN, tenantId);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string, @CurrentUser() user: CurrentUserPayload, @Request() req) {
-    const tenantId = req.headers['x-tenant-id'] as string;
+    const tenantId = req.tenant?.id;
     return this.ticketsService.findOne(id, user.id, (user.role as Role) || Role.GUARDIAN, tenantId);
   }
 
@@ -62,7 +62,7 @@ export class TicketsController {
   @UseGuards(JwtAuthGuard)
   @Patch(':id/escalate')
   escalate(@Param('id') id: string, @CurrentUser() user: CurrentUserPayload, @Request() req) {
-    const tenantId = req.headers['x-tenant-id'] as string;
+    const tenantId = req.tenant?.id;
     return this.ticketsService.escalate(id, user.id, tenantId);
   }
 

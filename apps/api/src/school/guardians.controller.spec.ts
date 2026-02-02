@@ -265,6 +265,7 @@ async function run() {
     ) => {},
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const controller = new GuardiansController(prismaMock, auditMock as any, emailMock as any);
 
   const tenantId = 'tenant-1';

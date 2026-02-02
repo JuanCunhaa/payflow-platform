@@ -2,8 +2,19 @@
 
 import { useEffect, useState } from 'react';
 import { i18nKeys } from '@payflow/shared';
+import { Loader2 } from 'lucide-react';
 import { useI18n } from '../../../i18n-context';
 import { useAuth } from '../../../auth-context';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
 
 type GuardianStudent = {
   id: string;
@@ -62,148 +73,69 @@ export default function GuardianStudentsPage() {
     };
   }, [apiFetch, t]);
 
-  return (
-    <section
-      style={{
-        maxWidth: '800px',
-        margin: '0 auto',
-        padding: '16px',
-        backgroundColor: '#ffffff',
-        borderRadius: '8px',
-        border: '1px solid #e2e8f0',
-      }}
-    >
-      <h1
-        style={{
-          marginTop: 0,
-          marginBottom: '8px',
-          fontSize: '20px',
-          fontWeight: 600,
-          color: '#0f172a',
-        }}
-      >
-        {t(i18nKeys.guardian.pages.students.title)}
-      </h1>
-      <p
-        style={{
-          margin: 0,
-          marginBottom: '16px',
-          fontSize: '14px',
-          color: '#64748b',
-        }}
-      >
-        {t(i18nKeys.guardian.pages.students.description)}
-      </p>
+  if (loading) {
+    return (
+      <div className="flex justify-center p-8 text-muted-foreground">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
 
-      {loading ? (
-        <p
-          style={{
-            margin: 0,
-            fontSize: '14px',
-            color: '#64748b',
-          }}
-        >
-          {t(i18nKeys.common.loading)}
-        </p>
-      ) : error ? (
-        <p
-          style={{
-            margin: 0,
-            fontSize: '14px',
-            color: '#b91c1c',
-          }}
-        >
-          {error}
-        </p>
-      ) : students.length === 0 ? (
-        <p
-          style={{
-            margin: 0,
-            fontSize: '14px',
-            color: '#64748b',
-          }}
-        >
-          {t(i18nKeys.school.studentsUi.empty)}
-        </p>
-      ) : (
-        <table
-          style={{
-            width: '100%',
-            borderCollapse: 'collapse',
-            fontSize: '14px',
-          }}
-        >
-          <thead>
-            <tr>
-              <th
-                style={{
-                  textAlign: 'left',
-                  padding: '8px',
-                  borderBottom: '1px solid #e2e8f0',
-                  fontWeight: 500,
-                  color: '#475569',
-                }}
-              >
-                {t(i18nKeys.school.studentsUi.table.name)}
-              </th>
-              <th
-                style={{
-                  textAlign: 'left',
-                  padding: '8px',
-                  borderBottom: '1px solid #e2e8f0',
-                  fontWeight: 500,
-                  color: '#475569',
-                }}
-              >
-                {t(i18nKeys.school.studentsUi.table.class)}
-              </th>
-              <th
-                style={{
-                  textAlign: 'left',
-                  padding: '8px',
-                  borderBottom: '1px solid #e2e8f0',
-                  fontWeight: 500,
-                  color: '#475569',
-                }}
-              >
-                {t(i18nKeys.school.studentsUi.table.status)}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {students.map((student) => (
-              <tr key={student.id}>
-                <td
-                  style={{
-                    padding: '8px',
-                    borderBottom: '1px solid #f1f5f9',
-                  }}
-                >
-                  {student.name}
-                </td>
-                <td
-                  style={{
-                    padding: '8px',
-                    borderBottom: '1px solid #f1f5f9',
-                  }}
-                >
-                  {student.class.name}
-                </td>
-                <td
-                  style={{
-                    padding: '8px',
-                    borderBottom: '1px solid #f1f5f9',
-                  }}
-                >
-                  {student.status === 'ACTIVE'
-                    ? t(i18nKeys.school.studentsUi.status.active)
-                    : t(i18nKeys.school.studentsUi.status.inactive)}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </section>
+  if (error) {
+    return <div className="flex justify-center p-8 text-destructive">{error}</div>;
+  }
+
+  return (
+    <div className="max-w-5xl mx-auto space-y-6">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight">
+          {t(i18nKeys.guardian.pages.students.title)}
+        </h1>
+        <p className="text-muted-foreground">{t(i18nKeys.guardian.pages.students.description)}</p>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Alunos Vinculados</CardTitle>
+          <CardDescription>Lista de alunos sob sua responsabilidade.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {students.length === 0 ? (
+            <div className="flex justify-center p-8 text-muted-foreground">
+              {t(i18nKeys.school.studentsUi.empty)}
+            </div>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>{t(i18nKeys.school.studentsUi.table.name)}</TableHead>
+                  <TableHead>{t(i18nKeys.school.studentsUi.table.class)}</TableHead>
+                  <TableHead>{t(i18nKeys.school.studentsUi.table.status)}</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {students.map((student) => (
+                  <TableRow key={student.id}>
+                    <TableCell className="font-medium">{student.name}</TableCell>
+                    <TableCell>{student.class.name}</TableCell>
+                    <TableCell>
+                      {student.status === 'ACTIVE' ? (
+                        <Badge variant="success">
+                          {t(i18nKeys.school.studentsUi.status.active)}
+                        </Badge>
+                      ) : (
+                        <Badge variant="secondary">
+                          {t(i18nKeys.school.studentsUi.status.inactive)}
+                        </Badge>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+        </CardContent>
+      </Card>
+    </div>
   );
 }

@@ -19,7 +19,7 @@ export default async function NewTicketPage({ params }: { params: { locale: Loca
           <CardTitle>Ticket Details</CardTitle>
         </CardHeader>
         <CardContent>
-          <UserTicketForm />
+          <UserTicketForm redirectBase="/g/tickets" />
         </CardContent>
       </Card>
     </div>

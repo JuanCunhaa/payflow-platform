@@ -1,4 +1,5 @@
 import { randomUUID } from 'crypto';
+import { URL } from 'url';
 import type { Request } from 'express';
 
 import { PrismaService } from '../prisma/prisma.service';
@@ -170,9 +171,9 @@ async function run() {
 
   await publicController.confirmSandboxPayment(invoiceId, { method: 'PIX' }, fakeReqConfirm);
 
-  const finalInvoice = (await prisma.invoice.findUnique({
+  const finalInvoice = await prisma.invoice.findUnique({
     where: { id: invoiceId },
-  })) as any;
+  });
 
   if (!finalInvoice) {
     throw new Error('Invoice missing after sandbox payment');

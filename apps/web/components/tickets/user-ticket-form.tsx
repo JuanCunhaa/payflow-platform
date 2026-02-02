@@ -20,7 +20,11 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
-export function UserTicketForm() {
+interface UserTicketFormProps {
+  redirectBase?: string;
+}
+
+export function UserTicketForm({ redirectBase = '/tickets' }: UserTicketFormProps) {
   const { dict, locale } = useI18n(); // Helper to safely access nested keys
   const tTickets = (dict.tickets as any) || {};
 
@@ -56,7 +60,7 @@ export function UserTicketForm() {
       }
 
       const ticket = await res.json();
-      router.push(`/${locale}/tickets/${ticket.id}`); // Redirect to chat
+      router.push(`/${locale}${redirectBase}/${ticket.id}`); // Redirect to chat
     } catch (err: any) {
       if (err.message.includes('already have an open ticket')) {
         setError(tTickets.create?.errorOneOpen || 'You already have an open ticket.');

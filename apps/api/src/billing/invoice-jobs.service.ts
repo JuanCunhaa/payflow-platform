@@ -312,6 +312,7 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
         guardian: {
           user: {
             email: {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               not: null as any,
             },
           },
@@ -336,6 +337,7 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
 
     let sentReminders = 0;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     for (const invoice of invoices as any[]) {
       const email = invoice.guardian?.user?.email;
       if (!email) continue;

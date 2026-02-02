@@ -8,15 +8,15 @@ import { useAuth } from '../../../../auth-context';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
-  Check,
-  X,
   AlertTriangle,
+  Check,
   ChevronLeft,
   ChevronRight,
   Mail,
   Phone,
-  User,
   ShieldAlert,
+  User,
+  X,
 } from 'lucide-react';
 
 type GuardianStatus = 'PENDING_APPROVAL' | 'ACTIVE' | 'REJECTED' | 'SUSPENDED';

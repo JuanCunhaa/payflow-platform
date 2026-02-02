@@ -147,7 +147,7 @@ export default function SchoolLayout({ children }: { children: React.ReactNode }
 
   if (!isStaff || !hasTenantContext) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
+      <div className="flex min-h-screen items-center justify-center bg-muted/30 p-4">
         <Card className="w-full max-w-md">
           <CardHeader>
             <CardTitle>{t(i18nKeys.school.layout.unauthorizedTitle)}</CardTitle>
@@ -173,8 +173,8 @@ export default function SchoolLayout({ children }: { children: React.ReactNode }
         <Sidebar title="Cobra Nex" items={sidebarItems} className="fixed w-64 h-full" />
       </div>
 
-      <div className="flex-1 flex flex-col min-w-0 bg-slate-50/50 dark:bg-slate-950">
-        <header className="sticky top-0 z-40 bg-white dark:bg-slate-900 border-b px-6 py-3 flex items-center justify-between shadow-sm">
+      <div className="flex-1 flex flex-col min-w-0 bg-muted/30 dark:bg-background">
+        <header className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b px-6 py-3 flex items-center justify-between shadow-sm">
           <div className="flex items-center gap-4">
             <MobileSidebar title="Cobra Nex" items={sidebarItems} />
             <div>
@@ -192,18 +192,14 @@ export default function SchoolLayout({ children }: { children: React.ReactNode }
                   </span>
                 ))}
               </nav>
-              <div className="text-base font-semibold text-slate-800 dark:text-slate-100">
-                {schoolName}
-              </div>
+              <div className="text-base font-semibold text-foreground">{schoolName}</div>
             </div>
           </div>
 
           <div className="flex items-center gap-4">
             <ModeToggle />
             <div className="text-right hidden sm:block">
-              <div className="text-sm font-medium text-slate-900 dark:text-slate-100">
-                {userLabel}
-              </div>
+              <div className="text-sm font-medium text-foreground">{userLabel}</div>
               <div className="text-xs text-muted-foreground">{user.email}</div>
             </div>
             <Button

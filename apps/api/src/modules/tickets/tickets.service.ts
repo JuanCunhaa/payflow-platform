@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateGuestTicketDto, CreateTicketDto } from './dto/create-ticket.dto';
-import { Role, TicketStatus } from '@prisma/client';
+import { Prisma, Role, TicketStatus } from '@prisma/client';
 
 @Injectable()
 export class TicketsService {
@@ -73,7 +73,7 @@ export class TicketsService {
   }
 
   async findAll(userId: string, userRole: Role, tenantId?: string) {
-    const where: any = {};
+    const where: Prisma.TicketWhereInput = {};
 
     if (userRole === Role.PLATFORM_ADMIN || userRole === Role.PLATFORM_SUPPORT) {
       // Platform sees all tickets, or filter by tenant if provided

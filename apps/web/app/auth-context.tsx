@@ -128,6 +128,41 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     (async () => {
       setSessionLoading(true);
 
+      // Check for cross-domain redirect token in URL
+      if (typeof window !== 'undefined') {
+        const urlParams = new URLSearchParams(window.location.search);
+        const xdToken = urlParams.get('_xd_token');
+        const xdUser = urlParams.get('_xd_user');
+
+        if (xdToken && xdUser) {
+          try {
+            // Remove token params from URL for security (without triggering navigation)
+            const url = new URL(window.location.href);
+            url.searchParams.delete('_xd_token');
+            url.searchParams.delete('_xd_user');
+            window.history.replaceState({}, '', url.toString());
+
+            // Restore session from cross-domain redirect
+            const parsedUser = JSON.parse(decodeURIComponent(xdUser)) as AuthUser;
+            const decodedToken = decodeURIComponent(xdToken);
+
+            setUser(parsedUser);
+            setAccessToken(decodedToken);
+
+            // Store in sessionStorage for page refreshes
+            window.sessionStorage.setItem(STORAGE_USER_KEY, JSON.stringify(parsedUser));
+            window.sessionStorage.setItem(STORAGE_TOKEN_KEY, decodedToken);
+
+            if (!cancelled) {
+              setSessionLoading(false);
+            }
+            return;
+          } catch {
+            // ignore parse errors and fall back to refresh
+          }
+        }
+      }
+
       // Primeiro tenta restaurar sessГЈo da sessionStorage (caso de reload).
       if (typeof window !== 'undefined') {
         try {
@@ -282,8 +317,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           if (targetSub && targetSub !== currentSub) {
             const protocol = window.location.protocol;
             const newHost = `${targetSub}.${baseDomain}${port}`;
-            // Construct absolute URL
-            const newUrl = `${protocol}//${newHost}/${base}${path}`;
+            // Pass token and user data via URL for cross-domain session sharing
+            const xdToken = encodeURIComponent(loginData.accessToken);
+            const xdUser = encodeURIComponent(JSON.stringify(nextUser));
+            // Construct absolute URL with cross-domain token
+            const newUrl = `${protocol}//${newHost}/${base}${path}?_xd_token=${xdToken}&_xd_user=${xdUser}`;
             window.location.href = newUrl;
             return; // Stop execution (router.push not needed)
           }
