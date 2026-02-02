@@ -14,6 +14,7 @@ import {
 } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 import type { Request } from 'express';
+import { ListInvoicesDto } from '../common/dto/list-invoices.dto';
 
 import { PrismaService } from '../prisma/prisma.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -30,19 +31,19 @@ type TenantRequest = Partial<Request> & {
 
 type InvoiceStatus = 'DRAFT' | 'PENDING' | 'PAID' | 'OVERDUE' | 'CANCELED' | 'REFUNDED';
 
-const ALLOWED_INVOICE_STATUS: InvoiceStatus[] = [
+const ALLOWED_INVOICE_STATUS = new Set<InvoiceStatus>([
   'DRAFT',
   'PENDING',
   'PAID',
   'OVERDUE',
   'CANCELED',
   'REFUNDED',
-];
+]);
 
 function parseInvoiceStatus(value?: string): InvoiceStatus | undefined {
   if (!value) return undefined;
   const upper = value.toUpperCase();
-  if (ALLOWED_INVOICE_STATUS.includes(upper as InvoiceStatus)) {
+  if (ALLOWED_INVOICE_STATUS.has(upper as InvoiceStatus)) {
     return upper as InvoiceStatus;
   }
   throw new BadRequestException({
@@ -64,8 +65,8 @@ function parseDate(value?: string): Date | undefined {
 }
 
 function parsePageParams(pageParam?: string, limitParam?: string) {
-  const page = Math.max(parseInt(pageParam ?? '1', 10) || 1, 1);
-  const limitRaw = parseInt(limitParam ?? '20', 10) || 20;
+  const page = Math.max(Number.parseInt(pageParam ?? '1', 10) || 1, 1);
+  const limitRaw = Number.parseInt(limitParam ?? '20', 10) || 20;
   const pageSize = Math.min(Math.max(limitRaw, 1), 100);
   return { page, pageSize };
 }
@@ -268,19 +269,14 @@ export class GuardianController {
   async listInvoices(
     @Req() req: TenantRequest,
     @CurrentUser() user: CurrentUserPayload,
-    @Query('status') statusParam?: string,
-    @Query('from') fromParam?: string,
-    @Query('to') toParam?: string,
-    @Query('studentId') studentId?: string,
-    @Query('page') pageParam?: string,
-    @Query('limit') limitParam?: string
+    @Query() query: ListInvoicesDto
   ) {
     const { guardian, tenantId, studentIds } = await this.resolveGuardianContext(req, user);
 
-    const status = parseInvoiceStatus(statusParam);
-    const from = parseDate(fromParam);
-    const to = parseDate(toParam);
-    const { page, pageSize } = parsePageParams(pageParam, limitParam);
+    const status = parseInvoiceStatus(query.status);
+    const from = parseDate(query.from);
+    const to = parseDate(query.to);
+    const { page, pageSize } = parsePageParams(query.page, query.limit);
 
     const where: Prisma.InvoiceWhereInput = {
       tenantId,
@@ -300,8 +296,8 @@ export class GuardianController {
       }
     }
 
-    if (studentId) {
-      where.studentId = studentId;
+    if (query.studentId) {
+      where.studentId = query.studentId;
     }
 
     const orConditions: Prisma.InvoiceWhereInput[] = [{ guardianId: guardian.id }];
@@ -457,7 +453,7 @@ export class GuardianController {
 
     if (invoice.paymentLink) {
       return {
-        paymentLink: invoice.paymentLink as string,
+        paymentLink: invoice.paymentLink,
         provider: (invoice.provider as string) ?? 'SANDBOX',
       };
     }

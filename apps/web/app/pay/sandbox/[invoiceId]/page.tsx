@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import { getApiBase } from '../../../api-base';
+import { useI18n } from '@/app/i18n-context';
+import { i18nKeys } from '@payflow/shared';
 
 type InvoiceStatus = 'DRAFT' | 'PENDING' | 'PAID' | 'OVERDUE' | 'CANCELED' | 'REFUNDED';
 
@@ -41,6 +43,7 @@ function formatDate(dateIso: string) {
 }
 
 export default function SandboxPaymentPage() {
+  const { t } = useI18n();
   const params = useParams<{ invoiceId: string }>();
   const searchParams = useSearchParams();
   const [state, setState] = useState<ViewState>({ type: 'loading' });
@@ -52,7 +55,7 @@ export default function SandboxPaymentPage() {
     if (!invoiceId || !token) {
       setState({
         type: 'error',
-        message: 'Link de pagamento inválido ou incompleto.',
+        message: t(i18nKeys.pay.sandbox.error.invalidLink),
       });
       return;
     }
@@ -71,7 +74,7 @@ export default function SandboxPaymentPage() {
         if (!res.ok) {
           setState({
             type: 'error',
-            message: 'Não foi possível carregar os dados da cobrança.',
+            message: t(i18nKeys.pay.sandbox.error.loadError),
           });
           return;
         }
@@ -89,7 +92,7 @@ export default function SandboxPaymentPage() {
         if (!cancelled) {
           setState({
             type: 'error',
-            message: 'Erro de conexão ao carregar a cobrança.',
+            message: t(i18nKeys.pay.sandbox.error.connectionError),
           });
         }
       }
@@ -100,7 +103,7 @@ export default function SandboxPaymentPage() {
     return () => {
       cancelled = true;
     };
-  }, [invoiceId, token]);
+  }, [invoiceId, token, t]);
 
   async function handleConfirm(method: 'PIX' | 'CARD') {
     if (state.type !== 'ready' || state.confirming) return;
@@ -124,7 +127,7 @@ export default function SandboxPaymentPage() {
       if (!res.ok) {
         setState({
           type: 'error',
-          message: 'Não foi possível confirmar o pagamento simulado.',
+          message: t(i18nKeys.pay.sandbox.error.confirmError),
         });
         return;
       }
@@ -138,7 +141,7 @@ export default function SandboxPaymentPage() {
     } catch {
       setState({
         type: 'error',
-        message: 'Erro de conexão ao confirmar o pagamento.',
+        message: t(i18nKeys.pay.sandbox.error.connectionError),
       });
     }
   }
@@ -168,8 +171,12 @@ export default function SandboxPaymentPage() {
     return (
       <main style={containerStyle}>
         <section style={cardStyle}>
-          <h1 style={{ marginTop: 0, marginBottom: '8px', fontSize: '20px' }}>Pagamento Sandbox</h1>
-          <p style={{ margin: 0, fontSize: '14px', color: '#9ca3af' }}>Carregando cobrança...</p>
+          <h1 style={{ marginTop: 0, marginBottom: '8px', fontSize: '20px' }}>
+            {t(i18nKeys.pay.sandbox.title)}
+          </h1>
+          <p style={{ margin: 0, fontSize: '14px', color: '#9ca3af' }}>
+            {t(i18nKeys.pay.sandbox.loading)}
+          </p>
         </section>
       </main>
     );
@@ -179,7 +186,9 @@ export default function SandboxPaymentPage() {
     return (
       <main style={containerStyle}>
         <section style={cardStyle}>
-          <h1 style={{ marginTop: 0, marginBottom: '8px', fontSize: '20px' }}>Pagamento Sandbox</h1>
+          <h1 style={{ marginTop: 0, marginBottom: '8px', fontSize: '20px' }}>
+            {t(i18nKeys.pay.sandbox.title)}
+          </h1>
           <p style={{ margin: 0, fontSize: '14px', color: '#fca5a5' }}>{state.message}</p>
         </section>
       </main>
@@ -201,7 +210,7 @@ export default function SandboxPaymentPage() {
             fontWeight: 600,
           }}
         >
-          Pagamento Sandbox
+          {t(i18nKeys.pay.sandbox.title)}
         </h1>
         <p
           style={{
@@ -211,7 +220,7 @@ export default function SandboxPaymentPage() {
             color: '#9ca3af',
           }}
         >
-          Esta página simula o fluxo de pagamento (PIX/cartão) apenas para testes.
+          {t(i18nKeys.pay.sandbox.description)}
         </p>
 
         <div
@@ -231,7 +240,9 @@ export default function SandboxPaymentPage() {
               marginBottom: '8px',
             }}
           >
-            <span style={{ fontSize: '13px', color: '#cbd5f5' }}>Aluno</span>
+            <span style={{ fontSize: '13px', color: '#cbd5f5' }}>
+              {t(i18nKeys.pay.sandbox.student)}
+            </span>
             <span style={{ fontSize: '14px', fontWeight: 500 }}>{invoice.studentName ?? '-'}</span>
           </div>
           <div
@@ -242,7 +253,9 @@ export default function SandboxPaymentPage() {
               marginBottom: '4px',
             }}
           >
-            <span style={{ fontSize: '13px', color: '#cbd5f5' }}>Responsável</span>
+            <span style={{ fontSize: '13px', color: '#cbd5f5' }}>
+              {t(i18nKeys.pay.sandbox.guardian)}
+            </span>
             <span style={{ fontSize: '14px', fontWeight: 500 }}>{invoice.guardianName ?? '-'}</span>
           </div>
           <div
@@ -253,7 +266,9 @@ export default function SandboxPaymentPage() {
               marginBottom: '4px',
             }}
           >
-            <span style={{ fontSize: '13px', color: '#cbd5f5' }}>Valor</span>
+            <span style={{ fontSize: '13px', color: '#cbd5f5' }}>
+              {t(i18nKeys.pay.sandbox.amount)}
+            </span>
             <span style={{ fontSize: '16px', fontWeight: 600 }}>
               {formatAmountBRL(invoice.amountCents)}
             </span>
@@ -265,7 +280,9 @@ export default function SandboxPaymentPage() {
               alignItems: 'center',
             }}
           >
-            <span style={{ fontSize: '13px', color: '#cbd5f5' }}>Vencimento</span>
+            <span style={{ fontSize: '13px', color: '#cbd5f5' }}>
+              {t(i18nKeys.pay.sandbox.dueDate)}
+            </span>
             <span style={{ fontSize: '14px' }}>{formatDate(invoice.dueDate)}</span>
           </div>
         </div>
@@ -279,7 +296,11 @@ export default function SandboxPaymentPage() {
         >
           Status:{' '}
           <strong>
-            {isPaid ? 'Pago (simulado)' : invoice.status === 'OVERDUE' ? 'Em atraso' : 'Pendente'}
+            {isPaid
+              ? t(i18nKeys.pay.sandbox.status.paid)
+              : invoice.status === 'OVERDUE'
+                ? t(i18nKeys.pay.sandbox.status.overdue)
+                : t(i18nKeys.pay.sandbox.status.pending)}
           </strong>
         </div>
 
@@ -292,7 +313,7 @@ export default function SandboxPaymentPage() {
               color: '#4ade80',
             }}
           >
-            Pagamento simulado registrado com sucesso. A cobrança foi marcada como paga.
+            {t(i18nKeys.pay.sandbox.success)}
           </p>
         )}
 
@@ -317,7 +338,9 @@ export default function SandboxPaymentPage() {
               fontSize: '14px',
             }}
           >
-            {state.confirming ? 'Confirmando...' : 'Pagar via PIX (simulado)'}
+            {state.confirming
+              ? t(i18nKeys.pay.sandbox.actions.confirming)
+              : t(i18nKeys.pay.sandbox.actions.payPix)}
           </button>
 
           <button
@@ -334,7 +357,9 @@ export default function SandboxPaymentPage() {
               fontSize: '14px',
             }}
           >
-            {state.confirming ? 'Confirmando...' : 'Pagar via Cartão (simulado)'}
+            {state.confirming
+              ? t(i18nKeys.pay.sandbox.actions.confirming)
+              : t(i18nKeys.pay.sandbox.actions.payCard)}
           </button>
         </div>
       </section>

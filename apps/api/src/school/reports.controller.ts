@@ -24,14 +24,14 @@ type TenantRequest = Partial<Request> & {
 
 type InvoiceStatus = 'DRAFT' | 'PENDING' | 'PAID' | 'OVERDUE' | 'CANCELED' | 'REFUNDED';
 
-const ALLOWED_STATUS: InvoiceStatus[] = [
+const ALLOWED_STATUS = new Set<InvoiceStatus>([
   'DRAFT',
   'PENDING',
   'PAID',
   'OVERDUE',
   'CANCELED',
   'REFUNDED',
-];
+]);
 
 function parseDate(value?: string): Date | undefined {
   if (!value) return undefined;
@@ -50,7 +50,7 @@ function parseDate(value?: string): Date | undefined {
 function parseInvoiceStatus(value?: string): InvoiceStatus | undefined {
   if (!value) return undefined;
   const upper = value.toUpperCase();
-  if (ALLOWED_STATUS.includes(upper as InvoiceStatus)) {
+  if (ALLOWED_STATUS.has(upper as InvoiceStatus)) {
     return upper as InvoiceStatus;
   }
   throw new BadRequestException({
@@ -62,7 +62,7 @@ function parseInvoiceStatus(value?: string): InvoiceStatus | undefined {
 function escapeCsvValue(input: string): string {
   let value = input;
   if (value.includes('"')) {
-    value = value.replace(/"/g, '""');
+    value = value.replaceAll('"', '""');
   }
   if (/[",\r\n]/.test(value)) {
     return `"${value}"`;
@@ -183,8 +183,7 @@ export class SchoolReportsController {
     today.setHours(0, 0, 0, 0);
 
     return invoices.map((invoice) => {
-      const dueDate =
-        invoice.dueDate instanceof Date ? (invoice.dueDate as Date) : new Date(invoice.dueDate);
+      const dueDate = invoice.dueDate instanceof Date ? invoice.dueDate : new Date(invoice.dueDate);
       const due = new Date(dueDate);
       due.setHours(0, 0, 0, 0);
 
@@ -193,13 +192,13 @@ export class SchoolReportsController {
         Number.isFinite(diffMs) && diffMs > 0 ? Math.floor(diffMs / (1000 * 60 * 60 * 24)) : 0;
 
       return {
-        invoiceId: invoice.id as string,
+        invoiceId: invoice.id,
         student: (invoice.student?.name as string | null) ?? null,
         guardian:
           (invoice.guardian?.name as string | null) ??
           (invoice.guardian?.user?.email as string | null) ??
           null,
-        amountCents: invoice.amountCents as number,
+        amountCents: invoice.amountCents,
         dueDate: dueDate.toISOString(),
         status: invoice.status as InvoiceStatus,
         daysOverdue,
@@ -270,16 +269,14 @@ export class SchoolReportsController {
       );
       const valor = formatAmount(invoice.amountCents);
       const vencimento =
-        invoice.dueDate instanceof Date
-          ? (invoice.dueDate as Date).toISOString()
-          : String(invoice.dueDate);
+        invoice.dueDate instanceof Date ? invoice.dueDate.toISOString() : String(invoice.dueDate);
       const statusValue = invoice.status ?? '';
-      const pagoEm =
-        invoice.paidAt instanceof Date
-          ? (invoice.paidAt as Date).toISOString()
-          : invoice.paidAt
-            ? String(invoice.paidAt)
-            : '';
+      let pagoEm = '';
+      if (invoice.paidAt instanceof Date) {
+        pagoEm = invoice.paidAt.toISOString();
+      } else if (invoice.paidAt) {
+        pagoEm = String(invoice.paidAt);
+      }
       const metodoPagamento = invoice.paidMethod ?? '';
 
       const line = [aluno, responsavel, valor, vencimento, statusValue, pagoEm, metodoPagamento]
@@ -343,33 +340,32 @@ export class SchoolReportsController {
 
     for (const invoice of invoices) {
       if (invoice.status === 'PAID') {
-        totalPaidCents += invoice.amountCents as number;
+        totalPaidCents += invoice.amountCents;
       } else if (invoice.status === 'PENDING' || invoice.status === 'OVERDUE') {
-        totalOpenCents += invoice.amountCents as number;
+        totalOpenCents += invoice.amountCents;
       }
     }
 
-    const mappedInvoices = invoices.map((invoice) => ({
-      id: invoice.id as string,
-      amountCents: invoice.amountCents as number,
-      currency: 'BRL',
-      status: invoice.status as InvoiceStatus,
-      dueDate:
-        invoice.dueDate instanceof Date
-          ? (invoice.dueDate as Date).toISOString()
-          : String(invoice.dueDate),
-      paidAt:
-        invoice.paidAt instanceof Date
-          ? (invoice.paidAt as Date).toISOString()
-          : invoice.paidAt
-            ? String(invoice.paidAt)
-            : null,
-      contractName: (invoice.contract?.name as string | null) ?? null,
-      guardianName:
-        (invoice.guardian?.name as string | null) ??
-        (invoice.guardian?.user?.email as string | null) ??
-        null,
-    }));
+    const mappedInvoices = invoices.map((invoice) => {
+      let paidAt: string | null = null;
+      if (invoice.paidAt instanceof Date) {
+        paidAt = invoice.paidAt.toISOString();
+      } else if (invoice.paidAt) {
+        paidAt = String(invoice.paidAt);
+      }
+
+      return {
+        id: invoice.id,
+        amountCents: invoice.amountCents,
+        currency: 'BRL',
+        status: invoice.status,
+        dueDate:
+          invoice.dueDate instanceof Date ? invoice.dueDate.toISOString() : String(invoice.dueDate),
+        paidAt,
+        contractName: invoice.contract?.name ?? null,
+        guardianName: invoice.guardian?.name ?? invoice.guardian?.user?.email ?? null,
+      };
+    });
 
     return {
       student: {
@@ -433,30 +429,32 @@ export class SchoolReportsController {
 
     for (const invoice of invoices) {
       if (invoice.status === 'PAID') {
-        totalPaidCents += invoice.amountCents as number;
+        totalPaidCents += invoice.amountCents;
       } else if (invoice.status === 'PENDING' || invoice.status === 'OVERDUE') {
-        totalOpenCents += invoice.amountCents as number;
+        totalOpenCents += invoice.amountCents;
       }
     }
 
-    const mappedInvoices = invoices.map((invoice) => ({
-      id: invoice.id as string,
-      amountCents: invoice.amountCents as number,
-      currency: 'BRL',
-      status: invoice.status as InvoiceStatus,
-      dueDate:
-        invoice.dueDate instanceof Date
-          ? (invoice.dueDate as Date).toISOString()
-          : String(invoice.dueDate),
-      paidAt:
-        invoice.paidAt instanceof Date
-          ? (invoice.paidAt as Date).toISOString()
-          : invoice.paidAt
-            ? String(invoice.paidAt)
-            : null,
-      contractName: (invoice.contract?.name as string | null) ?? null,
-      studentName: (invoice.student?.name as string | null) ?? null,
-    }));
+    const mappedInvoices = invoices.map((invoice) => {
+      let paidAt: string | null = null;
+      if (invoice.paidAt instanceof Date) {
+        paidAt = invoice.paidAt.toISOString();
+      } else if (invoice.paidAt) {
+        paidAt = String(invoice.paidAt);
+      }
+
+      return {
+        id: invoice.id,
+        amountCents: invoice.amountCents,
+        currency: 'BRL',
+        status: invoice.status,
+        dueDate:
+          invoice.dueDate instanceof Date ? invoice.dueDate.toISOString() : String(invoice.dueDate),
+        paidAt,
+        contractName: invoice.contract?.name ?? null,
+        studentName: invoice.student?.name ?? null,
+      };
+    });
 
     return {
       guardian: {

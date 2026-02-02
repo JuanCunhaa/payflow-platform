@@ -1,5 +1,5 @@
-import { randomUUID } from 'crypto';
-import { URL } from 'url';
+import { randomUUID } from 'node:crypto';
+import { URL } from 'node:url';
 import type { Request } from 'express';
 
 import { PrismaService } from '../prisma/prisma.service';
@@ -107,7 +107,7 @@ async function run() {
     },
   });
 
-  const reqTenant = createTenantRequest(tenant.id, tenant.slug) as TenantRequest;
+  const reqTenant = createTenantRequest(tenant.id, tenant.slug);
   const schoolUser: CurrentUserPayload = {
     id: randomUUID(),
     email: `staff-e2e-${unique}@example.com`,
@@ -192,6 +192,7 @@ async function run() {
   await prisma.$disconnect();
 }
 
+// eslint-disable-next-line @typescript-eslint/no-floating-promises, unicorn/prefer-top-level-await
 run().catch(async (error) => {
   console.error(error);
   const prisma = new PrismaService();

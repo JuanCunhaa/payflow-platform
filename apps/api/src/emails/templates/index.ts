@@ -283,12 +283,15 @@ function getLayout(
 }
 
 function interpolate(template: string, variables: Record<string, unknown>): string {
-  return template.replace(/{{\s*([\w]+)\s*}}/g, (_, key: string) => {
+  return template.replaceAll(/{{\s*(\w+)\s*}}/g, (_, key: string) => {
     const value = variables[key];
-    if (value === undefined || value === null) {
-      return '';
+    if (typeof value === 'string') {
+      return value;
     }
-    return String(value);
+    if (typeof value === 'number' || typeof value === 'boolean') {
+      return String(value);
+    }
+    return JSON.stringify(value);
   });
 }
 

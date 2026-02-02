@@ -3,8 +3,8 @@ import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma/prisma.service';
 import { LoginDto } from './dto/login.dto';
 import { PasswordService } from './password.service';
-import { Response } from 'express';
-import { randomBytes, randomUUID } from 'crypto';
+import { Response, CookieOptions } from 'express';
+import { randomBytes, randomUUID } from 'node:crypto';
 import { EmailService } from '../notifications/email.service';
 
 export interface JwtPayload {
@@ -193,12 +193,12 @@ export class AuthService {
     return this.prisma.refreshToken;
   }
 
-  private getRefreshCookieOptions() {
+  private getRefreshCookieOptions(): CookieOptions {
     const isProd = process.env.NODE_ENV === 'production';
     return {
       httpOnly: true,
       secure: isProd,
-      sameSite: (isProd ? 'none' : 'lax') as 'none' | 'lax',
+      sameSite: isProd ? 'none' : 'lax',
       path: '/',
       maxAge: REFRESH_TOKEN_TTL_MS,
       domain: isProd ? '.cobranex.xyz' : undefined,

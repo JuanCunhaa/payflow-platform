@@ -442,20 +442,23 @@ export default function GuardianInvoicesPage() {
               <>
                 <div className="space-y-4">
                   <div className="flex flex-col gap-1">
-                    <span className="text-sm text-muted-foreground">Valor e Vencimento</span>
+                    <span className="text-sm text-muted-foreground">
+                      {t(i18nKeys.guardian.invoicesUi.detail.amountAndDate)}
+                    </span>
                     <div className="flex items-center gap-2">
                       <span className="text-2xl font-bold">
                         {formatAmountBRL(selectedInvoice.amountCents)}
                       </span>
                     </div>
                     <span className="text-sm text-muted-foreground">
-                      Vence em {formatDate(selectedInvoice.dueDate)}
+                      {t(i18nKeys.guardian.invoicesUi.detail.dueDatePrefix)}{' '}
+                      {formatDate(selectedInvoice.dueDate)}
                     </span>
                   </div>
 
                   <div className="rounded-lg border p-3 bg-muted/30">
                     <span className="text-xs font-medium text-muted-foreground uppercase">
-                      Status
+                      {t(i18nKeys.guardian.invoicesUi.filters.status)}
                     </span>
                     <div className="mt-1">
                       <Badge variant={getStatusBadgeVariant(selectedInvoice.status)}>
@@ -465,20 +468,26 @@ export default function GuardianInvoicesPage() {
                   </div>
 
                   <div>
-                    <span className="text-sm font-medium text-muted-foreground">Aluno</span>
+                    <span className="text-sm font-medium text-muted-foreground">
+                      {t(i18nKeys.guardian.invoicesUi.table.student)}
+                    </span>
                     <p className="text-base">{selectedInvoice.student?.name ?? '-'}</p>
                   </div>
 
                   {selectedInvoice.description && (
                     <div>
-                      <span className="text-sm font-medium text-muted-foreground">Descrição</span>
+                      <span className="text-sm font-medium text-muted-foreground">
+                        {t(i18nKeys.guardian.invoicesUi.detail.descriptionLabel)}
+                      </span>
                       <p className="text-sm">{selectedInvoice.description}</p>
                     </div>
                   )}
                 </div>
 
                 <div className="space-y-3 pt-4 border-t">
-                  <h4 className="text-sm font-medium leading-none">Pagamento</h4>
+                  <h4 className="text-sm font-medium leading-none">
+                    {t(i18nKeys.guardian.invoicesUi.detail.paymentTitle)}
+                  </h4>
 
                   {selectedInvoice.status === 'PENDING' || selectedInvoice.status === 'OVERDUE' ? (
                     <div className="flex flex-col gap-2">
@@ -508,7 +517,7 @@ export default function GuardianInvoicesPage() {
                     </div>
                   ) : (
                     <div className="text-sm text-muted-foreground">
-                      Esta fatura não está pendente de pagamento.
+                      {t(i18nKeys.guardian.invoicesUi.detail.notPending)}
                     </div>
                   )}
                 </div>

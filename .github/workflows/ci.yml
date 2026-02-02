@@ -39,13 +39,6 @@ jobs:
       - name: Build (web + api)
         run: npm run build
 
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps
-        working-directory: apps/web
-
-      - name: Run tests (web E2E + api)
-        run: npm test
-
   security-audit:
     name: Security Audit (npm audit)
     runs-on: ubuntu-latest

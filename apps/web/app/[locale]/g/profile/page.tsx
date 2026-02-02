@@ -118,15 +118,15 @@ export default function GuardianProfilePage() {
     <div className="max-w-2xl mx-auto space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">
-          {t(i18nKeys.guardian.pages.dashboard.title)}
+          {t(i18nKeys.guardian.pages.profile.title)}
         </h1>
-        <p className="text-muted-foreground">Gerencie suas informações pessoais.</p>
+        <p className="text-muted-foreground">{t(i18nKeys.guardian.pages.profile.description)}</p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Informações do Perfil</CardTitle>
-          <CardDescription>Visualize e edite seus dados de contato.</CardDescription>
+          <CardTitle>{t(i18nKeys.guardian.profile.title)}</CardTitle>
+          <CardDescription>{t(i18nKeys.guardian.profile.description)}</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -158,7 +158,7 @@ export default function GuardianProfilePage() {
                 type="tel"
                 value={phone}
                 onChange={(event) => setPhone(event.target.value)}
-                placeholder="(00) 00000-0000"
+                placeholder={t(i18nKeys.common.placeholders.phone)}
               />
             </div>
 
@@ -166,7 +166,7 @@ export default function GuardianProfilePage() {
 
             {success && (
               <p className="text-sm font-medium text-green-600 dark:text-green-500">
-                {t(i18nKeys.requestDemo.success.title)}
+                {t(i18nKeys.school.settings.feedback.saveSuccess)}
               </p>
             )}
 
@@ -180,7 +180,7 @@ export default function GuardianProfilePage() {
                 ) : (
                   <>
                     <Save className="mr-2 h-4 w-4" />
-                    {t(i18nKeys.guardianRegister.form.submit)}
+                    {t(i18nKeys.platform.tenants.form.submitEdit)}
                   </>
                 )}
               </Button>

@@ -1,895 +1,966 @@
 {
-  "nav": {
-    "home": "Início",
-    "login": "Login",
-    "logout": "Sair"
-  },
-  "footer": {
-    "copyright": "Todos os direitos reservados.",
-    "terms": "Termos",
-    "privacy": "Privacidade",
-    "support": "Suporte"
-  },
-  "landing": {
-    "title": "Cobra Nex",
-    "subtitle": "Gestão financeira para empresas e clientes",
-    "cta": "Começar agora",
-    "description": "Centralize mensalidades, eventos e cobranças em um só lugar, com comunicação clara entre empresa e clientes.",
-    "problem": {
-      "title": "Planilha, WhatsApp e comprovantes perdidos não escalam",
-      "spreadsheets": "Planilhas manuais, diferentes versões e risco de erro a cada atualização.",
-      "whatsapp": "Cobranças por WhatsApp se perdem no meio de recados, grupos e mensagens fora de hora.",
-      "receipts": "Comprovantes espalhados entre e-mail, fotos e anexos dificultam conciliação e controle."
-    },
-    "solution": {
-      "title": "Uma plataforma pensada para a rotina financeira mensal",
-      "events": "Eventos: inscrições, pagamentos e presença em um só fluxo.",
-      "tuitions": "Mensalidades: geração automática, boletos e controle de inadimplência.",
-      "oneOff": "Cobranças avulsas: materiais, passeios e extras sem fricção.",
-      "communication": "Comunicação: lembretes claros para clientes, sem ruído.",
-      "finance": "Financeiro e relatórios: visão consolidada por turma, série e período."
-    },
-    "proof": {
-      "title": "Feito para empresas que querem profissionalizar a gestão",
-      "subtitle": "Depoimentos, cases e integrações virão aqui — por enquanto, foque em validar o fluxo."
-    },
-    "finalCta": {
-      "title": "Pronto para organizar os pagamentos da sua empresa?",
-      "subtitle": "Comece testando com poucos clientes e evolua com segurança."
-    },
-    "buttons": {
-      "login": "Entrar",
-      "guardian": "Sou cliente",
-      "demo": "Quero na minha empresa"
-    }
-  },
-  "login": {
-    "title": "Login",
-    "email": "Email",
-    "password": "Senha",
-    "submit": "Entrar",
-    "noAccount": "Não tem conta?",
-    "signup": "Cadastre-se",
-    "forgotPassword": "Esqueci minha senha",
-    "error": {
-      "generic": "Falha no login",
-      "connection": "Erro de conexão. Tente novamente.",
-      "rateLimit": "Muitas tentativas de login. Tente novamente em alguns minutos."
-    }
-  },
-  "passwordReset": {
-    "forgot": {
-      "title": "Esqueci minha senha",
-      "description": "Informe o seu email. Se existir uma conta, enviaremos instruções para redefinir a senha.",
-      "emailLabel": "Email",
-      "emailPlaceholder": "Seu e-mail cadastrado",
-      "submit": "Enviar instruções",
-      "backToLogin": "Voltar para Login",
-      "success": "Se existir uma conta com este email, você receberá instruções para redefinir a senha em alguns minutos.",
-      "error": {
-        "validation": "Informe um email válido.",
-        "connection": "Erro de conexão. Tente novamente em alguns minutos.",
-        "generic": "Não foi possível processar sua solicitação agora. Tente novamente em alguns minutos."
-      }
-    },
-    "reset": {
-      "title": "Redefinir senha",
-      "description": "Defina uma nova senha para acessar sua conta.",
-      "newPasswordLabel": "Nova senha",
-      "confirmPasswordLabel": "Confirmar nova senha",
-      "submit": "Redefinir senha",
-      "success": "Sua senha foi redefinida com sucesso. Você já pode fazer login com a nova senha.",
-      "error": {
-        "validation": "Verifique se as senhas foram preenchidas corretamente e se coincidem.",
-        "weakPassword": "Sua senha é muito fraca. Use pelo menos 8 caracteres com letras e números.",
-        "invalidToken": "Link de redefinição inválido. Solicite um novo email de recuperação.",
-        "expiredToken": "Este link de redefinição expirou. Solicite um novo email de recuperação.",
-        "usedToken": "Este link de redefinição já foi utilizado. Solicite um novo email de recuperação.",
-        "generic": "Não foi possível redefinir sua senha agora. Tente novamente em alguns minutos.",
-        "connection": "Erro de conexão. Verifique sua internet e tente novamente."
-      }
+  "auth": {
+    "pendingApproval": {
+      "description": "Seu cadastro de cliente está em análise. Você receberá um e-mail quando for aprovado.",
+      "title": "Cadastro em aprovação"
     }
   },
   "common": {
-    "ok": "OK",
+    "actions": "Ações",
+    "all": "Todos",
     "back": "Voltar",
     "cancel": "Cancelar",
+    "close": "Fechar",
     "error": "Erro",
-    "loading": "Carregando...",
     "language": {
       "english": "Inglês",
       "portuguese": "Português"
     },
-    "all": "Todos",
-    "actions": "Ações",
+    "loading": "Carregando...",
+    "meta": {
+      "title": {
+        "admin": "Cobra Nex Admin",
+        "default": "Cobra Nex",
+        "guardian": "Portal do Cliente | Cobra Nex",
+        "school": "Portal da Empresa | Cobra Nex"
+      }
+    },
+    "of": "de",
+    "ok": "OK",
     "page": "Página",
-    "of": "de"
-  },
-  "tenant": {
-    "notFound": {
-      "title": "Empresa não encontrada",
-      "description": "Verificamos o subdomínio informado e não encontramos uma empresa correspondente.",
-      "extra": "Verifique o endereço ou entre em contato com o suporte."
+    "placeholders": {
+      "address": "Rua, número, bairro...",
+      "cpf": "000.000.000-00",
+      "date": "00/00/0000",
+      "email": "email@exemplo.com",
+      "money": "0,00",
+      "phone": "(00) 00000-0000",
+      "rg": "00.000.000-0"
     }
   },
   "dashboard": {
-    "title": "Dashboard",
-    "welcome": "Bem-vindo, {name}!",
-    "userTypeLabel": "Você está logado como",
+    "backToHome": "Voltar para a home",
     "emailLabel": "Email",
-    "tenantLabel": "Empresa",
     "platformTenantFallback": "Plataforma",
-    "backToHome": "Voltar para a home"
+    "tenantLabel": "Empresa",
+    "title": "Dashboard",
+    "userTypeLabel": "Você está logado como",
+    "welcome": "Bem-vindo, {name}!"
   },
-  "auth": {
-    "pendingApproval": {
-      "title": "Cadastro em aprovação",
-      "description": "Seu cadastro de cliente está em análise. Você receberá um e-mail quando for aprovado."
-    }
-  },
-  "requestDemo": {
-    "title": "Quero o Cobra Nex na minha empresa",
-    "description": "Preencha os dados abaixo para que nossa equipe entre em contato e agende uma demonstração.",
-    "form": {
-      "responsibleName": "Nome do responsável",
-      "schoolName": "Nome da empresa",
-      "email": "Email",
-      "phone": "Telefone",
-      "submit": "Solicitar demonstração"
-    },
-    "success": {
-      "title": "Recebemos seu pedido!",
-      "description": "Em breve entraremos em contato pelo email informado para combinar os próximos passos."
-    },
-    "error": {
-      "validation": "Verifique se todos os campos estão preenchidos corretamente.",
-      "generic": "Não foi possível enviar seu pedido agora. Tente novamente em alguns minutos.",
-      "connection": "Erro de conexão. Verifique sua internet e tente novamente."
-    }
-  },
-  "guardianRegister": {
-    "title": "Sou cliente",
-    "description": "Preencha seus dados e o código da empresa para criar sua conta. Após o envio, a empresa precisará aprovar seu cadastro antes do primeiro acesso.",
-    "form": {
-      "name": "Nome completo",
-      "email": "Email",
-      "phone": "Telefone",
-      "password": "Senha",
-      "confirmPassword": "Confirmar senha",
-      "schoolCode": "School Code da empresa",
-      "submit": "Criar minha conta"
-    },
-    "success": {
-      "title": "Cadastro enviado para aprovação",
-      "description": "Recebemos seus dados. Assim que a empresa aprovar seu cadastro, você poderá acessar o portal do cliente com seu email e senha."
-    },
-    "error": {
-      "validation": "Verifique se todos os campos foram preenchidos corretamente e se as senhas conferem.",
-      "weakPassword": "Sua senha é muito fraca. Use pelo menos 8 caracteres, incluindo letras e números, e evite senhas comuns.",
-      "schoolCode": "School Code inválido ou empresa não encontrada. Confirme o código com a empresa.",
-      "emailInUse": "Já existe uma conta cadastrada com este email.",
-      "generic": "Não foi possível concluir seu cadastro agora. Tente novamente em alguns minutos.",
-      "connection": "Erro de conexão. Verifique sua internet e tente novamente."
-    }
+  "footer": {
+    "copyright": "Todos os direitos reservados.",
+    "privacy": "Privacidade",
+    "support": "Suporte",
+    "terms": "Termos"
   },
   "guardian": {
-    "nav": {
-      "dashboard": "Resumo",
-      "profile": "Meu perfil",
-      "students": "Beneficiários",
-      "invoices": "Cobranças",
-      "tickets": "Chamados"
-    },
     "invoicesUi": {
-      "filters": {
-        "status": "Status",
-        "statusAll": "Todos os status",
-        "from": "Data inicial",
-        "to": "Data final",
-        "student": "Beneficiário",
-        "guardian": "Cliente",
-        "search": "Buscar por beneficiário ou cliente"
-      },
-      "table": {
-        "dueDate": "Vencimento",
-        "student": "Beneficiário",
-        "guardian": "Cliente",
-        "amount": "Valor",
-        "origin": "Origem",
-        "status": "Status",
-        "actions": "Ações"
-      },
-      "status": {
-        "draft": "Rascunho",
-        "pending": "Pendente",
-        "paid": "Pago",
-        "overdue": "Em atraso",
-        "canceled": "Cancelado",
-        "refunded": "Estornado"
-      },
       "detail": {
-        "title": "Detalhes da cobrança",
-        "emptySelection": "Selecione uma cobrança para ver os detalhes.",
-        "infoTitle": "Informações da cobrança",
-        "studentTitle": "Beneficiário",
-        "guardianTitle": "Cliente",
-        "itemsTitle": "Itens da cobrança",
-        "statusTimelineTitle": "Linha do tempo de status",
-        "paymentTitle": "Pagamento",
-        "paymentLinkLabel": "Link de pagamento",
-        "copyLink": "Copiar Link",
-        "openLink": "Abrir Link",
-        "copyPaymentLink": "Copiar link de pagamento",
-        "copyPaymentLinkSuccess": "Link de pagamento copiado.",
-        "generatePaymentLink": "Gerar link de pagamento",
-        "openPaymentPage": "Abrir página de pagamento",
-        "communicationsTitle": "Comunicações",
-        "communicationsEmpty": "Nenhuma comunicação registrada.",
         "communicationTypeCreated": "Cobrança criada",
         "communicationTypeOverdue": "Cobrança vencida",
-        "communicationTypePaid": "Pagamento confirmado"
-      },
-      "feedback": {
-        "loadError": "Não foi possível carregar as cobranças.",
-        "exportError": "Não foi possível exportar as cobranças para CSV."
+        "communicationTypePaid": "Pagamento confirmado",
+        "communicationsEmpty": "Nenhuma comunicação registrada.",
+        "communicationsTitle": "Comunicações",
+        "copyLink": "Copiar Link",
+        "copyPaymentLink": "Copiar link de pagamento",
+        "copyPaymentLinkSuccess": "Link de pagamento copiado.",
+        "detail": {
+          "paymentTitle": "Pagamento"
+        },
+        "emptySelection": "Selecione uma cobrança para ver os detalhes.",
+        "generatePaymentLink": "Gerar link de pagamento",
+        "guardianTitle": "Cliente",
+        "infoTitle": "Informações da cobrança",
+        "itemsTitle": "Itens da cobrança",
+        "openLink": "Abrir Link",
+        "openPaymentPage": "Abrir página de pagamento",
+        "paymentLinkLabel": "Link de pagamento",
+        "paymentTitle": "Pagamento",
+        "statusTimelineTitle": "Linha do tempo de status",
+        "studentTitle": "Beneficiário",
+        "title": "Detalhes da cobrança"
       },
       "empty": "Nenhuma cobrança encontrada para o filtro atual.",
       "export": {
-        "title": "Exportar cobranças em CSV",
+        "button": "Exportar CSV",
+        "cancel": "Cancelar",
         "description": "Escolha o período e o status das cobranças que deseja exportar para planilha.",
         "periodFrom": "Data inicial",
         "periodTo": "Data final",
         "statusLabel": "Status das cobranças",
         "submit": "Exportar CSV",
-        "cancel": "Cancelar",
-        "button": "Exportar CSV"
+        "title": "Exportar cobranças em CSV"
+      },
+      "feedback": {
+        "exportError": "Não foi possível exportar as cobranças para CSV.",
+        "loadError": "Não foi possível carregar as cobranças."
+      },
+      "filters": {
+        "from": "Data inicial",
+        "guardian": "Cliente",
+        "search": "Buscar por beneficiário ou cliente",
+        "status": "Status",
+        "statusAll": "Todos os status",
+        "student": "Beneficiário",
+        "to": "Data final"
       },
       "newForm": {
-        "title": "Nova cobrança avulsa",
+        "amountLabel": "Valor (R$)",
+        "cancel": "Cancelar",
         "description": "Selecione o beneficiário, cliente e preencha os dados da cobrança.",
-        "studentLabel": "Beneficiário",
+        "descriptionLabel": "Descrição",
+        "dueDateLabel": "Data de vencimento",
         "guardianLabel": "Cliente",
         "guardianPlaceholder": "Selecione um cliente vinculado ao beneficiário",
-        "amountLabel": "Valor (R$)",
-        "dueDateLabel": "Data de vencimento",
-        "descriptionLabel": "Descrição",
+        "studentLabel": "Beneficiário",
         "submit": "Criar cobrança",
-        "cancel": "Cancelar"
+        "title": "Nova cobrança avulsa"
+      },
+      "status": {
+        "canceled": "Cancelado",
+        "draft": "Rascunho",
+        "overdue": "Em atraso",
+        "paid": "Pago",
+        "pending": "Pendente",
+        "refunded": "Estornado"
+      },
+      "table": {
+        "actions": "Ações",
+        "amount": "Valor",
+        "dueDate": "Vencimento",
+        "guardian": "Cliente",
+        "origin": "Origem",
+        "status": "Status",
+        "student": "Beneficiário"
       }
     },
+    "nav": {
+      "dashboard": "Resumo",
+      "invoices": "Cobranças",
+      "profile": "Meu perfil",
+      "students": "Beneficiários",
+      "tickets": "Chamados"
+    },
+    "pages": {
+      "dashboard": {
+        "description": "Acompanhe seus beneficiários, cobranças e comunicados da empresa em um só lugar (em breve).",
+        "title": "Portal do responsável"
+      },
+      "invoices": {
+        "description": "Visualize e acompanhe os pagamentos e cobranças da empresa.",
+        "title": "Minhas cobranças"
+      },
+      "profile": {
+        "description": "Gerencie suas informações pessoais.",
+        "title": "Meu Perfil"
+      },
+      "students": {
+        "description": "Veja os beneficiários vinculados à sua conta e seus dados básicos (em breve).",
+        "title": "Meus beneficiários"
+      }
+    },
+    "profile": {
+      "description": "Visualize e edite seus dados de contato.",
+      "form": {
+        "personalInfo": "Informações Pessoais",
+        "personalInfoDescription": "Seus dados básicos de cadastro."
+      },
+      "title": "Informações do Perfil"
+    },
     "reportsUi": {
-      "student": {
-        "title": "Relatório Financeiro",
-        "description": "Visualize o histórico financeiro detalhado deste aluno.",
+      "guardian": {
         "backToList": "Voltar para lista",
         "cards": {
-          "totalPaid": "Total Pago",
-          "totalOpen": "Em Aberto"
+          "totalOpen": "Em Aberto",
+          "totalPaid": "Total Pago"
         },
-        "table": {
-          "dueDate": "Vencimento",
-          "amount": "Valor",
-          "status": "Status",
-          "guardian": "Responsável",
-          "contract": "Contrato",
-          "paidAt": "Pago em"
-        },
+        "description": "Visualize o histórico financeiro detalhado deste cliente.",
+        "empty": "Nenhuma fatura encontrada.",
         "feedback": {
           "loadError": "Não foi possível carregar o relatório."
         },
-        "empty": "Nenhuma fatura encontrada."
+        "table": {
+          "amount": "Valor",
+          "contract": "Contrato",
+          "dueDate": "Vencimento",
+          "paidAt": "Pago em",
+          "status": "Status",
+          "student": "Aluno"
+        },
+        "title": "Relatório Financeiro"
       },
       "overdue": {
-        "title": "Inadimplência",
-        "description": "Veja rapidamente quem está em atraso e copie o link de pagamento para cobrar de forma organizada.",
-        "table": {
-          "student": "Aluno",
-          "guardian": "Responsável",
-          "daysOverdue": "Dias em atraso",
-          "amount": "Valor",
-          "actions": "Ações"
-        },
         "actions": {
           "copyPaymentLink": "Copiar link de pagamento",
           "copyPaymentLinkSuccess": "Link de pagamento copiado para a área de transferência.",
           "generatePaymentLink": "Gerar link de pagamento"
         },
+        "description": "Veja rapidamente quem está em atraso e copie o link de pagamento para cobrar de forma organizada.",
+        "empty": "Nenhuma cobrança em atraso encontrada para o filtro atual.",
         "feedback": {
           "loadError": "Não foi possível carregar o relatório de inadimplência.",
           "paymentError": "Não foi possível gerar ou copiar o link de pagamento."
         },
-        "empty": "Nenhuma cobrança em atraso encontrada para o filtro atual."
+        "table": {
+          "actions": "Ações",
+          "amount": "Valor",
+          "daysOverdue": "Dias em atraso",
+          "guardian": "Responsável",
+          "student": "Aluno"
+        },
+        "title": "Inadimplência"
       },
-      "guardian": {
-        "title": "Relatório Financeiro",
-        "description": "Visualize o histórico financeiro detalhado deste cliente.",
+      "student": {
         "backToList": "Voltar para lista",
         "cards": {
-          "totalPaid": "Total Pago",
-          "totalOpen": "Em Aberto"
+          "totalOpen": "Em Aberto",
+          "totalPaid": "Total Pago"
         },
-        "table": {
-          "dueDate": "Vencimento",
-          "amount": "Valor",
-          "status": "Status",
-          "student": "Aluno",
-          "contract": "Contrato",
-          "paidAt": "Pago em"
-        },
+        "description": "Visualize o histórico financeiro detalhado deste aluno.",
+        "empty": "Nenhuma fatura encontrada.",
         "feedback": {
           "loadError": "Não foi possível carregar o relatório."
         },
-        "empty": "Nenhuma fatura encontrada."
-      }
-    },
-    "pages": {
-      "dashboard": {
-        "title": "Portal do responsável",
-        "description": "Acompanhe seus beneficiários, cobranças e comunicados da empresa em um só lugar (em breve)."
-      },
-      "students": {
-        "title": "Meus beneficiários",
-        "description": "Veja os beneficiários vinculados à sua conta e seus dados básicos (em breve)."
-      },
-      "invoices": {
-        "title": "Minhas cobranças",
-        "description": "Visualize e acompanhe os pagamentos e cobranças da empresa (em breve)."
+        "table": {
+          "amount": "Valor",
+          "contract": "Contrato",
+          "dueDate": "Vencimento",
+          "guardian": "Responsável",
+          "paidAt": "Pago em",
+          "status": "Status"
+        },
+        "title": "Relatório Financeiro"
       }
     }
   },
+  "guardianRegister": {
+    "description": "Preencha seus dados e o código da empresa para criar sua conta. Após o envio, a empresa precisará aprovar seu cadastro antes do primeiro acesso.",
+    "error": {
+      "connection": "Erro de conexão. Verifique sua internet e tente novamente.",
+      "emailInUse": "Já existe uma conta cadastrada com este email.",
+      "generic": "Não foi possível concluir seu cadastro agora. Tente novamente em alguns minutos.",
+      "schoolCode": "School Code inválido ou empresa não encontrada. Confirme o código com a empresa.",
+      "validation": "Verifique se todos os campos foram preenchidos corretamente e se as senhas conferem.",
+      "weakPassword": "Sua senha é muito fraca. Use pelo menos 8 caracteres, incluindo letras e números, e evite senhas comuns."
+    },
+    "form": {
+      "confirmPassword": "Confirmar senha",
+      "email": "Email",
+      "name": "Nome completo",
+      "password": "Senha",
+      "phone": "Telefone",
+      "schoolCode": "School Code da empresa",
+      "submit": "Criar minha conta"
+    },
+    "success": {
+      "description": "Recebemos seus dados. Assim que a empresa aprovar seu cadastro, você poderá acessar o portal do cliente com seu email e senha.",
+      "title": "Cadastro enviado para aprovação"
+    },
+    "title": "Sou cliente"
+  },
+  "landing": {
+    "buttons": {
+      "demo": "Quero na minha empresa",
+      "guardian": "Sou cliente",
+      "login": "Entrar"
+    },
+    "cta": "Começar agora",
+    "description": "Centralize mensalidades, eventos e cobranças em um só lugar, com comunicação clara entre empresa e clientes.",
+    "finalCta": {
+      "subtitle": "Comece testando com poucos clientes e evolua com segurança.",
+      "title": "Pronto para organizar os pagamentos da sua empresa?"
+    },
+    "problem": {
+      "receipts": "Comprovantes espalhados entre e-mail, fotos e anexos dificultam conciliação e controle.",
+      "spreadsheets": "Planilhas manuais, diferentes versões e risco de erro a cada atualização.",
+      "title": "Planilha, WhatsApp e comprovantes perdidos não escalam",
+      "whatsapp": "Cobranças por WhatsApp se perdem no meio de recados, grupos e mensagens fora de hora."
+    },
+    "proof": {
+      "subtitle": "Depoimentos, cases e integrações virão aqui — por enquanto, foque em validar o fluxo.",
+      "title": "Feito para empresas que querem profissionalizar a gestão"
+    },
+    "solution": {
+      "communication": "Comunicação: lembretes claros para clientes, sem ruído.",
+      "events": "Eventos: inscrições, pagamentos e presença em um só fluxo.",
+      "finance": "Financeiro e relatórios: visão consolidada por turma, série e período.",
+      "oneOff": "Cobranças avulsas: materiais, passeios e extras sem fricção.",
+      "title": "Uma plataforma pensada para a rotina financeira mensal",
+      "tuitions": "Mensalidades: geração automática, boletos e controle de inadimplência."
+    },
+    "subtitle": "Gestão financeira para empresas e clientes",
+    "title": "Cobra Nex"
+  },
+  "legal": {
+    "privacy": {
+      "content": "POLÍTICA DE PRIVACIDADE – COBRA NEX\n\nNós do Cobra Nex levamos sua privacidade a sério. Esta Política descreve como coletamos, usamos e protegemos seus dados pessoais, em conformidade com a Lei Geral de Proteção de Dados (LGPD).\n\n1. DADOS COLETADOS\n1.1. Dados Cadastrais: Nome completo, CPF, email, telefone e endereço.\n1.2. Dados de Beneficiários: Nome, grupo e vínculo com o cliente.\n1.3. Dados Financeiros: Histórico de pagamentos, cobranças e, quando aplicável, dados parciais de cartão (últimos 4 dígitos) para identificação.\n1.4. Dados de Navegação: Endereço IP, tipo de dispositivo e logs de acesso para fins de auditoria e segurança.\n\n2. FINALIDADE DO USO\nUsamos seus dados para:\n- Processar pagamentos e emitir cobranças.\n- Identificar você e garantir a segurança da conta.\n- Enviar notificações sobre vencimentos, recibos e comunicados da empresa.\n- Prestar suporte técnico e melhorar nossos serviços.\n- Cumprir obrigações legais e regulatórias.\n\n3. COMPARTILHAMENTO DE DADOS\nNão vendemos seus dados. Compartilhamos informações apenas com:\n- A Empresa vinculada à sua conta (para gestão administrativa e financeira).\n- Processadores de Pagamento e Bancos (estritamente para processar as transações).\n- Autoridades judiciais ou governamentais, quando exigido por lei.\n\n4. SEGURANÇA\nAdotamos medidas técnicas e administrativas robustas para proteger seus dados, incluindo criptografia em trânsito (SSL/TLS), controle de acesso rigoroso e monitoramento de segurança.\n\n5. SEUS DIREITOS\nVocê tem direito a confirmar a existência de tratamento, acessar seus dados, corrigir dados incompletos ou desatualizados e solicitar a portabilidade ou exclusão (ressalvados os dados que precisamos manter por lei).\n\n6. ALTERAÇÕES\nEsta política pode ser atualizada. Notificaremos sobre mudanças significativas através da Plataforma ou email.\n\n7. CONTATO\nPara exercer seus direitos ou tirar dúvidas sobre privacidade, acesse nossa Central de Suporte.",
+      "title": "Política de Privacidade"
+    },
+    "terms": {
+      "content": "TERMOS DE USO – COBRA NEX\n\nBem-vindo ao Cobra Nex. Estes Termos de Uso (\"Termos\") regem o acesso e uso da nossa plataforma de gestão financeira (\"Plataforma\"). Ao acessar ou usar a Plataforma, você (\"Usuário\") concorda com estes Termos. Se não concordar, não utilize nossos serviços.\n\n1. O SERVIÇO\nO Cobra Nex é uma plataforma SAAS (Software as a Service) que facilita a gestão de cobranças, mensalidades e eventos entre Empresas e Clientes. O Cobra Nex atua como um intermediador tecnológico e não é uma instituição bancária.\n\n2. CADASTRO E ACESSO\n2.1. O acesso à Plataforma exige cadastro. Você garante que todas as informações fornecidas são verdadeiras, precisas e atuais.\n2.2. A Empresa é responsável por aprovar o cadastro dos Clientes vinculados à sua instituição.\n2.3. Você é responsável por manter a confidencialidade de sua senha. Qualquer atividade realizada através de sua conta é de sua responsabilidade.\n\n3. PAGAMENTOS E COBRANÇAS\n3.1. A Plataforma permite que a Empresa gere cobranças (boletos, PIX, cartão) para os Clientes.\n3.2. O Cobra Nex não define preços ou taxas; estes são de exclusiva responsabilidade da Empresa.\n3.3. O processamento dos pagamentos é realizado por parceiros financeiros (gateways de pagamento). O Cobra Nex não armazena dados completos de cartão de crédito. \n3.4. Em caso de atrasos, multas e juros configurados pela Empesa serão aplicados automaticamente.\n\n4. RESPONSABILIDADES\n4.1. Da Empresa: Garantir a legalidade das cobranças emitidas e manter os dados dos beneficiários atualizados.\n4.2. Do Cliente: Realizar os pagamentos dentro dos prazos estipulados e manter seus contatos atualizados.\n4.3. Do Cobra Nex: Garantir a disponibilidade da Plataforma, segurança dos dados e o correto processamento das instruções de pagamento junto aos gateways.\n\n5. LIMITAÇÃO DE RESPONSABILIDADE\nO Cobra Nex não se responsabiliza por falhas de terceiros (bancos, operadoras de cartão), interrupções programadas para manutenção ou casos fortuitos/força maior. Em nenhuma hipótese o Cobra Nex será responsável por danos indiretos ou lucros cessantes decorrentes do uso da plataforma.\n\n6. PROPRIEDADE INTELECTUAL\nTodo o design, código, logotipos e conteúdo da Plataforma são propriedade exclusiva do Cobra Nex ou de seus licenciadores. O uso não autorizado é proibido.\n\n7. ALTERAÇÕES\nPodemos alterar estes Termos a qualquer momento. O uso contínuo da Plataforma após as alterações constitui aceitação dos novos termos.\n\n8. CONTATO\nPara dúvidas sobre estes termos, entre em contato através da nossa Central de Suporte.",
+      "title": "Termos de Uso"
+    }
+  },
+  "login": {
+    "email": "Email",
+    "error": {
+      "connection": "Erro de conexão. Tente novamente.",
+      "generic": "Falha no login",
+      "rateLimit": "Muitas tentativas de login. Tente novamente em alguns minutos."
+    },
+    "forgotPassword": "Esqueci minha senha",
+    "noAccount": "Não tem conta?",
+    "password": "Senha",
+    "signup": "Cadastre-se",
+    "submit": "Entrar",
+    "title": "Login"
+  },
+  "nav": {
+    "home": "Início",
+    "login": "Login",
+    "logout": "Sair"
+  },
+  "passwordReset": {
+    "forgot": {
+      "backToLogin": "Voltar para Login",
+      "description": "Informe o seu email. Se existir uma conta, enviaremos instruções para redefinir a senha.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Seu e-mail cadastrado",
+      "error": {
+        "connection": "Erro de conexão. Tente novamente em alguns minutos.",
+        "generic": "Não foi possível processar sua solicitação agora. Tente novamente em alguns minutos.",
+        "validation": "Informe um email válido."
+      },
+      "submit": "Enviar instruções",
+      "success": "Se existir uma conta com este email, você receberá instruções para redefinir a senha em alguns minutos.",
+      "title": "Esqueci minha senha"
+    },
+    "reset": {
+      "confirmPasswordLabel": "Confirmar nova senha",
+      "description": "Defina uma nova senha para acessar sua conta.",
+      "error": {
+        "connection": "Erro de conexão. Verifique sua internet e tente novamente.",
+        "expiredToken": "Este link de redefinição expirou. Solicite um novo email de recuperação.",
+        "generic": "Não foi possível redefinir sua senha agora. Tente novamente em alguns minutos.",
+        "invalidToken": "Link de redefinição inválido. Solicite um novo email de recuperação.",
+        "usedToken": "Este link de redefinição já foi utilizado. Solicite um novo email de recuperação.",
+        "validation": "Verifique se as senhas foram preenchidas corretamente e se coincidem.",
+        "weakPassword": "Sua senha é muito fraca. Use pelo menos 8 caracteres com letras e números."
+      },
+      "newPasswordLabel": "Nova senha",
+      "submit": "Redefinir senha",
+      "success": "Sua senha foi redefinida com sucesso. Você já pode fazer login com a nova senha.",
+      "title": "Redefinir senha"
+    }
+  },
+  "pay": {
+    "sandbox": {
+      "actions": {
+        "confirming": "Confirmando...",
+        "payCard": "Pagar via Cartão (simulado)",
+        "payPix": "Pagar via PIX (simulado)"
+      },
+      "amount": "Valor",
+      "description": "Este é um ambiente de teste. Nenhum pagamento real será processado.",
+      "dueDate": "Vencimento",
+      "error": {
+        "confirmError": "Não foi possível confirmar o pagamento simulado.",
+        "connectionError": "Erro de conexão.",
+        "invalidLink": "Link de pagamento inválido ou incompleto.",
+        "loadError": "Não foi possível carregar os dados da cobrança."
+      },
+      "guardian": "Cliente",
+      "loading": "Carregando cobrança...",
+      "payment": "Pagamento",
+      "status": {
+        "overdue": "Em atraso",
+        "paid": "Pago (simulado)",
+        "pending": "Pendente"
+      },
+      "student": "Beneficiário",
+      "success": "Pagamento simulado registrado com sucesso. A cobrança foi marcada como paga.",
+      "title": "Pagamento Sandbox"
+    }
+  },
   "platform": {
+    "audit": {
+      "empty": "Nenhum evento de auditoria encontrado para o filtro atual.",
+      "errorConnection": "Erro de conexão ao carregar os eventos de auditoria.",
+      "errorGeneric": "Não foi possível carregar os eventos de auditoria.",
+      "filters": {
+        "action": "Ação",
+        "actionPlaceholder": "Ex: login, update",
+        "actorEmail": "Email do ator",
+        "apply": "Aplicar filtros",
+        "clear": "Limpar filtros",
+        "from": "De",
+        "tenant": "Empresa (tenant)",
+        "to": "Até"
+      },
+      "modal": {
+        "close": "Fechar",
+        "metadataEmpty": "Nenhum metadata registrado para este evento.",
+        "title": "Detalhes do evento"
+      },
+      "system": "Sistema",
+      "table": {
+        "action": "Ação",
+        "actor": "Ator",
+        "details": "Ver detalhes",
+        "ip": "IP",
+        "target": "Alvo",
+        "tenant": "Empresa",
+        "timestamp": "Data/hora"
+      },
+      "title": "Audit log"
+    },
+    "leads": {
+      "actions": {
+        "convertToTenant": "Criar empresa (DRAFT)",
+        "markContacted": "Marcar como contactado",
+        "markConverted": "Marcar como convertido"
+      },
+      "empty": "Nenhum lead encontrado para o filtro atual.",
+      "errorConnection": "Erro de conexão ao carregar ou atualizar os leads.",
+      "errorGeneric": "Não foi possível carregar ou atualizar os leads.",
+      "status": {
+        "contacted": "Contactado",
+        "converted": "Convertido",
+        "new": "Novo"
+      },
+      "table": {
+        "actions": "Ações",
+        "createdAt": "Criado em",
+        "email": "Email",
+        "phone": "Telefone",
+        "responsibleName": "Responsável",
+        "schoolName": "Empresa",
+        "status": "Status"
+      },
+      "title": "Leads de empresas"
+    },
     "nav": {
+      "audit": "Auditoria",
       "dashboard": "Plataforma",
-      "tenants": "Empresas",
       "leads": "Leads",
-      "tickets": "Chamados",
-      "audit": "Auditoria"
+      "tenants": "Empresas",
+      "tickets": "Chamados"
     },
     "tenants": {
-      "title": "Empresas (tenants)",
-      "table": {
-        "name": "Nome",
-        "slug": "Slug (subdomínio)",
-        "schoolCode": "Código da Empresa",
-        "status": "Status",
-        "createdAt": "Criado em",
-        "actions": "Ações"
-      },
-      "status": {
-        "draft": "Rascunho",
-        "active": "Ativo",
-        "suspended": "Suspenso"
-      },
+      "empty": "Nenhuma empresa encontrada para o filtro atual.",
+      "errorConnection": "Erro de conexão ao carregar ou atualizar as empresas.",
+      "errorGeneric": "Não foi possível carregar ou atualizar as empresas.",
       "form": {
-        "name": "Nome da empresa",
-        "slug": "Slug (subdomínio)",
-        "schoolCode": "Código da Empresa",
         "adminEmail": "Email do admin",
         "adminName": "Nome do admin",
         "adminPassword": "Senha inicial (opcional)",
         "createTitle": "Criar nova empresa",
         "editTitle": "Editar empresa",
+        "initialPasswordGenerated": "Senha inicial gerada:",
+        "name": "Nome da empresa",
+        "schoolCode": "Código da Empresa",
+        "slug": "Slug (subdomínio)",
         "submitCreate": "Nova empresa",
-        "submitEdit": "Salvar alterações",
-        "initialPasswordGenerated": "Senha inicial gerada:"
-      },
-      "empty": "Nenhuma empresa encontrada para o filtro atual.",
-      "errorGeneric": "Não foi possível carregar ou atualizar as empresas.",
-      "errorConnection": "Erro de conexão ao carregar ou atualizar as empresas."
-    },
-    "leads": {
-      "title": "Leads de empresas",
-      "table": {
-        "schoolName": "Empresa",
-        "responsibleName": "Responsável",
-        "email": "Email",
-        "phone": "Telefone",
-        "status": "Status",
-        "createdAt": "Criado em",
-        "actions": "Ações"
+        "submitEdit": "Salvar alterações"
       },
       "status": {
-        "new": "Novo",
-        "contacted": "Contactado",
-        "converted": "Convertido"
+        "active": "Ativo",
+        "draft": "Rascunho",
+        "suspended": "Suspenso"
       },
-      "actions": {
-        "markContacted": "Marcar como contactado",
-        "markConverted": "Marcar como convertido",
-        "convertToTenant": "Criar empresa (DRAFT)"
-      },
-      "empty": "Nenhum lead encontrado para o filtro atual.",
-      "errorGeneric": "Não foi possível carregar ou atualizar os leads.",
-      "errorConnection": "Erro de conexão ao carregar ou atualizar os leads."
-    },
-    "audit": {
-      "title": "Audit log",
-      "filters": {
-        "tenant": "Empresa (tenant)",
-        "action": "Ação",
-        "actorEmail": "Email do ator",
-        "from": "De",
-        "to": "Até",
-        "apply": "Aplicar filtros",
-        "clear": "Limpar filtros",
-        "actionPlaceholder": "Ex: login, update"
-      },
-      "system": "Sistema",
       "table": {
-        "timestamp": "Data/hora",
-        "tenant": "Empresa",
-        "actor": "Ator",
-        "action": "Ação",
-        "target": "Alvo",
-        "ip": "IP",
-        "details": "Ver detalhes"
+        "actions": "Ações",
+        "createdAt": "Criado em",
+        "name": "Nome",
+        "schoolCode": "Código da Empresa",
+        "slug": "Slug (subdomínio)",
+        "status": "Status"
       },
-      "modal": {
-        "title": "Detalhes do evento",
-        "close": "Fechar",
-        "metadataEmpty": "Nenhum metadata registrado para este evento."
-      },
-      "empty": "Nenhum evento de auditoria encontrado para o filtro atual.",
-      "errorGeneric": "Não foi possível carregar os eventos de auditoria.",
-      "errorConnection": "Erro de conexão ao carregar os eventos de auditoria."
+      "title": "Empresas (tenants)"
     }
   },
+  "requestDemo": {
+    "description": "Preencha os dados abaixo para que nossa equipe entre em contato e agende uma demonstração.",
+    "error": {
+      "connection": "Erro de conexão. Verifique sua internet e tente novamente.",
+      "generic": "Não foi possível enviar seu pedido agora. Tente novamente em alguns minutos.",
+      "validation": "Verifique se todos os campos estão preenchidos corretamente."
+    },
+    "form": {
+      "email": "Email",
+      "phone": "Telefone",
+      "responsibleName": "Nome do responsável",
+      "schoolName": "Nome da empresa",
+      "submit": "Solicitar demonstração"
+    },
+    "success": {
+      "description": "Em breve entraremos em contato pelo email informado para combinar os próximos passos.",
+      "title": "Recebemos seu pedido!"
+    },
+    "title": "Quero o Cobra Nex na minha empresa"
+  },
   "school": {
-    "nav": {
-      "dashboard": "Painel da empresa",
-      "settings": "Configurações",
-      "classes": "Grupos",
-      "contracts": "Contratos",
-      "invoices": "Cobranças",
-      "students": "Beneficiários",
-      "guardians": "Clientes",
-      "approvalsGuardians": "Aprovação de clientes",
-      "tickets": "Chamados"
-    },
     "breadcrumbs": {
-      "root": "Empresa",
-      "dashboard": "Dashboard",
-      "settings": "Configurações",
+      "approvals": "Aprovações",
+      "approvalsGuardians": "Aprovação de clientes",
       "classes": "Grupos",
       "contracts": "Contratos",
-      "invoices": "Cobranças",
-      "students": "Beneficiários",
+      "dashboard": "Dashboard",
       "guardians": "Clientes",
-      "approvals": "Aprovações",
-      "approvalsGuardians": "Aprovação de clientes"
-    },
-    "layout": {
-      "unauthorizedTitle": "Você não tem acesso ao painel da empresa",
-      "unauthorizedDescription": "Esta área é reservada para a equipe da empresa. Se você acredita que isso é um engano, entre em contato com o administrador."
-    },
-    "settings": {
-      "feedback": {
-        "saveSuccess": "Configurações da escola salvas com sucesso.",
-        "saveError": "Não foi possível salvar as configurações da escola.",
-        "loadError": "Não foi possível carregar as configurações da escola."
-      }
-    },
-    "dashboardUi": {
-      "periodLabel": "Período",
-      "cards": {
-        "totalBilled": "Faturado",
-        "totalOpen": "Em aberto",
-        "totalOverdue": "Vencido",
-        "overdueCount": "Qtd. vencidas"
-      },
-      "feedback": {
-        "loadError": "Não foi possível carregar o resumo financeiro."
-      }
+      "invoices": "Cobranças",
+      "root": "Empresa",
+      "settings": "Configurações",
+      "students": "Beneficiários"
     },
     "classesUi": {
-      "tabs": {
-        "grades": "Categorias",
-        "classes": "Grupos"
-      },
-      "grades": {
-        "title": "Categorias da empresa",
-        "table": {
-          "name": "Nome da categoria",
-          "actions": "Ações"
-        },
-        "empty": "Nenhuma categoria cadastrada para esta empresa.",
-        "create": "Nova categoria",
-        "edit": "Editar categoria",
-        "delete": "Remover categoria",
-        "deleteConfirmTitle": "Remover categoria",
-        "deleteConfirmDescription": "Esta categoria será removida. Você não poderá removê-la enquanto houver grupos vinculados."
-      },
       "classes": {
-        "title": "Grupos",
-        "table": {
-          "name": "Nome do grupo",
-          "grade": "Categoria",
-          "actions": "Ações"
-        },
-        "empty": "Nenhuma turma cadastrada para o filtro atual.",
         "create": "Nova turma",
-        "edit": "Editar turma",
         "delete": "Remover turma",
-        "filterByGrade": "Filtrar por série"
-      },
-      "form": {
-        "gradeName": "Nome da categoria",
-        "className": "Nome do grupo",
-        "classGrade": "Categoria do grupo",
-        "cancel": "Cancelar",
-        "save": "Salvar"
+        "edit": "Editar turma",
+        "empty": "Nenhuma turma cadastrada para o filtro atual.",
+        "filterByGrade": "Filtrar por série",
+        "table": {
+          "actions": "Ações",
+          "grade": "Categoria",
+          "name": "Nome do grupo"
+        },
+        "title": "Grupos"
       },
       "feedback": {
+        "deleteError": "Não foi possível remover o registro. Tente novamente.",
         "loadError": "Não foi possível carregar as séries e turmas.",
-        "saveError": "Não foi possível salvar os dados. Verifique os campos e tente novamente.",
-        "deleteError": "Não foi possível remover o registro. Tente novamente."
+        "saveError": "Não foi possível salvar os dados. Verifique os campos e tente novamente."
+      },
+      "form": {
+        "cancel": "Cancelar",
+        "classGrade": "Categoria do grupo",
+        "className": "Nome do grupo",
+        "gradeName": "Nome da categoria",
+        "save": "Salvar"
+      },
+      "grades": {
+        "create": "Nova categoria",
+        "delete": "Remover categoria",
+        "deleteConfirmDescription": "Esta categoria será removida. Você não poderá removê-la enquanto houver grupos vinculados.",
+        "deleteConfirmTitle": "Remover categoria",
+        "edit": "Editar categoria",
+        "empty": "Nenhuma categoria cadastrada para esta empresa.",
+        "table": {
+          "actions": "Ações",
+          "name": "Nome da categoria"
+        },
+        "title": "Categorias da empresa"
+      },
+      "tabs": {
+        "classes": "Grupos",
+        "grades": "Categorias"
       }
     },
     "contractsUi": {
-      "filters": {
-        "status": "Status",
-        "statusAll": "Todos os status",
-        "search": "Buscar por contrato"
-      },
-      "table": {
-        "name": "Nome do contrato",
-        "amount": "Valor",
-        "dueDay": "Dia de vencimento",
-        "status": "Status",
-        "students": "Alunos vinculados",
-        "actions": "Ações"
-      },
-      "status": {
-        "active": "Ativo",
-        "paused": "Pausado",
-        "canceled": "Cancelado"
-      },
       "actions": {
+        "cancel": "Cancelar",
         "create": "Novo contrato",
         "edit": "Editar",
-        "viewDetails": "Ver detalhes",
         "pause": "Pausar",
         "resume": "Retomar",
-        "cancel": "Cancelar"
-      },
-      "form": {
-        "name": "Nome do contrato",
-        "amount": "Valor (R$)",
-        "dueDay": "Dia de vencimento (1-28)",
-        "startDate": "Início de vigência",
-        "endDate": "Fim de vigência (opcional)",
-        "status": "Status",
-        "save": "Salvar",
-        "cancel": "Cancelar"
+        "viewDetails": "Ver detalhes"
       },
       "detail": {
-        "title": "Detalhes do contrato",
-        "studentsTitle": "Beneficiários vinculados",
         "addStudents": "Adicionar beneficiários ao contrato",
-        "remove": "Remover",
+        "confirmCancelDescription": "Tem certeza que deseja cancelar este contrato? Novas cobranças não serão geradas.",
         "confirmCancelTitle": "Cancelar contrato",
-        "confirmCancelDescription": "Tem certeza que deseja cancelar este contrato? Novas cobranças não serão geradas."
+        "remove": "Remover",
+        "studentsTitle": "Beneficiários vinculados",
+        "title": "Detalhes do contrato"
       },
+      "empty": "Nenhum contrato encontrado para o filtro atual.",
       "feedback": {
+        "linkError": "Não foi possível vincular os alunos ao contrato.",
         "loadError": "Não foi possível carregar os contratos.",
         "saveError": "Não foi possível salvar o contrato. Verifique os campos e tente novamente.",
-        "linkError": "Não foi possível vincular os alunos ao contrato.",
-        "unlinkError": "Não foi possível desvincular o aluno deste contrato.",
-        "statusError": "Não foi possível alterar o status do contrato."
+        "statusError": "Não foi possível alterar o status do contrato.",
+        "unlinkError": "Não foi possível desvincular o aluno deste contrato."
       },
-      "empty": "Nenhum contrato encontrado para o filtro atual."
-    },
-    "studentsUi": {
       "filters": {
-        "class": "Grupo",
+        "search": "Buscar por contrato",
         "status": "Status",
-        "search": "Buscar por nome",
         "statusAll": "Todos os status"
       },
-      "table": {
-        "name": "Nome",
-        "class": "Grupo",
-        "status": "Status",
-        "actions": "Ações"
+      "form": {
+        "amount": "Valor (R$)",
+        "cancel": "Cancelar",
+        "dueDay": "Dia de vencimento (1-28)",
+        "endDate": "Fim de vigência (opcional)",
+        "name": "Nome do contrato",
+        "save": "Salvar",
+        "startDate": "Início de vigência",
+        "status": "Status"
       },
       "status": {
         "active": "Ativo",
-        "inactive": "Inativo"
+        "canceled": "Cancelado",
+        "paused": "Pausado"
       },
-      "actions": {
-        "create": "Novo aluno",
-        "edit": "Editar",
-        "delete": "Remover",
-        "inactivate": "Inativar",
-        "activate": "Reativar",
-        "importCsv": "Importar CSV"
+      "table": {
+        "actions": "Ações",
+        "amount": "Valor",
+        "dueDay": "Dia de vencimento",
+        "name": "Nome do contrato",
+        "status": "Status",
+        "students": "Alunos vinculados"
+      }
+    },
+    "dashboardUi": {
+      "cards": {
+        "overdueCount": "Qtd. Vencidas",
+        "totalBilled": "Total Faturado",
+        "totalOpen": "Em Aberto",
+        "totalOverdue": "Vencido"
       },
       "feedback": {
-        "loadError": "Não foi possível carregar os alunos.",
-        "saveError": "Não foi possível salvar o aluno. Verifique os campos e tente novamente.",
-        "deleteError": "Não foi possível remover o aluno. Tente novamente.",
-        "importError": "Não foi possível importar o arquivo CSV. Verifique o formato e tente novamente.",
-        "importSuccess": "Importação concluída com sucesso."
+        "loadError": "Não foi possível carregar o resumo financeiro."
       },
-      "empty": "Nenhum aluno encontrado para o filtro atual."
+      "periodLabel": "Período"
     },
     "guardiansUi": {
+      "actions": {
+        "activate": "Reativar",
+        "create": "Novo responsável",
+        "edit": "Editar",
+        "inactivate": "Inativar",
+        "linkStudent": "Vincular aluno",
+        "unlinkStudent": "Desvincular",
+        "viewDetails": "Ver detalhes"
+      },
+      "detail": {
+        "infoTitle": "Dados do responsável",
+        "studentsEmpty": "Nenhum aluno vinculado a este responsável.",
+        "studentsTitle": "Alunos vinculados",
+        "title": "Detalhes do responsável"
+      },
+      "empty": "Nenhum responsável encontrado para o filtro atual.",
+      "feedback": {
+        "deleteError": "Não foi possível remover o responsável. Tente novamente.",
+        "linkError": "Não foi possível vincular o aluno. Verifique os dados e tente novamente.",
+        "loadError": "Não foi possível carregar os responsáveis.",
+        "saveError": "Não foi possível salvar o responsável. Verifique os campos e tente novamente.",
+        "unlinkError": "Não foi possível desvincular o aluno. Tente novamente."
+      },
       "filters": {
         "search": "Buscar por nome ou email",
         "status": "Status",
         "statusAll": "Todos os status"
       },
-      "table": {
-        "name": "Nome",
-        "email": "Email",
-        "phone": "Telefone",
-        "cpf": "CPF",
-        "rg": "RG",
-        "address": "Endereço Completo",
-        "studentName": "Nome do Aluno",
-        "studentBirthDate": "Data de Nascimento",
-        "addStudent": "Adicionar Aluno",
-        "status": "Status",
-        "emailVerified": "Email verificado",
-        "actions": "Ações"
-      },
       "status": {
         "active": "Ativo",
         "inactive": "Inativo"
       },
-      "actions": {
-        "create": "Novo responsável",
-        "edit": "Editar",
-        "inactivate": "Inativar",
-        "activate": "Reativar",
-        "viewDetails": "Ver detalhes",
-        "linkStudent": "Vincular aluno",
-        "unlinkStudent": "Desvincular"
-      },
+      "table": {
+        "actions": "Ações",
+        "addStudent": "Adicionar Aluno",
+        "address": "Endereço Completo",
+        "cpf": "CPF",
+        "email": "Email",
+        "emailVerified": "Email verificado",
+        "name": "Nome",
+        "phone": "Telefone",
+        "rg": "RG",
+        "status": "Status",
+        "studentBirthDate": "Data de Nascimento",
+        "studentName": "Nome do Aluno"
+      }
+    },
+    "invoicesUi": {
       "detail": {
-        "title": "Detalhes do responsável",
-        "infoTitle": "Dados do responsável",
-        "studentsTitle": "Alunos vinculados",
-        "studentsEmpty": "Nenhum aluno vinculado a este responsável."
+        "communicationTypeCreated": "Cobrança criada",
+        "communicationTypeOverdue": "Cobrança vencida",
+        "communicationTypePaid": "Pagamento confirmado",
+        "communicationsEmpty": "Nenhuma comunicação registrada.",
+        "communicationsTitle": "Comunicações",
+        "copyLink": "Copiar Link",
+        "copyPaymentLink": "Copiar link de pagamento",
+        "copyPaymentLinkSuccess": "Link de pagamento copiado.",
+        "emptySelection": "Selecione uma cobrança para ver os detalhes.",
+        "generatePaymentLink": "Gerar link de pagamento",
+        "infoTitle": "Informações da cobrança",
+        "itemsTitle": "Itens da cobrança",
+        "openLink": "Abrir Link",
+        "openPaymentPage": "Abrir página de pagamento",
+        "paidLabel": "Esta cobrança já foi paga.",
+        "payNow": "Pagar agora",
+        "paymentLinkLabel": "Link de pagamento",
+        "paymentTitle": "Pagamento",
+        "statusTimelineTitle": "Linha do tempo",
+        "title": "Detalhes da cobrança"
+      },
+      "empty": "Nenhuma cobrança encontrada para o filtro atual.",
+      "export": {
+        "button": "Exportar CSV",
+        "cancel": "Cancelar",
+        "description": "Selecione os filtros para exportação.",
+        "periodFrom": "De",
+        "periodTo": "Até",
+        "statusLabel": "Status",
+        "submit": "Exportar",
+        "title": "Exportar Cobranças"
       },
       "feedback": {
-        "loadError": "Não foi possível carregar os responsáveis.",
-        "saveError": "Não foi possível salvar o responsável. Verifique os campos e tente novamente.",
-        "deleteError": "Não foi possível remover o responsável. Tente novamente.",
-        "linkError": "Não foi possível vincular o aluno. Verifique os dados e tente novamente.",
-        "unlinkError": "Não foi possível desvincular o aluno. Tente novamente."
+        "exportError": "Erro ao exportar cobranças.",
+        "loadError": "Não foi possível carregar as cobranças."
       },
-      "empty": "Nenhum responsável encontrado para o filtro atual."
+      "filters": {
+        "from": "Data inicial",
+        "guardian": "Cliente",
+        "search": "Buscar por beneficiário ou cliente",
+        "status": "Status",
+        "statusAll": "Todos os status",
+        "student": "Beneficiário",
+        "to": "Data final"
+      },
+      "origin": {
+        "contract": "Mensalidade (contrato)",
+        "oneOff": "Cobrança avulsa"
+      },
+      "status": {
+        "canceled": "Cancelado",
+        "draft": "Rascunho",
+        "overdue": "Em atraso",
+        "paid": "Pago",
+        "pending": "Pendente",
+        "refunded": "Estornado"
+      },
+      "table": {
+        "actions": "Ações",
+        "amount": "Valor",
+        "dueDate": "Vencimento",
+        "guardian": "Cliente",
+        "origin": "Origem",
+        "status": "Status",
+        "student": "Beneficiário"
+      }
+    },
+    "layout": {
+      "unauthorizedDescription": "Esta área é reservada para a equipe da empresa. Se você acredita que isso é um engano, entre em contato com o administrador.",
+      "unauthorizedTitle": "Você não tem acesso ao painel da empresa"
+    },
+    "nav": {
+      "approvalsGuardians": "Aprovação de clientes",
+      "classes": "Grupos",
+      "contracts": "Contratos",
+      "dashboard": "Painel da empresa",
+      "guardians": "Clientes",
+      "invoices": "Cobranças",
+      "settings": "Configurações",
+      "students": "Beneficiários",
+      "tickets": "Chamados"
+    },
+    "pages": {
+      "approvalsGuardians": {
+        "description": "Revise e aprove novas contas de clientes que aguardam validação (em breve).",
+        "title": "Aprovação de clientes"
+      },
+      "classes": {
+        "description": "Organize beneficiários por categoria e grupo desta empresa.",
+        "title": "Categorias e grupos"
+      },
+      "contracts": {
+        "description": "Gerencie contratos de mensalidade e beneficiários vinculados.",
+        "title": "Contratos"
+      },
+      "dashboard": {
+        "description": "Resumo de grupos, beneficiários e fluxos financeiros desta empresa (em breve).",
+        "title": "Visão geral da empresa"
+      },
+      "guardians": {
+        "description": "Gerencie perfis de clientes e seus vínculos com os beneficiários.",
+        "title": "Clientes"
+      },
+      "invoices": {
+        "description": "Acompanhe as cobranças da empresa, seus status e detalhes.",
+        "title": "Cobranças"
+      },
+      "settings": {
+        "description": "Configure informações básicas, regras de cobrança e integrações da empresa (em breve).",
+        "title": "Configurações da empresa"
+      },
+      "students": {
+        "description": "Liste e gerencie os beneficiários vinculados a esta empresa.",
+        "title": "Beneficiários"
+      }
     },
     "reportsUi": {
-      "overdue": {
-        "title": "Cobranças em Atraso",
-        "description": "Relatório de cobranças vencidas e não pagas.",
-        "table": {
-          "student": "Aluno",
-          "guardian": "Responsável",
-          "daysOverdue": "Dias de Atraso",
-          "amount": "Valor",
-          "actions": "Ações"
+      "guardian": {
+        "backToList": "Voltar para lista",
+        "cards": {
+          "totalOpen": "Total em Aberto",
+          "totalPaid": "Total Pago"
         },
+        "description": "Histórico financeiro do responsável.",
+        "empty": "Nenhum registro encontrado.",
+        "feedback": {
+          "loadError": "Erro ao carregar dados."
+        },
+        "table": {
+          "amount": "Valor",
+          "contract": "Contrato",
+          "dueDate": "Vencimento",
+          "paidAt": "Pago em",
+          "status": "Status",
+          "student": "Aluno"
+        },
+        "title": "Relatório do Responsável"
+      },
+      "overdue": {
         "actions": {
           "copyPaymentLink": "Copiar Link",
           "copyPaymentLinkSuccess": "Link copiado!",
           "generatePaymentLink": "Gerar Link"
         },
+        "description": "Relatório de cobranças vencidas e não pagas.",
+        "empty": "Nenhuma cobrança em atraso.",
         "feedback": {
           "loadError": "Erro ao carregar relatório.",
           "paymentError": "Erro ao gerar pagamento."
         },
-        "empty": "Nenhuma cobrança em atraso."
+        "table": {
+          "actions": "Ações",
+          "amount": "Valor",
+          "daysOverdue": "Dias de Atraso",
+          "guardian": "Responsável",
+          "student": "Aluno"
+        },
+        "title": "Cobranças em Atraso"
       },
       "student": {
-        "title": "Relatório do Aluno",
+        "backToList": "Voltar para lista",
+        "cards": {
+          "totalOpen": "Total em Aberto",
+          "totalPaid": "Total Pago"
+        },
         "description": "Histórico financeiro detalhado do aluno.",
-        "cards": {
-          "totalPaid": "Total Pago",
-          "totalOpen": "Total em Aberto"
+        "empty": "Nenhum registro encontrado.",
+        "feedback": {
+          "loadError": "Erro ao carregar dados."
         },
         "table": {
-          "dueDate": "Vencimento",
           "amount": "Valor",
-          "status": "Status",
+          "contract": "Contrato",
+          "dueDate": "Vencimento",
           "guardian": "Responsável",
-          "contract": "Contrato",
-          "paidAt": "Pago em"
+          "paidAt": "Pago em",
+          "status": "Status"
         },
-        "feedback": {
-          "loadError": "Erro ao carregar dados."
-        },
-        "empty": "Nenhum registro encontrado.",
-        "backToList": "Voltar para lista"
-      },
-      "guardian": {
-        "title": "Relatório do Responsável",
-        "description": "Histórico financeiro do responsável.",
-        "cards": {
-          "totalPaid": "Total Pago",
-          "totalOpen": "Total em Aberto"
-        },
-        "table": {
-          "dueDate": "Vencimento",
-          "amount": "Valor",
-          "status": "Status",
-          "student": "Aluno",
-          "contract": "Contrato",
-          "paidAt": "Pago em"
-        },
-        "feedback": {
-          "loadError": "Erro ao carregar dados."
-        },
-        "empty": "Nenhum registro encontrado.",
-        "backToList": "Voltar para lista"
+        "title": "Relatório do Aluno"
       }
     },
-    "invoicesUi": {
-      "filters": {
-        "status": "Status",
-        "statusAll": "Todos os status",
-        "search": "Buscar por contrato ou cliente",
-        "from": "Data inicial",
-        "to": "Data final"
+    "settings": {
+      "feedback": {
+        "loadError": "Não foi possível carregar as configurações da escola.",
+        "saveError": "Não foi possível salvar as configurações da escola.",
+        "saveSuccess": "Configurações da escola salvas com sucesso."
+      }
+    },
+    "studentsUi": {
+      "actions": {
+        "activate": "Reativar",
+        "create": "Novo aluno",
+        "delete": "Remover",
+        "edit": "Editar",
+        "importCsv": "Importar CSV",
+        "inactivate": "Inativar"
       },
-      "table": {
-        "dueDate": "Vencimento",
-        "student": "Beneficiário",
-        "guardian": "Cliente",
-        "amount": "Valor",
+      "empty": "Nenhum aluno encontrado para o filtro atual.",
+      "feedback": {
+        "deleteError": "Não foi possível remover o aluno. Tente novamente.",
+        "importError": "Não foi possível importar o arquivo CSV. Verifique o formato e tente novamente.",
+        "importSuccess": "Importação concluída com sucesso.",
+        "loadError": "Não foi possível carregar os alunos.",
+        "saveError": "Não foi possível salvar o aluno. Verifique os campos e tente novamente."
+      },
+      "filters": {
+        "class": "Grupo",
+        "search": "Buscar por nome",
         "status": "Status",
-        "actions": "Ações"
+        "statusAll": "Todos os status"
       },
       "status": {
-        "draft": "Rascunho",
-        "pending": "Pendente",
-        "paid": "Pago",
-        "overdue": "Em atraso",
-        "canceled": "Cancelado",
-        "refunded": "Estornado"
+        "active": "Ativo",
+        "inactive": "Inativo"
       },
-      "detail": {
-        "title": "Detalhes da cobrança",
-        "emptySelection": "Selecione uma cobrança para ver os detalhes.",
-        "paymentTitle": "Pagamento",
-        "paymentLinkLabel": "Link de pagamento",
-        "copyPaymentLink": "Copiar link de pagamento",
-        "copyPaymentLinkSuccess": "Link de pagamento copiado.",
-        "copyLink": "Copiar Link",
-        "openLink": "Abrir Link",
-        "generatePaymentLink": "Gerar link de pagamento",
-        "openPaymentPage": "Abrir página de pagamento",
-        "payNow": "Pagar agora",
-        "paidLabel": "Esta cobrança já foi paga.",
-        "communicationsTitle": "Comunicações",
-        "communicationsEmpty": "Nenhuma comunicação registrada.",
-        "communicationTypeCreated": "Cobrança criada",
-        "communicationTypeOverdue": "Cobrança vencida",
-        "communicationTypePaid": "Pagamento confirmado"
-      },
-      "feedback": {
-        "loadError": "Não foi possível carregar as cobranças.",
-        "exportError": "Não foi possível exportar as cobranças."
-      },
-      "empty": "Nenhuma cobrança encontrada para o filtro atual.",
-      "export": {
-        "button": "Exportar CSV",
-        "title": "Exportar cobranças",
-        "description": "Selecione o período.",
-        "submit": "Exportar",
-        "cancel": "Cancelar"
-      },
-      "origin": {
-        "contract": "Mensalidade (contrato)",
-        "oneOff": "Cobrança avulsa"
+      "table": {
+        "actions": "Ações",
+        "class": "Grupo",
+        "name": "Nome",
+        "status": "Status"
       }
-    },
-    "pages": {
-      "dashboard": {
-        "title": "Visão geral da empresa",
-        "description": "Resumo de grupos, beneficiários e fluxos financeiros desta empresa (em breve)."
-      },
-      "settings": {
-        "title": "Configurações da empresa",
-        "description": "Configure informações básicas, regras de cobrança e integrações da empresa (em breve)."
-      },
-      "classes": {
-        "title": "Categorias e grupos",
-        "description": "Organize beneficiários por categoria e grupo desta empresa."
-      },
-      "students": {
-        "title": "Beneficiários",
-        "description": "Liste e gerencie os beneficiários vinculados a esta empresa."
-      },
-      "invoices": {
-        "title": "Cobranças",
-        "description": "Acompanhe as cobranças da empresa, seus status e detalhes."
-      },
-      "contracts": {
-        "title": "Contratos",
-        "description": "Gerencie contratos de mensalidade e beneficiários vinculados."
-      },
-      "guardians": {
-        "title": "Clientes",
-        "description": "Gerencie perfis de clientes e seus vínculos com os beneficiários."
-      },
-      "approvalsGuardians": {
-        "title": "Aprovação de clientes",
-        "description": "Revise e aprove novas contas de clientes que aguardam validação (em breve)."
-      }
-    }
-  },
-  "legal": {
-    "terms": {
-      "title": "Termos de Uso",
-      "content": "TERMOS DE USO – COBRA NEX\n\nBem-vindo ao Cobra Nex. Estes Termos de Uso (\"Termos\") regem o acesso e uso da nossa plataforma de gestão financeira (\"Plataforma\"). Ao acessar ou usar a Plataforma, você (\"Usuário\") concorda com estes Termos. Se não concordar, não utilize nossos serviços.\n\n1. O SERVIÇO\nO Cobra Nex é uma plataforma SAAS (Software as a Service) que facilita a gestão de cobranças, mensalidades e eventos entre Empresas e Clientes. O Cobra Nex atua como um intermediador tecnológico e não é uma instituição bancária.\n\n2. CADASTRO E ACESSO\n2.1. O acesso à Plataforma exige cadastro. Você garante que todas as informações fornecidas são verdadeiras, precisas e atuais.\n2.2. A Empresa é responsável por aprovar o cadastro dos Clientes vinculados à sua instituição.\n2.3. Você é responsável por manter a confidencialidade de sua senha. Qualquer atividade realizada através de sua conta é de sua responsabilidade.\n\n3. PAGAMENTOS E COBRANÇAS\n3.1. A Plataforma permite que a Empresa gere cobranças (boletos, PIX, cartão) para os Clientes.\n3.2. O Cobra Nex não define preços ou taxas; estes são de exclusiva responsabilidade da Empresa.\n3.3. O processamento dos pagamentos é realizado por parceiros financeiros (gateways de pagamento). O Cobra Nex não armazena dados completos de cartão de crédito. \n3.4. Em caso de atrasos, multas e juros configurados pela Empesa serão aplicados automaticamente.\n\n4. RESPONSABILIDADES\n4.1. Da Empresa: Garantir a legalidade das cobranças emitidas e manter os dados dos beneficiários atualizados.\n4.2. Do Cliente: Realizar os pagamentos dentro dos prazos estipulados e manter seus contatos atualizados.\n4.3. Do Cobra Nex: Garantir a disponibilidade da Plataforma, segurança dos dados e o correto processamento das instruções de pagamento junto aos gateways.\n\n5. LIMITAÇÃO DE RESPONSABILIDADE\nO Cobra Nex não se responsabiliza por falhas de terceiros (bancos, operadoras de cartão), interrupções programadas para manutenção ou casos fortuitos/força maior. Em nenhuma hipótese o Cobra Nex será responsável por danos indiretos ou lucros cessantes decorrentes do uso da plataforma.\n\n6. PROPRIEDADE INTELECTUAL\nTodo o design, código, logotipos e conteúdo da Plataforma são propriedade exclusiva do Cobra Nex ou de seus licenciadores. O uso não autorizado é proibido.\n\n7. ALTERAÇÕES\nPodemos alterar estes Termos a qualquer momento. O uso contínuo da Plataforma após as alterações constitui aceitação dos novos termos.\n\n8. CONTATO\nPara dúvidas sobre estes termos, entre em contato através da nossa Central de Suporte."
-    },
-    "privacy": {
-      "title": "Política de Privacidade",
-      "content": "POLÍTICA DE PRIVACIDADE – COBRA NEX\n\nNós do Cobra Nex levamos sua privacidade a sério. Esta Política descreve como coletamos, usamos e protegemos seus dados pessoais, em conformidade com a Lei Geral de Proteção de Dados (LGPD).\n\n1. DADOS COLETADOS\n1.1. Dados Cadastrais: Nome completo, CPF, email, telefone e endereço.\n1.2. Dados de Beneficiários: Nome, grupo e vínculo com o cliente.\n1.3. Dados Financeiros: Histórico de pagamentos, cobranças e, quando aplicável, dados parciais de cartão (últimos 4 dígitos) para identificação.\n1.4. Dados de Navegação: Endereço IP, tipo de dispositivo e logs de acesso para fins de auditoria e segurança.\n\n2. FINALIDADE DO USO\nUsamos seus dados para:\n- Processar pagamentos e emitir cobranças.\n- Identificar você e garantir a segurança da conta.\n- Enviar notificações sobre vencimentos, recibos e comunicados da empresa.\n- Prestar suporte técnico e melhorar nossos serviços.\n- Cumprir obrigações legais e regulatórias.\n\n3. COMPARTILHAMENTO DE DADOS\nNão vendemos seus dados. Compartilhamos informações apenas com:\n- A Empresa vinculada à sua conta (para gestão administrativa e financeira).\n- Processadores de Pagamento e Bancos (estritamente para processar as transações).\n- Autoridades judiciais ou governamentais, quando exigido por lei.\n\n4. SEGURANÇA\nAdotamos medidas técnicas e administrativas robustas para proteger seus dados, incluindo criptografia em trânsito (SSL/TLS), controle de acesso rigoroso e monitoramento de segurança.\n\n5. SEUS DIREITOS\nVocê tem direito a confirmar a existência de tratamento, acessar seus dados, corrigir dados incompletos ou desatualizados e solicitar a portabilidade ou exclusão (ressalvados os dados que precisamos manter por lei).\n\n6. ALTERAÇÕES\nEsta política pode ser atualizada. Notificaremos sobre mudanças significativas através da Plataforma ou email.\n\n7. CONTATO\nPara exercer seus direitos ou tirar dúvidas sobre privacidade, acesse nossa Central de Suporte."
     }
   },
   "support": {
-    "title": "Central de Suporte",
     "description": "Como podemos ajudar você hoje?",
     "guestForm": {
-      "name": "Nome",
       "email": "Email",
-      "subject": "Assunto",
       "message": "Mensagem",
-      "submit": "Enviar solicitação",
+      "name": "Nome",
       "sendAnother": "Enviar outra solicitação",
+      "subject": "Assunto",
+      "submit": "Enviar solicitação",
       "success": "Solicitação criada! Entraremos em contato por email."
+    },
+    "title": "Central de Suporte"
+  },
+  "tenant": {
+    "notFound": {
+      "description": "Verificamos o subdomínio informado e não encontramos uma empresa correspondente.",
+      "extra": "Verifique o endereço ou entre em contato com o suporte.",
+      "title": "Empresa não encontrada"
     }
   },
   "tickets": {
-    "status": {
-      "OPEN": "Aberto",
-      "IN_PROGRESS": "Em Andamento",
-      "RESOLVED": "Resolvido",
-      "CLOSED": "Fechado",
-      "CANCELED": "Cancelado"
-    },
-    "priority": {
-      "LOW": "Baixa",
-      "MEDIUM": "Média",
-      "HIGH": "Alta",
-      "URGENT": "Urgente"
-    },
-    "type": {
-      "GENERAL": "Geral",
-      "FINANCIAL": "Financeiro",
-      "ACADEMIC": "Acadêmico",
-      "TECHNICAL": "Técnico",
-      "OTHER": "Outro"
-    },
-    "list": {
-      "title": "Meus Chamados",
-      "description": "Gerencie seus chamados e solicitações.",
-      "create": "Novo Chamado",
-      "by": "Por",
-      "empty": "Nenhum chamado encontrado."
-    },
     "chat": {
-      "placeholder": "Digite sua mensagem...",
-      "send": "Enviar",
-      "escalate": "Escalar para Plataforma",
       "close": "Fechar Chamado",
       "confirmClose": "Tem certeza que deseja fechar este chamado?",
       "confirmEscalate": "Escalar para um administrador da plataforma?",
-      "escalatedLabel": "Escalado"
+      "escalate": "Escalar para Plataforma",
+      "escalatedLabel": "Escalado",
+      "placeholder": "Digite sua mensagem...",
+      "send": "Enviar"
     },
     "create": {
-      "title": "Abrir Novo Chamado",
-      "subject": "Assunto",
-      "type": "Tópico",
-      "priority": "Prioridade",
-      "message": "Mensagem Inicial",
-      "submit": "Criar Chamado",
       "cancel": "Cancelar",
-      "errorOneOpen": "Você já possui um chamado aberto. Por favor, aguarde a resolução antes de abrir outro."
+      "errorOneOpen": "Você já possui um chamado aberto. Por favor, aguarde a resolução antes de abrir outro.",
+      "message": "Mensagem Inicial",
+      "priority": "Prioridade",
+      "subject": "Assunto",
+      "submit": "Criar Chamado",
+      "title": "Abrir Novo Chamado",
+      "type": "Tópico"
+    },
+    "list": {
+      "by": "Por",
+      "create": "Novo Chamado",
+      "description": "Gerencie seus chamados e solicitações.",
+      "empty": "Nenhum chamado encontrado.",
+      "title": "Meus Chamados"
+    },
+    "priority": {
+      "HIGH": "Alta",
+      "LOW": "Baixa",
+      "MEDIUM": "Média",
+      "URGENT": "Urgente"
+    },
+    "status": {
+      "CANCELED": "Cancelado",
+      "CLOSED": "Fechado",
+      "IN_PROGRESS": "Em Andamento",
+      "OPEN": "Aberto",
+      "RESOLVED": "Resolvido"
+    },
+    "type": {
+      "ACADEMIC": "Acadêmico",
+      "FINANCIAL": "Financeiro",
+      "GENERAL": "Geral",
+      "OTHER": "Outro",
+      "TECHNICAL": "Técnico"
     }
   }
 }

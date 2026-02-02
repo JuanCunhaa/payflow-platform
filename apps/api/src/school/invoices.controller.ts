@@ -11,6 +11,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import type { Request } from 'express';
+import { ListInvoicesDto } from '../common/dto/list-invoices.dto';
 import { Prisma } from '@prisma/client';
 
 import { PrismaService } from '../prisma/prisma.service';
@@ -31,19 +32,19 @@ type TenantRequest = Partial<Request> & {
 
 type InvoiceStatus = 'DRAFT' | 'PENDING' | 'PAID' | 'OVERDUE' | 'CANCELED' | 'REFUNDED';
 
-const ALLOWED_STATUS: InvoiceStatus[] = [
+const ALLOWED_STATUS = new Set<InvoiceStatus>([
   'DRAFT',
   'PENDING',
   'PAID',
   'OVERDUE',
   'CANCELED',
   'REFUNDED',
-];
+]);
 
 function parseInvoiceStatus(value?: string): InvoiceStatus | undefined {
   if (!value) return undefined;
   const upper = value.toUpperCase();
-  if (ALLOWED_STATUS.includes(upper as InvoiceStatus)) {
+  if (ALLOWED_STATUS.has(upper as InvoiceStatus)) {
     return upper as InvoiceStatus;
   }
   throw new BadRequestException({
@@ -65,8 +66,8 @@ function parseDate(value?: string): Date | undefined {
 }
 
 function parsePageParams(pageParam?: string, limitParam?: string) {
-  const page = Math.max(parseInt(pageParam ?? '1', 10) || 1, 1);
-  const limitRaw = parseInt(limitParam ?? '20', 10) || 20;
+  const page = Math.max(Number.parseInt(pageParam ?? '1', 10) || 1, 1);
+  const limitRaw = Number.parseInt(limitParam ?? '20', 10) || 20;
   const pageSize = Math.min(Math.max(limitRaw, 1), 100);
   return { page, pageSize };
 }
@@ -116,22 +117,12 @@ export class SchoolInvoicesController {
 
   @Get()
   @Roles('SCHOOL_ADMIN', 'FINANCE', 'SECRETARY', 'READONLY')
-  async listInvoices(
-    @Req() req: TenantRequest,
-    @Query('status') statusParam?: string,
-    @Query('q') searchQuery?: string,
-    @Query('from') fromParam?: string,
-    @Query('to') toParam?: string,
-    @Query('studentId') studentId?: string,
-    @Query('guardianId') guardianId?: string,
-    @Query('page') pageParam?: string,
-    @Query('limit') limitParam?: string
-  ) {
+  async listInvoices(@Req() req: TenantRequest, @Query() query: ListInvoicesDto) {
     const tenantId = req.tenant!.id;
-    const { page, pageSize } = parsePageParams(pageParam, limitParam);
-    const status = parseInvoiceStatus(statusParam);
-    const from = parseDate(fromParam);
-    const to = parseDate(toParam);
+    const { page, pageSize } = parsePageParams(query.page, query.limit);
+    const status = parseInvoiceStatus(query.status);
+    const from = parseDate(query.from);
+    const to = parseDate(query.to);
 
     const where: Prisma.InvoiceWhereInput = {
       tenantId,
@@ -141,12 +132,12 @@ export class SchoolInvoicesController {
       where.status = status;
     }
 
-    if (studentId) {
-      where.studentId = studentId;
+    if (query.studentId) {
+      where.studentId = query.studentId;
     }
 
-    if (guardianId) {
-      where.guardianId = guardianId;
+    if (query.guardianId) {
+      where.guardianId = query.guardianId;
     }
 
     if (from || to) {
@@ -159,7 +150,7 @@ export class SchoolInvoicesController {
       }
     }
 
-    const q = searchQuery?.trim();
+    const q = query.q?.trim();
     if (q) {
       const term = q;
       where.OR = [
@@ -507,7 +498,7 @@ export class SchoolInvoicesController {
       },
     });
 
-    const guardianEmail = invoice.guardian?.user?.email as string | undefined;
+    const guardianEmail = invoice.guardian?.user?.email;
     if (guardianEmail) {
       await this.emailService.sendInvoicePaid({
         recipient: guardianEmail,
@@ -554,7 +545,7 @@ export class SchoolInvoicesController {
 
     if (invoice.paymentLink) {
       return {
-        paymentLink: invoice.paymentLink as string,
+        paymentLink: invoice.paymentLink,
         provider: (invoice.provider as string) ?? 'SANDBOX',
       };
     }

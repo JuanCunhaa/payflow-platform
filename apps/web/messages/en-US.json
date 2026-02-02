@@ -1,850 +1,926 @@
 {
-  "nav": {
-    "home": "Home",
-    "login": "Login",
-    "logout": "Logout"
-  },
-  "footer": {
-    "copyright": "All rights reserved.",
-    "terms": "Terms",
-    "privacy": "Privacy",
-    "support": "Support"
-  },
-  "landing": {
-    "title": "Cobra Nex",
-    "subtitle": "Financial flows made simple for companies and clients",
-    "cta": "Get started now",
-    "description": "Centralize tuition, events and one-off charges in one place, with clear communication between company and clients.",
-    "problem": {
-      "title": "Spreadsheets, WhatsApp and scattered receipts don't scale",
-      "spreadsheets": "Manual spreadsheets, different versions and a risk of errors on every update.",
-      "whatsapp": "Payment requests get lost among groups, chats and off-hours messages.",
-      "receipts": "Receipts spread across email, photos and attachments make reconciliation hard."
-    },
-    "solution": {
-      "title": "A platform designed for recurring financial operations",
-      "events": "Events: registrations, payments and attendance in a single flow.",
-      "tuitions": "Tuitions: automatic billing, invoices and delinquency tracking.",
-      "oneOff": "One-off charges: materials, trips and extras with less friction.",
-      "communication": "Communication: clear reminders for clients, without the noise.",
-      "finance": "Finance and reports: consolidated view by class, grade and period."
-    },
-    "proof": {
-      "title": "Built for companies that want professional financial workflows",
-      "subtitle": "Testimonials, case studies and integrations will live here — for now, focus on validating the flow."
-    },
-    "finalCta": {
-      "title": "Ready to organize your company payments?",
-      "subtitle": "Start with a small group of clients and evolve safely."
-    },
-    "buttons": {
-      "login": "Sign in",
-      "guardian": "I'm a client",
-      "demo": "Bring Cobra Nex to my company"
-    }
-  },
-  "login": {
-    "title": "Login",
-    "email": "Email",
-    "password": "Password",
-    "submit": "Sign in",
-    "noAccount": "Don't have an account?",
-    "signup": "Sign up",
-    "forgotPassword": "Forgot your password?",
-    "error": {
-      "generic": "Login failed",
-      "connection": "Connection error. Please try again.",
-      "rateLimit": "Too many login attempts. Please try again in a few minutes."
-    }
-  },
-  "passwordReset": {
-    "forgot": {
-      "title": "Forgot your password?",
-      "description": "Enter your email. If there is an account, we will send instructions to reset your password.",
-      "emailLabel": "Email",
-      "emailPlaceholder": "Your registered email",
-      "submit": "Send instructions",
-      "backToLogin": "Back to login",
-      "success": "If an account exists with this email, you will receive password reset instructions in a few minutes.",
-      "error": {
-        "validation": "Please enter a valid email address.",
-        "connection": "Connection error. Please try again in a few minutes.",
-        "generic": "We couldn't process your request right now. Please try again in a few minutes."
-      }
-    },
-    "reset": {
-      "title": "Reset password",
-      "description": "Set a new password to access your account.",
-      "newPasswordLabel": "New password",
-      "confirmPasswordLabel": "Confirm new password",
-      "submit": "Reset password",
-      "success": "Your password has been reset successfully. You can now log in with the new password.",
-      "error": {
-        "validation": "Check that both password fields are filled and match.",
-        "weakPassword": "Your password is too weak. Use at least 8 characters with letters and numbers.",
-        "invalidToken": "Invalid reset link. Please request a new password reset email.",
-        "expiredToken": "This reset link has expired. Please request a new password reset email.",
-        "usedToken": "This reset link has already been used. Please request a new password reset email.",
-        "generic": "We couldn't reset your password right now. Please try again in a few minutes.",
-        "connection": "Connection error. Check your internet and try again."
-      }
+  "auth": {
+    "pendingApproval": {
+      "description": "Your client account is under review. You will receive an email when it is approved.",
+      "title": "Account pending approval"
     }
   },
   "common": {
-    "ok": "OK",
+    "actions": "Actions",
+    "all": "All",
     "back": "Back",
     "cancel": "Cancel",
+    "close": "Close",
     "error": "Error",
-    "loading": "Loading...",
     "language": {
       "english": "English",
       "portuguese": "Portuguese"
     },
-    "all": "All",
-    "actions": "Actions",
+    "loading": "Loading...",
+    "meta": {
+      "title": {
+        "admin": "Cobra Nex Admin",
+        "default": "Cobra Nex",
+        "guardian": "Client Portal | Cobra Nex",
+        "school": "Company Panel | Cobra Nex"
+      }
+    },
+    "of": "of",
+    "ok": "OK",
     "page": "Page",
-    "of": "of"
-  },
-  "tenant": {
-    "notFound": {
-      "title": "Tenant not found",
-      "description": "We checked the provided subdomain and could not find a matching company.",
-      "extra": "Check the address or contact support."
+    "placeholders": {
+      "address": "Street, number, district...",
+      "cpf": "000.000.000-00",
+      "date": "MM/DD/YYYY",
+      "email": "email@example.com",
+      "money": "0.00",
+      "phone": "(00) 00000-0000",
+      "rg": "00.000.000-0"
     }
   },
   "dashboard": {
-    "title": "Dashboard",
-    "welcome": "Welcome, {name}!",
-    "userTypeLabel": "You are logged in as",
+    "backToHome": "Back to home",
     "emailLabel": "Email",
-    "tenantLabel": "Company",
     "platformTenantFallback": "Platform",
-    "backToHome": "Back to home"
+    "tenantLabel": "Company",
+    "title": "Dashboard",
+    "userTypeLabel": "You are logged in as",
+    "welcome": "Welcome, {name}!"
   },
-  "auth": {
-    "pendingApproval": {
-      "title": "Account pending approval",
-      "description": "Your client account is under review. You will receive an email when it is approved."
-    }
-  },
-  "requestDemo": {
-    "title": "Bring Cobra Nex to my company",
-    "description": "Fill in the details below and our team will contact you to schedule a demo.",
-    "form": {
-      "responsibleName": "Contact name",
-      "schoolName": "Company name",
-      "email": "Email",
-      "phone": "Phone",
-      "submit": "Request a demo"
-    },
-    "success": {
-      "title": "We received your request!",
-      "description": "We will reach out soon using the email you provided to coordinate next steps."
-    },
-    "error": {
-      "validation": "Please check that all fields are filled in correctly.",
-      "generic": "We couldn't send your request right now. Please try again in a few minutes.",
-      "connection": "Connection error. Check your internet and try again."
-    }
-  },
-  "guardianRegister": {
-    "title": "I'm a client",
-    "description": "Fill in your details and the company code to create your account. After submitting, the company must approve your registration before you can log in.",
-    "form": {
-      "name": "Full name",
-      "email": "Email",
-      "phone": "Phone",
-      "password": "Password",
-      "confirmPassword": "Confirm password",
-      "schoolCode": "Company code",
-      "submit": "Create my account"
-    },
-    "success": {
-      "title": "Registration sent for approval",
-      "description": "We received your details. As soon as the company approves your registration, you will be able to access the client portal with your email and password."
-    },
-    "error": {
-      "validation": "Please check that all fields are filled in correctly and that the passwords match.",
-      "weakPassword": "Your password is too weak. Use at least 8 characters including letters and numbers, and avoid very common passwords.",
-      "schoolCode": "Invalid company code or company not found. Confirm the code with the company.",
-      "emailInUse": "An account with this email already exists.",
-      "generic": "We couldn't complete your registration right now. Please try again in a few minutes.",
-      "connection": "Connection error. Check your internet and try again."
-    }
+  "footer": {
+    "copyright": "All rights reserved.",
+    "privacy": "Privacy",
+    "support": "Support",
+    "terms": "Terms"
   },
   "guardian": {
-    "nav": {
-      "dashboard": "Overview",
-      "profile": "My profile",
-      "students": "Beneficiaries",
-      "invoices": "Invoices",
-      "tickets": "Tickets"
-    },
     "invoicesUi": {
-      "filters": {
-        "status": "Status",
-        "statusAll": "All statuses",
-        "from": "From date",
-        "to": "To date",
-        "student": "Beneficiary",
-        "search": "Search by beneficiary"
-      },
-      "table": {
-        "dueDate": "Due date",
-        "student": "Beneficiary",
-        "guardian": "Client",
-        "amount": "Amount",
-        "status": "Status",
-        "actions": "Actions"
-      },
-      "status": {
-        "draft": "Draft",
-        "pending": "Pending",
-        "paid": "Paid",
-        "overdue": "Overdue",
-        "canceled": "Canceled",
-        "refunded": "Refunded"
-      },
       "detail": {
-        "title": "Invoice details",
-        "emptySelection": "Select an invoice to see details.",
-        "infoTitle": "Invoice information",
-        "studentTitle": "Beneficiary",
-        "guardianTitle": "Client",
-        "itemsTitle": "Invoice items",
-        "statusTimelineTitle": "Status timeline",
-        "paymentTitle": "Payment",
-        "paymentLinkLabel": "Payment link",
-        "copyLink": "Copy Link",
-        "openLink": "Open Link",
-        "payNow": "Open payment page",
-        "paidLabel": "This invoice is already paid.",
-        "generatePaymentLink": "Generate payment link",
-        "copyPaymentLink": "Copy payment link",
-        "copyPaymentLinkSuccess": "Payment link copied to clipboard.",
-        "openPaymentPage": "Open payment page",
-        "communicationsTitle": "Communications",
-        "communicationsEmpty": "No communications recorded.",
         "communicationTypeCreated": "Invoice created",
         "communicationTypeOverdue": "Overdue notice",
-        "communicationTypePaid": "Payment confirmed"
-      },
-      "feedback": {
-        "loadError": "Could not load invoices.",
-        "exportError": "Could not export invoices to CSV."
+        "communicationTypePaid": "Payment confirmed",
+        "communicationsEmpty": "No communications recorded.",
+        "communicationsTitle": "Communications",
+        "copyLink": "Copy Link",
+        "copyPaymentLink": "Copy payment link",
+        "copyPaymentLinkSuccess": "Payment link copied to clipboard.",
+        "detail": {
+          "paymentTitle": "Payment"
+        },
+        "emptySelection": "Select an invoice to see details.",
+        "generatePaymentLink": "Generate payment link",
+        "guardianTitle": "Client",
+        "infoTitle": "Invoice information",
+        "itemsTitle": "Invoice items",
+        "openLink": "Open Link",
+        "openPaymentPage": "Open payment page",
+        "paidLabel": "This invoice is already paid.",
+        "payNow": "Open payment page",
+        "paymentLinkLabel": "Payment link",
+        "paymentTitle": "Payment",
+        "statusTimelineTitle": "Status timeline",
+        "studentTitle": "Beneficiary",
+        "title": "Invoice details"
       },
       "empty": "No invoices found for the current filter.",
       "export": {
-        "title": "Export invoices as CSV",
+        "button": "Export CSV",
+        "cancel": "Cancel",
         "description": "Select the period and status of the invoices you want to export to a spreadsheet.",
         "periodFrom": "Start date",
         "periodTo": "End date",
         "statusLabel": "Invoice status",
         "submit": "Export CSV",
-        "cancel": "Cancel",
-        "button": "Export CSV"
+        "title": "Export invoices as CSV"
+      },
+      "feedback": {
+        "exportError": "Could not export invoices to CSV.",
+        "loadError": "Could not load invoices."
+      },
+      "filters": {
+        "from": "From date",
+        "search": "Search by beneficiary",
+        "status": "Status",
+        "statusAll": "All statuses",
+        "student": "Beneficiary",
+        "to": "To date"
       },
       "origin": {
         "contract": "Contract",
         "oneOff": "One-off"
+      },
+      "status": {
+        "canceled": "Canceled",
+        "draft": "Draft",
+        "overdue": "Overdue",
+        "paid": "Paid",
+        "pending": "Pending",
+        "refunded": "Refunded"
+      },
+      "table": {
+        "actions": "Actions",
+        "amount": "Amount",
+        "dueDate": "Due date",
+        "guardian": "Client",
+        "status": "Status",
+        "student": "Beneficiary"
       }
+    },
+    "nav": {
+      "dashboard": "Overview",
+      "invoices": "Invoices",
+      "profile": "My profile",
+      "students": "Beneficiaries",
+      "tickets": "Tickets"
+    },
+    "pages": {
+      "dashboard": {
+        "description": "Follow your beneficiaries, invoices and company communication in one place (coming soon).",
+        "title": "Client portal"
+      },
+      "invoices": {
+        "description": "View and track company payments and charges (coming soon).",
+        "title": "My invoices"
+      },
+      "profile": {
+        "description": "Manage your personal information.",
+        "title": "My Profile"
+      },
+      "students": {
+        "description": "See the beneficiaries linked to your account and their basic information (coming soon).",
+        "title": "My beneficiaries"
+      }
+    },
+    "profile": {
+      "description": "View and edit your contact details.",
+      "form": {
+        "personalInfo": "Personal Information",
+        "personalInfoDescription": "Your basic registration details."
+      },
+      "title": "Profile Information"
     },
     "reportsUi": {
       "overdue": {
-        "title": "Overdue invoices",
-        "description": "Quickly see who is late and copy the payment link to follow up in an organized way.",
-        "table": {
-          "student": "Beneficiary",
-          "guardian": "Client",
-          "daysOverdue": "Days overdue",
-          "amount": "Amount",
-          "actions": "Actions"
-        },
         "actions": {
           "copyPaymentLink": "Copy payment link",
           "copyPaymentLinkSuccess": "Payment link copied to clipboard.",
           "generatePaymentLink": "Generate payment link"
         },
+        "description": "Quickly see who is late and copy the payment link to follow up in an organized way.",
+        "empty": "No overdue invoices found for the current filter.",
         "feedback": {
           "loadError": "Could not load overdue invoices report.",
           "paymentError": "Could not generate or copy the payment link."
         },
-        "empty": "No overdue invoices found for the current filter."
-      }
-    },
-    "pages": {
-      "dashboard": {
-        "title": "Client portal",
-        "description": "Follow your beneficiaries, invoices and company communication in one place (coming soon)."
-      },
-      "students": {
-        "title": "My beneficiaries",
-        "description": "See the beneficiaries linked to your account and their basic information (coming soon)."
-      },
-      "invoices": {
-        "title": "My invoices",
-        "description": "View and track company payments and charges (coming soon)."
+        "table": {
+          "actions": "Actions",
+          "amount": "Amount",
+          "daysOverdue": "Days overdue",
+          "guardian": "Client",
+          "student": "Beneficiary"
+        },
+        "title": "Overdue invoices"
       }
     }
   },
+  "guardianRegister": {
+    "description": "Fill in your details and the company code to create your account. After submitting, the company must approve your registration before you can log in.",
+    "error": {
+      "connection": "Connection error. Check your internet and try again.",
+      "emailInUse": "An account with this email already exists.",
+      "generic": "We couldn't complete your registration right now. Please try again in a few minutes.",
+      "schoolCode": "Invalid company code or company not found. Confirm the code with the company.",
+      "validation": "Please check that all fields are filled in correctly and that the passwords match.",
+      "weakPassword": "Your password is too weak. Use at least 8 characters including letters and numbers, and avoid very common passwords."
+    },
+    "form": {
+      "confirmPassword": "Confirm password",
+      "email": "Email",
+      "name": "Full name",
+      "password": "Password",
+      "phone": "Phone",
+      "schoolCode": "Company code",
+      "submit": "Create my account"
+    },
+    "success": {
+      "description": "We received your details. As soon as the company approves your registration, you will be able to access the client portal with your email and password.",
+      "title": "Registration sent for approval"
+    },
+    "title": "I'm a client"
+  },
+  "landing": {
+    "buttons": {
+      "demo": "Bring Cobra Nex to my company",
+      "guardian": "I'm a client",
+      "login": "Sign in"
+    },
+    "cta": "Get started now",
+    "description": "Centralize tuition, events and one-off charges in one place, with clear communication between company and clients.",
+    "finalCta": {
+      "subtitle": "Start with a small group of clients and evolve safely.",
+      "title": "Ready to organize your company payments?"
+    },
+    "problem": {
+      "receipts": "Receipts spread across email, photos and attachments make reconciliation hard.",
+      "spreadsheets": "Manual spreadsheets, different versions and a risk of errors on every update.",
+      "title": "Spreadsheets, WhatsApp and scattered receipts don't scale",
+      "whatsapp": "Payment requests get lost among groups, chats and off-hours messages."
+    },
+    "proof": {
+      "subtitle": "Testimonials, case studies and integrations will live here — for now, focus on validating the flow.",
+      "title": "Built for companies that want professional financial workflows"
+    },
+    "solution": {
+      "communication": "Communication: clear reminders for clients, without the noise.",
+      "events": "Events: registrations, payments and attendance in a single flow.",
+      "finance": "Finance and reports: consolidated view by class, grade and period.",
+      "oneOff": "One-off charges: materials, trips and extras with less friction.",
+      "title": "A platform designed for recurring financial operations",
+      "tuitions": "Tuitions: automatic billing, invoices and delinquency tracking."
+    },
+    "subtitle": "Financial flows made simple for companies and clients",
+    "title": "Cobra Nex"
+  },
+  "legal": {
+    "privacy": {
+      "content": "PRIVACY POLICY – COBRA NEX\n\nAt Cobra Nex, we take your privacy seriously. This Policy describes how we collect, use, and protect your personal data, in compliance with applicable data protection laws.\n\n1. DATA COLLECTED\n1.1. Registration Data: Full name, ID number, email, phone, and address.\n1.2. Beneficiary Data: Name, group, and relationship to the client.\n1.3. Financial Data: Payment history, invoices, and, where applicable, partial card data (last 4 digits) for identification.\n1.4. Navigation Data: IP address, device type, and access logs for audit and security purposes.\n\n2. PURPOSE OF USE\nWe use your data to:\n- Process payments and issue invoices.\n- Identify you and ensure account security.\n- Send notifications about due dates, receipts, and company communications.\n- Provide technical support and improve our services.\n- Comply with legal and regulatory obligations.\n\n3. DATA SHARING\nWe do not sell your data. We share information only with:\n- The Company linked to your account (for administrative and financial management).\n- Payment Processors and Banks (strictly to process transactions).\n- Judicial or government authorities, when required by law.\n\n4. SECURITY\nWe adopt robust technical and administrative measures to protect your data, including encryption in transit (SSL/TLS), strict access control, and security monitoring.\n\n5. YOUR RIGHTS\nYou have the right to access your data, correct incomplete or outdated data, and request portability or deletion (except for data we are required by law to retain).\n\n6. CHANGES\nThis policy may be updated. We will notify you of significant changes via the Platform or email.\n\n7. CONTACT\nTo exercise your rights or ask questions about privacy, visit our Support Center.",
+      "title": "Privacy Policy"
+    },
+    "terms": {
+      "content": "TERMS OF SERVICE – COBRA NEX\n\nWelcome to Cobra Nex. These Terms of Service (\"Terms\") govern your access to and use of our financial management platform (\"Platform\"). By accessing or using the Platform, you (\"User\") agree to these Terms. If you do not agree, strictly do not use our services.\n\n1. THE SERVICE\nCobra Nex is a SaaS (Software as a Service) platform that facilitates the management of fees, subscriptions, and events between Companies and Clients. Cobra Nex acts as a technological intermediary and is not a bank.\n\n2. REGISTRATION AND ACCESS\n2.1. Access to the Platform requires an account. You warrant that all information provided is true, accurate, and current.\n2.2. The Company is responsible for approving the registration of Clients linked to its institution.\n2.3. You are responsible for maintaining the confidentiality of your password. Any activity conducted through your account is your responsibility.\n\n3. PAYMENTS AND BILLING\n3.1. The Platform allows the Company to generate charges (invoices, bank transfers, cards) for Clients.\n3.2. Cobra Nex does not set prices or fees; these are the sole responsibility of the Company.\n3.3. Payment processing is performed by third-party financial partners (payment gateways). Cobra Nex does not store full credit card data.\n3.4. In case of late payments, fines and interest configured by the Company will be applied automatically.\n\n4. RESPONSIBILITIES\n4.1. The Company: Ensures the legality of issued charges and maintains beneficiary data updated.\n4.2. The Client: Makes payments within stipulated deadlines and keeps contact info updated.\n4.3. Cobra Nex: Ensures Platform availability, data security, and correct processing of payment instructions with gateways.\n\n5. LIMITATION OF LIABILITY\nCobra Nex is not liable for third-party failures (banks, card operators), scheduled maintenance interruptions, or force majeure events. In no event shall Cobra Nex be liable for indirect damages or lost profits arising from the use of the platform.\n\n6. INTELLECTUAL PROPERTY\nAll design, code, logos, and content of the Platform are the exclusive property of Cobra Nex or its licensors. Unauthorized use is prohibited.\n\n7. CHANGES\nWe may modify these Terms at any time. Continued use of the Platform after changes constitutes acceptance of the new terms.\n\n8. CONTACT\nFor questions regarding these terms, please contact our Support Center.",
+      "title": "Terms of Service"
+    }
+  },
+  "login": {
+    "email": "Email",
+    "error": {
+      "connection": "Connection error. Please try again.",
+      "generic": "Login failed",
+      "rateLimit": "Too many login attempts. Please try again in a few minutes."
+    },
+    "forgotPassword": "Forgot your password?",
+    "noAccount": "Don't have an account?",
+    "password": "Password",
+    "signup": "Sign up",
+    "submit": "Sign in",
+    "title": "Login"
+  },
+  "nav": {
+    "home": "Home",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "passwordReset": {
+    "forgot": {
+      "backToLogin": "Back to login",
+      "description": "Enter your email. If there is an account, we will send instructions to reset your password.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Your registered email",
+      "error": {
+        "connection": "Connection error. Please try again in a few minutes.",
+        "generic": "We couldn't process your request right now. Please try again in a few minutes.",
+        "validation": "Please enter a valid email address."
+      },
+      "submit": "Send instructions",
+      "success": "If an account exists with this email, you will receive password reset instructions in a few minutes.",
+      "title": "Forgot your password?"
+    },
+    "reset": {
+      "confirmPasswordLabel": "Confirm new password",
+      "description": "Set a new password to access your account.",
+      "error": {
+        "connection": "Connection error. Check your internet and try again.",
+        "expiredToken": "This reset link has expired. Please request a new password reset email.",
+        "generic": "We couldn't reset your password right now. Please try again in a few minutes.",
+        "invalidToken": "Invalid reset link. Please request a new password reset email.",
+        "usedToken": "This reset link has already been used. Please request a new password reset email.",
+        "validation": "Check that both password fields are filled and match.",
+        "weakPassword": "Your password is too weak. Use at least 8 characters with letters and numbers."
+      },
+      "newPasswordLabel": "New password",
+      "submit": "Reset password",
+      "success": "Your password has been reset successfully. You can now log in with the new password.",
+      "title": "Reset password"
+    }
+  },
+  "pay": {
+    "sandbox": {
+      "actions": {
+        "confirming": "Confirming...",
+        "payCard": "Pay with Card (simulated)",
+        "payPix": "Pay with PIX (simulated)"
+      },
+      "amount": "Amount",
+      "description": "This is a test environment. No real payment will be processed.",
+      "dueDate": "Due Date",
+      "error": {
+        "confirmError": "Could not confirm simulated payment.",
+        "connectionError": "Connection error.",
+        "invalidLink": "Invalid or incomplete payment link.",
+        "loadError": "Could not load invoice data."
+      },
+      "guardian": "Client",
+      "loading": "Loading invoice...",
+      "payment": "Payment",
+      "status": {
+        "overdue": "Overdue",
+        "paid": "Paid (simulated)",
+        "pending": "Pending"
+      },
+      "student": "Beneficiary",
+      "success": "Simulated payment successfully registered. The invoice has been marked as paid.",
+      "title": "Sandbox Payment"
+    }
+  },
   "platform": {
+    "audit": {
+      "empty": "No audit events found for the current filter.",
+      "errorConnection": "Connection error while loading audit events.",
+      "errorGeneric": "Could not load audit events.",
+      "filters": {
+        "action": "Action",
+        "actionPlaceholder": "Ex: login, update",
+        "actorEmail": "Actor email",
+        "apply": "Apply filters",
+        "clear": "Clear filters",
+        "from": "From",
+        "tenant": "Company (tenant)",
+        "to": "To"
+      },
+      "modal": {
+        "close": "Close",
+        "metadataEmpty": "No metadata recorded for this event.",
+        "title": "Event details"
+      },
+      "system": "System",
+      "table": {
+        "action": "Action",
+        "actor": "Actor",
+        "details": "View details",
+        "ip": "IP",
+        "target": "Target",
+        "tenant": "Tenant",
+        "timestamp": "Date/time"
+      },
+      "title": "Audit log"
+    },
+    "leads": {
+      "actions": {
+        "convertToTenant": "Create tenant (DRAFT)",
+        "markContacted": "Mark as contacted",
+        "markConverted": "Mark as converted"
+      },
+      "empty": "No leads found for the current filter.",
+      "errorConnection": "Connection error while loading or updating leads.",
+      "errorGeneric": "Could not load or update leads.",
+      "status": {
+        "contacted": "Contacted",
+        "converted": "Converted",
+        "new": "New"
+      },
+      "table": {
+        "actions": "Actions",
+        "createdAt": "Created at",
+        "email": "Email",
+        "phone": "Phone",
+        "responsibleName": "Contact",
+        "schoolName": "Company",
+        "status": "Status"
+      },
+      "title": "Company leads"
+    },
     "nav": {
+      "audit": "Audit",
       "dashboard": "Platform",
-      "tenants": "Tenants",
       "leads": "Leads",
-      "tickets": "Tickets",
-      "audit": "Audit"
+      "tenants": "Tenants",
+      "tickets": "Tickets"
     },
     "tenants": {
-      "title": "Company tenants",
-      "table": {
-        "name": "Name",
-        "slug": "Slug (subdomain)",
-        "schoolCode": "School code",
-        "status": "Status",
-        "createdAt": "Created at",
-        "actions": "Actions"
-      },
-      "status": {
-        "draft": "Draft",
-        "active": "Active",
-        "suspended": "Suspended"
-      },
+      "empty": "No tenants found for the current filter.",
+      "errorConnection": "Connection error while loading or updating tenants.",
+      "errorGeneric": "Could not load or update tenants.",
       "form": {
-        "name": "School name",
-        "slug": "Slug (subdomain)",
-        "schoolCode": "School code",
         "adminEmail": "Admin email",
         "adminName": "Admin name",
         "adminPassword": "Initial password (optional)",
         "createTitle": "Create new school",
         "editTitle": "Edit school",
+        "initialPasswordGenerated": "Initial password generated:",
+        "name": "School name",
+        "schoolCode": "School code",
+        "slug": "Slug (subdomain)",
         "submitCreate": "New school",
-        "submitEdit": "Save changes",
-        "initialPasswordGenerated": "Initial password generated:"
-      },
-      "empty": "No tenants found for the current filter.",
-      "errorGeneric": "Could not load or update tenants.",
-      "errorConnection": "Connection error while loading or updating tenants."
-    },
-    "leads": {
-      "title": "Company leads",
-      "table": {
-        "schoolName": "Company",
-        "responsibleName": "Contact",
-        "email": "Email",
-        "phone": "Phone",
-        "status": "Status",
-        "createdAt": "Created at",
-        "actions": "Actions"
+        "submitEdit": "Save changes"
       },
       "status": {
-        "new": "New",
-        "contacted": "Contacted",
-        "converted": "Converted"
+        "active": "Active",
+        "draft": "Draft",
+        "suspended": "Suspended"
       },
-      "actions": {
-        "markContacted": "Mark as contacted",
-        "markConverted": "Mark as converted",
-        "convertToTenant": "Create tenant (DRAFT)"
-      },
-      "empty": "No leads found for the current filter.",
-      "errorGeneric": "Could not load or update leads.",
-      "errorConnection": "Connection error while loading or updating leads."
-    },
-    "audit": {
-      "title": "Audit log",
-      "filters": {
-        "tenant": "Company (tenant)",
-        "action": "Action",
-        "actorEmail": "Actor email",
-        "from": "From",
-        "to": "To",
-        "apply": "Apply filters",
-        "clear": "Clear filters",
-        "actionPlaceholder": "Ex: login, update"
-      },
-      "system": "System",
       "table": {
-        "timestamp": "Date/time",
-        "tenant": "Tenant",
-        "actor": "Actor",
-        "action": "Action",
-        "target": "Target",
-        "ip": "IP",
-        "details": "View details"
+        "actions": "Actions",
+        "createdAt": "Created at",
+        "name": "Name",
+        "schoolCode": "School code",
+        "slug": "Slug (subdomain)",
+        "status": "Status"
       },
-      "modal": {
-        "title": "Event details",
-        "close": "Close",
-        "metadataEmpty": "No metadata recorded for this event."
-      },
-      "empty": "No audit events found for the current filter.",
-      "errorGeneric": "Could not load audit events.",
-      "errorConnection": "Connection error while loading audit events."
+      "title": "Company tenants"
     }
   },
+  "requestDemo": {
+    "description": "Fill in the details below and our team will contact you to schedule a demo.",
+    "error": {
+      "connection": "Connection error. Check your internet and try again.",
+      "generic": "We couldn't send your request right now. Please try again in a few minutes.",
+      "validation": "Please check that all fields are filled in correctly."
+    },
+    "form": {
+      "email": "Email",
+      "phone": "Phone",
+      "responsibleName": "Contact name",
+      "schoolName": "Company name",
+      "submit": "Request a demo"
+    },
+    "success": {
+      "description": "We will reach out soon using the email you provided to coordinate next steps.",
+      "title": "We received your request!"
+    },
+    "title": "Bring Cobra Nex to my company"
+  },
   "school": {
-    "nav": {
-      "dashboard": "Company panel",
-      "settings": "Settings",
-      "classes": "Classes",
-      "contracts": "Contracts",
-      "invoices": "Invoices",
-      "students": "Students",
-      "guardians": "Guardians",
-      "approvalsGuardians": "Guardian approvals"
-    },
     "breadcrumbs": {
-      "root": "School",
-      "dashboard": "Dashboard",
-      "settings": "Settings",
+      "approvals": "Approvals",
+      "approvalsGuardians": "Guardian approvals",
       "classes": "Classes",
       "contracts": "Contracts",
-      "invoices": "Invoices",
-      "students": "Students",
+      "dashboard": "Dashboard",
       "guardians": "Guardians",
-      "approvals": "Approvals",
-      "approvalsGuardians": "Guardian approvals"
-    },
-    "layout": {
-      "unauthorizedTitle": "You don't have access to the school panel",
-      "unauthorizedDescription": "This area is reserved for school staff. If you believe this is a mistake, contact the school administrator."
-    },
-    "settings": {
-      "feedback": {
-        "saveSuccess": "School settings saved successfully.",
-        "saveError": "Could not save school settings.",
-        "loadError": "Could not load school settings."
-      }
+      "invoices": "Invoices",
+      "root": "School",
+      "settings": "Settings",
+      "students": "Students"
     },
     "classesUi": {
-      "tabs": {
-        "grades": "Categories",
-        "classes": "Groups"
-      },
-      "grades": {
-        "title": "Company categories",
-        "table": {
-          "name": "Category name",
-          "actions": "Actions"
-        },
-        "empty": "No categories found for this company.",
-        "create": "New category",
-        "edit": "Edit category",
-        "delete": "Remove category",
-        "deleteConfirmTitle": "Remove category",
-        "deleteConfirmDescription": "This category will be removed. You cannot remove it while there are groups linked to it."
-      },
       "classes": {
-        "title": "Groups",
-        "table": {
-          "name": "Group name",
-          "grade": "Category",
-          "actions": "Actions"
-        },
-        "empty": "No groups found for the current filter.",
         "create": "New group",
-        "edit": "Edit group",
         "delete": "Remove group",
-        "filterByGrade": "Filter by category"
-      },
-      "form": {
-        "gradeName": "Category name",
-        "className": "Group name",
-        "classGrade": "Group category",
-        "cancel": "Cancel",
-        "save": "Save"
+        "edit": "Edit group",
+        "empty": "No groups found for the current filter.",
+        "filterByGrade": "Filter by category",
+        "table": {
+          "actions": "Actions",
+          "grade": "Category",
+          "name": "Group name"
+        },
+        "title": "Groups"
       },
       "feedback": {
+        "deleteError": "Could not remove the record. Please try again.",
         "loadError": "Could not load categories and groups.",
-        "saveError": "Could not save data. Please check the fields and try again.",
-        "deleteError": "Could not remove the record. Please try again."
+        "saveError": "Could not save data. Please check the fields and try again."
+      },
+      "form": {
+        "cancel": "Cancel",
+        "classGrade": "Group category",
+        "className": "Group name",
+        "gradeName": "Category name",
+        "save": "Save"
+      },
+      "grades": {
+        "create": "New category",
+        "delete": "Remove category",
+        "deleteConfirmDescription": "This category will be removed. You cannot remove it while there are groups linked to it.",
+        "deleteConfirmTitle": "Remove category",
+        "edit": "Edit category",
+        "empty": "No categories found for this company.",
+        "table": {
+          "actions": "Actions",
+          "name": "Category name"
+        },
+        "title": "Company categories"
+      },
+      "tabs": {
+        "classes": "Groups",
+        "grades": "Categories"
       }
     },
     "contractsUi": {
-      "filters": {
-        "status": "Status",
-        "statusAll": "All statuses",
-        "search": "Search contracts"
-      },
-      "table": {
-        "name": "Contract name",
-        "amount": "Amount",
-        "dueDay": "Due day",
-        "status": "Status",
-        "students": "Linked beneficiaries",
-        "actions": "Actions"
-      },
-      "status": {
-        "active": "Active",
-        "paused": "Paused",
-        "canceled": "Canceled"
-      },
       "actions": {
+        "cancel": "Cancel",
         "create": "New contract",
         "edit": "Edit",
-        "viewDetails": "View details",
         "pause": "Pause",
         "resume": "Resume",
-        "cancel": "Cancel"
-      },
-      "form": {
-        "name": "Contract name",
-        "amount": "Amount",
-        "dueDay": "Due day (1-28)",
-        "startDate": "Start date",
-        "endDate": "End date (optional)",
-        "status": "Status",
-        "save": "Save",
-        "cancel": "Cancel"
+        "viewDetails": "View details"
       },
       "detail": {
-        "title": "Contract details",
-        "studentsTitle": "Linked beneficiaries",
         "addStudents": "Add beneficiaries to contract",
-        "remove": "Remove",
+        "confirmCancelDescription": "Are you sure you want to cancel this contract? New invoices will not be generated.",
         "confirmCancelTitle": "Cancel contract",
-        "confirmCancelDescription": "Are you sure you want to cancel this contract? New invoices will not be generated."
+        "remove": "Remove",
+        "studentsTitle": "Linked beneficiaries",
+        "title": "Contract details"
       },
+      "empty": "No contracts found for the current filter.",
       "feedback": {
+        "linkError": "Could not link beneficiaries to the contract.",
         "loadError": "Could not load contracts.",
         "saveError": "Could not save contract. Please check the fields and try again.",
-        "linkError": "Could not link beneficiaries to the contract.",
-        "unlinkError": "Could not unlink the beneficiary from this contract.",
-        "statusError": "Could not change contract status."
+        "statusError": "Could not change contract status.",
+        "unlinkError": "Could not unlink the beneficiary from this contract."
       },
-      "empty": "No contracts found for the current filter."
-    },
-    "invoicesUi": {
       "filters": {
+        "search": "Search contracts",
         "status": "Status",
-        "statusAll": "All statuses",
-        "from": "From date",
-        "to": "To date",
-        "student": "Beneficiary",
-        "guardian": "Client",
-        "search": "Search by beneficiary or client"
-      },
-      "table": {
-        "dueDate": "Due date",
-        "student": "Beneficiary",
-        "guardian": "Client",
-        "amount": "Amount",
-        "origin": "Origin",
-        "status": "Status",
-        "actions": "Actions"
-      },
-      "status": {
-        "draft": "Draft",
-        "pending": "Pending",
-        "paid": "Paid",
-        "overdue": "Overdue",
-        "canceled": "Canceled",
-        "refunded": "Refunded"
-      },
-      "detail": {
-        "title": "Invoice details",
-        "emptySelection": "Select an invoice to see details.",
-        "paymentTitle": "Payment",
-        "payNow": "Pay now",
-        "paidLabel": "This invoice is already paid.",
-        "infoTitle": "Invoice information",
-        "itemsTitle": "Invoice items",
-        "statusTimelineTitle": "Status timeline",
-        "paymentLinkLabel": "Payment link",
-        "copyPaymentLink": "Copy payment link",
-        "copyPaymentLinkSuccess": "Payment link copied to clipboard.",
-        "generatePaymentLink": "Generate payment link",
-        "openPaymentPage": "Open payment page",
-        "copyLink": "Copy Link",
-        "openLink": "Open Link",
-        "communicationsTitle": "Communications",
-        "communicationsEmpty": "No communications recorded.",
-        "communicationTypeCreated": "Invoice created",
-        "communicationTypeOverdue": "Overdue notice",
-        "communicationTypePaid": "Payment confirmed"
-      },
-      "feedback": {
-        "loadError": "Could not load invoices."
-      },
-      "empty": "No invoices found for the current filter.",
-      "newForm": {
-        "title": "New one-off invoice",
-        "description": "Select the beneficiary, client and fill in the invoice details.",
-        "studentLabel": "Beneficiary",
-        "guardianLabel": "Client",
-        "guardianPlaceholder": "Select a client linked to the beneficiary",
-        "amountLabel": "Amount (R$)",
-        "dueDateLabel": "Due date",
-        "descriptionLabel": "Description",
-        "submit": "Create invoice",
-        "cancel": "Cancel"
-      }
-    },
-    "studentsUi": {
-      "filters": {
-        "class": "Group",
-        "status": "Status",
-        "search": "Search by name",
         "statusAll": "All statuses"
       },
-      "table": {
-        "name": "Name",
-        "class": "Group",
-        "status": "Status",
-        "actions": "Actions"
+      "form": {
+        "amount": "Amount",
+        "cancel": "Cancel",
+        "dueDay": "Due day (1-28)",
+        "endDate": "End date (optional)",
+        "name": "Contract name",
+        "save": "Save",
+        "startDate": "Start date",
+        "status": "Status"
       },
       "status": {
         "active": "Active",
-        "inactive": "Inactive"
+        "canceled": "Canceled",
+        "paused": "Paused"
       },
-      "actions": {
-        "create": "New beneficiary",
-        "edit": "Edit",
-        "delete": "Delete",
-        "inactivate": "Inactivate",
-        "activate": "Reactivate",
-        "importCsv": "Import CSV"
-      },
-      "feedback": {
-        "loadError": "Could not load beneficiaries.",
-        "saveError": "Could not save beneficiary. Please check the fields and try again.",
-        "deleteError": "Could not delete beneficiary. Please try again.",
-        "importError": "Could not import CSV file. Please check the format and try again.",
-        "importSuccess": "Import completed successfully."
-      },
-      "empty": "No beneficiaries found for the current filter."
+      "table": {
+        "actions": "Actions",
+        "amount": "Amount",
+        "dueDay": "Due day",
+        "name": "Contract name",
+        "status": "Status",
+        "students": "Linked beneficiaries"
+      }
     },
     "guardiansUi": {
+      "actions": {
+        "activate": "Activate",
+        "create": "New guardian",
+        "edit": "Edit",
+        "inactivate": "Deactivate",
+        "linkStudent": "Link student",
+        "unlinkStudent": "Unlink",
+        "viewDetails": "View details"
+      },
+      "detail": {
+        "infoTitle": "Client information",
+        "studentsEmpty": "No beneficiaries linked to this client.",
+        "studentsTitle": "Linked beneficiaries",
+        "title": "Guardian details"
+      },
+      "empty": "No guardians found for the current filter.",
+      "feedback": {
+        "deleteError": "Could not delete guardian. Please try again.",
+        "linkError": "Could not link student. Please check the data and try again.",
+        "loadError": "Could not load guardians.",
+        "saveError": "Could not save guardian. Please check the fields and try again.",
+        "unlinkError": "Could not unlink student. Please try again."
+      },
       "filters": {
         "search": "Search by name or email",
         "status": "Status",
         "statusAll": "All statuses"
       },
-      "table": {
-        "name": "Name",
-        "email": "Email",
-        "phone": "Phone",
-        "cpf": "National ID (CPF)",
-        "rg": "ID (RG)",
-        "address": "Full Address",
-        "studentName": "Student Name",
-        "studentBirthDate": "Date of Birth",
-        "addStudent": "Add Student",
-        "status": "Status",
-        "emailVerified": "Email verified",
-        "actions": "Actions"
-      },
       "status": {
         "active": "Active",
         "inactive": "Inactive"
       },
-      "actions": {
-        "create": "New guardian",
-        "edit": "Edit",
-        "inactivate": "Deactivate",
-        "activate": "Activate",
-        "viewDetails": "View details",
-        "linkStudent": "Link student",
-        "unlinkStudent": "Unlink"
-      },
+      "table": {
+        "actions": "Actions",
+        "addStudent": "Add Student",
+        "address": "Full Address",
+        "cpf": "National ID (CPF)",
+        "email": "Email",
+        "emailVerified": "Email verified",
+        "name": "Name",
+        "phone": "Phone",
+        "rg": "ID (RG)",
+        "status": "Status",
+        "studentBirthDate": "Date of Birth",
+        "studentName": "Student Name"
+      }
+    },
+    "invoicesUi": {
       "detail": {
-        "title": "Guardian details",
-        "infoTitle": "Client information",
-        "studentsTitle": "Linked beneficiaries",
-        "studentsEmpty": "No beneficiaries linked to this client."
+        "communicationTypeCreated": "Invoice created",
+        "communicationTypeOverdue": "Overdue notice",
+        "communicationTypePaid": "Payment confirmed",
+        "communicationsEmpty": "No communications recorded.",
+        "communicationsTitle": "Communications",
+        "copyLink": "Copy Link",
+        "copyPaymentLink": "Copy payment link",
+        "copyPaymentLinkSuccess": "Payment link copied to clipboard.",
+        "emptySelection": "Select an invoice to see details.",
+        "generatePaymentLink": "Generate payment link",
+        "infoTitle": "Invoice information",
+        "itemsTitle": "Invoice items",
+        "openLink": "Open Link",
+        "openPaymentPage": "Open payment page",
+        "paidLabel": "This invoice is already paid.",
+        "payNow": "Pay now",
+        "paymentLinkLabel": "Payment link",
+        "paymentTitle": "Payment",
+        "statusTimelineTitle": "Status timeline",
+        "title": "Invoice details"
+      },
+      "empty": "No invoices found for the current filter.",
+      "export": {
+        "button": "Export CSV",
+        "cancel": "Cancel",
+        "description": "Select filters to export.",
+        "periodFrom": "From",
+        "periodTo": "To",
+        "statusLabel": "Status",
+        "submit": "Export",
+        "title": "Export Invoices"
       },
       "feedback": {
-        "loadError": "Could not load guardians.",
-        "saveError": "Could not save guardian. Please check the fields and try again.",
-        "deleteError": "Could not delete guardian. Please try again.",
-        "linkError": "Could not link student. Please check the data and try again.",
-        "unlinkError": "Could not unlink student. Please try again."
+        "loadError": "Could not load invoices."
       },
-      "empty": "No guardians found for the current filter."
+      "filters": {
+        "from": "From date",
+        "guardian": "Client",
+        "search": "Search by beneficiary or client",
+        "status": "Status",
+        "statusAll": "All statuses",
+        "student": "Beneficiary",
+        "to": "To date"
+      },
+      "newForm": {
+        "amountLabel": "Amount (R$)",
+        "cancel": "Cancel",
+        "description": "Fill in the details below to generate a single invoice.",
+        "descriptionLabel": "Description",
+        "dueDateLabel": "Due Date",
+        "guardianLabel": "Financial Guardian",
+        "guardianPlaceholder": "Select a guardian...",
+        "studentLabel": "Beneficiary",
+        "submit": "Create Invoice",
+        "title": "New One-off Invoice"
+      },
+      "origin": {
+        "contract": "Tuition",
+        "oneOff": "One-off"
+      },
+      "status": {
+        "canceled": "Canceled",
+        "draft": "Draft",
+        "overdue": "Overdue",
+        "paid": "Paid",
+        "pending": "Pending",
+        "refunded": "Refunded"
+      },
+      "table": {
+        "actions": "Actions",
+        "amount": "Amount",
+        "dueDate": "Due date",
+        "guardian": "Client",
+        "origin": "Origin",
+        "status": "Status",
+        "student": "Beneficiary"
+      }
+    },
+    "layout": {
+      "unauthorizedDescription": "This area is reserved for school staff. If you believe this is a mistake, contact the school administrator.",
+      "unauthorizedTitle": "You don't have access to the school panel"
+    },
+    "nav": {
+      "approvalsGuardians": "Guardian approvals",
+      "classes": "Classes",
+      "contracts": "Contracts",
+      "dashboard": "Company panel",
+      "guardians": "Guardians",
+      "invoices": "Invoices",
+      "settings": "Settings",
+      "students": "Students"
+    },
+    "pages": {
+      "approvalsGuardians": {
+        "description": "Review and approve new client accounts waiting for validation (coming soon).",
+        "title": "Client approvals"
+      },
+      "classes": {
+        "description": "Organize beneficiaries by category and group for this company.",
+        "title": "Categories and groups"
+      },
+      "contracts": {
+        "description": "Manage contracts and linked beneficiaries.",
+        "title": "Contracts"
+      },
+      "dashboard": {
+        "description": "Summary of groups, beneficiaries and financial flows for this company (coming soon).",
+        "title": "Company overview"
+      },
+      "dashboardUi": {
+        "cards": {
+          "overdueCount": "Overdue invoices",
+          "totalBilled": "Billed",
+          "totalOpen": "Open",
+          "totalOverdue": "Overdue"
+        },
+        "feedback": {
+          "loadError": "Could not load financial summary."
+        },
+        "periodLabel": "Period"
+      },
+      "guardians": {
+        "description": "Manage client profiles and their links to beneficiaries.",
+        "title": "Clients"
+      },
+      "invoices": {
+        "description": "Track the company's invoices, their status and details.",
+        "title": "Invoices"
+      },
+      "settings": {
+        "description": "Configure basic information, billing rules and integrations for this company (coming soon).",
+        "title": "Company settings"
+      },
+      "students": {
+        "description": "List and manage beneficiaries linked to this company.",
+        "title": "Beneficiaries"
+      }
     },
     "reportsUi": {
-      "overdue": {
-        "title": "Overdue Invoices",
-        "description": "Report of overdue and unpaid invoices.",
-        "table": {
-          "student": "Student",
-          "guardian": "Guardian",
-          "daysOverdue": "Days Overdue",
-          "amount": "Amount",
-          "actions": "Actions"
+      "guardian": {
+        "backToList": "Back to list",
+        "cards": {
+          "totalOpen": "Total Open",
+          "totalPaid": "Total Paid"
         },
+        "description": "Financial history of the guardian.",
+        "empty": "No records found.",
+        "feedback": {
+          "loadError": "Error loading data."
+        },
+        "table": {
+          "amount": "Amount",
+          "contract": "Contract",
+          "dueDate": "Due Date",
+          "paidAt": "Paid At",
+          "status": "Status",
+          "student": "Student"
+        },
+        "title": "Guardian Report"
+      },
+      "overdue": {
         "actions": {
           "copyPaymentLink": "Copy Link",
           "copyPaymentLinkSuccess": "Link copied!",
           "generatePaymentLink": "Generate Link"
         },
+        "description": "Report of overdue and unpaid invoices.",
+        "empty": "No overdue invoices.",
         "feedback": {
           "loadError": "Error loading report.",
           "paymentError": "Error generating payment."
         },
-        "empty": "No overdue invoices."
+        "table": {
+          "actions": "Actions",
+          "amount": "Amount",
+          "daysOverdue": "Days Overdue",
+          "guardian": "Guardian",
+          "student": "Student"
+        },
+        "title": "Overdue Invoices"
       },
       "student": {
-        "title": "Student Report",
+        "backToList": "Back to list",
+        "cards": {
+          "totalOpen": "Total Open",
+          "totalPaid": "Total Paid"
+        },
         "description": "Detailed financial history of the student.",
-        "cards": {
-          "totalPaid": "Total Paid",
-          "totalOpen": "Total Open"
+        "empty": "No records found.",
+        "feedback": {
+          "loadError": "Error loading data."
         },
         "table": {
-          "dueDate": "Due Date",
           "amount": "Amount",
-          "status": "Status",
+          "contract": "Contract",
+          "dueDate": "Due Date",
           "guardian": "Guardian",
-          "contract": "Contract",
-          "paidAt": "Paid At"
+          "paidAt": "Paid At",
+          "status": "Status"
         },
-        "feedback": {
-          "loadError": "Error loading data."
-        },
-        "empty": "No records found.",
-        "backToList": "Back to list"
-      },
-      "guardian": {
-        "title": "Guardian Report",
-        "description": "Financial history of the guardian.",
-        "cards": {
-          "totalPaid": "Total Paid",
-          "totalOpen": "Total Open"
-        },
-        "table": {
-          "dueDate": "Due Date",
-          "amount": "Amount",
-          "status": "Status",
-          "student": "Student",
-          "contract": "Contract",
-          "paidAt": "Paid At"
-        },
-        "feedback": {
-          "loadError": "Error loading data."
-        },
-        "empty": "No records found.",
-        "backToList": "Back to list"
+        "title": "Student Report"
       }
     },
-    "pages": {
-      "dashboard": {
-        "title": "Company overview",
-        "description": "Summary of groups, beneficiaries and financial flows for this company (coming soon)."
-      },
-      "dashboardUi": {
-        "periodLabel": "Period",
-        "cards": {
-          "totalBilled": "Billed",
-          "totalOpen": "Open",
-          "totalOverdue": "Overdue",
-          "overdueCount": "Overdue invoices"
-        },
-        "feedback": {
-          "loadError": "Could not load financial summary."
-        }
-      },
-      "settings": {
-        "title": "Company settings",
-        "description": "Configure basic information, billing rules and integrations for this company (coming soon)."
-      },
-      "classes": {
-        "title": "Categories and groups",
-        "description": "Organize beneficiaries by category and group for this company."
-      },
-      "students": {
-        "title": "Beneficiaries",
-        "description": "List and manage beneficiaries linked to this company."
-      },
-      "invoices": {
-        "title": "Invoices",
-        "description": "Track the company's invoices, their status and details."
-      },
-      "contracts": {
-        "title": "Contracts",
-        "description": "Manage contracts and linked beneficiaries."
-      },
-      "guardians": {
-        "title": "Clients",
-        "description": "Manage client profiles and their links to beneficiaries."
-      },
-      "approvalsGuardians": {
-        "title": "Client approvals",
-        "description": "Review and approve new client accounts waiting for validation (coming soon)."
+    "settings": {
+      "feedback": {
+        "loadError": "Could not load school settings.",
+        "saveError": "Could not save school settings.",
+        "saveSuccess": "School settings saved successfully."
       }
-    }
-  },
-  "legal": {
-    "terms": {
-      "title": "Terms of Service",
-      "content": "TERMS OF SERVICE – COBRA NEX\n\nWelcome to Cobra Nex. These Terms of Service (\"Terms\") govern your access to and use of our financial management platform (\"Platform\"). By accessing or using the Platform, you (\"User\") agree to these Terms. If you do not agree, strictly do not use our services.\n\n1. THE SERVICE\nCobra Nex is a SaaS (Software as a Service) platform that facilitates the management of fees, subscriptions, and events between Companies and Clients. Cobra Nex acts as a technological intermediary and is not a bank.\n\n2. REGISTRATION AND ACCESS\n2.1. Access to the Platform requires an account. You warrant that all information provided is true, accurate, and current.\n2.2. The Company is responsible for approving the registration of Clients linked to its institution.\n2.3. You are responsible for maintaining the confidentiality of your password. Any activity conducted through your account is your responsibility.\n\n3. PAYMENTS AND BILLING\n3.1. The Platform allows the Company to generate charges (invoices, bank transfers, cards) for Clients.\n3.2. Cobra Nex does not set prices or fees; these are the sole responsibility of the Company.\n3.3. Payment processing is performed by third-party financial partners (payment gateways). Cobra Nex does not store full credit card data.\n3.4. In case of late payments, fines and interest configured by the Company will be applied automatically.\n\n4. RESPONSIBILITIES\n4.1. The Company: Ensures the legality of issued charges and maintains beneficiary data updated.\n4.2. The Client: Makes payments within stipulated deadlines and keeps contact info updated.\n4.3. Cobra Nex: Ensures Platform availability, data security, and correct processing of payment instructions with gateways.\n\n5. LIMITATION OF LIABILITY\nCobra Nex is not liable for third-party failures (banks, card operators), scheduled maintenance interruptions, or force majeure events. In no event shall Cobra Nex be liable for indirect damages or lost profits arising from the use of the platform.\n\n6. INTELLECTUAL PROPERTY\nAll design, code, logos, and content of the Platform are the exclusive property of Cobra Nex or its licensors. Unauthorized use is prohibited.\n\n7. CHANGES\nWe may modify these Terms at any time. Continued use of the Platform after changes constitutes acceptance of the new terms.\n\n8. CONTACT\nFor questions regarding these terms, please contact our Support Center."
     },
-    "privacy": {
-      "title": "Privacy Policy",
-      "content": "PRIVACY POLICY – COBRA NEX\n\nAt Cobra Nex, we take your privacy seriously. This Policy describes how we collect, use, and protect your personal data, in compliance with applicable data protection laws.\n\n1. DATA COLLECTED\n1.1. Registration Data: Full name, ID number, email, phone, and address.\n1.2. Beneficiary Data: Name, group, and relationship to the client.\n1.3. Financial Data: Payment history, invoices, and, where applicable, partial card data (last 4 digits) for identification.\n1.4. Navigation Data: IP address, device type, and access logs for audit and security purposes.\n\n2. PURPOSE OF USE\nWe use your data to:\n- Process payments and issue invoices.\n- Identify you and ensure account security.\n- Send notifications about due dates, receipts, and company communications.\n- Provide technical support and improve our services.\n- Comply with legal and regulatory obligations.\n\n3. DATA SHARING\nWe do not sell your data. We share information only with:\n- The Company linked to your account (for administrative and financial management).\n- Payment Processors and Banks (strictly to process transactions).\n- Judicial or government authorities, when required by law.\n\n4. SECURITY\nWe adopt robust technical and administrative measures to protect your data, including encryption in transit (SSL/TLS), strict access control, and security monitoring.\n\n5. YOUR RIGHTS\nYou have the right to access your data, correct incomplete or outdated data, and request portability or deletion (except for data we are required by law to retain).\n\n6. CHANGES\nThis policy may be updated. We will notify you of significant changes via the Platform or email.\n\n7. CONTACT\nTo exercise your rights or ask questions about privacy, visit our Support Center."
+    "studentsUi": {
+      "actions": {
+        "activate": "Reactivate",
+        "create": "New beneficiary",
+        "delete": "Delete",
+        "edit": "Edit",
+        "importCsv": "Import CSV",
+        "inactivate": "Inactivate"
+      },
+      "empty": "No beneficiaries found for the current filter.",
+      "feedback": {
+        "deleteError": "Could not delete beneficiary. Please try again.",
+        "importError": "Could not import CSV file. Please check the format and try again.",
+        "importSuccess": "Import completed successfully.",
+        "loadError": "Could not load beneficiaries.",
+        "saveError": "Could not save beneficiary. Please check the fields and try again."
+      },
+      "filters": {
+        "class": "Group",
+        "search": "Search by name",
+        "status": "Status",
+        "statusAll": "All statuses"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "table": {
+        "actions": "Actions",
+        "class": "Group",
+        "name": "Name",
+        "status": "Status"
+      }
     }
   },
   "support": {
-    "title": "Support Center",
     "description": "How can we help you today?",
     "guestForm": {
-      "name": "Name",
       "email": "Email",
-      "subject": "Subject",
       "message": "Message",
-      "submit": "Send ticket",
+      "name": "Name",
       "sendAnother": "Send another request",
+      "subject": "Subject",
+      "submit": "Send ticket",
       "success": "Ticket created! We will contact you via email."
+    },
+    "title": "Support Center"
+  },
+  "tenant": {
+    "notFound": {
+      "description": "We checked the provided subdomain and could not find a matching company.",
+      "extra": "Check the address or contact support.",
+      "title": "Tenant not found"
     }
   },
   "tickets": {
-    "status": {
-      "OPEN": "Open",
-      "IN_PROGRESS": "In Progress",
-      "RESOLVED": "Resolved",
-      "CLOSED": "Closed",
-      "CANCELED": "Canceled"
-    },
-    "priority": {
-      "LOW": "Low",
-      "MEDIUM": "Medium",
-      "HIGH": "High",
-      "URGENT": "Urgent"
-    },
-    "type": {
-      "GENERAL": "General",
-      "FINANCIAL": "Financial",
-      "ACADEMIC": "Academic",
-      "TECHNICAL": "Technical",
-      "OTHER": "Other"
-    },
-    "list": {
-      "title": "My Tickets",
-      "description": "Manage your support requests.",
-      "create": "New Ticket",
-      "by": "By",
-      "empty": "No tickets found."
-    },
     "chat": {
-      "placeholder": "Type your message...",
-      "send": "Send",
-      "escalate": "Escalate to Platform",
       "close": "Close Ticket",
       "confirmClose": "Are you sure you want to close this ticket?",
       "confirmEscalate": "Escalate to Platform Admin?",
-      "escalatedLabel": "Escalated"
+      "escalate": "Escalate to Platform",
+      "escalatedLabel": "Escalated",
+      "placeholder": "Type your message...",
+      "send": "Send"
     },
     "create": {
-      "title": "Open New Ticket",
-      "subject": "Subject",
-      "type": "Topic",
-      "priority": "Priority",
-      "message": "Initial Message",
-      "submit": "Create Ticket",
       "cancel": "Cancel",
-      "errorOneOpen": "You already have an open ticket. Please resolve it before creating a new one."
+      "errorOneOpen": "You already have an open ticket. Please resolve it before creating a new one.",
+      "message": "Initial Message",
+      "priority": "Priority",
+      "subject": "Subject",
+      "submit": "Create Ticket",
+      "title": "Open New Ticket",
+      "type": "Topic"
+    },
+    "list": {
+      "by": "By",
+      "create": "New Ticket",
+      "description": "Manage your support requests.",
+      "empty": "No tickets found.",
+      "title": "My Tickets"
+    },
+    "priority": {
+      "HIGH": "High",
+      "LOW": "Low",
+      "MEDIUM": "Medium",
+      "URGENT": "Urgent"
+    },
+    "status": {
+      "CANCELED": "Canceled",
+      "CLOSED": "Closed",
+      "IN_PROGRESS": "In Progress",
+      "OPEN": "Open",
+      "RESOLVED": "Resolved"
+    },
+    "type": {
+      "ACADEMIC": "Academic",
+      "FINANCIAL": "Financial",
+      "GENERAL": "General",
+      "OTHER": "Other",
+      "TECHNICAL": "Technical"
     }
   }
 }

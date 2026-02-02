@@ -226,25 +226,42 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
     });
 
     for (const cs of contractStudents) {
-      const student = cs.student;
-      if (!student) continue;
-
-      for (const gs of student.guardians) {
-        const guardian = gs.guardian;
-        const email = guardian?.user?.email;
-        if (!email) continue;
-
-        const sentAt = new Date();
-        await this.emailService.sendInvoiceCreated({
-          recipient: email,
-          studentName: student.name,
-          schoolName: tenant?.name ?? '',
+      if (cs.student) {
+        await this.notifyGuardiansForStudent(
+          cs.student,
+          tenant?.name ?? '',
           amountCents,
           dueDate,
-          paymentLink,
-        });
-        await logInvoiceCommunicationOncePerDay(this.prisma, invoiceId, 'CREATED', sentAt);
+          invoiceId,
+          paymentLink
+        );
       }
+    }
+  }
+
+  private async notifyGuardiansForStudent(
+    student: any,
+    schoolName: string,
+    amountCents: number,
+    dueDate: Date,
+    invoiceId: string,
+    paymentLink?: string
+  ): Promise<void> {
+    for (const gs of student.guardians) {
+      const guardian = gs.guardian;
+      const email = guardian?.user?.email;
+      if (!email) continue;
+
+      const sentAt = new Date();
+      await this.emailService.sendInvoiceCreated({
+        recipient: email,
+        studentName: student.name,
+        schoolName,
+        amountCents,
+        dueDate,
+        paymentLink,
+      });
+      await logInvoiceCommunicationOncePerDay(this.prisma, invoiceId, 'CREATED', sentAt);
     }
   }
 
@@ -288,7 +305,7 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
 
   async sendOverdueReminders(referenceDate: Date = new Date()) {
     const REMINDER_INTERVAL_DAYS = 3;
-    const asOf = new Date(referenceDate.getTime());
+    const asOf = new Date(referenceDate);
     const cutoff = new Date(
       asOf.getFullYear(),
       asOf.getMonth(),
@@ -342,7 +359,7 @@ export class InvoiceJobsService implements OnModuleInit, OnModuleDestroy {
       const email = invoice.guardian?.user?.email;
       if (!email) continue;
 
-      const sentAt = new Date(asOf.getTime());
+      const sentAt = new Date(asOf);
       await this.emailService.sendInvoiceOverdue({
         recipient: email,
         studentName: invoice.student?.name ?? '',

@@ -104,11 +104,58 @@ export const i18nKeys = {
     actions: 'common.actions',
     page: 'common.page',
     of: 'common.of',
+    close: 'common.close',
+    placeholders: {
+      phone: 'common.placeholders.phone',
+      email: 'common.placeholders.email',
+      cpf: 'common.placeholders.cpf',
+      rg: 'common.placeholders.rg',
+      address: 'common.placeholders.address',
+      date: 'common.placeholders.date',
+      money: 'common.placeholders.money',
+    },
+    meta: {
+      title: {
+        default: 'common.meta.title.default',
+        admin: 'common.meta.title.admin',
+        guardian: 'common.meta.title.guardian',
+        school: 'common.meta.title.school',
+      },
+    },
   },
   auth: {
     pendingApproval: {
       title: 'auth.pendingApproval.title',
       description: 'auth.pendingApproval.description',
+    },
+  },
+  pay: {
+    sandbox: {
+      title: 'pay.sandbox.title',
+      loading: 'pay.sandbox.loading',
+      student: 'pay.sandbox.student',
+      guardian: 'pay.sandbox.guardian',
+      amount: 'pay.sandbox.amount',
+      dueDate: 'pay.sandbox.dueDate',
+      payment: 'pay.sandbox.payment',
+      description: 'pay.sandbox.description',
+      actions: {
+        payPix: 'pay.sandbox.actions.payPix',
+        payCard: 'pay.sandbox.actions.payCard',
+        confirming: 'pay.sandbox.actions.confirming',
+      },
+      status: {
+        paid: 'pay.sandbox.status.paid',
+        overdue: 'pay.sandbox.status.overdue',
+        pending: 'pay.sandbox.status.pending',
+      },
+      error: {
+        invalidLink: 'pay.sandbox.error.invalidLink',
+        loadError: 'pay.sandbox.error.loadError',
+        confirmError: 'pay.sandbox.error.confirmError',
+        connectionError: 'pay.sandbox.error.connectionError',
+      },
+      success: 'pay.sandbox.success',
     },
   },
   tenant: {
@@ -215,6 +262,11 @@ export const i18nKeys = {
         copyPaymentLink: 'guardian.invoicesUi.detail.copyPaymentLink',
         copyPaymentLinkSuccess: 'guardian.invoicesUi.detail.copyPaymentLinkSuccess',
         openPaymentPage: 'guardian.invoicesUi.detail.openPaymentPage',
+        amountAndDate: 'guardian.invoicesUi.detail.amountAndDate',
+        dueDatePrefix: 'guardian.invoicesUi.detail.dueDatePrefix',
+        descriptionLabel: 'guardian.invoicesUi.detail.descriptionLabel',
+        notPending: 'guardian.invoicesUi.detail.notPending',
+        paymentTitle: 'guardian.invoicesUi.detail.paymentTitle',
       },
       feedback: {
         loadError: 'guardian.invoicesUi.feedback.loadError',
@@ -233,6 +285,18 @@ export const i18nKeys = {
       invoices: {
         title: 'guardian.pages.invoices.title',
         description: 'guardian.pages.invoices.description',
+      },
+      profile: {
+        title: 'guardian.pages.profile.title',
+        description: 'guardian.pages.profile.description',
+      },
+    },
+    profile: {
+      title: 'guardian.profile.title',
+      description: 'guardian.profile.description',
+      form: {
+        personalInfo: 'guardian.profile.form.personalInfo',
+        personalInfoDescription: 'guardian.profile.form.personalInfoDescription',
       },
     },
   },

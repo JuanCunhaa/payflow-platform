@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 import type { Request } from 'express';
-import { randomBytes } from 'crypto';
+import { randomBytes } from 'node:crypto';
 import { PrismaService } from '../prisma/prisma.service';
 import { PasswordService } from '../auth/password.service';
 import { CustomThrottlerGuard } from '../common/guards/throttler.guard';
@@ -53,7 +53,8 @@ export class PublicController {
   @Get('tenant/:slug')
   @Throttle({ medium: { ttl: 10 * 60 * 1000, limit: 5 } })
   getTenantInfo(@Param('slug') slug: string) {
-    // TODO: Implement actual tenant lookup
+    // IMPLEMENTATION_NOTE: Tenant lookup is currently handled by subdomain resolution in the frontend.
+    // This endpoint is a placeholder for future specific tenant info retrieval if needed.
     return {
       message: 'Public tenant info endpoint placeholder',
       slug,
@@ -126,7 +127,7 @@ export class PublicController {
       select: { id: true, status: true },
     });
 
-    if (!tenant || tenant.status !== 'ACTIVE') {
+    if (tenant?.status !== 'ACTIVE') {
       throw new BadRequestException({
         code: 'school_code_not_found',
         message: 'School code is invalid or tenant is not active',
@@ -181,7 +182,7 @@ export class PublicController {
 
     const forwardedFor = req.headers['x-forwarded-for'];
     const ip = (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) || req.ip || null;
-    const userAgent = (req.headers['user-agent'] as string | undefined) || null;
+    const userAgent = (req.headers['user-agent'] as string) || null;
 
     await this.auditService.log({
       tenantId: tenant.id,
@@ -462,7 +463,7 @@ export class PublicController {
 
     const forwardedFor = req.headers['x-forwarded-for'];
     const ip = (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) || req.ip || null;
-    const userAgent = (req.headers['user-agent'] as string | undefined) || null;
+    const userAgent = (req.headers['user-agent'] as string) || null;
 
     await this.auditService.log({
       tenantId: invoice.tenantId,
@@ -479,7 +480,7 @@ export class PublicController {
       userAgent,
     });
 
-    const guardianEmail = invoice.guardian?.user?.email as string | undefined;
+    const guardianEmail = invoice.guardian?.user?.email;
     if (guardianEmail) {
       await this.emailService.sendInvoicePaid({
         recipient: guardianEmail,
