@@ -39,8 +39,8 @@ export class PlatformAuditController {
     const from = parseDate(fromParam);
     const to = parseDate(toParam);
 
-    const page = Math.max(parseInt(pageParam ?? '1', 10) || 1, 1);
-    const limitRaw = parseInt(limitParam ?? '20', 10) || 20;
+    const page = Math.max(Number.parseInt(pageParam ?? '1', 10) || 1, 1);
+    const limitRaw = Number.parseInt(limitParam ?? '20', 10) || 20;
     const pageSize = Math.min(Math.max(limitRaw, 1), 100);
 
     const where: Prisma.AuditLogWhereInput = {};
@@ -98,11 +98,11 @@ export class PlatformAuditController {
 
     const tenantIds = Array.from(
       new Set(logs.map((log) => log.tenantId).filter((id): id is string => !!id))
-    ) as string[];
+    );
 
     const actorIds = Array.from(
       new Set(logs.map((log) => log.actorUserId).filter((id): id is string => !!id))
-    ) as string[];
+    );
 
     const [tenants, actors] = await Promise.all([
       tenantIds.length

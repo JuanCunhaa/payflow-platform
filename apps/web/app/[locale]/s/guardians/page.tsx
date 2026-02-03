@@ -1,20 +1,19 @@
 'use client';
 
-import type { ChangeEvent, FormEvent } from 'react';
+import type { FormEvent } from 'react';
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 import { i18nKeys } from '@payflow/shared';
 import { useI18n } from '../../../i18n-context';
 import { useAuth } from '../../../auth-context';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
   Sheet,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet';
@@ -96,7 +95,9 @@ export default function SchoolGuardiansPage() {
   const [formCpf, setFormCpf] = useState('');
   const [formRg, setFormRg] = useState('');
   const [formAddress, setFormAddress] = useState('');
-  const [formNewStudents, setFormNewStudents] = useState<{ name: string; birthDate: string }[]>([]);
+  const [formNewStudents, setFormNewStudents] = useState<
+    { name: string; birthDate: string; tempId: string }[]
+  >([]);
   const [formStatus, setFormStatus] = useState<GuardianStatus>('ACTIVE');
   const [saving, setSaving] = useState(false);
 
@@ -252,7 +253,7 @@ export default function SchoolGuardiansPage() {
             cpf: formCpf,
             rg: formRg,
             address: formAddress ? { line: formAddress } : undefined,
-            students: formNewStudents,
+            students: formNewStudents.map(({ tempId, ...rest }) => rest),
           }),
         });
         if (!res.ok) {
@@ -638,7 +639,11 @@ export default function SchoolGuardiansPage() {
                       if (newStudentName.trim()) {
                         setFormNewStudents([
                           ...formNewStudents,
-                          { name: newStudentName, birthDate: newStudentBirthDate },
+                          {
+                            name: newStudentName,
+                            birthDate: newStudentBirthDate,
+                            tempId: Math.random().toString(36).slice(2),
+                          },
                         ]);
                         setNewStudentName('');
                         setNewStudentBirthDate('');
@@ -654,7 +659,7 @@ export default function SchoolGuardiansPage() {
                     <div className="space-y-2 mt-2">
                       {formNewStudents.map((s, idx) => (
                         <div
-                          key={idx}
+                          key={s.tempId}
                           className="flex items-center justify-between rounded-md bg-background border p-2 text-sm"
                         >
                           <div>

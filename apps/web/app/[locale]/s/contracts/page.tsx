@@ -51,7 +51,7 @@ function formatAmount(amountCents: number, currency: string) {
 function parseAmountToCents(raw: string): number | null {
   const trimmed = raw.trim();
   if (!trimmed) return null;
-  const normalized = trimmed.replace(/\s/g, '').replace(/\./g, '').replace(/,/g, '.');
+  const normalized = trimmed.replaceAll(/[\s.]/g, '').replaceAll(',', '.');
   const value = Number(normalized);
   if (!Number.isFinite(value) || value <= 0) return null;
   return Math.round(value * 100);
@@ -346,8 +346,8 @@ export default function SchoolContractsPage() {
 
     if (
       next === 'CANCELED' &&
-      typeof window !== 'undefined' &&
-      !window.confirm(t(i18nKeys.school.contractsUi.detail.confirmCancelDescription))
+      globalThis.window !== undefined &&
+      !globalThis.window.confirm(t(i18nKeys.school.contractsUi.detail.confirmCancelDescription))
     ) {
       return;
     }

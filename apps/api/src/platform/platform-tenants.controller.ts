@@ -26,13 +26,13 @@ import { UpdateTenantDto } from './dto/update-tenant.dto';
 
 type TenantStatus = 'ACTIVE' | 'DRAFT' | 'SUSPENDED';
 
-const ALLOWED_TENANT_STATUS: TenantStatus[] = ['ACTIVE', 'DRAFT', 'SUSPENDED'];
+const ALLOWED_TENANT_STATUS = new Set<TenantStatus>(['ACTIVE', 'DRAFT', 'SUSPENDED']);
 
 type PrismaTenantClient = Pick<PrismaClient, 'tenant' | 'user' | 'membership'>;
 
 function parseTenantStatusOrUndefined(statusParam?: string): TenantStatus | undefined {
   if (!statusParam) return undefined;
-  if (ALLOWED_TENANT_STATUS.includes(statusParam as TenantStatus)) {
+  if (ALLOWED_TENANT_STATUS.has(statusParam as TenantStatus)) {
     return statusParam as TenantStatus;
   }
   throw new BadRequestException({
@@ -44,10 +44,10 @@ function parseTenantStatusOrUndefined(statusParam?: string): TenantStatus | unde
 function slugifyName(value: string): string {
   const normalized = value
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
+    .replaceAll(/[\u0300-\u036f]/g, '')
     .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)+/g, '');
+    .replaceAll(/[^a-z0-9]+/g, '-')
+    .replaceAll(/(^-|-$)+/g, '');
   return normalized || 'tenant';
 }
 
@@ -91,7 +91,7 @@ async function generateUniqueSchoolCode(
 ): Promise<string> {
   const codeBase =
     baseSlug
-      .replace(/[^a-z0-9]/gi, '')
+      .replaceAll(/[^a-z0-9]/gi, '')
       .toUpperCase()
       .slice(0, 8) || 'SCHOOL';
 
@@ -132,8 +132,8 @@ export class PlatformTenantsController {
     @Query('pageSize') pageSizeParam?: string
   ) {
     const status = parseTenantStatusOrUndefined(statusParam);
-    const page = Math.max(parseInt(pageParam ?? '1', 10) || 1, 1);
-    const pageSizeRaw = parseInt(pageSizeParam ?? '20', 10) || 20;
+    const page = Math.max(Number.parseInt(pageParam ?? '1', 10) || 1, 1);
+    const pageSizeRaw = Number.parseInt(pageSizeParam ?? '20', 10) || 20;
     const pageSize = Math.min(Math.max(pageSizeRaw, 1), 100);
 
     const where = status ? { status } : {};
@@ -172,7 +172,7 @@ export class PlatformTenantsController {
     }
 
     const slugInput = dto.slug?.trim().toLowerCase();
-    let baseSlug = slugInput && slugInput.length > 0 ? slugInput : slugifyName(name);
+    const baseSlug = slugInput && slugInput.length > 0 ? slugInput : slugifyName(name);
     if (!/^[a-z0-9-]+$/.test(baseSlug)) {
       throw new BadRequestException({
         code: 'invalid_slug',
@@ -251,7 +251,7 @@ export class PlatformTenantsController {
 
     const forwardedFor = req.headers['x-forwarded-for'];
     const ip = (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) || req.ip || null;
-    const userAgent = (req.headers['user-agent'] as string | undefined) || null;
+    const userAgent = req.headers['user-agent'] || null;
 
     await this.auditService.log({
       tenantId: result.tenant.id,
@@ -351,7 +351,7 @@ export class PlatformTenantsController {
 
     const forwardedFor = req.headers['x-forwarded-for'];
     const ip = (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) || req.ip || null;
-    const userAgent = (req.headers['user-agent'] as string | undefined) || null;
+    const userAgent = req.headers['user-agent'] || null;
 
     await this.auditService.log({
       tenantId: tenant.id,
@@ -399,7 +399,7 @@ export class PlatformTenantsController {
 
     const forwardedFor = req.headers['x-forwarded-for'];
     const ip = (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) || req.ip || null;
-    const userAgent = (req.headers['user-agent'] as string | undefined) || null;
+    const userAgent = req.headers['user-agent'] || null;
 
     await this.auditService.log({
       tenantId: tenant.id,
@@ -445,7 +445,7 @@ export class PlatformTenantsController {
 
     const forwardedFor = req.headers['x-forwarded-for'];
     const ip = (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor) || req.ip || null;
-    const userAgent = (req.headers['user-agent'] as string | undefined) || null;
+    const userAgent = req.headers['user-agent'] || null;
 
     await this.auditService.log({
       tenantId: tenant.id,

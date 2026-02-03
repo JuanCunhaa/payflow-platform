@@ -28,7 +28,7 @@ export class TenantResolverMiddleware implements NestMiddleware {
 
   async use(req: Request, _res: Response, next: NextFunction) {
     try {
-      let tenantSlug = req.headers['x-tenant-slug'] as string | undefined;
+      const tenantSlug = req.headers['x-tenant-slug'] as string | undefined;
 
       // If explicit header is provided (from frontend context), use it directly
       if (tenantSlug) {
@@ -48,7 +48,7 @@ export class TenantResolverMiddleware implements NestMiddleware {
         host = req.headers['x-forwarded-host'] as string | undefined;
       }
       if (!host) {
-        host = req.headers['host'] as string | undefined;
+        host = req.headers['host'];
       }
       const subdomain = extractFirstSubdomain(host);
       if (subdomain) {

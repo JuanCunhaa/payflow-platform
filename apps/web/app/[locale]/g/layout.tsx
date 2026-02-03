@@ -2,8 +2,7 @@
 
 import type React from 'react';
 import { useEffect } from 'react';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { i18nKeys } from '@payflow/shared';
 import { useAuth } from '../../auth-context';
 import { useI18n } from '../../i18n-context';
@@ -28,11 +27,10 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/tickets', labelKey: i18nKeys.guardian.nav.tickets, icon: LifeBuoy },
 ];
 
-export default function GuardianLayout({ children }: { children: React.ReactNode }) {
+export default function GuardianLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const { user, sessionLoading, isLoggingOut, logout } = useAuth();
   const { locale, t } = useI18n();
   const router = useRouter();
-  const pathname = usePathname();
 
   useEffect(() => {
     if (sessionLoading || isLoggingOut) return;

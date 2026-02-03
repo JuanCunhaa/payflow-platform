@@ -1,8 +1,7 @@
 'use client';
 
-import type { ChangeEvent, FormEvent } from 'react';
 import Link from 'next/link';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { type ChangeEvent, type FormEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { i18nKeys } from '@payflow/shared';
 import { useI18n } from '../../../i18n-context';
 import { useAuth } from '../../../auth-context';
@@ -306,43 +305,42 @@ export default function SchoolStudentsPage() {
 
       let successCount = 0;
 
-      for (let i = 1; i < lines.length; i += 1) {
-        const parts = lines[i].split(',');
-        const rawName = parts[nameIndex]?.trim() ?? '';
-        const rawClass = parts[classIndex]?.trim() ?? '';
-        const rawStatus = statusIndex >= 0 ? (parts[statusIndex]?.trim() ?? '') : '';
+      const validRows = lines
+        .slice(1)
+        .map((line) => {
+          const parts = line.split(',');
+          const rawName = parts[nameIndex]?.trim() ?? '';
+          const rawClass = parts[classIndex]?.trim() ?? '';
+          const rawStatus = statusIndex >= 0 ? (parts[statusIndex]?.trim() ?? '') : '';
 
-        if (!rawName || !rawClass) {
-          // eslint-disable-next-line no-continue
-          continue;
-        }
+          if (!rawName || !rawClass) return null;
 
-        const classLower = rawClass.toLowerCase();
-        const classEntity =
-          classes.find((item) => item.id === rawClass) ||
-          classes.find((item) => item.name.toLowerCase() === classLower);
+          const classLower = rawClass.toLowerCase();
+          const classEntity =
+            classes.find((item) => item.id === rawClass) ||
+            classes.find((item) => item.name.toLowerCase() === classLower);
 
-        if (!classEntity) {
-          // eslint-disable-next-line no-continue
-          continue;
-        }
+          if (!classEntity) return null;
 
-        let status: StudentStatus = 'ACTIVE';
-        if (rawStatus) {
-          const normalized = rawStatus.toUpperCase();
-          if (normalized === 'INACTIVE' || normalized === 'INATIVO' || normalized === 'INATIVA') {
-            status = 'INACTIVE';
+          let status: StudentStatus = 'ACTIVE';
+          if (rawStatus) {
+            const normalized = rawStatus.toUpperCase();
+            if (normalized === 'INACTIVE' || normalized === 'INATIVO' || normalized === 'INATIVA') {
+              status = 'INACTIVE';
+            }
           }
-        }
 
+          return { name: rawName, classId: classEntity.id, status };
+        })
+        .filter(
+          (item): item is { name: string; classId: string; status: StudentStatus } => item !== null
+        );
+
+      for (const student of validRows) {
         try {
           const res = await apiFetch('/school/students', {
             method: 'POST',
-            body: JSON.stringify({
-              name: rawName,
-              classId: classEntity.id,
-              status,
-            }),
+            body: JSON.stringify(student),
           });
           if (res.ok) {
             successCount += 1;

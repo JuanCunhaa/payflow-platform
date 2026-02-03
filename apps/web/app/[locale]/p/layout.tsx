@@ -10,17 +10,17 @@ import { ModeToggle } from '@/components/mode-toggle';
 import { LanguageToggle } from '@/components/language-toggle';
 import { Button } from '@/components/ui/button';
 import { Activity, Building, LayoutDashboard, LifeBuoy, LogOut, Megaphone } from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+
 import { Footer } from '@/components/footer';
 
-export default function PlatformLayout({ children }: { children: React.ReactNode }) {
+export default function PlatformLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const { user, sessionLoading, isLoggingOut, logout } = useAuth();
   const { locale, t } = useI18n();
   const router = useRouter();
 
   useEffect(() => {
     if (sessionLoading || isLoggingOut) return;
-    if (!user || user.userType !== 'PLATFORM') {
+    if (user?.userType !== 'PLATFORM') {
       const base = locale || 'pt-BR';
       router.replace(`/${base}/login`);
     }
@@ -36,7 +36,7 @@ export default function PlatformLayout({ children }: { children: React.ReactNode
     { href: `${basePath}/audit`, label: t(i18nKeys.platform.nav.audit), icon: Activity },
   ];
 
-  if (sessionLoading || isLoggingOut || !user || user.userType !== 'PLATFORM') {
+  if (sessionLoading || isLoggingOut || user?.userType !== 'PLATFORM') {
     return (
       <div className="flex min-h-screen items-center justify-center p-4">
         <p className="text-muted-foreground animate-pulse">{t(i18nKeys.common.loading)}</p>
