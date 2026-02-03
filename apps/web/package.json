@@ -7,8 +7,6 @@
     "build": "next build",
     "start": "next start -p 3000",
     "lint": "next lint",
-    "test": "playwright test",
-    "test:e2e": "playwright test",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -32,7 +30,6 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@playwright/test": "^1.57.0",
     "@types/node": "^20.11.0",
     "@types/react": "^18.2.44",
     "autoprefixer": "^10.4.23",
