@@ -23,5 +23,8 @@
     "concurrently": "^8.2.2",
     "husky": "^9.1.7",
     "prettier": "^3.2.4"
+  },
+  "overrides": {
+    "next@<=15.5.10": "15.5.10"
   }
 }
